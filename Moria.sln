@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaWCFContracts", "MoriaW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaModels", "MoriaModels\MoriaModels.csproj", "{39B8B104-D162-4001-A34F-1F61218CE29A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaDesktop", "MoriaDesktop\MoriaDesktop.csproj", "{898DD2FB-8A88-4E50-BC95-21C3C9072CB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{39B8B104-D162-4001-A34F-1F61218CE29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39B8B104-D162-4001-A34F-1F61218CE29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39B8B104-D162-4001-A34F-1F61218CE29A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898DD2FB-8A88-4E50-BC95-21C3C9072CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898DD2FB-8A88-4E50-BC95-21C3C9072CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898DD2FB-8A88-4E50-BC95-21C3C9072CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898DD2FB-8A88-4E50-BC95-21C3C9072CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
