@@ -1,0 +1,6 @@
+@MoriaWebAPI_HostAddress = http://localhost:5095
+
+GET {{MoriaWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
