@@ -9,7 +9,7 @@
             //ContainerBuilder builder = new ContainerBuilder();
             //builder.RegisterType<Logger<Program>>().As<ILogger>();
             //builder.RegisterType<ContractsService>();
-
+            //;
             //using (var container = builder.Build())
             //{
             //    Uri address = new Uri("http://localhost:8080/Service1");
