@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaDesktop", "MoriaDeskto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaWebAPI", "MoriaWebAPI\MoriaWebAPI.csproj", "{D1C6D8B8-905C-493D-9C47-0D1AEBED35A4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaBaseServices", "MoriaBaseServices\MoriaBaseServices.csproj", "{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseGenerator", "DatabaseGenerator\DatabaseGenerator.csproj", "{6AF80DBA-1503-472E-84F6-D6E701F73142}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaBaseServices", "MoriaBaseServices\MoriaBaseServices.csproj", "{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaWebAPIServices", "MoriaWebAPIServices\MoriaWebAPIServices.csproj", "{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}"
 EndProject
