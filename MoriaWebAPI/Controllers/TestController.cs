@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MoriaBaseServices.Services;
 
 namespace MoriaWebAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("")]
 public class TestController: ControllerBase
 {
     readonly ILogger<TestController> _logger;
@@ -13,11 +15,17 @@ public class TestController: ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
+#if DEBUG
+
+    [HttpGet(WebAPIEndpointsProvider.GetTestPath)]
+    [Authorize]
     public IActionResult Get()
     {
-        _logger.LogCritical($"Testowy log: {nameof(TestController)}");
+        var userId = User.FindFirst("id")?.Value;
+        _logger.LogCritical($"Testowy log: {userId}");
 
         return Ok();
     }
+
+#endif
 }
