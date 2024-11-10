@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moria.MiddlewareService", "Moria.MiddlewareService\Moria.MiddlewareService.csproj", "{B2872C5F-2AE2-427A-AA89-775A4BE3C276}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{D524134C-6A90-4A70-A029-D9C3B786A024}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaDTObjects", "MoriaDTObjects\MoriaDTObjects.csproj", "{FF8090C5-177F-4FEE-B992-DBC941736FB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaServices", "MoriaServices\MoriaServices.csproj", "{F66B4C0A-7948-46F2-B2C9-6164957F4761}"
@@ -27,20 +23,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaWebAPI", "MoriaWebAPI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseGenerator", "DatabaseGenerator\DatabaseGenerator.csproj", "{6AF80DBA-1503-472E-84F6-D6E701F73142}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaBaseServices", "MoriaBaseServices\MoriaBaseServices.csproj", "{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B2872C5F-2AE2-427A-AA89-775A4BE3C276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2872C5F-2AE2-427A-AA89-775A4BE3C276}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2872C5F-2AE2-427A-AA89-775A4BE3C276}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2872C5F-2AE2-427A-AA89-775A4BE3C276}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D524134C-6A90-4A70-A029-D9C3B786A024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D524134C-6A90-4A70-A029-D9C3B786A024}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D524134C-6A90-4A70-A029-D9C3B786A024}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D524134C-6A90-4A70-A029-D9C3B786A024}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF8090C5-177F-4FEE-B992-DBC941736FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF8090C5-177F-4FEE-B992-DBC941736FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8090C5-177F-4FEE-B992-DBC941736FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,10 +67,6 @@ Global
 		{D1C6D8B8-905C-493D-9C47-0D1AEBED35A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1C6D8B8-905C-493D-9C47-0D1AEBED35A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1C6D8B8-905C-493D-9C47-0D1AEBED35A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AF80DBA-1503-472E-84F6-D6E701F73142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AF80DBA-1503-472E-84F6-D6E701F73142}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AF80DBA-1503-472E-84F6-D6E701F73142}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AF80DBA-1503-472E-84F6-D6E701F73142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

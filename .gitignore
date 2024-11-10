@@ -361,3 +361,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+/MoriaConsoleApp/App.config
+/MoriaServices/app.config
+/MoriaWCFApp/App.config
+/MoriaWCFContracts/app.config
+/MoriaWCFService/App.config
+/MoriaConsoleApp/Services/TestCredentialsService.cs
