@@ -54,12 +54,14 @@ public class Program
                 {
                     x.TokenValidationParameters = new()
                     {
-                        ValidIssuer = ip, //get from configuration
+                        ValidIssuer = ip,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey123456789101112131415")),
                         ValidateIssuer = true,
                         ValidateAudience = false,
                         ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true
+                        ValidateIssuerSigningKey = true,
+                        //by default ClockSkew is set for 5 minutes, it means that token is valid even 5 minutes later, than token expiration date
+                        ClockSkew = TimeSpan.FromSeconds(60),
                     };
                 });
             builder.Services.AddAuthorization();

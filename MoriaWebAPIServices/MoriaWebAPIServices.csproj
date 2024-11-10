@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoriaBaseServices\MoriaBaseServices.csproj" />
+    <ProjectReference Include="..\MoriaDTObjects\MoriaDTObjects.csproj" />
+    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
   </ItemGroup>
 
 </Project>

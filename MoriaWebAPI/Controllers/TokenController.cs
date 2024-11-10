@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoriaBaseServices.Services;
+using MoriaModels.Models.EntityPersonel;
 using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces;
 
@@ -21,11 +22,11 @@ public class TokenController : ControllerBase
     }
 
     [HttpPost(WebAPIEndpointsProvider.PostTokenPath)]
-    public IActionResult Post()
+    public IActionResult Post(UserCredentials credentials)
     {
         try
         {
-            var userId = _userService.LogIn("123", "abc");
+            var userId = _userService.LogIn(credentials.Username, credentials.Password);
             if (string.IsNullOrWhiteSpace(userId))
                 return Unauthorized();
 
