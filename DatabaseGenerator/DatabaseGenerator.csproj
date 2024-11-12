@@ -14,11 +14,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
+    <ProjectReference Include="..\MoriaWebAPIServices\MoriaWebAPIServices.csproj" />
   </ItemGroup>
 
 </Project>

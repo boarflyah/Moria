@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseGenerator", "Databa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaBaseServices", "MoriaBaseServices\MoriaBaseServices.csproj", "{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaWebAPIServices", "MoriaWebAPIServices\MoriaWebAPIServices.csproj", "{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{261F6EFC-A41C-416D-BDFA-B1966E2E5C29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEA174C-E526-4BED-8448-A2C40CCFDFF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

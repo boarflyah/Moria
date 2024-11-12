@@ -1,5 +1,11 @@
 using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using MoriaWebAPI.Services;
+using MoriaWebAPI.Services.Interfaces;
+using MoriaWebAPIServices.Services;
+using MoriaWebAPIServices.Services.Interfaces;
 using Serilog;
 
 namespace MoriaWebAPI;
@@ -11,12 +17,14 @@ public class Program
         try
         {
             var builder = WebApplication.CreateBuilder(args);
+            var ip = GetLocalIPAddress();
+            var portNumber = builder.Configuration.GetValue(typeof(int), "PortNumber") as int?;
 
             builder.Host.UseWindowsService();
 
             //logger configuration
             Log.Logger = new LoggerConfiguration()
-                //.MinimumLevel.Debug()
+                .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File(".\\Logs\\log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
@@ -24,17 +32,43 @@ public class Program
             builder.Logging.AddSerilog(Log.Logger);
 
             // Add services to the container.
-
+            builder.Services.AddScoped<IUserService, TempUserService>();
+            builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
+            {
+                TempTokenGeneratorService service = new(ip);
+                return service;
+            });
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
+            //authentication configuration
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                //x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.TokenValidationParameters = new()
+                    {
+                        ValidIssuer = ip,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKey123456789101112131415")),
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        //by default ClockSkew is set for 5 minutes, it means that token is valid even 5 minutes later, than token expiration date
+                        ClockSkew = TimeSpan.FromSeconds(60),
+                    };
+                });
+            builder.Services.AddAuthorization();
+
+            //kestrel config, port/ip/certificates
             builder.WebHost.ConfigureKestrel((context, options) =>
             {
-                var ip = GetLocalIPAddress();
-                var portNumber = builder.Configuration.GetValue(typeof(int), "PortNumber") as int?;
                 options.Listen(IPAddress.Parse(ip), portNumber.GetValueOrDefault(5000), configure =>
                 {
                     configure.UseHttps();
@@ -51,6 +85,8 @@ public class Program
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.MapControllers();
 
             app.Run();
