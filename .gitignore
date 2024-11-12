@@ -368,3 +368,4 @@ FodyWeavers.xsd
 /MoriaWCFContracts/app.config
 /MoriaWCFService/App.config
 /MoriaConsoleApp/Services/TestCredentialsService.cs
+/MoriaConsoleApp/App.config
