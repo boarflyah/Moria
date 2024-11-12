@@ -8,4 +8,26 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\home.png" />
+    <None Remove="Images\homeColor.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\home.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\homeColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
+  </ItemGroup>
+
 </Project>
