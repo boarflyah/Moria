@@ -5,13 +5,13 @@ public abstract class BaseNotifyPropertyChanged: INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void RaisePropertyChanged(string property, object oldValue = null, object newValue = null)
+    protected void RaisePropertyChanged(string property, object newValue = null)
     {
-        OnPropertyChanged(property, oldValue, newValue);
+        OnPropertyChanged(property, newValue);
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
     }
 
-    protected virtual void OnPropertyChanged(string property, object oldValue = null, object newValue = null)
+    protected virtual void OnPropertyChanged(string property, object newValue = null)
     {
     }
 
