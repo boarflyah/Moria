@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Images\home.png" />
     <None Remove="Images\homeColor.png" />
+    <None Remove="Images\menu.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,9 @@
     </Content>
     <Content Include="Images\homeColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\menu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
