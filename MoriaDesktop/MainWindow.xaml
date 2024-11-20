@@ -5,66 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoriaDesktop"
         xmlns:models="clr-namespace:MoriaDesktop.Models"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"
+        mc:Ignorable="d" 
+        Height="450" Width="800"
         WindowStyle="None"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized"
-        AllowsTransparency="True" Background="Transparent" BorderBrush="#387478" BorderThickness="1.5">
-
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        ResizeMode="CanResize"
+        AllowsTransparency="True"
+        Background="Transparent" 
+        BorderThickness="1"
+        BorderBrush="Black"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
+        <converters:BoolToVisibilityInvertedConverter x:Key="bool2visinv"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <!--#region Navigation panel-->
 
-        <Grid Background="#F8F8F8     "
-              Opacity="0.95"/>
+        <Grid Background="#F8F8F8"
+              Grid.RowSpan="2"
+              Opacity="1"/>
 
-        <StackPanel 
-                    Width="200"
-                    Orientation="Vertical"
-                    HorizontalAlignment="Left">
+
+
+        <Grid x:Name="MenuGrid"
+              Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+            </Grid.RowDefinitions>
 
             <!--#region Titlebar-->
 
             <Grid Height="50"
                   VerticalAlignment="Top"
-                  Margin="0, 20, 0, 0">
+                  Margin="0, 5, 0, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="2" 
-                        Background="#D4BEE4"
+                        Background="{StaticResource MainWindowAccentBrush}"
                         Height="35"
                         CornerRadius="3, 0, 0, 3"
                         Width="6"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right"/>
 
-                <TextBlock Grid.Column ="1" 
+                <TextBlock x:Name="TitleTextBlock"
+                           Grid.Column ="1" 
                            Text="MoriaDesktop"
                            Foreground="#33372C"
                            FontSize="20"
-                           Margin="0 0 16 0"
+                           Margin="0 0 5 0"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
 
-                <Button BorderThickness="0.5"
+                <Button x:Name="ExpandButton"
+                        BorderThickness="0"
                         BorderBrush="LightGray"
                         Margin="10 0 0 0"
-                        Height="35"
-                        Width="35">
-                    <Button.Background>
-                        <SolidColorBrush Opacity="0.6"  Color="#D4BEE4"/>
-                    </Button.Background>
+                        Width="35"
+                        Click="ExpandButton_Click"
+                        Background="{StaticResource MainWindowAccentBrush}">
                     <Button.Content>
                         <Image Source="Images/menu.png" 
-                               Stretch="Uniform" 
-                               />
+                               Stretch="Uniform"
+                               Width="20"/>
                     </Button.Content>
                 </Button>
             </Grid>
@@ -73,9 +93,16 @@
 
             <!--#region  Main menu-->
 
-
-            <TreeView ItemsSource="{Binding Navigation}" Background="Transparent" BorderThickness="0" Margin="10 20 0 20" 
-                      SelectedItemChanged="TreeView_SelectedItemChanged">
+            <TreeView x:Name="NavigationTreeView"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Navigation}"
+                      Background="Transparent" 
+                      BorderThickness="0"
+                      Margin="10 20 0 20" 
+                      HorizontalAlignment="Stretch"
+                      HorizontalContentAlignment="Stretch"
+                      SelectedItemChanged="TreeView_SelectedItemChanged"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <TreeView.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
                       Color="Transparent" />
@@ -85,38 +112,36 @@
                       Color="Transparent" />
                     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
                       Color="Black" />
+
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+
                 </TreeView.Resources>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Items}">
-                        <Border  BorderThickness="1" Height="40" CornerRadius="8" Width="120" Margin="3">
+                        <Border  BorderThickness="0" Height="40" HorizontalAlignment="Stretch" CornerRadius="3 0 0 3" Margin="3">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background">
-                                        <Setter.Value>
-                                            <SolidColorBrush Opacity="0.6"  Color="#D4BEE4"/>
-                                        </Setter.Value>
-                                    </Setter>
+                                    <Setter Property="Background" Value="{StaticResource MainWindowAccentBrush}"/>
                                     <Setter Property="BorderBrush" Value="#CB9DF0" />
-                                    <Setter Property="Effect">
-                                        <Setter.Value>
-                                            <DropShadowEffect BlurRadius="5" Color="#D4BEE4" Opacity="0.7" ShadowDepth="3"/>
-                                        </Setter.Value>
-                                    </Setter>
 
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="#D4F6FF" />
                                             <Setter Property="BorderBrush" Value="#37AFE1" />
                                         </Trigger>
-                                        
+
                                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                             <Setter Property="Background" Value="#D4F6FF" />
                                             <Setter Property="BorderBrush" Value="#37AFE1" />
-                                            <Setter Property="Effect">
+                                            <!--<Setter Property="Effect">
                                                 <Setter.Value>
                                                     <DropShadowEffect BlurRadius="5" Color="#BFECFF" Opacity="0.7" ShadowDepth="3"/>
                                                 </Setter.Value>
-                                            </Setter>
+                                            </Setter>-->
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -130,11 +155,17 @@
 
                 <!--<TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem">
-                        --><!-- Default Background Color --><!--
+                        -->
+                <!-- Default Background Color -->
+                <!--
                         <Setter Property="Background" Value="Transparent" />
-                        --><!-- Style triggers for the selected item --><!--
+                        -->
+                <!-- Style triggers for the selected item -->
+                <!--
                         <Style.Triggers>
-                            --><!-- Change the background when the item is selected --><!--
+                            -->
+                <!-- Change the background when the item is selected -->
+                <!--
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Foreground" Value="Black" />
                             </Trigger>
@@ -189,21 +220,103 @@
 
             <!--#endregion-->
 
-        </StackPanel>
+        </Grid>
 
         <!--#endregion-->
 
-        <Border Grid.Column="1"           
-                Background="#F8F8F8"
+        <!--#region top ribbon section-->
+        
+        <Grid Background="{StaticResource WindowDefaultBackgroundBrush}"
+              Opacity="0.8"
+              Grid.Column="1"
+              Margin="0 5 0 0"
+              Height="55"/>
+        <Border Grid.Column="1"
+                Height="35"
+                HorizontalAlignment="Stretch"
+                Background="{StaticResource MainWindowAccentBrush}"/>
+        <Button x:Name="BackButton" 
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Command="{Binding GoBackCommand, Mode=OneWay}"
+                Style="{StaticResource MainWindowTopRibbonButtonStyle}"
+                Visibility="{Binding IsEnabled, ElementName=BackButton, Converter={StaticResource bool2vis}}">
+            <Button.Content>
+                <Image Source="Images/back.png" 
+                       Stretch="Uniform"
+                       Width="15"/>
+            </Button.Content>
+        </Button>
+        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0 0 7 0">
+            <Button x:Name="HideButton"
+                    Style="{StaticResource MainWindowTopRibbonButtonStyle}"
+                    Click="HideButton_Click"
+                    Margin="0 0 3 0">
+                <Button.Content>
+                    <Image Source="Images/windowHide.png" 
+                           Stretch="Uniform"
+                           Width="15"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="MaximizeButton"
+                    Style="{StaticResource MainWindowTopRibbonButtonStyle}"
+                    Command="{Binding SetFullScreenCommand, Mode=OneWay}"
+                    Visibility="{Binding IsFullScreen, Mode=OneWay, Converter={StaticResource bool2visinv}}"
+                    Click="MaximizeButton_Click"
+                    Margin="0 0 3 0">
+                <Button.Content>
+                    <Image Source="Images/maximize.png" 
+                           Stretch="Uniform"
+                           Width="15"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="MinimizeButton"
+                    Style="{StaticResource MainWindowTopRibbonButtonStyle}"
+                    Command="{Binding SetWindowCommand, Mode=OneWay}"
+                    Visibility="{Binding IsFullScreen, Mode=OneWay, Converter={StaticResource bool2vis}}"
+                    Click="MinimizeButton_Click"
+                    Margin="0 0 3 0">
+                <Button.Content>
+                    <Image Source="Images/minimize.png" 
+                           Stretch="Uniform"
+                           Width="15"/>
+                </Button.Content>
+            </Button>
+            <Button x:Name="CloseButton"
+                    Style="{StaticResource MainWindowTopRibbonButtonStyle}"
+                    Command="{Binding CloseAppCommand, Mode=OneWay}"
+                    Click="CloseButton_Click"
+                    Margin="0 0 3 0">
+                <Button.Content>
+                    <Image Source="Images/close.png" 
+                           Stretch="Uniform"
+                           Width="15"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        
+        <!--#endregion-->
+        
+        <!--#region content section-->
+
+        <Border Grid.Column="1" 
+                Grid.Row="1"
+                Background="{StaticResource WindowDefaultBackgroundBrush}"
                 Opacity="1"
-                Margin="15"
+                Margin="5 5 10 10"
+                Padding="10"
                 CornerRadius="10">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="10" Direction="225" Color="LightGray" Opacity="0.7" ShadowDepth="10"/>
             </Border.Effect>
+            <Frame x:Name="NavigationFrame" Grid.Column="1"
+                   NavigationUIVisibility="Hidden"/>
         </Border>
-
-        <Image Source="Images/homeColor.png" Grid.Column="1" Stretch="Uniform" Width="100" HorizontalAlignment="Center"/>
-
+        
+        <!--#endregion-->
+        
     </Grid>
 </Window>
