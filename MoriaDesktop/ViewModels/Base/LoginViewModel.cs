@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using MoriaBaseServices.Services;
 using MoriaDesktop.Commands;
 using MoriaDesktopServices.Interfaces;
 
@@ -9,12 +10,14 @@ public class LoginViewModel : ViewModelBase
     #region services
 
     readonly INavigationService _navigationService;
+    readonly ApiRequestService _apiRequestService;
 
     #endregion
 
-    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService) : base(logger)
+    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, ApiRequestService apiRequestService) : base(logger)
     {
         _navigationService = navigationService;
+        _apiRequestService = apiRequestService;
 
         LoginCommand = new(Login);
         TestOid = 10;
@@ -49,8 +52,10 @@ public class LoginViewModel : ViewModelBase
 
     async Task Login()
     {
-        await Task.Delay(2000);
-        Navigate();
+        var token = await _apiRequestService.Get("http", "192.168.0.59", 5000, WebAPIEndpointsProvider.GetTestPath, null);
+
+        //await Task.Delay(2000);
+        //Navigate();
     }
 
     #endregion

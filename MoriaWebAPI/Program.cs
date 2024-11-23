@@ -39,7 +39,10 @@ public class Program
                 return service;
             });
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -71,12 +74,11 @@ public class Program
             {
                 options.Listen(IPAddress.Parse(ip), portNumber.GetValueOrDefault(5000), configure =>
                 {
-                    configure.UseHttps();
+                    //configure.UseHttps();
                 });
             });
 
             var app = builder.Build();
-
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

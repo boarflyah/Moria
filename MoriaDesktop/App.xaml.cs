@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MoriaBaseServices.Services;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.Views.Base;
@@ -27,6 +28,7 @@ public partial class App : Application
                         services.AddScoped<SecondViewModel>();
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
+                        services.AddScoped<ApiRequestService>();
                         services.AddHttpClient();
                     })
                     .Build();
