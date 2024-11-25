@@ -1,13 +1,20 @@
-﻿using MoriaWebAPIServices.Services.Interfaces;
+﻿using MoriaModelsDo.Models.Contacts;
+using MoriaWebAPIServices.Services.Interfaces;
 
 namespace MoriaWebAPIServices.Services;
 public class TempUserService : IUserService
 {
-    public string LogIn(string username, string password)
+    public async Task<EmployeeDo> LogIn(string username, string password)
     {
         if (username.Equals("123") && password.Equals("abc"))
-            return "70054d2f-0c8e-4d82-bb0d-6ad3fe7b8f66";
+            return new()
+            {
+                Id = 50,
+                FirstName = "Jan",
+                LastName = "Nowak",
+                Username = "123",
+            };
         else
-            return string.Empty;
+            return null;
     }
 }

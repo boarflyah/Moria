@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
+using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -11,12 +13,14 @@ public class MainWindowViewModel : ViewModelBase
     #region DI properties
 
     readonly INavigationService _navigationService;
+    readonly IApiTokenService _tokenService;
 
     #endregion
 
-    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService) : base(logger)
+    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService) : base(logger)
     {
         _navigationService = navigationService;
+        _tokenService = tokenService;
 
         _navigationService.OnNavigated += _navigationService_OnNavigated;
 
@@ -175,7 +179,21 @@ public class MainWindowViewModel : ViewModelBase
 
     private void _navigationService_OnNavigated(object? sender, MoriaBaseServices.Args.OnNavigatedEventArgs e)
     {
+        if (e.Content is IViewModelContent content && content.GetViewModel() is ViewModelBase vmb)
+        {
+            vmb.OnReAuthorizationNeeded -= OnReAuthorizationNeeded;
+            vmb.OnReAuthorizationNeeded += OnReAuthorizationNeeded;
+        }
         GoBackCommand?.RaiseCanExecuteChanged();
+    }
+
+    private async void OnReAuthorizationNeeded(object? sender, Args.InvokeViewEventArgs e)
+    {
+        //TODO show new window or popup with username/password fields to login again
+        //or maybe password only with username control disabled
+        var employee = await _tokenService.GetUserWithToken("123", "abc");
+
+        e.CompletionSource.SetResult(employee != null && !string.IsNullOrWhiteSpace(employee.Token) && employee.ValidTo > DateTime.Now);
     }
 
     #endregion

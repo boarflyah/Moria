@@ -1,4 +1,4 @@
-﻿namespace MoriaModels.Models.EntityPersonel;
+﻿namespace MoriaModelsDo.Models.Contacts;
 
 /// <summary>
 /// Model for authentication token generating

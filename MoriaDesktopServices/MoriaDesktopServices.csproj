@@ -3,11 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MoriaBaseServices\MoriaBaseServices.csproj" />
+    <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
   </ItemGroup>
 
 </Project>

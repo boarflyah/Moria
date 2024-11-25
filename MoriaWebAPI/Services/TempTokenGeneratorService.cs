@@ -19,13 +19,13 @@ public class TempTokenGeneratorService : ITokenGeneratorService
         _ip = ip;
     }
 
-    public string GenerateJwtToken(string userId)
+    public string GenerateJwtToken(int userId)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes("SuperSecretKey123456789101112131415");
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[] { new Claim("id", userId) }),
+            Subject = new ClaimsIdentity(new[] { new Claim("id", userId.ToString()) }),
             Expires = DateTime.UtcNow.AddHours(8),
             Issuer = _ip,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

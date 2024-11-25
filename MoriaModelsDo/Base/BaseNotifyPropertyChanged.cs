@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MoriaModels.Base;
+namespace MoriaModelsDo.Base;
 public abstract class BaseNotifyPropertyChanged: INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -3,12 +3,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
     <None Remove="Images\back.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\home.png" />
@@ -41,13 +42,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MoriaDesktopServices\MoriaDesktopServices.csproj" />
-    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
+    <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Contacts\" />
   </ItemGroup>
 
 </Project>

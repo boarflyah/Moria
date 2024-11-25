@@ -1,7 +1,8 @@
-﻿namespace MoriaWebAPIServices.Services.Interfaces
+﻿using MoriaModelsDo.Models.Contacts;
+
+namespace MoriaWebAPIServices.Services.Interfaces;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        public string LogIn(string username, string password);
-    }
+    Task<EmployeeDo> LogIn(string username, string password);
 }

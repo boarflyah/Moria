@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices.Services;
-using MoriaDesktop.Commands;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
+using MoriaDesktopServices.Services.API;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Base;
 public class LoginViewModel : ViewModelBase
@@ -10,14 +12,17 @@ public class LoginViewModel : ViewModelBase
     #region services
 
     readonly INavigationService _navigationService;
-    readonly ApiRequestService _apiRequestService;
+    readonly IApiTokenService _tokenService;
+
+    readonly ApiTestService _testService;
 
     #endregion
 
-    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, ApiRequestService apiRequestService) : base(logger)
+    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, IApiTokenService tokenService, ApiTestService testService) : base(logger)
     {
         _navigationService = navigationService;
-        _apiRequestService = apiRequestService;
+        _tokenService = tokenService;
+        _testService = testService;
 
         LoginCommand = new(Login);
         TestOid = 10;
@@ -52,10 +57,23 @@ public class LoginViewModel : ViewModelBase
 
     async Task Login()
     {
-        var token = await _apiRequestService.Get("http", "192.168.0.59", 5000, WebAPIEndpointsProvider.GetTestPath, null);
+        var result = await ExecuteApiRequest(_testService.Get);
 
-        //await Task.Delay(2000);
-        //Navigate();
+        var employee = await ExecuteApiRequest(_tokenService.GetUserWithToken, "123", "abc");
+
+        //var employee = await ExecuteApiRequest(() =>
+        //{
+        //    return _tokenService.GetUserWithToken("123", "abc");
+        //});
+
+        //var token = await _tokenService.GetUserWithToken("123", "abc");
+
+        //var authorizationHeader = _apiRequestService.GetAuthorizationHeader(token.Token);
+        //var testGet = await _apiRequestService.Get("http", "192.168.0.59", 5000, WebAPIEndpointsProvider.GetTestPath, new()
+        //{
+        //    { authorizationHeader.Key, authorizationHeader.Value }
+        //});
+
     }
 
     #endregion

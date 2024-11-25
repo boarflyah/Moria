@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoriaBaseServices.Services;
-using MoriaModels.Models.EntityPersonel;
+using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces;
 
@@ -22,15 +22,19 @@ public class TokenController : ControllerBase
     }
 
     [HttpPost(WebAPIEndpointsProvider.PostTokenPath)]
-    public IActionResult Post(UserCredentials credentials)
+    [Produces<EmployeeDo>]
+    public async Task<IActionResult> Post(UserCredentials credentials)
     {
         try
         {
-            var userId = _userService.LogIn(credentials.Username, credentials.Password);
-            if (string.IsNullOrWhiteSpace(userId))
+            var user = await _userService.LogIn(credentials.Username, credentials.Password);
+            if (user == null)
                 return Unauthorized();
 
-            return Ok(_tokenGeneratorService.GenerateJwtToken(userId));
+            user.Token = _tokenGeneratorService.GenerateJwtToken(user.Id);
+            user.ValidTo = DateTime.Now.AddHours(8);
+
+            return Ok(user);
         }
         catch (Exception ex)
         {
@@ -50,7 +54,7 @@ public class TokenController : ControllerBase
     {
         try
         {
-            var token = _tokenGeneratorService.GenerateJwtToken("123");
+            var token = _tokenGeneratorService.GenerateJwtToken(42);
 
             return Ok(new { token });
         }

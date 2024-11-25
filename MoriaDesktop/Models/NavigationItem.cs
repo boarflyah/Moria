@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using MoriaDesktop.ViewModels.Base;
-using MoriaModels.Base;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.Models;
 
