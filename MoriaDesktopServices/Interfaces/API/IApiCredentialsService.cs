@@ -9,6 +9,4 @@ public interface IApiCredentialsService
     string GetHost();
     int GetPortNumber();
     string GetCertificateThumbprint();
-    string GetToken(string username);
-    DateTime GetTokenValidTo(string username);
 }

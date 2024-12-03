@@ -79,9 +79,6 @@ public class MoriaApiService : IApiService
 
     public void AddAuthorizationHeader(ref Dictionary<string, string> headers, string username)
     {
-        throw new MoriaAppException(MoriaAppExceptionReason.AuthorizationTokenNotAvailable, "Authorization token not available or expired");
-
-
         if (headers == null)
             headers = new();
 

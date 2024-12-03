@@ -27,6 +27,7 @@ public partial class App : Application
                     {
                         services.AddSingleton<MainWindow>();
                         services.AddSingleton<MainWindowViewModel>();
+                        services.AddSingleton<AppStateService>();
                         services.AddScoped<LoginView>();
                         services.AddScoped<LoginViewModel>();
                         services.AddScoped<SecondView>();
@@ -39,6 +40,7 @@ public partial class App : Application
                         services.AddScoped<IApiTokenService, ApiTokenService>();
                         services.AddScoped<ApiTestService>();
                         services.AddScoped<ITokensManager, TokensManager>();
+                        services.AddScoped<IApiEmployeeService, ApiEmployeeService>();
                         services.AddHttpClient();
                         services.AddHttpClient(ApiRequestService.HttpsApiClientName)
                         .ConfigurePrimaryHttpMessageHandler(c =>

@@ -27,19 +27,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
         <!--#region Navigation panel-->
 
-        <Grid Background="#F8F8F8"
-              Grid.RowSpan="2"
-              Opacity="1"/>
-
-
+        <Grid Background="{StaticResource WindowDefaultBackgroundBrush}"
+              Grid.RowSpan="3"
+              Opacity="{StaticResource MainWindowOpacityValue}"/>
 
         <Grid x:Name="MenuGrid"
-              Grid.RowSpan="2">
+              Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -48,9 +47,9 @@
 
             <!--#region Titlebar-->
 
-            <Grid Height="50"
+            <Grid Height="55"
                   VerticalAlignment="Top"
-                  Margin="0, 5, 0, 0">
+                  Margin="0, 0, 0, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -67,7 +66,7 @@
                 <TextBlock x:Name="TitleTextBlock"
                            Grid.Column ="1" 
                            Text="MoriaDesktop"
-                           Foreground="#33372C"
+                           Foreground="{StaticResource DefaultForeground}"
                            FontSize="20"
                            Margin="0 0 5 0"
                            FontWeight="SemiBold"
@@ -79,6 +78,7 @@
                         BorderBrush="LightGray"
                         Margin="10 0 0 0"
                         Width="35"
+                        Height="35"
                         Click="ExpandButton_Click"
                         Background="{StaticResource MainWindowAccentBrush}">
                     <Button.Content>
@@ -95,6 +95,7 @@
 
             <TreeView x:Name="NavigationTreeView"
                       Grid.Row="1"
+                      Grid.RowSpan="2"
                       ItemsSource="{Binding Navigation}"
                       Background="Transparent" 
                       BorderThickness="0"
@@ -174,50 +175,6 @@
                 </TreeView.ItemContainerStyle>-->
             </TreeView>
 
-            <!--<TreeView x:Name="treeView" Background="Transparent" BorderThickness="0" Margin="0 20 0 0">
-                <HierarchicalDataTemplate DataType="{x:Type models:NavigationItem}" ItemsSource="{Binding Items, Mode=OneWay}">
-                    <TextBlock Text="{Binding Title}" />
-                </HierarchicalDataTemplate>
-            </TreeView>-->
-
-            <!--<Menu Height="Auto" 
-                  Background="Transparent"
-                  Margin="0, 20, 0, 0">
-
-                -->
-            <!--<Menu.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical"/>
-                        
-                    </ItemsPanelTemplate>
-                </Menu.ItemsPanel>-->
-            <!--
-
-                <MenuItem Header="Home">
-                    <MenuItem Header="Test">
-                        -->
-            <!--<MenuItem.HeaderTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="Home" 
-                                           Foreground="#33372C"
-                                           VerticalAlignment="Center"
-                                           FontWeight="Medium"
-                                           FontSize="15"/>
-                            </Grid>
-                        </DataTemplate>
-                    </MenuItem.HeaderTemplate>-->
-            <!--Template="{StaticResource Menu_Template}"-->
-            <!--
-                        <MenuItem.Icon>
-                            <Image Source="/MoriaDesktop;component/Images/homeColor.png"
-                               Stretch="None"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-
-            </Menu>-->
-
             <!--#endregion-->
 
         </Grid>
@@ -225,9 +182,9 @@
         <!--#endregion-->
 
         <!--#region top ribbon section-->
-        
+
         <Grid Background="{StaticResource WindowDefaultBackgroundBrush}"
-              Opacity="0.8"
+              Opacity="{StaticResource MainWindowOpacityValue}"
               Grid.Column="1"
               Margin="0 5 0 0"
               Height="55"/>
@@ -235,88 +192,170 @@
                 Height="35"
                 HorizontalAlignment="Stretch"
                 Background="{StaticResource MainWindowAccentBrush}"/>
-        <Button x:Name="BackButton" 
-                Grid.Column="1"
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="160"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackButton" 
                 HorizontalAlignment="Left"
                 Command="{Binding GoBackCommand, Mode=OneWay}"
                 Style="{StaticResource MainWindowTopRibbonButtonStyle}"
                 Visibility="{Binding IsEnabled, ElementName=BackButton, Converter={StaticResource bool2vis}}">
-            <Button.Content>
-                <Image Source="Images/back.png" 
+                <Button.Content>
+                    <Image Source="Images/back.png" 
                        Stretch="Uniform"
                        Width="15"/>
-            </Button.Content>
-        </Button>
-        <StackPanel Grid.Column="1"
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.ColumnSpan="3"
+                       Margin="0 0 0 0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding PageTitle, Mode=OneWay}"
+                       FontSize="20"/>
+            <StackPanel Grid.Column="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0 0 7 0">
-            <Button x:Name="HideButton"
+                <Button x:Name="HideButton"
                     Style="{StaticResource MainWindowTopRibbonButtonStyle}"
                     Click="HideButton_Click"
                     Margin="0 0 3 0">
-                <Button.Content>
-                    <Image Source="Images/windowHide.png" 
+                    <Button.Content>
+                        <Image Source="Images/windowHide.png" 
                            Stretch="Uniform"
                            Width="15"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="MaximizeButton"
+                    </Button.Content>
+                </Button>
+                <Button x:Name="MaximizeButton"
                     Style="{StaticResource MainWindowTopRibbonButtonStyle}"
                     Command="{Binding SetFullScreenCommand, Mode=OneWay}"
                     Visibility="{Binding IsFullScreen, Mode=OneWay, Converter={StaticResource bool2visinv}}"
                     Click="MaximizeButton_Click"
                     Margin="0 0 3 0">
-                <Button.Content>
-                    <Image Source="Images/maximize.png" 
+                    <Button.Content>
+                        <Image Source="Images/maximize.png" 
                            Stretch="Uniform"
                            Width="15"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="MinimizeButton"
+                    </Button.Content>
+                </Button>
+                <Button x:Name="MinimizeButton"
                     Style="{StaticResource MainWindowTopRibbonButtonStyle}"
                     Command="{Binding SetWindowCommand, Mode=OneWay}"
                     Visibility="{Binding IsFullScreen, Mode=OneWay, Converter={StaticResource bool2vis}}"
                     Click="MinimizeButton_Click"
                     Margin="0 0 3 0">
-                <Button.Content>
-                    <Image Source="Images/minimize.png" 
+                    <Button.Content>
+                        <Image Source="Images/minimize.png" 
                            Stretch="Uniform"
                            Width="15"/>
-                </Button.Content>
-            </Button>
-            <Button x:Name="CloseButton"
+                    </Button.Content>
+                </Button>
+                <Button x:Name="CloseButton"
                     Style="{StaticResource MainWindowTopRibbonButtonStyle}"
                     Command="{Binding CloseAppCommand, Mode=OneWay}"
                     Click="CloseButton_Click"
                     Margin="0 0 3 0">
-                <Button.Content>
-                    <Image Source="Images/close.png" 
+                    <Button.Content>
+                        <Image Source="Images/close.png" 
                            Stretch="Uniform"
                            Width="15"/>
-                </Button.Content>
-            </Button>
-        </StackPanel>
-        
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
+
         <!--#endregion-->
-        
+
         <!--#region content section-->
 
+        <!--<Border Grid.Column="1" 
+                Grid.Row="1"
+                Background="{StaticResource WindowDefaultBackgroundBrush}"
+                Opacity="1"
+                Margin="5 5 10 5"
+                Padding="10"
+                CornerRadius="10">-->
         <Border Grid.Column="1" 
                 Grid.Row="1"
                 Background="{StaticResource WindowDefaultBackgroundBrush}"
                 Opacity="1"
-                Margin="5 5 10 10"
-                Padding="10"
-                CornerRadius="10">
-            <Border.Effect>
+                Margin="0"
+                Padding="0"
+                BorderBrush="Black"
+                BorderThickness="0.3 0.3 0 0.3"
+                CornerRadius="5 0 0 5">
+            <!--<Border.Effect>
                 <DropShadowEffect BlurRadius="10" Direction="225" Color="LightGray" Opacity="0.7" ShadowDepth="10"/>
-            </Border.Effect>
+            </Border.Effect>-->
             <Frame x:Name="NavigationFrame" Grid.Column="1"
                    NavigationUIVisibility="Hidden"/>
         </Border>
-        
+
         <!--#endregion-->
-        
+
+        <!--#region status bar-->
+
+        <StatusBar Grid.Column="1"
+                   Grid.Row="2"
+                   Height="30"
+                   Background="{StaticResource WindowDefaultBackgroundBrush}"
+                   Opacity="{StaticResource MainWindowOpacityValue}"
+                   Margin="0 0 0 5"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Bottom">
+            <StatusBar.Resources>
+                <converters:SystemInfoStatusToBrushConverter x:Key="status2brush"/>
+            </StatusBar.Resources>
+            <StatusBarItem HorizontalAlignment="Left">
+                <TextBlock Text="Użytkownik: Marmir"
+                               FontWeight="Light"
+                               Margin="10 0 10 0"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Stretch"
+                           HorizontalContentAlignment="Stretch">
+                <Grid VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch">
+                    <Grid Visibility="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource bool2vis}}">
+                        <TextBlock Text="{Binding LoadingText, Mode=OneWay}"
+                                   FontWeight="Light"
+                                   HorizontalAlignment="Right"
+                                   Margin="10 0 10 0"/>
+                    </Grid>
+                    <Grid Background="{Binding InfoStatus, Mode=OneWay, Converter={StaticResource status2brush}}"
+                          Visibility="{Binding IsInfoVisible, Mode=OneWay, Converter={StaticResource bool2vis}}"
+                          HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding InfoText, Mode=OneWay}"
+                               FontWeight="Light"
+                                   HorizontalAlignment="Right"
+                               Margin="10 0 5 0"/>
+                        <Button x:Name="CloseInfoButton" 
+                            Style="{StaticResource MainWindowTopRibbonButtonStyle}" 
+                            Command="{Binding CloseInfoCommand, Mode=OneWay}"
+                            Grid.Column="1"
+                            Height="20"
+                            Width="20"
+                            Margin="0 0 5 0">
+                            <Button.Content>
+                                <Image Source="Images/close.png" 
+                                   Stretch="Uniform"
+                                   Width="10"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </StatusBarItem>
+        </StatusBar>
+
+
+
+        <!--#endregion-->
+
     </Grid>
 </Window>

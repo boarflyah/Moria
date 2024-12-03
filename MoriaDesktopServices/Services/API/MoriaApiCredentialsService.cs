@@ -18,19 +18,5 @@ public class MoriaApiCredentialsService : IApiCredentialsService
     public string GetHost() => _configuration.GetValue<string>("MoriaApiHost") ?? "";
     public int GetPortNumber() => _configuration.GetValue<int>("MoriaPortNumber");
     public string GetScheme() => _configuration.GetValue<string>("MoriaApiScheme") ?? "";
-    /// <summary>
-    /// just for now certificate thumbprint will be stored in configuration file
-    /// </summary>
-    /// <returns></returns>
     public string GetCertificateThumbprint() => _configuration.GetValue<string>("MoriaApiCertificate") ?? "";
-    /// <summary>
-    /// just for now token info will be stored in configuration file
-    /// </summary>
-    /// <returns></returns>
-    public string GetToken(string username) => _configuration.GetValue<string>("MoriaApiToken") ?? "";
-    /// <summary>
-    /// just for now token info will be stored in configuration file
-    /// </summary>
-    /// <returns></returns>
-    public DateTime GetTokenValidTo(string username) => _configuration.GetValue<DateTime>("MoriaTokenValidTo");
 }

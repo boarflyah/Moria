@@ -6,7 +6,10 @@ public class InvokeViewEventArgs: EventArgs
         ReturnedValues = new();
     }
 
-    public TaskCompletionSource<bool> CompletionSource
+    /// <summary>
+    /// result: true - accepted, null - cancelled, 
+    /// </summary>
+    public TaskCompletionSource<bool?> CompletionSource
     {
         get; set;
     }

@@ -24,7 +24,7 @@ public class Program
 
             //logger configuration
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                //.MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File(".\\Logs\\log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();

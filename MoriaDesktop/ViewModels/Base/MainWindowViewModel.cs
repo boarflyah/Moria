@@ -2,25 +2,30 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
+using MoriaDesktop.Models.Enums;
+using MoriaDesktop.Services;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.ViewModels.Base;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : BaseNotifyPropertyChanged
 {
     #region DI properties
 
     readonly INavigationService _navigationService;
     readonly IApiTokenService _tokenService;
+    readonly ILogger<MainWindowViewModel> _logger;
 
     #endregion
 
-    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService) : base(logger)
+    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService) : base()
     {
         _navigationService = navigationService;
         _tokenService = tokenService;
+        _logger = logger;
 
         _navigationService.OnNavigated += _navigationService_OnNavigated;
 
@@ -28,6 +33,7 @@ public class MainWindowViewModel : ViewModelBase
         SetFullScreenCommand = new(SetFullScreen, CanSetFullScreen);
         SetWindowCommand = new(SetWindow, CanSetWindow);
         CloseAppCommand = new(CloseApp, CanCloseApp);
+        CloseInfoCommand = new(CloseInfo);
 
         IsFullScreen = true;
 
@@ -74,6 +80,17 @@ public class MainWindowViewModel : ViewModelBase
 
     public ObservableCollection<NavigationItem> Navigation { get; set; }
 
+    string _PageTitle;
+    public string PageTitle
+    {
+        get => _PageTitle;
+        set
+        {
+            _PageTitle = value;
+            RaisePropertyChanged(nameof(PageTitle), value);
+        }
+    }
+
     NavigationItem _SelectedItem;
     public NavigationItem SelectedItem
     {
@@ -100,6 +117,69 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    #region infobar
+
+    bool _IsInfoVisible;
+    public bool IsInfoVisible
+    {
+        get => _IsInfoVisible;
+        set
+        {
+            _IsInfoVisible = value;
+            RaisePropertyChanged(nameof(IsInfoVisible), value);
+        }
+    }
+
+    SystemInfoStatus _InfoStatus;
+    public SystemInfoStatus InfoStatus
+    {
+        get => _InfoStatus;
+        set
+        {
+            _InfoStatus = value;
+            RaisePropertyChanged(nameof(InfoStatus), value);
+        }
+    }
+
+    string _InfoText;
+    public string InfoText
+    {
+        get => _InfoText;
+        set
+        {
+            _InfoText = value;
+            RaisePropertyChanged(nameof(InfoText), value);
+        }
+    }
+
+    #endregion
+
+    #region loading bar
+
+    bool _IsLoadingVisible;
+    public bool IsLoadingVisible
+    {
+        get => _IsLoadingVisible;
+        set
+        {
+            _IsLoadingVisible = value;
+            RaisePropertyChanged(nameof(IsLoadingVisible), value);
+        }
+    }
+
+    string _LoadingText;
+    public string LoadingText
+    {
+        get => _LoadingText;
+        set
+        {
+            _LoadingText = value;
+            RaisePropertyChanged(nameof(LoadingText), value);
+        }
+    }
+
+    #endregion
+
     #endregion
 
     #region commands
@@ -111,6 +191,11 @@ public class MainWindowViewModel : ViewModelBase
     public BaseCommand SetWindowCommand  { get; init; }
 
     public BaseCommand CloseAppCommand { get; init; }
+    public BaseCommand CloseInfoCommand
+    {
+        get;
+        init;
+    }
 
     #endregion
 
@@ -144,6 +229,11 @@ public class MainWindowViewModel : ViewModelBase
 
     bool CanCloseApp() => true;
 
+    void CloseInfo()
+    {
+        SetupInfo();
+    }
+
     #endregion
 
     #region methods
@@ -173,6 +263,19 @@ public class MainWindowViewModel : ViewModelBase
         _navigationService.NavigateTo<LoginViewModel>(true);
     }
 
+    public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)
+    {
+        InfoStatus = status;
+        InfoText = text;
+        IsInfoVisible = isVisible;
+    }
+
+    public void SetupLoading(bool isVisible = false, string text = "Wczytywanie...")
+    {
+        IsLoadingVisible = isVisible;
+        LoadingText = text;
+    }
+
     #endregion
 
     #region events
@@ -181,14 +284,19 @@ public class MainWindowViewModel : ViewModelBase
     {
         if (e.Content is IViewModelContent content && content.GetViewModel() is ViewModelBase vmb)
         {
+            PageTitle = vmb.Title;
             vmb.OnReAuthorizationNeeded -= OnReAuthorizationNeeded;
             vmb.OnReAuthorizationNeeded += OnReAuthorizationNeeded;
         }
+        SetupInfo();
+        SetupLoading();
         GoBackCommand?.RaiseCanExecuteChanged();
     }
 
     private async void OnReAuthorizationNeeded(object? sender, Args.InvokeViewEventArgs e)
     {
+        //when logging in cancelled
+        //e.CompletionSource.SetResult(null)
         //TODO show new window or popup with username/password fields to login again
         //or maybe password only with username control disabled
         var employee = await _tokenService.GetUserWithToken("123", "abc");
