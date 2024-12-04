@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoriaDesktop"
         xmlns:models="clr-namespace:MoriaDesktop.Models"
+        xmlns:lottie="clr-namespace:LottieSharp.WPF;assembly=LottieSharp"
+        xmlns:transforms="clr-namespace:LottieSharp.WPF.Transforms;assembly=LottieSharp"
         xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"
         mc:Ignorable="d" 
         Height="450" Width="800"
@@ -20,6 +22,7 @@
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
         <converters:BoolToVisibilityInvertedConverter x:Key="bool2visinv"/>
+        <converters:InvertBoolConverter x:Key="invbool"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -287,11 +290,32 @@
                 BorderBrush="Black"
                 BorderThickness="0.3 0.3 0 0.3"
                 CornerRadius="5 0 0 5">
+            <Grid>
             <!--<Border.Effect>
                 <DropShadowEffect BlurRadius="10" Direction="225" Color="LightGray" Opacity="0.7" ShadowDepth="10"/>
             </Border.Effect>-->
-            <Frame x:Name="NavigationFrame" Grid.Column="1"
+            <Frame x:Name="NavigationFrame"
+                   IsEnabled="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource invbool}}"
                    NavigationUIVisibility="Hidden"/>
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource bool2vis}}">
+                    <lottie:LottieAnimationView Width="60"
+                                                Height="60"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                AutoPlay="True"
+                                                ResourcePath="pack://application:,,,/Images/loading2.json"
+                                                RepeatCount="-1">
+
+                    </lottie:LottieAnimationView>
+                    <TextBlock Text="{Binding LoadingText, Mode=OneWay}"
+                               FontWeight="Regular"
+                               HorizontalAlignment="Center"
+                               Margin="0 10 0 0"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!--#endregion-->
@@ -318,12 +342,12 @@
                            HorizontalContentAlignment="Stretch">
                 <Grid VerticalAlignment="Stretch"
                       HorizontalAlignment="Stretch">
-                    <Grid Visibility="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource bool2vis}}">
+                    <!--<Grid Visibility="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource bool2vis}}">
                         <TextBlock Text="{Binding LoadingText, Mode=OneWay}"
                                    FontWeight="Light"
                                    HorizontalAlignment="Right"
                                    Margin="10 0 10 0"/>
-                    </Grid>
+                    </Grid>-->
                     <Grid Background="{Binding InfoStatus, Mode=OneWay, Converter={StaticResource status2brush}}"
                           Visibility="{Binding IsInfoVisible, Mode=OneWay, Converter={StaticResource bool2vis}}"
                           HorizontalAlignment="Stretch">

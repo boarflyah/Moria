@@ -48,18 +48,7 @@ public class LoginViewModel : ViewModelBase
         _appStateService.SetupLoading(true);
         try
         {
-            employee = await _employeeService.Login(username, password);
-        }
-        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.AuthorizationTokenNotAvailable)
-        {
-            try
-            {
-                employee = await _tokenService.GetUserWithToken(username, password);
-            }
-            catch (Exception innerEx)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, innerEx.Message, true);
-            }
+            employee = await _tokenService.GetUserWithToken(username, password);
         }
         catch (Exception ex)
         {

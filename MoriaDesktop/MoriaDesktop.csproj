@@ -14,6 +14,8 @@
     <None Remove="Images\close.png" />
     <None Remove="Images\home.png" />
     <None Remove="Images\homeColor.png" />
+    <None Remove="Images\loading.json" />
+    <None Remove="Images\loading2.json" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\menu.png" />
     <None Remove="Images\minimize.png" />
@@ -21,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\loading.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\loading2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Images\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -49,6 +57,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="LottieSharp" Version="2.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
 
