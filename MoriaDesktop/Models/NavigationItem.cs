@@ -4,7 +4,7 @@ using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.Models;
 
-public class NavigationItem: BaseNotifyPropertyChanged
+public class NavigationItem : BaseNotifyPropertyChanged
 {
     public NavigationItem()
     {
@@ -33,6 +33,17 @@ public class NavigationItem: BaseNotifyPropertyChanged
         }
     }
 
+    bool _IsExpanded;
+    public bool IsExpanded
+    {
+        get => _IsExpanded;
+        set
+        {
+            _IsExpanded = value;
+            RaisePropertyChanged(nameof(IsExpanded), value);
+        }
+    }
+
     public Type ViewModelType
     {
         get;
@@ -45,5 +56,8 @@ public class NavigationItem: BaseNotifyPropertyChanged
         set;
     }
 
-    public ObservableCollection<NavigationItem> Items { get; set; }
+    public ObservableCollection<NavigationItem> Items
+    {
+        get; set;
+    }
 }

@@ -32,7 +32,7 @@ public class Program
             builder.Logging.AddSerilog(Log.Logger);
 
             // Add services to the container.
-            builder.Services.AddScoped<IUserService, TempUserService>();
+            builder.Services.AddScoped<IEmployeeService, TempEmployeeService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);

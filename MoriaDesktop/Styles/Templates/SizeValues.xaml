@@ -3,4 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:Double x:Key="MainWindowOpacityValue">1</system:Double>
     <system:Double x:Key="DefaultFontSize">15</system:Double>
+    <system:Double x:Key="DefaultDataGridCellFontSize">13</system:Double>
+    <system:Double x:Key="DefaultDataGridHeaderFontSize">11</system:Double>
 </ResourceDictionary>

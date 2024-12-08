@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaWebAPIServices", "Mori
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaDesktopServices", "MoriaDesktopServices\MoriaDesktopServices.csproj", "{722DE9E0-CAFC-468F-B183-A57891DCAC88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaModelsDo", "MoriaModelsDo\MoriaModelsDo.csproj", "{654F372F-DB0A-47F8-8F95-D1DA65D682AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaModelsDo", "MoriaModelsDo\MoriaModelsDo.csproj", "{654F372F-DB0A-47F8-8F95-D1DA65D682AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

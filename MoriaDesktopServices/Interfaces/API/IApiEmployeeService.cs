@@ -8,4 +8,6 @@ namespace MoriaDesktopServices.Interfaces.API;
 public interface IApiEmployeeService
 {
     Task<EmployeeDo> Login(string username, string password);
+
+    Task<IEnumerable<EmployeeDo>> GetEmployees(string username);
 }

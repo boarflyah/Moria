@@ -7,7 +7,9 @@ using Microsoft.Extensions.Hosting;
 using MoriaBaseServices.Services;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktop.Views.Base;
+using MoriaDesktop.Views.Contacts;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services;
@@ -32,6 +34,8 @@ public partial class App : Application
                         services.AddScoped<LoginViewModel>();
                         services.AddScoped<SecondView>();
                         services.AddScoped<SecondViewModel>();
+                        services.AddScoped<EmployeeListView>();
+                        services.AddScoped<EmployeeListViewModel>();
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddScoped<ApiRequestService>();
@@ -73,6 +77,9 @@ public partial class App : Application
         var wnd = AppHost.Services.GetRequiredService<MainWindow>();
         var navigationService = AppHost.Services.GetRequiredService<INavigationService>();
         navigationService.SetFrame(wnd.NavigationFrame);
+
+        var appStateService = AppHost.Services.GetRequiredService<AppStateService>();
+        appStateService.SetMainViewModel(AppHost.Services.GetRequiredService<MainWindowViewModel>());
 
         wnd.Title = "MoriaDesktop";
         wnd.Resources.MergedDictionaries.Add(Application.Current.Resources);

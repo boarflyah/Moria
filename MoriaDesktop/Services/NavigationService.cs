@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Navigation;
 using Microsoft.Extensions.DependencyInjection;
 using MoriaBaseServices.Args;
 using MoriaDesktopServices.Interfaces;
@@ -62,11 +63,13 @@ public class NavigationService : INavigationService
     {
         if (sender is Frame frame)
         {
-            OnNavigated?.Invoke(this, new OnNavigatedEventArgs(e.Content, e.ExtraData));
             var clearNavigation = (bool)frame.Tag;
-            if (clearNavigation)
-                ;
-        if (frame.Content is Page page && page.DataContext is INavigationAware navigationAware)
+            if (clearNavigation && frame.NavigationService != null)
+                while (frame.NavigationService.RemoveBackEntry() != null)
+                {
+                }
+            OnNavigated?.Invoke(this, new OnNavigatedEventArgs(e.Content, e.ExtraData));
+            if (frame.Content is Page page && page.DataContext is INavigationAware navigationAware)
                 navigationAware.OnNavigatedTo(e.ExtraData);
         }
     }

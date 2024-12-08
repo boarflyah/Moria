@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Models.Contacts;
@@ -63,8 +64,9 @@ public class LoginViewModel : ViewModelBase
 
         if (employee != null)
         {
+            _appStateService.OnLoggedIn(employee);
+            _navigationService.NavigateTo<EmployeeListViewModel>(true);
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zalogowano", true);
-            _navigationService.NavigateTo<SecondViewModel>(true);
             //TODO handle correct login and navigate to default view
         }
     }

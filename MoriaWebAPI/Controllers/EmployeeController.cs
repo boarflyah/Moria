@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using MoriaBaseServices;
 using MoriaBaseServices.Services;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPI.Services.Interfaces;
@@ -12,12 +14,12 @@ namespace MoriaWebAPI.Controllers;
 [Route("")]
 public class EmployeeController: ControllerBase
 {
-    readonly IUserService _userService;
+    readonly IEmployeeService _employeeService;
     readonly ILogger<EmployeeController> _logger;
 
-    public EmployeeController(IUserService userService)
+    public EmployeeController(IEmployeeService employeeService)
     {
-        _userService = userService;
+        _employeeService = employeeService;
     }
 
     [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]
@@ -27,7 +29,7 @@ public class EmployeeController: ControllerBase
     {
         try
         {
-            var user = await _userService.LogIn(credentials.Username, credentials.Password);
+            var user = await _employeeService.LogIn(credentials.Username, credentials.Password);
             if (user == null)
                 return Unauthorized();
 
@@ -39,5 +41,29 @@ public class EmployeeController: ControllerBase
             return StatusCode(501, ex.Message);
         }
 
+    }
+
+    [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
+    [Authorize]
+    [Produces<IEnumerable<EmployeeDo>>]
+    public async Task<IActionResult> GetEmployees()
+    {
+        try
+        {
+            var user = await _employeeService.GetEmployees();
+            if (user == null)
+                return Unauthorized();
+
+            return Ok(user);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(Login)}");
+            return StatusCode(501, ex.Message);
+        }
     }
 }

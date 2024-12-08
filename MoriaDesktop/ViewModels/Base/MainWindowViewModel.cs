@@ -4,6 +4,7 @@ using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
 using MoriaDesktop.Models.Enums;
 using MoriaDesktop.Services;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
@@ -17,14 +18,16 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     readonly INavigationService _navigationService;
     readonly IApiTokenService _tokenService;
+    readonly AppStateService _appStateService;
     readonly ILogger<MainWindowViewModel> _logger;
 
     #endregion
 
-    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService) : base()
+    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService, AppStateService appStateService) : base()
     {
         _navigationService = navigationService;
         _tokenService = tokenService;
+        _appStateService = appStateService;
         _logger = logger;
 
         _navigationService.OnNavigated += _navigationService_OnNavigated;
@@ -34,6 +37,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         SetWindowCommand = new(SetWindow, CanSetWindow);
         CloseAppCommand = new(CloseApp, CanCloseApp);
         CloseInfoCommand = new(CloseInfo);
+        LogoutCommand = new(Logout);
 
         IsFullScreen = true;
 
@@ -66,7 +70,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         node1.Items.Add(new()
         {
-            Title = "Pracownicy"
+            Title = "Pracownicy",
+            ViewModelType = typeof(EmployeeListViewModel),
         });
         node1.Items.Add(new()
         {
@@ -114,6 +119,28 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             SetFullScreenCommand?.RaiseCanExecuteChanged();
             SetWindowCommand?.RaiseCanExecuteChanged();
             RaisePropertyChanged(nameof(IsFullScreen), value);
+        }
+    }
+
+    bool _IsLoggedIn;
+    public bool IsLoggedIn
+    {
+        get => _IsLoggedIn;
+        set
+        {
+            _IsLoggedIn = value;
+            RaisePropertyChanged(nameof(IsLoggedIn), value);
+        }
+    }
+
+    string _Username;
+    public string Username
+    {
+        get => _Username;
+        set
+        {
+            _Username = value;
+            RaisePropertyChanged(nameof(Username), value);
         }
     }
 
@@ -185,17 +212,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     #region commands
 
     public BaseCommand GoBackCommand { get; init; }
-
     public BaseCommand SetFullScreenCommand { get; init; }
-
     public BaseCommand SetWindowCommand  { get; init; }
-
     public BaseCommand CloseAppCommand { get; init; }
-    public BaseCommand CloseInfoCommand
-    {
-        get;
-        init;
-    }
+    public BaseCommand CloseInfoCommand { get; init; }
+    public BaseCommand LogoutCommand { get; init; }
 
     #endregion
 
@@ -207,6 +228,14 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     }
 
     bool CanGoBack() => _navigationService.CanGoBack;
+
+    void Logout()
+    {
+        //TODO ask for confirmation in dialog
+        _appStateService.OnLoggingOut();
+        _navigationService.NavigateTo<LoginViewModel>(true);
+        SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
+    }
 
     void SetFullScreen()
     {
@@ -287,6 +316,14 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             PageTitle = vmb.Title;
             vmb.OnReAuthorizationNeeded -= OnReAuthorizationNeeded;
             vmb.OnReAuthorizationNeeded += OnReAuthorizationNeeded;
+
+            NavigationItem mainNode = null;
+            var navItem = GetCurrentNavigationItem(vmb.GetType(), ref mainNode);
+            if (navItem != null)
+            {
+                mainNode.IsExpanded = true;
+                SelectedItem = navItem;
+            }
         }
         SetupInfo();
         SetupLoading();
@@ -302,6 +339,15 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         var employee = await _tokenService.GetUserWithToken("123", "abc");
 
         e.CompletionSource.SetResult(employee != null && !string.IsNullOrWhiteSpace(employee.Token) && employee.ValidTo > DateTime.Now);
+    }
+
+    NavigationItem GetCurrentNavigationItem(Type viewModelType, ref NavigationItem mainNode)
+    {
+        mainNode = Navigation.FirstOrDefault(x => x.Items.Any(y => y.ViewModelType == viewModelType));
+        if (mainNode != null)
+            return mainNode.Items.First(x => x.ViewModelType == viewModelType);
+
+        return null;
     }
 
     #endregion

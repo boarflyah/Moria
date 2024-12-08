@@ -11,10 +11,10 @@ namespace MoriaWebAPI.Controllers;
 public class TokenController : ControllerBase
 {
     readonly ITokenGeneratorService _tokenGeneratorService;
-    readonly IUserService _userService;
+    readonly IEmployeeService _userService;
     readonly ILogger<TokenController> _logger;
 
-    public TokenController(ITokenGeneratorService tokenGeneratorService, IUserService userService, ILogger<TokenController> logger)
+    public TokenController(ITokenGeneratorService tokenGeneratorService, IEmployeeService userService, ILogger<TokenController> logger)
     {
         _logger = logger;
         _tokenGeneratorService = tokenGeneratorService;

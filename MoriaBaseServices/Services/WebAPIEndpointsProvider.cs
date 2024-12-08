@@ -32,6 +32,8 @@ public class WebAPIEndpointsProvider
     /// </summary>
     public const string PostLoginPath = $"{Employee}/login";
 
+    public const string GetEmployeesPath = $"{Employee}";
+
     #endregion
 
 #if DEBUG
