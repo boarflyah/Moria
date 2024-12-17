@@ -25,7 +25,7 @@ public partial class MainWindow : Window
 
     private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
     {
-        (DataContext as MainWindowViewModel)!.OnNavigationSelectionChanged(e.NewValue);
+        //(DataContext as MainWindowViewModel)!.OnNavigationSelectionChanged(e.NewValue);
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)

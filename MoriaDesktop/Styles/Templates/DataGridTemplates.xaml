@@ -4,7 +4,7 @@
     <Style TargetType="DataGrid">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="3"/>
-        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="IsReadOnly" Value="False"/>
         <Setter Property="RowHeaderWidth" Value="15"/>
         <Setter Property="SelectionUnit" Value="CellOrRowHeader"/>
         <Setter Property="MinRowHeight" Value="30"/>
@@ -30,6 +30,14 @@
     <Style TargetType="DataGridRow">
         <Setter Property="FontSize" Value="{StaticResource DefaultDataGridCellFontSize}"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+    </Style>
+
+    <Style TargetType="DataGridCell">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

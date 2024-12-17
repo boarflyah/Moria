@@ -36,7 +36,9 @@ public class TempEmployeeService : IEmployeeService
             LastName = "Kowalski",
             PhoneNumber = "32643253",
             Username = "KKO",
+            IsLocked = true
         });
+        ;
         result.Add(new()
         {
             Id = 1,

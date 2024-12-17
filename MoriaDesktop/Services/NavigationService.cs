@@ -43,9 +43,9 @@ public class NavigationService : INavigationService
         }
         return false;
     }
-    public void NavigateTo<TViewModel>(bool clearNavigation, params object[] parameters)
+    public void NavigateTo(Type viewModelType, bool clearNavigation, params object[] parameters)
     {
-        Type viewType = _pageService.GetViewType<TViewModel>();
+        Type viewType = _pageService.GetViewType(viewModelType);
         if (viewType == null)
             throw new ArgumentException($"View not registered in PageService");
 

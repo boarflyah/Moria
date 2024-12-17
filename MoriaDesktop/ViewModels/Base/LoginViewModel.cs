@@ -65,7 +65,7 @@ public class LoginViewModel : ViewModelBase
         if (employee != null)
         {
             _appStateService.OnLoggedIn(employee);
-            _navigationService.NavigateTo<EmployeeListViewModel>(true);
+            _navigationService.NavigateTo(typeof(EmployeeListViewModel), true);
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zalogowano", true);
             //TODO handle correct login and navigate to default view
         }

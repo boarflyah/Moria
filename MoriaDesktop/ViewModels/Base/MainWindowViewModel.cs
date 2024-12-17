@@ -75,7 +75,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         });
         node1.Items.Add(new()
         {
-            Title = "Podmioty"
+            Title = "Podmioty",
+            ViewModelType = typeof(SecondViewModel),
         });
 
         #endregion
@@ -233,7 +234,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     {
         //TODO ask for confirmation in dialog
         _appStateService.OnLoggingOut();
-        _navigationService.NavigateTo<LoginViewModel>(true);
+        _navigationService.NavigateTo(typeof(LoginViewModel), true);
         SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
     }
 
@@ -269,10 +270,13 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     public void OnNavigationSelectionChanged(object obj)
     {
-        foreach (var child in Navigation)
-            RestartSelection(child);
         if (obj is NavigationItem ni && !ni.Items.Any())
+        {
+            foreach (var child in Navigation)
+                RestartSelection(child);
             SelectedItem = ni;
+            _navigationService.NavigateTo(SelectedItem.ViewModelType, false);
+        }
         else
             SelectedItem = null;
     }
@@ -289,7 +293,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     public void NavigateToFirstView()
     {
-        _navigationService.NavigateTo<LoginViewModel>(true);
+        _navigationService.NavigateTo(typeof(LoginViewModel), true);
     }
 
     public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)
@@ -311,6 +315,12 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     private void _navigationService_OnNavigated(object? sender, MoriaBaseServices.Args.OnNavigatedEventArgs e)
     {
+        if (_navigationService.IsOnGoBackNavigated)
+        {
+            foreach (var child in Navigation)
+                RestartSelection(child);
+        }
+
         if (e.Content is IViewModelContent content && content.GetViewModel() is ViewModelBase vmb)
         {
             PageTitle = vmb.Title;

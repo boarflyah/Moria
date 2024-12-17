@@ -1,7 +1,7 @@
 ﻿using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Contacts;
-public class EmployeeDo: BaseNotifyPropertyChanged
+public class EmployeeDo: BaseDo
 {
     int _Id;
     public int Id

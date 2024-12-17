@@ -10,8 +10,8 @@ public class PageService: IPageService
         RegisteredViews.Add(viewModelType, viewType);
     }
 
-    public Type GetViewType<TViewModel>()
+    public Type GetViewType(Type viewModelType)
     {
-        return RegisteredViews.GetValueOrDefault(typeof(TViewModel));
+        return RegisteredViews.GetValueOrDefault(viewModelType);
     }
 }
