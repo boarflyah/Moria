@@ -11,12 +11,22 @@
   <ItemGroup>
     <None Remove="Images\back.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\edit.png" />
+    <None Remove="Images\Exit.png" />
     <None Remove="Images\home.png" />
     <None Remove="Images\homeColor.png" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\menu.png" />
     <None Remove="Images\minimize.png" />
+    <None Remove="Images\save.png" />
+    <None Remove="Images\saveExit.png" />
     <None Remove="Images\windowHide.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +36,9 @@
     <Content Include="Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\maximize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -33,6 +46,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\save.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\saveExit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\windowHide.png">

@@ -4,7 +4,9 @@ using Microsoft.Extensions.Hosting;
 using MoriaBaseServices.Services;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Dictionary;
 using MoriaDesktop.Views.Base;
+using MoriaDesktop.Views.Dictionary;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Services;
 
@@ -26,6 +28,14 @@ public partial class App : Application
                         services.AddScoped<LoginViewModel>();
                         services.AddScoped<SecondView>();
                         services.AddScoped<SecondViewModel>();
+                        services.AddScoped<WarehouseView>();
+                        services.AddScoped<WarehouseViewModel>();
+                        services.AddScoped<MotorView>();
+                        services.AddScoped<MotorViewModel>();
+                        services.AddScoped<MotorGearView>();
+                        services.AddScoped<MotorGearViewModel>();
+                        services.AddScoped<ColorView>();
+                        services.AddScoped<ColorViewModel>();
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddScoped<ApiRequestService>();

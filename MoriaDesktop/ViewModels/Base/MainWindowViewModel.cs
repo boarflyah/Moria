@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
+using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktop.Views.Dictionary;
 using MoriaDesktopServices.Interfaces;
 
 namespace MoriaDesktop.ViewModels.Base;
@@ -166,7 +168,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public void NavigateToFirstView()
     {
-        _navigationService.NavigateTo<LoginViewModel>(true);
+        _navigationService.NavigateTo<MotorViewModel>(true);
+        //_navigationService.NavigateTo<LoginViewModel>(true);
     }
 
     #endregion
