@@ -3,23 +3,29 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="appsettings.json" />
     <None Remove="Images\back.png" />
     <None Remove="Images\close.png" />
     <None Remove="Images\edit.png" />
     <None Remove="Images\Exit.png" />
     <None Remove="Images\home.png" />
     <None Remove="Images\homeColor.png" />
+    <None Remove="Images\loading.json" />
+    <None Remove="Images\loading2.json" />
+    <None Remove="Images\logout1.png" />
+    <None Remove="Images\logout2.png" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\menu.png" />
     <None Remove="Images\minimize.png" />
     <None Remove="Images\save.png" />
     <None Remove="Images\saveExit.png" />
+    <None Remove="Images\setting.png" />
     <None Remove="Images\windowHide.png" />
   </ItemGroup>
 
@@ -30,6 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\loading.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\loading2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Images\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -37,6 +49,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logout1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\logout2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\maximize.png">
@@ -54,19 +72,33 @@
     <Content Include="Images\saveExit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\setting.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\windowHide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="LottieSharp" Version="2.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MoriaDesktopServices\MoriaDesktopServices.csproj" />
-    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
+    <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Contacts\" />
   </ItemGroup>
 
 </Project>

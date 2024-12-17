@@ -1,6 +1,8 @@
 ﻿using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktop.Views.Base;
+using MoriaDesktop.Views.Contacts;
 using MoriaDesktop.Views.Dictionary;
 using MoriaDesktopServices.Services;
 
@@ -21,5 +23,6 @@ public class DesktopPageService: PageService
         Register(typeof(EmployeeViewModel), typeof(EmployeeView));
 
 
+        Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
     }
 }

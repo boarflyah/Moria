@@ -20,13 +20,13 @@ public class TestController: ControllerBase
 #if DEBUG
 
     [HttpGet(WebAPIEndpointsProvider.GetTestPath)]
-    //[Authorize]
+    [Authorize]
     public IActionResult Get()
     {
         var userId = User.FindFirst("id")?.Value;
         _logger.LogCritical($"Testowy log: {userId}");
-
-        return StatusCode(ApiException.ApiExceptionThrownStatusCode, new ApiException(ApiExceptionReason.DefaultExceptionCheckStatusCode, ApiException.ApiExceptionThrownStatusCode));
+        return Ok("123");
+        //return StatusCode(ApiException.ApiExceptionThrownStatusCode, new ApiException(ApiExceptionReason.DefaultExceptionCheckStatusCode, ApiException.ApiExceptionThrownStatusCode));
         //return StatusCode(ApiException.ApiExceptionThrownStatusCode, JsonSerializer.Serialize(new ApiException(ApiExceptionReason.DefaultExceptionCheckStatusCode, ApiException.ApiExceptionThrownStatusCode)));
     }
 

@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MoriaBaseServices\MoriaBaseServices.csproj" />
     <ProjectReference Include="..\MoriaDTObjects\MoriaDTObjects.csproj" />
+    <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
     <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
   </ItemGroup>
 

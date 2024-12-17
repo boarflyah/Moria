@@ -2,26 +2,26 @@
 using System.Text.Json.Serialization;
 
 namespace MoriaBaseServices;
-public class ApiException: Exception
+public class MoriaApiException: Exception
 {
     [JsonIgnore]
     public const int ApiExceptionThrownStatusCode = 700;
 
-    public ApiException(ApiExceptionReason reason, int status)
+    public MoriaApiException(MoriaApiExceptionReason reason, int status)
     {
         Status = status;
         Reason = reason;
     }
 
     /// <summary>
-    /// Default custom message when <see cref="ApiException"/> is thrown in Api with statuscode = 700
+    /// Default custom message when <see cref="MoriaApiException"/> is thrown in Api with statuscode = 700
     /// </summary>
     public int Status
     {
         get; set;
     }
 
-    public ApiExceptionReason Reason
+    public MoriaApiExceptionReason Reason
     {
         get; set;
     }

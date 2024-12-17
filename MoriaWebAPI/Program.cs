@@ -24,7 +24,7 @@ public class Program
 
             //logger configuration
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                //.MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File(".\\Logs\\log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
@@ -32,7 +32,7 @@ public class Program
             builder.Logging.AddSerilog(Log.Logger);
 
             // Add services to the container.
-            builder.Services.AddScoped<IUserService, TempUserService>();
+            builder.Services.AddScoped<IEmployeeService, TempEmployeeService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);

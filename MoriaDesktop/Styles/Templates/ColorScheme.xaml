@@ -2,5 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="MainWindowAccentBrush" Color="#D4BEE4"/>
     <SolidColorBrush x:Key="WindowDefaultBackgroundBrush" Color="#F8F8F8"/>
+    <SolidColorBrush x:Key="DefaultForeground" Color="#33372C"/>
+    <SolidColorBrush x:Key="DefaultSuccessBrush" Color="#A8CD89"/>
+    <SolidColorBrush x:Key="DefaultWarningBrush" Color="#FCDE70"/>
+    <SolidColorBrush x:Key="DefaultErrorBrush" Color="#F95454"/>
+    <SolidColorBrush x:Key="DefaultInfoBrush" Color="#D4EBF8"/>
 
 </ResourceDictionary>

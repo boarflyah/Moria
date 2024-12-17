@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Logging;
-using MoriaBaseServices.Services;
-using MoriaDesktop.Commands;
+﻿using Microsoft.Extensions.Logging;
+using MoriaBaseServices;
+using MoriaDesktop.Services;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Base;
 public class LoginViewModel : ViewModelBase
@@ -10,61 +12,63 @@ public class LoginViewModel : ViewModelBase
     #region services
 
     readonly INavigationService _navigationService;
-    readonly ApiRequestService _apiRequestService;
+    readonly IApiEmployeeService _employeeService;
+    readonly IApiTokenService _tokenService;
 
     #endregion
 
-    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, ApiRequestService apiRequestService) : base(logger)
+    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, IApiEmployeeService employeeService, IApiTokenService tokenService,
+        AppStateService appStateService) : base(logger, appStateService)
     {
         _navigationService = navigationService;
-        _apiRequestService = apiRequestService;
+        _employeeService = employeeService;
+        _tokenService = tokenService;
 
-        LoginCommand = new(Login);
-        TestOid = 10;
+        Title = "Zaloguj się";
     }
 
     #region properties
-
-    int _TestOid;
-    public int TestOid
-    {
-        get => _TestOid;
-        set
-        {
-            _TestOid = value;
-            RaisePropertyChanged(nameof(TestOid), value);
-        }
-    }
 
     #endregion
 
     #region commands
 
-    public AsyncRelayCommand LoginCommand
-    {
-        get;
-        init;
-    }
-
     #endregion
 
     #region commands methods
 
-    async Task Login()
-    {
-        var token = await _apiRequestService.Get("http", "192.168.0.59", 5000, WebAPIEndpointsProvider.GetTestPath, null);
 
-        //await Task.Delay(2000);
-        //Navigate();
-    }
 
     #endregion
 
     #region methods
 
-    public void Navigate()
+    public async Task Login(string username, string password)
     {
-        _navigationService.NavigateTo<SecondViewModel>(false);
+        EmployeeDo employee = null;
+        _appStateService.SetupLoading(true);
+        try
+        {
+            employee = await _tokenService.GetUserWithToken(username, password);
+        }
+        catch (Exception ex)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+        }
+        finally
+        {
+            _appStateService.SetupLoading();
+        }
+
+        //TODO catch different exceptions
+
+        if (employee != null)
+        {
+            _appStateService.OnLoggedIn(employee);
+            _navigationService.NavigateTo<EmployeeListViewModel>(true);
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zalogowano", true);
+            //TODO handle correct login and navigate to default view
+        }
     }
 
     #endregion

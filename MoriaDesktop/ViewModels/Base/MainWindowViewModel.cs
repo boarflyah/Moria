@@ -4,21 +4,33 @@ using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Dictionary;
 using MoriaDesktop.Views.Dictionary;
+using MoriaDesktop.Models.Enums;
+using MoriaDesktop.Services;
+using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
+using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.ViewModels.Base;
 
-public class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : BaseNotifyPropertyChanged
 {
     #region DI properties
 
     readonly INavigationService _navigationService;
+    readonly IApiTokenService _tokenService;
+    readonly AppStateService _appStateService;
+    readonly ILogger<MainWindowViewModel> _logger;
 
     #endregion
 
-    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService) : base(logger)
+    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService, AppStateService appStateService) : base()
     {
         _navigationService = navigationService;
+        _tokenService = tokenService;
+        _appStateService = appStateService;
+        _logger = logger;
 
         _navigationService.OnNavigated += _navigationService_OnNavigated;
 
@@ -26,6 +38,8 @@ public class MainWindowViewModel : ViewModelBase
         SetFullScreenCommand = new(SetFullScreen, CanSetFullScreen);
         SetWindowCommand = new(SetWindow, CanSetWindow);
         CloseAppCommand = new(CloseApp, CanCloseApp);
+        CloseInfoCommand = new(CloseInfo);
+        LogoutCommand = new(Logout);
 
         IsFullScreen = true;
 
@@ -58,7 +72,8 @@ public class MainWindowViewModel : ViewModelBase
 
         node1.Items.Add(new()
         {
-            Title = "Pracownicy"
+            Title = "Pracownicy",
+            ViewModelType = typeof(EmployeeListViewModel),
         });
         node1.Items.Add(new()
         {
@@ -71,6 +86,17 @@ public class MainWindowViewModel : ViewModelBase
     #region properties
 
     public ObservableCollection<NavigationItem> Navigation { get; set; }
+
+    string _PageTitle;
+    public string PageTitle
+    {
+        get => _PageTitle;
+        set
+        {
+            _PageTitle = value;
+            RaisePropertyChanged(nameof(PageTitle), value);
+        }
+    }
 
     NavigationItem _SelectedItem;
     public NavigationItem SelectedItem
@@ -98,17 +124,101 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
 
+    bool _IsLoggedIn;
+    public bool IsLoggedIn
+    {
+        get => _IsLoggedIn;
+        set
+        {
+            _IsLoggedIn = value;
+            RaisePropertyChanged(nameof(IsLoggedIn), value);
+        }
+    }
+
+    string _Username;
+    public string Username
+    {
+        get => _Username;
+        set
+        {
+            _Username = value;
+            RaisePropertyChanged(nameof(Username), value);
+        }
+    }
+
+    #region infobar
+
+    bool _IsInfoVisible;
+    public bool IsInfoVisible
+    {
+        get => _IsInfoVisible;
+        set
+        {
+            _IsInfoVisible = value;
+            RaisePropertyChanged(nameof(IsInfoVisible), value);
+        }
+    }
+
+    SystemInfoStatus _InfoStatus;
+    public SystemInfoStatus InfoStatus
+    {
+        get => _InfoStatus;
+        set
+        {
+            _InfoStatus = value;
+            RaisePropertyChanged(nameof(InfoStatus), value);
+        }
+    }
+
+    string _InfoText;
+    public string InfoText
+    {
+        get => _InfoText;
+        set
+        {
+            _InfoText = value;
+            RaisePropertyChanged(nameof(InfoText), value);
+        }
+    }
+
+    #endregion
+
+    #region loading bar
+
+    bool _IsLoadingVisible;
+    public bool IsLoadingVisible
+    {
+        get => _IsLoadingVisible;
+        set
+        {
+            _IsLoadingVisible = value;
+            RaisePropertyChanged(nameof(IsLoadingVisible), value);
+        }
+    }
+
+    string _LoadingText;
+    public string LoadingText
+    {
+        get => _LoadingText;
+        set
+        {
+            _LoadingText = value;
+            RaisePropertyChanged(nameof(LoadingText), value);
+        }
+    }
+
+    #endregion
+
     #endregion
 
     #region commands
 
     public BaseCommand GoBackCommand { get; init; }
-
     public BaseCommand SetFullScreenCommand { get; init; }
-
     public BaseCommand SetWindowCommand  { get; init; }
-
     public BaseCommand CloseAppCommand { get; init; }
+    public BaseCommand CloseInfoCommand { get; init; }
+    public BaseCommand LogoutCommand { get; init; }
 
     #endregion
 
@@ -120,6 +230,14 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     bool CanGoBack() => _navigationService.CanGoBack;
+
+    void Logout()
+    {
+        //TODO ask for confirmation in dialog
+        _appStateService.OnLoggingOut();
+        _navigationService.NavigateTo<LoginViewModel>(true);
+        SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
+    }
 
     void SetFullScreen()
     {
@@ -141,6 +259,11 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     bool CanCloseApp() => true;
+
+    void CloseInfo()
+    {
+        SetupInfo();
+    }
 
     #endregion
 
@@ -172,13 +295,62 @@ public class MainWindowViewModel : ViewModelBase
         //_navigationService.NavigateTo<LoginViewModel>(true);
     }
 
+    public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)
+    {
+        InfoStatus = status;
+        InfoText = text;
+        IsInfoVisible = isVisible;
+    }
+
+    public void SetupLoading(bool isVisible = false, string text = "Wczytywanie...")
+    {
+        IsLoadingVisible = isVisible;
+        LoadingText = text;
+    }
+
     #endregion
 
     #region events
 
     private void _navigationService_OnNavigated(object? sender, MoriaBaseServices.Args.OnNavigatedEventArgs e)
     {
+        if (e.Content is IViewModelContent content && content.GetViewModel() is ViewModelBase vmb)
+        {
+            PageTitle = vmb.Title;
+            vmb.OnReAuthorizationNeeded -= OnReAuthorizationNeeded;
+            vmb.OnReAuthorizationNeeded += OnReAuthorizationNeeded;
+
+            NavigationItem mainNode = null;
+            var navItem = GetCurrentNavigationItem(vmb.GetType(), ref mainNode);
+            if (navItem != null)
+            {
+                mainNode.IsExpanded = true;
+                SelectedItem = navItem;
+            }
+        }
+        SetupInfo();
+        SetupLoading();
         GoBackCommand?.RaiseCanExecuteChanged();
+    }
+
+    private async void OnReAuthorizationNeeded(object? sender, Args.InvokeViewEventArgs e)
+    {
+        //when logging in cancelled
+        //e.CompletionSource.SetResult(null)
+        //TODO show new window or popup with username/password fields to login again
+        //or maybe password only with username control disabled
+        var employee = await _tokenService.GetUserWithToken("123", "abc");
+
+        e.CompletionSource.SetResult(employee != null && !string.IsNullOrWhiteSpace(employee.Token) && employee.ValidTo > DateTime.Now);
+    }
+
+    NavigationItem GetCurrentNavigationItem(Type viewModelType, ref NavigationItem mainNode)
+    {
+        mainNode = Navigation.FirstOrDefault(x => x.Items.Any(y => y.ViewModelType == viewModelType));
+        if (mainNode != null)
+            return mainNode.Items.First(x => x.ViewModelType == viewModelType);
+
+        return null;
     }
 
     #endregion

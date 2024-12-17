@@ -1,34 +1,47 @@
-﻿namespace MoriaBaseServices.Services
+﻿namespace MoriaBaseServices.Services;
+
+public class WebAPIEndpointsProvider
 {
-    public class WebAPIEndpointsProvider
-    {
-        #region controllers
+    #region controllers
 
-        public const string Token = "token";
+    public const string Token = "token";
+    public const string Employee = "employee";
 
-        #endregion
+    #endregion
 
-        #region endpoints
+    #region endpoints
 
-        #region Token
+    #region Token
 
-        public const string PostTokenPath = $"{Token}";
+    public const string PostTokenPath = $"{Token}";
 
 #if DEBUG
 
-        public const string GetTokenGetTokenPath = $"{Token}/gettoken";
+    public const string GetTokenGetTokenPath = $"{Token}/gettoken";
 
 #endif
 
-        #endregion
+    #endregion
+
+    #region Employee
+
+    /// <summary>
+    /// Body: object of type UserCredentials
+    /// <para>Return EmployeeDo</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string PostLoginPath = $"{Employee}/login";
+
+    public const string GetEmployeesPath = $"{Employee}";
+
+    #endregion
 
 #if DEBUG
-        public const string Test = "test";
+    public const string Test = "test";
 
-        public const string GetTestPath = $"{Test}";
+    public const string GetTestPath = $"{Test}";
 
 #endif
 
-        #endregion
-    }
+    #endregion
 }

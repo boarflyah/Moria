@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using MoriaDesktop.ViewModels.Base;
 
@@ -59,6 +60,7 @@ public partial class MainWindow : Window
         to = menuHiddenWidth;
         TitleTextBlock.Visibility = Visibility.Hidden;
         NavigationTreeView.Visibility = Visibility.Hidden;
+        FooterButtonsPanel.Orientation = System.Windows.Controls.Orientation.Vertical;
         isMenuExpanded = false;
     }
 
@@ -67,7 +69,8 @@ public partial class MainWindow : Window
         from = menuHiddenWidth;
         to = menuExpandedWidth;
         TitleTextBlock.Visibility = Visibility.Visible;
-        NavigationTreeView.Visibility = Visibility.Visible;
+        NavigationTreeView.Visibility = (DataContext as MainWindowViewModel).IsLoggedIn ? Visibility.Visible : Visibility.Hidden;
+        FooterButtonsPanel.Orientation = System.Windows.Controls.Orientation.Horizontal;
         isMenuExpanded = true;
     }
 
@@ -89,5 +92,13 @@ public partial class MainWindow : Window
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         Close();
+    }
+
+    private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
+        {
+            DragMove();
+        }
     }
 }

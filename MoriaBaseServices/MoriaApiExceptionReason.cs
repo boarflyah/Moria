@@ -1,5 +1,5 @@
 ﻿namespace MoriaBaseServices;
-public enum ApiExceptionReason
+public enum MoriaApiExceptionReason
 {
     Unknown = 0,
     DefaultExceptionCheckStatusCode = 1,

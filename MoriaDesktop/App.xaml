@@ -6,9 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Templates/SizeValues.xaml"/>
+                <ResourceDictionary Source="Styles/Templates/ColorScheme.xaml"/>
                 <ResourceDictionary Source="Styles/Templates/ControlsTemplates.xaml"/>
                 <ResourceDictionary Source="Styles/Templates/ColorScheme.xaml"/>
                 <ResourceDictionary Source="Styles/Templates/PageTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/Templates/DataGridTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

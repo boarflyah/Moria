@@ -2,5 +2,5 @@
 
 public interface ITokenGeneratorService
 {
-    string GenerateJwtToken(string userId);
+    string GenerateJwtToken(int userId);
 }
