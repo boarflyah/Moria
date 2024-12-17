@@ -11,6 +11,7 @@ using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
 using MoriaModelsDo.Base;
+using MoriaDesktop.ViewModels.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -95,7 +96,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _PageTitle = value;
-            RaisePropertyChanged(nameof(PageTitle), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -108,7 +109,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             _SelectedItem = value;
             if (_SelectedItem != null)
                 _SelectedItem.IsSelected = true;
-            RaisePropertyChanged(nameof(SelectedItem), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -121,7 +122,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             _IsFullScreen = value;
             SetFullScreenCommand?.RaiseCanExecuteChanged();
             SetWindowCommand?.RaiseCanExecuteChanged();
-            RaisePropertyChanged(nameof(IsFullScreen), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -132,7 +133,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _IsLoggedIn = value;
-            RaisePropertyChanged(nameof(IsLoggedIn), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -143,7 +144,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _Username = value;
-            RaisePropertyChanged(nameof(Username), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -156,7 +157,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _IsInfoVisible = value;
-            RaisePropertyChanged(nameof(IsInfoVisible), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -167,7 +168,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _InfoStatus = value;
-            RaisePropertyChanged(nameof(InfoStatus), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -178,7 +179,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _InfoText = value;
-            RaisePropertyChanged(nameof(InfoText), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -193,7 +194,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _IsLoadingVisible = value;
-            RaisePropertyChanged(nameof(IsLoadingVisible), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -204,7 +205,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         set
         {
             _LoadingText = value;
-            RaisePropertyChanged(nameof(LoadingText), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -295,7 +296,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     public void NavigateToFirstView()
     {
-        _navigationService.NavigateTo(typeof(LoginViewModel), true);
+        _navigationService.NavigateTo(typeof(DriveDetailViewModel), true);
+        //_navigationService.NavigateTo(typeof(LoginViewModel), true);
     }
 
     public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)

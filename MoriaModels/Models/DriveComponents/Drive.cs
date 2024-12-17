@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.DriveComponents;
+﻿using MoriaModels.Models.Base;
 
-public class Drive
+namespace MoriaModels.Models.DriveComponents;
+
+public class Drive: BaseModel
 {
     public int Id { get; set; }
     public bool Variator { get; set; }

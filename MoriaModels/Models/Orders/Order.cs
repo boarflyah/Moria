@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.Orders;
+﻿using MoriaModels.Models.Base;
 
-public class Order
+namespace MoriaModels.Models.Orders;
+
+public class Order : BaseModel
 {
     public int Id { get; set; }
     public string OrderNumberSymbol { get; set; }

@@ -1,7 +1,7 @@
 ﻿using MoriaModelsDo.Base;
 
-namespace MoriaModelsDo.Models.Contacts;
-public class PositionDo: BaseDo
+namespace MoriaModelsDo.Models.Dictionaries;
+public class ColorDo: BaseDo
 {
     int _Id;
     public int Id
@@ -9,15 +9,15 @@ public class PositionDo: BaseDo
         get => _Id;
         set
         {
-            _Id= value;
+            _Id = value;
             RaisePropertyChanged(value);
         }
     }
 
-    string _Name;
+    private string _Name;
     public string Name
     {
-        get => _Name;
+        get => _Name;       
         set
         {
             _Name = value;
@@ -25,7 +25,7 @@ public class PositionDo: BaseDo
         }
     }
 
-    string _Code;
+    private string _Code;
     public string Code
     {
         get => _Code;

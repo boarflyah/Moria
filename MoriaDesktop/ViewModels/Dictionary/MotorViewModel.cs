@@ -23,7 +23,7 @@ public class MotorViewModel : ViewModelBase
         set
         {
             _Symbol = value;
-            RaisePropertyChanged(nameof(Symbol));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -34,7 +34,7 @@ public class MotorViewModel : ViewModelBase
         set
         {
             _Name = value;
-            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -45,7 +45,7 @@ public class MotorViewModel : ViewModelBase
         set
         {
             _Power = value;
-            RaisePropertyChanged(nameof(Power));
+            RaisePropertyChanged(value);
         }
     }
     #endregion

@@ -16,6 +16,8 @@ using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services;
 using MoriaDesktopServices.Services.API;
+using MoriaDesktop.Views.DriveComponents;
+using MoriaDesktop.ViewModels.DriveComponents;
 
 namespace MoriaDesktop;
 
@@ -46,6 +48,8 @@ public partial class App : Application
                         services.AddScoped<ColorViewModel>();
                         services.AddScoped<EmployeeListView>();
                         services.AddScoped<EmployeeListViewModel>();
+                        services.AddScoped<DriveDetailView>();
+                        services.AddScoped<DriveDetailViewModel>();
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddScoped<ApiRequestService>();

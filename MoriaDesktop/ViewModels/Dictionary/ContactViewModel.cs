@@ -18,7 +18,7 @@ public class ContactViewModel : ViewModelBase
         set
         {
             _Symbol = value;
-            RaisePropertyChanged(nameof(Symbol));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -29,7 +29,7 @@ public class ContactViewModel : ViewModelBase
         set
         {
             _ShortName = value;
-            RaisePropertyChanged(nameof(ShortName));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -40,7 +40,7 @@ public class ContactViewModel : ViewModelBase
         set
         {
             _LongName = value;
-            RaisePropertyChanged(nameof(LongName));
+            RaisePropertyChanged(value);
         }
     }
 

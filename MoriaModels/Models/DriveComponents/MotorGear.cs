@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.DriveComponents;
+﻿using MoriaModels.Models.Base;
 
-public class MotorGear
+namespace MoriaModels.Models.DriveComponents;
+
+public class MotorGear: BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

@@ -12,6 +12,7 @@ namespace MoriaWebAPI.Controllers;
 
 [ApiController]
 [Route("")]
+[Authorize]
 public class EmployeeController: ControllerBase
 {
     readonly IEmployeeService _employeeService;
@@ -23,7 +24,6 @@ public class EmployeeController: ControllerBase
     }
 
     [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]
-    [Authorize]
     [Produces<EmployeeDo>]
     public async Task<IActionResult> Login(UserCredentials credentials)
     {
@@ -44,7 +44,6 @@ public class EmployeeController: ControllerBase
     }
 
     [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
-    [Authorize]
     [Produces<IEnumerable<EmployeeDo>>]
     public async Task<IActionResult> GetEmployees()
     {

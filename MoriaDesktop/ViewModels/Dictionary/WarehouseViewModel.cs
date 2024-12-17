@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoriaDesktop.ViewModels.Dictionary;
 public class WarehouseViewModel : ViewModelBase
@@ -23,7 +18,7 @@ public class WarehouseViewModel : ViewModelBase
         set
         {
             _Symbol = value;
-            RaisePropertyChanged(nameof(Symbol));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -34,7 +29,7 @@ public class WarehouseViewModel : ViewModelBase
         set
         {
             _WarehouseName = value;
-            RaisePropertyChanged(nameof(WarehouseName));
+            RaisePropertyChanged(value);
         }
     }
 

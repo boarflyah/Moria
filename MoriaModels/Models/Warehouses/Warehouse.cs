@@ -1,8 +1,9 @@
-﻿using MoriaModels.Models.Products;
+﻿using MoriaModels.Models.Base;
+using MoriaModels.Models.Products;
 
 namespace MoriaModels.Models.Warehouses;
 
-public class Warehouse
+public class Warehouse : BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

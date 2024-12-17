@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.Products;
+﻿using MoriaModels.Models.Base;
 
-public class Category
+namespace MoriaModels.Models.Products;
+
+public class Category : BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

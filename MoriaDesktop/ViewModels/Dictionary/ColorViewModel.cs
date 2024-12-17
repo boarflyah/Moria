@@ -19,7 +19,7 @@ public class ColorViewModel : ViewModelBase
         set
         {
             _Code = value;
-            RaisePropertyChanged(nameof(Code));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -30,7 +30,7 @@ public class ColorViewModel : ViewModelBase
         set
         {
             _Name = value;
-            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(value);
         }
     }
 

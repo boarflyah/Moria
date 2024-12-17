@@ -8,7 +8,7 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
         set
         {
             _IsLocked = value;
-            RaisePropertyChanged(nameof(IsLocked), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -19,7 +19,7 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
         set
         {
             _LastModified = value;
-            RaisePropertyChanged(nameof(LastModified), value);
+            RaisePropertyChanged(value);
         }
     }
 }

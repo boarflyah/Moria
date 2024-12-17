@@ -1,10 +1,11 @@
-﻿using MoriaModels.Models.EntityPersonel;
+﻿using MoriaModels.Models.Base;
+using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 
 namespace MoriaModels.Models.Orders;
 
-public class OrderItem
+public class OrderItem : BaseModel
 {
     public int Id { get; set; }
     public int Index { get; set; }

@@ -20,7 +20,7 @@ public class SteelKindViewModel : ViewModelBase
         set
         {
             _Symbol = value;
-            RaisePropertyChanged(nameof(Symbol));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -31,7 +31,7 @@ public class SteelKindViewModel : ViewModelBase
         set
         {
             _Name = value;
-            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(value);
         }
     }
 

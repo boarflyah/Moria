@@ -20,7 +20,7 @@ public class PositionViewModel : ViewModelBase
         set
         {
             _Code = value;
-            RaisePropertyChanged(nameof(Code));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -31,7 +31,7 @@ public class PositionViewModel : ViewModelBase
         set
         {
             _Name = value;
-            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(value);
         }
     }
 

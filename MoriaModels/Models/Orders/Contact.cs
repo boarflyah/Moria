@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.Orders;
+﻿using MoriaModels.Models.Base;
 
-public class Contact
+namespace MoriaModels.Models.Orders;
+
+public class Contact : BaseModel
 {
     public int Id { get; set; }
     public string ShortName { get; set; }

@@ -59,7 +59,7 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         set
         {
             _Title = value;
-            RaisePropertyChanged(nameof(Title));
+            RaisePropertyChanged(value);
         }
     }
 

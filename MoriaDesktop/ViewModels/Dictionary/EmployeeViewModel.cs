@@ -19,7 +19,7 @@ public class EmployeeViewModel : ViewModelBase
         set
         {
             _FirstName = value;
-            RaisePropertyChanged(nameof(FirstName));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -30,7 +30,7 @@ public class EmployeeViewModel : ViewModelBase
         set
         {
             _LastName = value;
-            RaisePropertyChanged(nameof(LastName));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -41,7 +41,7 @@ public class EmployeeViewModel : ViewModelBase
         set
         {
             _Username = value;
-            RaisePropertyChanged(nameof(Username));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -52,7 +52,7 @@ public class EmployeeViewModel : ViewModelBase
         set
         {
             _Password = value;
-            RaisePropertyChanged(nameof(Password));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -63,7 +63,7 @@ public class EmployeeViewModel : ViewModelBase
         set
         {
             _PhoneNumber = value;
-            RaisePropertyChanged(nameof(PhoneNumber));
+            RaisePropertyChanged(value);
         }
     }
 

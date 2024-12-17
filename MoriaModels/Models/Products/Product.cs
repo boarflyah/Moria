@@ -1,8 +1,9 @@
-﻿using MoriaModels.Models.DriveComponents;
+﻿using MoriaModels.Models.Base;
+using MoriaModels.Models.DriveComponents;
 
 namespace MoriaModels.Models.Products;
 
-public class Product
+public class Product : BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

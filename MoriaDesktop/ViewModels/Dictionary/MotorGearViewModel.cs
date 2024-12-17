@@ -19,7 +19,7 @@ public class MotorGearViewModel : ViewModelBase
         set
         {
             _Symbol = value;
-            RaisePropertyChanged(nameof(Symbol));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -30,7 +30,7 @@ public class MotorGearViewModel : ViewModelBase
         set
         {
             _Name = value;
-            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(value);
         }
     }
 
@@ -41,7 +41,7 @@ public class MotorGearViewModel : ViewModelBase
         set
         {
             _Ratio = value;
-            RaisePropertyChanged(nameof(Ratio));
+            RaisePropertyChanged(value);
         }
     }
 

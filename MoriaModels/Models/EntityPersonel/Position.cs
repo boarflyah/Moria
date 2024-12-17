@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.EntityPersonel;
+﻿using MoriaModels.Models.Base;
 
-public class Position
+namespace MoriaModels.Models.EntityPersonel;
+
+public class Position : BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }

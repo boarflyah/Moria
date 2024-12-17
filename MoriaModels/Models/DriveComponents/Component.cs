@@ -1,9 +1,10 @@
-﻿using MoriaModels.Models.Orders;
+﻿using MoriaModels.Models.Base;
+using MoriaModels.Models.Orders;
 using MoriaModels.Models.Products;
 
 namespace MoriaModels.Models.DriveComponents;
 
-public class Component
+public class Component: BaseModel
 {
     public int Id { get; set; }
     public string ElectricalDescription { get; set; }

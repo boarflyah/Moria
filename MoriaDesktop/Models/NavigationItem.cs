@@ -18,7 +18,7 @@ public class NavigationItem : BaseNotifyPropertyChanged
         set
         {
             _Title = value;
-            RaisePropertyChanged(nameof(Title), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -29,7 +29,7 @@ public class NavigationItem : BaseNotifyPropertyChanged
         set
         {
             _IsSelected = value;
-            RaisePropertyChanged(nameof(IsSelected), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -40,7 +40,7 @@ public class NavigationItem : BaseNotifyPropertyChanged
         set
         {
             _IsExpanded = value;
-            RaisePropertyChanged(nameof(IsExpanded), value);
+            RaisePropertyChanged(value);
         }
     }
 

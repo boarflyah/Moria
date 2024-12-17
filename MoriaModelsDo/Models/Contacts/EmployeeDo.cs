@@ -10,7 +10,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _Id = value;
-            RaisePropertyChanged(nameof(Id), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -21,7 +21,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _FirstName = value;
-            RaisePropertyChanged(nameof(FirstName), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -32,7 +32,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _LastName = value;
-            RaisePropertyChanged(nameof(LastName), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -43,7 +43,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _UserName= value;
-            RaisePropertyChanged(nameof(Username), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -54,7 +54,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _Password = value;
-            RaisePropertyChanged(nameof(Password), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -65,7 +65,7 @@ public class EmployeeDo: BaseDo
         set
         {
          _PhoneNumber= value;
-            RaisePropertyChanged(nameof(PhoneNumber), value);
+            RaisePropertyChanged(value);
         }
     }
 
@@ -76,7 +76,7 @@ public class EmployeeDo: BaseDo
         set
         {
             _Position = value;
-            RaisePropertyChanged(nameof(Position), value);
+            RaisePropertyChanged(value);
         }
     }
 

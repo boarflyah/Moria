@@ -1,6 +1,8 @@
-﻿namespace MoriaModels.Models.Products;
+﻿using MoriaModels.Models.Base;
 
-public class Color
+namespace MoriaModels.Models.Products;
+
+public class Color: BaseModel
 {
     public int Id { get; set; }
     public string Name { get; set; }
