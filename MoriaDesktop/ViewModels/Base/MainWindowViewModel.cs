@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
+using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktop.Views.Dictionary;
 using MoriaDesktop.Models.Enums;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Contacts;
