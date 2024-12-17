@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
-using MoriaModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MoriaDesktop.ViewModels.Dictionary;
 public class WarehouseViewModel : ViewModelBase
 {
-    public WarehouseViewModel(ILogger<ViewModelBase> logger) : base(logger)
+    public WarehouseViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
     {
     }
 

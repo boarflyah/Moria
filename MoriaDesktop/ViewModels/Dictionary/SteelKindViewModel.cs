@@ -1,12 +1,13 @@
 ﻿
 
 using Microsoft.Extensions.Logging;
+using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 
 namespace MoriaDesktop.ViewModels.Dictionary;
 public class SteelKindViewModel : ViewModelBase
 {
-    public SteelKindViewModel(ILogger<ViewModelBase> logger) : base(logger)
+    public SteelKindViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
     {
     }
 

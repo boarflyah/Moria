@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 
 namespace MoriaDesktop.ViewModels.Dictionary;
 
 public class MotorGearViewModel : ViewModelBase
 {
-    public MotorGearViewModel(ILogger<ViewModelBase> logger) : base(logger)
+    public MotorGearViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
     {
     }
 

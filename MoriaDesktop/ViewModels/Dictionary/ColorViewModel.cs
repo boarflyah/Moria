@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 
 namespace MoriaDesktop.ViewModels.Dictionary;
 
 public class ColorViewModel : ViewModelBase
 {
-    public ColorViewModel(ILogger<ViewModelBase> logger) : base(logger)
+    public ColorViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
     {
     }
 

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using MoriaModels.Base;
 using System.Windows.Input;
 using MoriaBaseServices;
 using MoriaDesktop.Args;
@@ -22,6 +21,7 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
     {
         _logger = logger;
 
+        _appStateService = appStateService;
         SaveCommand = new RelayCommand(Save);
         SaveAndCloseCommand = new RelayCommand(SaveAndClose);
         CloseCommand = new RelayCommand(Close);
@@ -48,7 +48,6 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
     private void Close()
     {
         // 
-        _appStateService = appStateService;
     }
 
     #region properties
