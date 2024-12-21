@@ -55,7 +55,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         NavigationItem node2 = new()
         {
-            Title = "Produkcja",
+            Title = "Słowniki",
             Items = new()
         };
 
@@ -64,11 +64,13 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         node2.Items.Add(new()
         {
-            Title = "Zamówienia",
+            Title = "Kolory",
+            ViewModelType = typeof(ColorViewModel)
         });
         node2.Items.Add(new()
         {
-            Title = "Napędy"
+            Title = "Magazyny",
+            ViewModelType = typeof(WarehouseViewModel),
         });
 
         node1.Items.Add(new()
@@ -296,8 +298,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     public void NavigateToFirstView()
     {
-        _navigationService.NavigateTo(typeof(DriveDetailViewModel), true);
-        //_navigationService.NavigateTo(typeof(LoginViewModel), true);
+        //_navigationService.NavigateTo(typeof(DriveDetailViewModel), true);
+        _navigationService.NavigateTo(typeof(LoginViewModel), true);
     }
 
     public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)

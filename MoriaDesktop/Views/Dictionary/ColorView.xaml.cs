@@ -1,15 +1,12 @@
-﻿using MoriaDesktop.ViewModels.Dictionary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Dictionary;
-public partial class ColorView : Page
+public partial class ColorView : Page, IViewModelContent
 {
+    public object GetViewModel() => DataContext;
+
     public ColorView( ColorViewModel viewModel)
     {
         InitializeComponent();

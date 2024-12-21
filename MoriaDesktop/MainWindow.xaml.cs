@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Base;
 
 namespace MoriaDesktop;
@@ -99,6 +100,14 @@ public partial class MainWindow : Window
         if (e.LeftButton == MouseButtonState.Pressed)
         {
             DragMove();
+        }
+    }
+
+    private void NavigationTreeView_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+    {
+        if (e.OriginalSource is FrameworkElement fe && fe.DataContext is NavigationItem ni)
+        {
+            (DataContext as MainWindowViewModel)!.OnNavigationSelectionChanged(ni);
         }
     }
 }

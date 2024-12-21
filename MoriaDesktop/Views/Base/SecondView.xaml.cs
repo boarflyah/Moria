@@ -1,12 +1,13 @@
 ﻿using System.Windows.Controls;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Base;
-/// <summary>
-/// Logika interakcji dla klasy SecondView.xaml
-/// </summary>
-public partial class SecondView : Page
+
+public partial class SecondView : Page, IViewModelContent
 {
+    public object GetViewModel() => DataContext;
+
     public SecondView(SecondViewModel viewModel) : this()
     {
         DataContext = viewModel;
