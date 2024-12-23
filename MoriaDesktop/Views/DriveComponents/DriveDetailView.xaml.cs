@@ -1,11 +1,13 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.DriveComponents;
 
-public partial class DriveDetailView : Page
+public partial class DriveDetailView : Page, IViewModelContent
 {
+    public object GetViewModel() => DataContext;
     public DriveDetailView(DriveDetailViewModel vm)
     {
         InitializeComponent();

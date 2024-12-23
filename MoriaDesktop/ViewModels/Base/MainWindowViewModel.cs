@@ -12,6 +12,7 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
 using MoriaModelsDo.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaDesktop.ViewModels.Products;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -82,6 +83,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         {
             Title = "Podmioty",
             ViewModelType = typeof(SecondViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Produkty",
+            ViewModelType = typeof(ProductDetailViewModel),
         });
 
         #endregion
