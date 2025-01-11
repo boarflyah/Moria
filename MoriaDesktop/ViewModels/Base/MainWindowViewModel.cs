@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Commands;
 using MoriaDesktop.Models;
-using MoriaDesktop.ViewModels.Dictionary;
 using MoriaDesktop.Views.Dictionary;
 using MoriaDesktop.Models.Enums;
 using MoriaDesktop.Services;
@@ -12,6 +11,8 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
 using MoriaModelsDo.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaDesktop.Views.Dictionary.DetailView;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Products;
 
 namespace MoriaDesktop.ViewModels.Base;

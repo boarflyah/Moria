@@ -3,7 +3,7 @@ using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.DriveComponents.Relations;
 
 namespace MoriaModelsDo.Models.DriveComponents;
-public class DriveDo: BaseDo
+public class DriveDo : BaseDo
 {
     private int _Id;
     public int Id

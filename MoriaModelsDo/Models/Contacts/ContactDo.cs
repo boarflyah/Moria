@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoriaModelsDo.Models.Dictionaries;
-public class SteelKindDo : BaseDo
+namespace MoriaModelsDo.Models.Contacts;
+public class ContactDo : BaseDo
 {
-
-    private int _Id;
+    int _Id;
     public int Id
     {
         get => _Id;
@@ -20,18 +19,29 @@ public class SteelKindDo : BaseDo
         }
     }
 
-    private string _Name;
-    public string Name
+    string _ShortName;
+    public string ShortName
     {
-        get => _Name;
+        get => _ShortName;
         set
         {
-            _Name = value;
+            _ShortName = value;
             RaisePropertyChanged(value);
         }
     }
 
-    private string _Symbol;
+    string _LongName;
+    public string LongName
+    {
+        get => _LongName;
+        set
+        {
+            _LongName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    string _Symbol;
     public string Symbol
     {
         get => _Symbol;
@@ -41,4 +51,5 @@ public class SteelKindDo : BaseDo
             RaisePropertyChanged(value);
         }
     }
+
 }

@@ -1,15 +1,10 @@
 ﻿using MoriaModelsDo.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoriaModelsDo.Models.Dictionaries;
-public class SteelKindDo : BaseDo
-{
 
-    private int _Id;
+public class WarehouseDo : BaseDo
+{
+    int _Id;
     public int Id
     {
         get => _Id;
