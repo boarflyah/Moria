@@ -107,7 +107,7 @@
                       HorizontalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch"
                       SelectedItemChanged="TreeView_SelectedItemChanged"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden" MouseLeftButtonUp="NavigationTreeView_MouseLeftButtonUp"
                       Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}">
                 <TreeView.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"

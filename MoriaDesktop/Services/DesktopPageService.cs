@@ -8,6 +8,8 @@ using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.Views.DriveComponents;
 using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktop.ViewModels.Products;
+using MoriaDesktop.Views.Products;
 
 namespace MoriaDesktop.Services;
 public class DesktopPageService: PageService
@@ -26,5 +28,6 @@ public class DesktopPageService: PageService
         Register(typeof(DriveDetailViewModel), typeof(DriveDetailView));
 
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
+        Register(typeof(ProductDetailViewModel), typeof(ProductDetailView));
     }
 }

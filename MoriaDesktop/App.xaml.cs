@@ -18,9 +18,8 @@ using MoriaDesktopServices.Services.API;
 using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.Views.DriveComponents;
 using MoriaDesktop.ViewModels.DriveComponents;
-using MoriaDesktop.ViewModels.Dictionary.DetailView;
-using MoriaDesktop.Views.Dictionary.ListView;
-using MoriaDesktop.ViewModels.Dictionary.ListView;
+using MoriaDesktop.Views.Products;
+using MoriaDesktop.ViewModels.Products;
 
 namespace MoriaDesktop;
 
@@ -74,6 +73,8 @@ public partial class App : Application
                         services.AddScoped<SteelKindListViewModel>();
                         services.AddScoped<WarehouseListView>();
                         services.AddScoped<WarehouseListViewModel>();
+                        services.AddScoped<ProductDetailView>();
+                        services.AddScoped<ProductDetailViewModel>();
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddScoped<ApiRequestService>();

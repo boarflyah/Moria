@@ -13,6 +13,7 @@ using MoriaModelsDo.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktop.ViewModels.Products;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -56,7 +57,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         NavigationItem node2 = new()
         {
-            Title = "Produkcja",
+            Title = "Słowniki",
             Items = new()
         };
 
@@ -65,11 +66,13 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         node2.Items.Add(new()
         {
-            Title = "Zamówienia",
+            Title = "Kolory",
+            ViewModelType = typeof(ColorViewModel)
         });
         node2.Items.Add(new()
         {
-            Title = "Napędy"
+            Title = "Magazyny",
+            ViewModelType = typeof(WarehouseViewModel),
         });
 
         node1.Items.Add(new()
@@ -81,6 +84,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         {
             Title = "Podmioty",
             ViewModelType = typeof(SecondViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Produkty",
+            ViewModelType = typeof(ProductDetailViewModel),
         });
 
         #endregion
@@ -297,8 +305,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     public void NavigateToFirstView()
     {
-        _navigationService.NavigateTo(typeof(ColorDetailViewModel), true);
-        //_navigationService.NavigateTo(typeof(LoginViewModel), true);
+        //_navigationService.NavigateTo(typeof(DriveDetailViewModel), true);
+        _navigationService.NavigateTo(typeof(LoginViewModel), true);
     }
 
     public void SetupInfo(SystemInfoStatus status = SystemInfoStatus.None, string text = "", bool isVisible = false)

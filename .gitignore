@@ -369,3 +369,4 @@ FodyWeavers.xsd
 /MoriaWCFService/App.config
 /MoriaConsoleApp/Services/TestCredentialsService.cs
 /MoriaConsoleApp/App.config
+/DatabaseGenerator/appsettings.json

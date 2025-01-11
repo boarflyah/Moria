@@ -1,12 +1,7 @@
 ﻿using MoriaModelsDo.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MoriaModelsDo.Models.Dictionaries;
-public class SteelKindDo : BaseDo
+namespace MoriaModelsDo.Models.Products;
+public class CategoryDo: BaseDo
 {
 
     private int _Id;
@@ -27,17 +22,6 @@ public class SteelKindDo : BaseDo
         set
         {
             _Name = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
-    private string _Symbol;
-    public string Symbol
-    {
-        get => _Symbol;
-        set
-        {
-            _Symbol = value;
             RaisePropertyChanged(value);
         }
     }
