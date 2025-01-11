@@ -66,6 +66,11 @@
                 <Setter Property="CornerRadius" Value="5"/>
             </Style>
         </Style.Resources>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="PasswordBox">

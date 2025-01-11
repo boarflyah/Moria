@@ -59,4 +59,14 @@ public class ApiEmployeeService : IApiEmployeeService
 
         return result;
     }
+
+    public async Task<EmployeeDo> GetEmployee(string username, int id)
+    {
+        return await _apiService.Get<EmployeeDo>(username, WebAPIEndpointsProvider.GetEmployeePath, null, id);
+    }
+
+    public async Task<bool> CreateEmployee(string username, EmployeeDo employee)
+    {
+        return await _apiService.Post<bool>(username, WebAPIEndpointsProvider.PostEmployeePath, null, employee);
+    }
 }

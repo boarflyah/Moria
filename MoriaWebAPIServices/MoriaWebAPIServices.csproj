@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\TempEmployeeService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MoriaBaseServices\MoriaBaseServices.csproj" />
     <ProjectReference Include="..\MoriaDTObjects\MoriaDTObjects.csproj" />
     <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />

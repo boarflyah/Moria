@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaModelsDo.Models.Dictionaries;
@@ -87,8 +88,32 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
 
     public async override Task Load()
     {
+        if (!isNew)
+            try
+            {
+                _appStateService.SetupLoading(true);
+
+                //var product = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
+                //if (product != null)
+                //{
+
+                //}
+                //else
+                //    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+            }
+            catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+            }
+            finally
+            {
+                _appStateService.SetupLoading();
+            }
     }
-    //=> throw new NotImplementedException();
 
     #endregion
 }

@@ -2,6 +2,7 @@
 using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Models.Contacts;
 using System.Collections.ObjectModel;
@@ -10,10 +11,12 @@ namespace MoriaDesktop.ViewModels.Contacts;
 public sealed class EmployeeListViewModel : BaseListViewModel
 {
     readonly IApiEmployeeService _employeeService;
+    readonly INavigationService _navigationService;
 
-    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService) : base(logger, appStateService)
+    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService) : base(logger, appStateService)
     {
         _employeeService = employeeService;
+        _navigationService = navigationService;
 
         Employees = new();
         Title = "Pracownicy";
@@ -27,10 +30,11 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 
     #region commands
 
-    public override async Task OnLoaded()
+    public async override Task OnLoaded()
     {
         try
         {
+            Employees.Clear();
             _appStateService.SetupLoading(true);
 
             var employees = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
@@ -59,9 +63,9 @@ public sealed class EmployeeListViewModel : BaseListViewModel
     public override void OnRowSelected(object row)
     {
         if (row is EmployeeDo edo)
-        {
-            //TODO navigate to EmployeeDetailViewModel
-        }
+                _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, edo.Id);
+        else
+            _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, null);
     }
 
     #endregion

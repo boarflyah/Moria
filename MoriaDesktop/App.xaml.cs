@@ -36,6 +36,8 @@ public partial class App : Application
                         services.AddSingleton<MainWindow>();
                         services.AddSingleton<MainWindowViewModel>();
                         services.AddSingleton<AppStateService>();
+
+
                         services.AddScoped<LoginView>();
                         services.AddScoped<LoginViewModel>();
                         services.AddScoped<SecondView>();
@@ -54,6 +56,10 @@ public partial class App : Application
                         services.AddScoped<DriveDetailViewModel>();
                         services.AddScoped<ProductDetailView>();
                         services.AddScoped<ProductDetailViewModel>();
+                        services.AddScoped<EmployeeDetailView>();
+                        services.AddScoped<EmployeeDetailViewModel>();
+
+
                         services.AddScoped<IPageService, DesktopPageService>();
                         services.AddSingleton<INavigationService, NavigationService>();
                         services.AddScoped<ApiRequestService>();

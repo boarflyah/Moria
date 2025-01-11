@@ -266,7 +266,7 @@ public class ApiRequestService
             Path = endpointPath
         };
         if (parameters.Any())
-            builder.Path += $"{string.Join("/", parameters)}";
+            builder.Path += $"/{string.Join("/", parameters)}";
 
         return builder.Uri;
     }

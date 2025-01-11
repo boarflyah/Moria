@@ -34,6 +34,17 @@ public class WebAPIEndpointsProvider
 
     public const string GetEmployeesPath = $"{Employee}";
 
+    /// <summary>
+    /// Parameter from path: employee.id
+    /// </summary>
+    public const string GetEmployeePath = $"{Employee}";
+
+    /// <summary>
+    /// Body: EmployeeDo
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string PostEmployeePath = $"{Employee}";
+
     #endregion
 
 #if DEBUG

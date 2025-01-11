@@ -27,6 +27,8 @@ public partial class EmployeeListView : Page, IViewModelContent
     private void EmployeeDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.Source is DataGrid dg)
+        {
             (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
+        }
     }
 }

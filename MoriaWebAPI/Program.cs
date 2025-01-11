@@ -1,9 +1,11 @@
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MoriaWebAPI.Services;
 using MoriaWebAPI.Services.Interfaces;
+using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services;
 using MoriaWebAPIServices.Services.Interfaces;
 using Serilog;
@@ -32,7 +34,11 @@ public class Program
             builder.Logging.AddSerilog(Log.Logger);
 
             // Add services to the container.
-            builder.Services.AddScoped<IEmployeeService, TempEmployeeService>();
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseNpgsql(builder.Configuration.GetConnectionString("MoriaDatabase"));
+            });
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);

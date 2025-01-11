@@ -51,4 +51,10 @@ public class TempEmployeeService : IEmployeeService
         return result;
     }
 
+    public Task<EmployeeDo> GetEmployee(int id)
+    {
+        return null;
+    }
+
+
 }

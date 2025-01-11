@@ -33,6 +33,11 @@ public class AppStateService
         _mainViewModel.SetupLoading(visible, text);
     }
 
+    public void SetupTitle(string title)
+    {
+        _mainViewModel.PageTitle = title;
+    }
+
     public void OnLoggedIn(EmployeeDo employee)
     {
         _mainViewModel.IsLoggedIn = true;

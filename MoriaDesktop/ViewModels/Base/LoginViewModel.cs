@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
@@ -12,16 +11,14 @@ public class LoginViewModel : ViewModelBase
     #region services
 
     readonly INavigationService _navigationService;
-    readonly IApiEmployeeService _employeeService;
     readonly IApiTokenService _tokenService;
 
     #endregion
 
-    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, IApiEmployeeService employeeService, IApiTokenService tokenService,
+    public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, IApiTokenService tokenService,
         AppStateService appStateService) : base(logger, appStateService)
     {
         _navigationService = navigationService;
-        _employeeService = employeeService;
         _tokenService = tokenService;
 
         Title = "Zaloguj się";

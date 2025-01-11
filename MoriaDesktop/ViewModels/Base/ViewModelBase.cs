@@ -35,17 +35,17 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
     public ICommand CloseCommand { get; }
     public ICommand EditCommand { get; }
 
-    private void Save()
+    protected virtual void Save()
     {
         // 
     }
 
-    private void SaveAndClose()
+    protected virtual void SaveAndClose()
     {
         // 
     }
 
-    private void Close()
+    protected virtual void Close()
     {
         // 
     }
@@ -168,7 +168,7 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
 
     #endregion
 
-    private void Edit()
+    protected virtual void Edit()
     {
         // 
     }

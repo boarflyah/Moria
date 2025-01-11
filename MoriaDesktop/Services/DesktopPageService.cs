@@ -24,7 +24,7 @@ public class DesktopPageService: PageService
         Register(typeof(SteelKindView), typeof(SteelKindView));
         Register(typeof(PositionViewModel), typeof(PositionView));
         Register(typeof(ContactViewModel), typeof(ContactView));
-        Register(typeof(EmployeeViewModel), typeof(EmployeeView));
+        Register(typeof(EmployeeDetailViewModel), typeof(EmployeeDetailView));
         Register(typeof(DriveDetailViewModel), typeof(DriveDetailView));
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
         Register(typeof(ProductDetailViewModel), typeof(ProductDetailView));

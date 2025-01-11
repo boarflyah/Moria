@@ -6,7 +6,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Page">
-                    <Border BorderBrush="Black" BorderThickness="1" Background="White">
+                    <Border BorderBrush="Black" BorderThickness="0" Background="White" CornerRadius="0">
                         <Grid>
                             <!-- Główna struktura Page -->
                             <Grid.RowDefinitions>
@@ -31,16 +31,16 @@
 
                                 <!-- Ikony narzędzi -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zapisz"  Command="{Binding SaveCommand}">
+                                    <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz"  Command="{Binding SaveCommand}">
                                         <Image Source="/Images/save.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij" Command="{Binding SaveAndCloseCommand}">
+                                    <Button x:Name="SaveAndCloseButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij" Command="{Binding SaveAndCloseCommand}">
                                         <Image Source="/Images/saveExit.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zamknij" Command="{Binding CloseCommand}">
+                                    <Button x:Name="ExitButton" Width="30" Height="30" Margin="5" ToolTip="Zamknij" Command="{Binding CloseCommand}">
                                         <Image Source="/Images/Exit.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Edytuj" Command="{Binding EditCommand}">
+                                    <Button x:Name="EditButton" Width="30" Height="30" Margin="5" ToolTip="Edytuj" Command="{Binding EditCommand}">
                                         <Image Source="/Images/edit.png"/>
                                     </Button>
                                 </StackPanel>
@@ -62,15 +62,19 @@
                             </Grid>
 
                             <!-- Stopka -->
-                            <Border Grid.Row="2" Background="#EEE" Height="30" VerticalAlignment="Bottom">
+                            <!--<Border Grid.Row="2" Background="#EEE" Height="30" VerticalAlignment="Bottom">
                                 <TextBlock Text="Last update by"
                                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"
                                            FontStyle="Italic"/>
-                            </Border>
+                            </Border>-->
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="GlobalListViewStyle" TargetType="Page">
+        <Setter Property="Background" Value="White"/>
     </Style>
 </ResourceDictionary>

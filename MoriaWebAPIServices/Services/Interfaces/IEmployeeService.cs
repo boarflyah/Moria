@@ -7,4 +7,8 @@ public interface IEmployeeService
     Task<EmployeeDo> LogIn(string username, string password);
 
     Task<IEnumerable<EmployeeDo>> GetEmployees();
+    
+    Task<EmployeeDo> GetEmployee(int id);
+
+    Task<bool> CreateEmployee(EmployeeDo employee);
 }

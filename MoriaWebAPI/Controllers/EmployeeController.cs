@@ -45,13 +45,11 @@ public class EmployeeController: ControllerBase
 
     [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
     [Produces<IEnumerable<EmployeeDo>>]
-    public async Task<IActionResult> GetEmployees()
+    public async Task<IActionResult> Get()
     {
         try
         {
             var user = await _employeeService.GetEmployees();
-            if (user == null)
-                return Unauthorized();
 
             return Ok(user);
         }
@@ -61,7 +59,49 @@ public class EmployeeController: ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Method: {nameof(Login)}");
+            _logger.LogError(ex, $"Method: {nameof(Get)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetEmployeePath}/{{id}}")]
+    [Produces<EmployeeDo>]
+    public async Task<IActionResult> Get(int id)
+    {
+        try
+        {
+            var user = await _employeeService.GetEmployee(id);
+
+            return Ok(user);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(Get)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpPost($"{WebAPIEndpointsProvider.PostEmployeePath}")]
+    [Produces<bool>]
+    public async Task<IActionResult> Post(EmployeeDo employee)
+    {
+        try
+        {
+            var user = await _employeeService.CreateEmployee(employee);
+
+            return Ok(user);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(Post)}");
             return StatusCode(501, ex.Message);
         }
     }

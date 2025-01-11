@@ -23,6 +23,17 @@ namespace DatabaseGenerator
             {
                 
                 context.Database.Migrate();
+
+                context.Employees.Add(new MoriaModels.Models.EntityPersonel.Employee()
+                {
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Username = "admin",
+                    Password = "admin",
+                });
+
+                context.SaveChanges();
+
                 Console.WriteLine("Baza danych została pomyślnie wygenerowana!");
             }
         }

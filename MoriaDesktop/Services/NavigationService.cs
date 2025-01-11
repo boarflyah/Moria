@@ -70,7 +70,12 @@ public class NavigationService : INavigationService
                 }
             OnNavigated?.Invoke(this, new OnNavigatedEventArgs(e.Content, e.ExtraData));
             if (frame.Content is Page page && page.DataContext is INavigationAware navigationAware)
-                navigationAware.OnNavigatedTo(e.ExtraData);
+            {
+                if (e.ExtraData is object[] array)
+                    navigationAware.OnNavigatedTo(array);
+                else
+                    navigationAware.OnNavigatedTo(e.ExtraData);
+            }
         }
     }
 }
