@@ -2,7 +2,7 @@
 using MoriaBaseServices.Services;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPI.Services.Interfaces;
-using MoriaWebAPIServices.Services.Interfaces;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPI.Controllers;
 
@@ -11,10 +11,10 @@ namespace MoriaWebAPI.Controllers;
 public class TokenController : ControllerBase
 {
     readonly ITokenGeneratorService _tokenGeneratorService;
-    readonly IEmployeeService _userService;
+    readonly IEmployeeControllerService _userService;
     readonly ILogger<TokenController> _logger;
 
-    public TokenController(ITokenGeneratorService tokenGeneratorService, IEmployeeService userService, ILogger<TokenController> logger)
+    public TokenController(ITokenGeneratorService tokenGeneratorService, IEmployeeControllerService userService, ILogger<TokenController> logger)
     {
         _logger = logger;
         _tokenGeneratorService = tokenGeneratorService;

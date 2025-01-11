@@ -6,7 +6,7 @@ using MoriaBaseServices;
 using MoriaBaseServices.Services;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPI.Services.Interfaces;
-using MoriaWebAPIServices.Services.Interfaces;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPI.Controllers;
 
@@ -15,12 +15,13 @@ namespace MoriaWebAPI.Controllers;
 [Authorize]
 public class EmployeeController: ControllerBase
 {
-    readonly IEmployeeService _employeeService;
+    readonly IEmployeeControllerService _employeeService;
     readonly ILogger<EmployeeController> _logger;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IEmployeeControllerService employeeService, ILogger<EmployeeController> logger)
     {
         _employeeService = employeeService;
+        _logger = logger;
     }
 
     [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]

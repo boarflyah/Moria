@@ -6,6 +6,11 @@ public abstract class BaseModel
         get; set;
     }
 
+    public string LockedBy
+    {
+        get; set;
+    }
+
     public string LastModified
     {
         get; set;

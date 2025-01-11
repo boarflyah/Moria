@@ -20,6 +20,9 @@ using MoriaDesktop.Views.DriveComponents;
 using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.Views.Products;
 using MoriaDesktop.ViewModels.Products;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktop.Views.Dictionary.ListView;
+using MoriaDesktop.ViewModels.Dictionary.ListView;
 
 namespace MoriaDesktop;
 

@@ -12,6 +12,18 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
         }
     }
 
+
+    private string _LockedBy;
+    public string LockedBy
+    {
+        get => _LockedBy;
+        set
+        {
+            _LockedBy = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     string _LastModified;
     public string LastModified
     {

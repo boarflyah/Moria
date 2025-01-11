@@ -1,7 +1,9 @@
-﻿using MoriaModels.Models.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.EntityPersonel;
 
+[Index(nameof(Username), IsUnique = true)]
 public class Employee: BaseModel
 {
     public int Id { get; set; }

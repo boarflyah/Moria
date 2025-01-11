@@ -1,15 +1,16 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Dictionary;
 
-public partial class MotorView : Page, IViewModelContent
+public partial class MotorDetailView : Page, IViewModelContent
 {
     public object GetViewModel() => DataContext;
 
-    public MotorView( MotorViewModel viewModel)
+    public MotorDetailView(MotorDetailViewModel viewModel)
     {
         InitializeComponent();
         this.DataContext = viewModel;

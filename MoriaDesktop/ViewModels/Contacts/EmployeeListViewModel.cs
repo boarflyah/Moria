@@ -26,6 +26,18 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 
     public ObservableCollection<EmployeeDo> Employees { get; set; }
 
+
+    private EmployeeDo _Selected;
+    public EmployeeDo Selected
+    {
+        get => _Selected;
+        set
+        {
+            _Selected = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region commands

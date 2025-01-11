@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
-using MoriaDesktop.ViewModels.Dictionary;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Dictionary;
-public partial class SteelKindView : Page, IViewModelContent
+public partial class SteelKindDetailView : Page, IViewModelContent
 {
     public object GetViewModel() => DataContext;
 
-    public SteelKindView(SteelKindViewModel viewModel)
+    public SteelKindDetailView(SteelKindDetailViewModel viewModel)
     {
         InitializeComponent();
         this.DataContext = viewModel;

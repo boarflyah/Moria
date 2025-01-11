@@ -14,6 +14,7 @@ using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Products;
+using MoriaDesktop.ViewModels.Dictionary.ListView;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -67,12 +68,12 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         node2.Items.Add(new()
         {
             Title = "Kolory",
-            ViewModelType = typeof(ColorViewModel)
+            ViewModelType = typeof(ColorListViewModel)
         });
         node2.Items.Add(new()
         {
             Title = "Magazyny",
-            ViewModelType = typeof(WarehouseViewModel),
+            ViewModelType = typeof(WarehouseListViewModel),
         });
 
         node1.Items.Add(new()
