@@ -1,0 +1,97 @@
+﻿<Page x:Class="MoriaDesktop.Views.Dictionary.DetailView.ColorDetailView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ColorView"      
+      Style="{StaticResource GlobalPageStyle}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Nazwa" Grid.Row="0" Margin="0,0,0,5"/>
+            <TextBox Name="TextBox1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Kod" Grid.Row="0" Margin="0,0,0,5"/>
+            <TextBox Name="TextBox2" Text="{Binding Code, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1"/>
+        </Grid>
+
+        <ComboBox Name="comboBox1"
+            Grid.Column="0" Grid.Row="1"
+            ItemsSource="{Binding Listmotos}"
+            Text="My Motors"
+            DisplayMemberPath="Name"
+            IsEditable="true">
+
+            <ComboBox.Template>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <!-- Pole tekstowe dla wybranego elementu -->
+                        <ToggleButton Name="ToggleButton"                              
+                              Grid.Column="2" 
+                              Focusable="false"
+                              IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" 
+                              ClickMode="Press"/>
+                        <ContentPresenter Name="ContentSite"
+                                  IsHitTestVisible="False"
+                                  Content="{TemplateBinding SelectionBoxItem}"
+                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                  ContentStringFormat="{TemplateBinding DisplayMemberPath}"
+                                  Margin="3,3,23,3"
+                                  VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Left"/>
+                        <TextBox Visibility="Collapsed"/>
+                        <Popup Name="Popup"
+                       Placement="Bottom"
+                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                       AllowsTransparency="True"
+                       Focusable="False"
+                       PopupAnimation="Slide">
+                            <Grid Name="DropDown"
+                          SnapsToDevicePixels="True"
+                          MinWidth="{TemplateBinding ActualWidth}"
+                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder" 
+                                BorderThickness="1"/>
+                                <ScrollViewer Margin="4" SnapsToDevicePixels="True">
+                                    <StackPanel>
+                                        <!-- Przycisk "Nowy" -->
+                                        <Button Content="Nowy" Click="NewButton_Click" Height="30" Margin="2"/>
+                                        <!-- Lista elementów -->
+                                        <ItemsPresenter/>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </ComboBox.Template>
+
+        </ComboBox>
+
+        <TextBlock Text="{Binding ElementName=comboBox1, Path=SelectedItem}"/>
+
+    </Grid>
+</Page>
