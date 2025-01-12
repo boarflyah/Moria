@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoriaDesktop.ViewModels.Dictionary.ListView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MoriaDesktop.Views.Dictionary.ListView
+namespace MoriaDesktop.Views.Dictionary.ListView;
+
+public partial class SteelKindListView : Page
 {
-    /// <summary>
-    /// Interaction logic for SteelKindListView.xaml
-    /// </summary>
-    public partial class SteelKindListView : Page
+    public SteelKindListView(SteelKindListViewModel listViewModel) : this()
     {
-        public SteelKindListView()
-        {
-            InitializeComponent();
-        }
+        DataContext = listViewModel;
+    }
+
+    public SteelKindListView()
+    {
+        InitializeComponent();
     }
 }

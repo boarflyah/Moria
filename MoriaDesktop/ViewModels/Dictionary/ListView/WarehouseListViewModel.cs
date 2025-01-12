@@ -20,7 +20,7 @@ public sealed class WarehouseListViewModel : BaseListViewModel
 
     public override Task OnLoaded()
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     public override void OnRowSelected(object row)

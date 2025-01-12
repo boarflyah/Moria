@@ -61,9 +61,26 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Słowniki",
             Items = new()
         };
+        NavigationItem node3 = new()
+        {
+            Title = "Testy",
+            Items = new()
+        };
 
         Navigation.Add(node1);
         Navigation.Add(node2);
+        Navigation.Add(node3);
+
+        node1.Items.Add(new()
+        {
+            Title = "Pracownicy",
+            ViewModelType = typeof(EmployeeListViewModel),
+        });
+        node1.Items.Add(new()
+        {
+            Title = "Podmioty",
+            ViewModelType = typeof(ContactListViewModel),
+        });
 
         node2.Items.Add(new()
         {
@@ -75,22 +92,33 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Magazyny",
             ViewModelType = typeof(WarehouseListViewModel),
         });
-
-        node1.Items.Add(new()
+        node2.Items.Add(new()
         {
-            Title = "Pracownicy",
-            ViewModelType = typeof(EmployeeListViewModel),
-        });
-        node1.Items.Add(new()
-        {
-            Title = "Podmioty",
-            ViewModelType = typeof(SecondViewModel),
+            Title = "Przekładnie",
+            ViewModelType = typeof(MotorGearListViewModel),
         });
         node2.Items.Add(new()
         {
-            Title = "Produkty",
-            ViewModelType = typeof(ProductDetailViewModel),
+            Title = "Silniki",
+            ViewModelType = typeof(MotorListViewModel),
         });
+        node2.Items.Add(new()
+        {
+            Title = "Stanowiska",
+            ViewModelType = typeof(PositionListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Rodzaj stali",
+            ViewModelType = typeof(SteelKindListViewModel),
+        });
+
+        node3.Items.Add(new()
+        {
+            Title = "Test",
+            ViewModelType = typeof(ColorDetailViewModel),
+        });
+
 
         #endregion
     }

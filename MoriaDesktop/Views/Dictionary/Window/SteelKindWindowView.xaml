@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="SteelKindWindowView" Height="450" Width="800"
         MouseLeftButtonDown="DragWindow"
-        Style="{StaticResource GlobalWindowStyle}">
+        Style="{StaticResource GlobalWindowStyle}"
+        Loaded="WinowLoaed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

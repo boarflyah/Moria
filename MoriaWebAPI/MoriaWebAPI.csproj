@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseGenerator\DatabaseGenerator.csproj" />
     <ProjectReference Include="..\MoriaDTObjects\MoriaDTObjects.csproj" />
     <ProjectReference Include="..\MoriaWebAPIServices\MoriaWebAPIServices.csproj" />
   </ItemGroup>

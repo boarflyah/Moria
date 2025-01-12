@@ -10,12 +10,15 @@ using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.Views.Products;
+using MoriaDesktop.Views.Dictionary.ListView;
+using MoriaDesktop.ViewModels.Dictionary.ListView;
 
 namespace MoriaDesktop.Services;
 public class DesktopPageService: PageService
 {
     public DesktopPageService()
     {
+        //DetailView
         Register(typeof(LoginViewModel), typeof(LoginView));
         Register(typeof(SecondViewModel), typeof(SecondView));
         Register(typeof(WarehouseDetailViewModel), typeof(WarehouseDetailView));
@@ -26,9 +29,17 @@ public class DesktopPageService: PageService
         Register(typeof(PositionDetailViewModel), typeof(PositionDetailView));
         Register(typeof(ContactDetailViewModel), typeof(ContactDetailView));
         Register(typeof(DriveDetailViewModel), typeof(DriveDetailView));
-
-        Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
         Register(typeof(EmployeeDetailViewModel), typeof(EmployeeDetailView));
         Register(typeof(ProductDetailViewModel), typeof(ProductDetailView));
+
+        //ListView
+        Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
+        Register(typeof(ColorListViewModel), typeof(ColorListView));
+        Register(typeof(ContactListViewModel), typeof(ContactListView));
+        Register(typeof(MotorGearListViewModel), typeof(MotorGearListView));
+        Register(typeof(MotorListViewModel), typeof(MotorListView));
+        Register(typeof(PositionListViewModel), typeof(PositionListView));
+        Register(typeof(SteelKindListViewModel), typeof(SteelKindListView));
+        Register(typeof(WarehouseListViewModel), typeof(WarehouseListView));
     }
 }

@@ -9,6 +9,23 @@
       Title="WarehouseListView">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="WarehouseDataGrid"
+              Grid.Row="1"
+              ItemsSource="{Binding Warehouses, Mode=OneWay}"
+              MouseDoubleClick="WarehouseDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol"
+                                Binding="{Binding Symbol}"
+                                Width="*"/>
+                <DataGridTextColumn Header="Nazwa" 
+                                Binding="{Binding Name}"
+                                Width="3*"/>                
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

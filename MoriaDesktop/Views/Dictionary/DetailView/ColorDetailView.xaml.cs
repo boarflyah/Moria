@@ -26,7 +26,6 @@ public partial class ColorDetailView : Page
     {
         var colorWindow = new ColorWindowView(cdvm);
 
-        // Wywołujemy okno w trybie modalnym
         bool? dialogResult = colorWindow.ShowDialog();
 
     }

@@ -33,15 +33,13 @@
 
                                 <!-- Ikony narzędzi -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zapisz">
+                                    <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz">
                                         <Image Source="/Images/save.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij">
+                                    <Button x:Name="SaveAndCloseButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij">
                                         <Image Source="/Images/saveExit.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Edytuj">
-                                        <Image Source="/Images/edit.png"/>
-                                    </Button>
+                                 
                                 </StackPanel>
 
                                 <!-- Tytuł okna -->
@@ -52,10 +50,10 @@
 
                                 <!-- Przyciski sterujące -->
                                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Minimalizuj">
+                                    <Button x:Name="MinimalizeButton" Width="30" Height="30" Margin="5" ToolTip="Minimalizuj">
                                         <Image Source="/Images/minimize.png"/>
                                     </Button>
-                                    <Button Width="30" Height="30" Margin="5" ToolTip="Zamknij" Command="{Binding CloseCommand, RelativeSource={RelativeSource AncestorType=Window}}">
+                                    <Button x:Name="ExitButton" Width="30" Height="30" Margin="5" ToolTip="Zamknij">
                                         <Image Source="/Images/close.png"/>
                                     </Button>
                                 </StackPanel>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoriaDesktop.ViewModels.Dictionary.ListView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MoriaDesktop.Views.Dictionary.ListView
+namespace MoriaDesktop.Views.Dictionary.ListView;
+
+public partial class WarehouseListView : Page
 {
-    /// <summary>
-    /// Interaction logic for WarehouseListView.xaml
-    /// </summary>
-    public partial class WarehouseListView : Page
+    public object GetViewModel() => DataContext;
+
+    public WarehouseListView(WarehouseListViewModel warehouseListViewModel) : this()
     {
-        public WarehouseListView()
-        {
-            InitializeComponent();
-        }
+        DataContext = warehouseListViewModel;
+    }
+    public WarehouseListView()
+    {
+        InitializeComponent();
+    }
+    private void WarehouseDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+
     }
 }
