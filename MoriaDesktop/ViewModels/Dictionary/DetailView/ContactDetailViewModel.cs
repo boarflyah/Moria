@@ -2,11 +2,12 @@
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
-public class ContactDetailViewModel : ViewModelBase
+public class ContactDetailViewModel : BaseDetailViewModel
 {
-    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
     {
     }
 
@@ -43,6 +44,36 @@ public class ContactDetailViewModel : ViewModelBase
             _LongName = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public override Task Load()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Type GetModelType()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task LoadObject()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task<bool> SaveNewObject()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override Task<bool> UpdateExistingObject()
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override bool CheckPropertyName(string propertyName)
+    {
+        throw new NotImplementedException();
     }
 
     #endregion
