@@ -56,7 +56,7 @@ public class EmployeeController: ControllerBase
         }
         catch (MoriaApiException mae)
         {
-            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
         }
         catch (Exception ex)
         {
@@ -77,7 +77,7 @@ public class EmployeeController: ControllerBase
         }
         catch (MoriaApiException mae)
         {
-            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
         }
         catch (Exception ex)
         {
@@ -87,7 +87,7 @@ public class EmployeeController: ControllerBase
     }
 
     [HttpPost($"{WebAPIEndpointsProvider.PostEmployeePath}")]
-    [Produces<bool>]
+    [Produces<EmployeeDo>]
     public async Task<IActionResult> Post(EmployeeDo employee)
     {
         try
@@ -98,11 +98,53 @@ public class EmployeeController: ControllerBase
         }
         catch (MoriaApiException mae)
         {
-            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, mae);
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Method: {nameof(Post)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpPut($"{WebAPIEndpointsProvider.PutEmployeePath}")]
+    [Produces<EmployeeDo>]
+    public async Task<IActionResult> Put(EmployeeDo employee)
+    {
+        try
+        {
+            var user = await _employeeService.UpdateEmployee(employee);
+
+            return Ok(user);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(Put)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpDelete($"{WebAPIEndpointsProvider.PostEmployeePath}/{{id}}")]
+    [Produces<bool>]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            var user = await _employeeService.DeleteEmployee(id);
+
+            return Ok(user);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(Delete)}");
             return StatusCode(501, ex.Message);
         }
     }

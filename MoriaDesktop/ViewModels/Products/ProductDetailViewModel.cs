@@ -1,14 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Products;
 public sealed class ProductDetailViewModel : BaseDetailViewModel
 {
-    public ProductDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
+    public ProductDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService lockService, INavigationService navigationService) : base(logger, appStateService, lockService, navigationService)
     {
         Title = "Nowy produkt";
     }
@@ -86,34 +87,11 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
 
     #region methods
 
-    public async override Task Load()
-    {
-        if (!isNew)
-            try
-            {
-                _appStateService.SetupLoading(true);
-
-                //var product = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
-                //if (product != null)
-                //{
-
-                //}
-                //else
-                //    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
-            }
-            catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
-            }
-            catch (Exception ex)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
-            }
-            finally
-            {
-                _appStateService.SetupLoading();
-            }
-    }
+    protected override Type GetModelType() => typeof(ProductDo);
+    protected override Task LoadObject() => throw new NotImplementedException();
+    protected override Task<bool> SaveNewObject() => throw new NotImplementedException();
+    protected override Task<bool> UpdateExistingObject() => throw new NotImplementedException();
+    protected override bool CheckPropertyName(string propertyName) => throw new NotImplementedException();
 
     #endregion
 }

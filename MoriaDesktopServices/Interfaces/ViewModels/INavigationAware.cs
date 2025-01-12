@@ -2,4 +2,6 @@
 public interface INavigationAware
 {
     void OnNavigatedTo(params object[] parameters);
+
+    Task OnNavigatingFrom();
 }

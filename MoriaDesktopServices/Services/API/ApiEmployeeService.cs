@@ -23,36 +23,6 @@ public class ApiEmployeeService : IApiEmployeeService
 
     public async Task<IEnumerable<EmployeeDo>> GetEmployees(string username)
     {
-        #region mockup
-
-        //var result = new List<EmployeeDo>();
-        //result.Add(new()
-        //{
-        //    Id = 1,
-        //    FirstName = "Arek",
-        //    LastName = "Nowy",
-        //    PhoneNumber = "346125654",
-        //    Username = "ANO",
-        //});
-        //result.Add(new()
-        //{
-        //    Id = 1,
-        //    FirstName = "Krzysiek",
-        //    LastName = "Kowalski",
-        //    PhoneNumber = "32643253",
-        //    Username = "KKO",
-        //});
-        //result.Add(new()
-        //{
-        //    Id = 1,
-        //    FirstName = "Jan",
-        //    LastName = "Nowak",
-        //    PhoneNumber = "89754573",
-        //    Username = "JNO",
-        //});
-
-        #endregion
-
         var result = await _apiService.Get<IEnumerable<EmployeeDo>>(username, WebAPIEndpointsProvider.GetEmployeesPath, null);
         if (result == null)
             return new List<EmployeeDo>();
@@ -65,8 +35,19 @@ public class ApiEmployeeService : IApiEmployeeService
         return await _apiService.Get<EmployeeDo>(username, WebAPIEndpointsProvider.GetEmployeePath, null, id);
     }
 
-    public async Task<bool> CreateEmployee(string username, EmployeeDo employee)
+    public async Task<EmployeeDo> CreateEmployee(string username, EmployeeDo employee)
     {
-        return await _apiService.Post<bool>(username, WebAPIEndpointsProvider.PostEmployeePath, null, employee);
+        return await _apiService.Post<EmployeeDo>(username, WebAPIEndpointsProvider.PostEmployeePath, null, employee);
     }
+
+    public async Task<EmployeeDo> UpdateEmployee(string username, EmployeeDo employee)
+    {
+        return await _apiService.Put<EmployeeDo>(username, WebAPIEndpointsProvider.PutEmployeePath, null, employee);
+    }
+
+    public async Task<bool> DeleteEmployee(string username, int id)
+    {
+        return await _apiService.Delete<bool>(username, WebAPIEndpointsProvider.DeleteEmployeePath, null, id);
+    }
+
 }

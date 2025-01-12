@@ -5,9 +5,11 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="3"/>
         <Setter Property="IsReadOnly" Value="False"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="RowHeaderWidth" Value="15"/>
         <Setter Property="SelectionUnit" Value="CellOrRowHeader"/>
         <Setter Property="MinRowHeight" Value="30"/>
+        <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="Background" Value="White"/>
     </Style>

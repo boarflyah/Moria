@@ -10,5 +10,7 @@ public interface IApiEmployeeService
     Task<EmployeeDo> Login(string username, string password);
     Task<IEnumerable<EmployeeDo>> GetEmployees(string username);
     Task<EmployeeDo> GetEmployee(string username, int id);
-    Task<bool> CreateEmployee(string username, EmployeeDo employee);
+    Task<EmployeeDo> CreateEmployee(string username, EmployeeDo employee);
+    Task<EmployeeDo> UpdateEmployee(string username, EmployeeDo employee);
+    Task<bool> DeleteEmployee(string username, int id);
 }

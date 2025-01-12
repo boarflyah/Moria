@@ -61,6 +61,31 @@ public class ModelsCreator
         return result;
     }
 
+    public async Task UpdateEmployee(Employee employee, EmployeeDo employeeModel)
+    {
+        employee.FirstName = employeeModel.FirstName;
+        employee.LastName = employeeModel.LastName;
+        employee.Username = employeeModel.Username;
+        if(employeeModel.Password != null)
+            employee.Password = employeeModel.Password;
+        employee.PhoneNumber = employeeModel.PhoneNumber;
+        employee.LastModified = employeeModel.LastModified;
+        employee.IsLocked = false;
+        employee.LockedBy = string.Empty;
+
+        if (employeeModel.Position == null)
+            employee.Position = null;
+        else
+        {
+            employee.Position = await _context.Positions.FindAsync(employee.Position.Id);
+            if (employee.Position == null)
+            {
+                employee.Position = await CreatePosition(employeeModel.Position);
+                await _context.AddAsync(employee.Position);
+            }
+        }
+    }
+
     public PositionDo GetPosition(Position position)
     {
         return new()

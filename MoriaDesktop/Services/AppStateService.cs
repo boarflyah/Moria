@@ -19,6 +19,16 @@ public class AppStateService
         get; set;
     }
 
+    public Type CurrentDetailViewObjectType
+    {
+        get; set;
+    }
+
+    public int CurrentDetailViewObjectId
+    {
+        get; set;
+    }
+
     #endregion
 
     #region Methods

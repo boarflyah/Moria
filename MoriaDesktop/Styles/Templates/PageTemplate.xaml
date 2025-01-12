@@ -32,16 +32,16 @@
                                 <!-- Ikony narzędzi -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz"  Command="{Binding SaveCommand}">
-                                        <Image Source="/Images/save.png"/>
+                                        <Image Source="/Images/save.png" Width="20" Height="20"/>
                                     </Button>
                                     <Button x:Name="SaveAndCloseButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij" Command="{Binding SaveAndCloseCommand}">
-                                        <Image Source="/Images/saveExit.png"/>
+                                        <Image Source="/Images/saveExit.png" Width="20" Height="20"/>
                                     </Button>
                                     <Button x:Name="ExitButton" Width="30" Height="30" Margin="5" ToolTip="Zamknij" Command="{Binding CloseCommand}">
                                         <Image Source="/Images/Exit.png"/>
                                     </Button>
                                     <Button x:Name="EditButton" Width="30" Height="30" Margin="5" ToolTip="Edytuj" Command="{Binding EditCommand}">
-                                        <Image Source="/Images/edit.png"/>
+                                        <Image Source="/Images/edit.png" Width="20" Height="20"/>
                                     </Button>
                                 </StackPanel>
 
@@ -76,5 +76,71 @@
 
     <Style x:Key="GlobalListViewStyle" TargetType="Page">
         <Setter Property="Background" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Page">
+                    <Border BorderThickness="0" Background="White" CornerRadius="0">
+                        <Grid>
+                            <!-- Główna struktura Page -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <!-- Pasek narzędzi -->
+                                <RowDefinition Height="*"/>
+                                <!-- Główna zawartość -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Stopka -->
+                            </Grid.RowDefinitions>
+
+                            <!-- Pasek narzędzi -->
+                            <Grid Grid.Row="0" Background="#EEE" Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Ikony -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Tytuł -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Informacje użytkownika -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Ikony narzędzi -->
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button x:Name="NewButton" Width="30" Height="30" Margin="5" ToolTip="Utwórz"  Command="{Binding NewCommand}">
+                                        <Image Source="/Images/create.png"/>
+                                    </Button>
+                                    <Button x:Name="DeleteButton" Width="30" Height="30" Margin="5" ToolTip="Usuń" Command="{Binding DeleteCommand}">
+                                        <Image Source="/Images/delete.png"/>
+                                    </Button>
+                                    <Button x:Name="RefreshButton" Width="30" Height="30" Margin="5" ToolTip="Odśwież" Command="{Binding RefreshCommand}">
+                                        <Image Source="/Images/refresh.png" Width="20" Height="20"/>
+                                    </Button>
+                                </StackPanel>
+
+                                <!-- Tytuł strony -->
+                                <!--<TextBlock Grid.Column="1" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Page}}"
+                                           VerticalAlignment="Center" 
+                                           FontWeight="Bold" FontSize="16" 
+                                           HorizontalAlignment="Center"/>-->
+
+                                <!-- Informacje użytkownika -->
+                                <!--<TextBlock Grid.Column="2" Text="Edit by user"
+                                           VerticalAlignment="Center" Margin="10"/>-->
+                            </Grid>
+
+                            <!-- Główna zawartość (Grid do dynamicznej treści) -->
+                            <Grid Grid.Row="1" Margin="10" x:Name="ContentArea">
+                                <ContentPresenter/>
+                            </Grid>
+
+                            <!-- Stopka -->
+                            <!--<Border Grid.Row="2" Background="#EEE" Height="30" VerticalAlignment="Bottom">
+                                <TextBlock Text="Last update by"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10"
+                                           FontStyle="Italic"/>
+                            </Border>-->
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

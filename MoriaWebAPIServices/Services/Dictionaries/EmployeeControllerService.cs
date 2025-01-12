@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoriaModels.Models.EntityPersonel;
+using MoriaBaseServices;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
+using Npgsql;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 public class EmployeeControllerService : IEmployeeControllerService
@@ -48,32 +49,37 @@ public class EmployeeControllerService : IEmployeeControllerService
         return result;
     }
 
-    public async Task<bool> CreateEmployee(EmployeeDo employee)
+    public async Task<EmployeeDo> CreateEmployee(EmployeeDo employee)
     {
-        var entity = await _context.AddAsync(await _creator.CreateEmployee(employee));
-        var created = await _context.SaveChangesAsync();
-
-        //TODO - obsluzyc powtorzenie Username
-
-        return true;
+        try
+        {
+            var entity = await _context.AddAsync(await _creator.CreateEmployee(employee));
+            var created = await _context.SaveChangesAsync();
+            return _creator.GetEmployeeDo(entity.Entity);
+        }
+        catch (DbUpdateException due) when(due.InnerException is PostgresException pe && pe.SqlState.Equals("23505"))
+        {
+            throw new MoriaApiException(MoriaApiExceptionReason.ValueIsNotUnique, MoriaApiException.ApiExceptionThrownStatusCode);
+        }
     }
 
-    public async Task<EmployeeDo> EditEmployee(EmployeeDo employee)
+    public async Task<EmployeeDo> UpdateEmployee(EmployeeDo employee)
     {
-        var searchEmployee = await _context.Employees.FindAsync(employee.Id);
-        if (searchEmployee == null)
-            return null;
+        try
+        {
+            var searchEmployee = await _context.Employees.FindAsync(employee.Id);
+            if (searchEmployee == null)
+                throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchEmployee.FirstName = employee.FirstName;
-        searchEmployee.LastName = employee.LastName;
-        searchEmployee.Username = employee.Username;
-        searchEmployee.Password = employee.Password;
-        searchEmployee.PhoneNumber = employee.PhoneNumber;
-        //searchEmployee.PositionId = employee.Position?.Id ?? 0;
+            await _creator.UpdateEmployee(searchEmployee, employee);
 
-        await _context.SaveChangesAsync();
-
-        return employee;
+            var created = await _context.SaveChangesAsync();
+            return _creator.GetEmployeeDo(searchEmployee);
+        }
+        catch (DbUpdateException due) when (due.InnerException is PostgresException pe && pe.SqlState.Equals("23505"))
+        {
+            throw new MoriaApiException(MoriaApiExceptionReason.ValueIsNotUnique, MoriaApiException.ApiExceptionThrownStatusCode);
+        }
     }
 
     public async Task<bool> DeleteEmployee(int id)
@@ -81,6 +87,9 @@ public class EmployeeControllerService : IEmployeeControllerService
         var searchEmployee = await _context.Employees.FindAsync(id);
         if (searchEmployee == null)
             return false;
+
+        if (searchEmployee.IsLocked)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectIsLocked, 406, searchEmployee.LockedBy);
 
         _context.Employees.Remove(searchEmployee);
 

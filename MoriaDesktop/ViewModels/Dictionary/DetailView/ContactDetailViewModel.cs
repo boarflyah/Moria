@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class ContactDetailViewModel : ViewModelBase
 {
-    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
+    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
     }
 

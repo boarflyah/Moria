@@ -10,13 +10,11 @@ namespace MoriaDesktop.ViewModels.Contacts;
 public sealed class EmployeeDetailViewModel : BaseDetailViewModel
 {
     readonly IApiEmployeeService _employeeService;
-    readonly INavigationService _navigationService;
 
-
-    public EmployeeDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService) : base(logger, appStateService)
+    public EmployeeDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IApiLockService apiLockService)
+        : base(logger, appStateService, apiLockService, navigationService)
     {
         _employeeService = employeeService;
-        _navigationService = navigationService;
     }
 
     #region properties
@@ -77,58 +75,83 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         }
     }
 
+
+    private PositionDo _Position;
+    public PositionDo Position
+    {
+        get => _Position;
+        set
+        {
+            _Position = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
 
     #region methods
-
-    public async override Task Load()
-    {
-        if (!isNew)
-            try
-            {
-                _appStateService.SetupLoading(true);
-
-                var employee = await ExecuteApiRequest(_employeeService.GetEmployee, _appStateService.LoggedUser.Username, objectId);
-                if (employee != null)
-                    Setup(employee);
-                else
-                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
-            }
-            catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
-            }
-            catch (Exception ex)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
-            }
-            finally
-            {
-                _appStateService.SetupLoading();
-            }
-    }
 
     public async Task SaveEmployee(string password)
     {
         try
         {
             _appStateService.SetupLoading(true);
+            var succeeded = false;
             if (isNew)
             {
                 var employee = GetEmployee();
                 employee.Password = password;
 
                 var created = await ExecuteApiRequest(_employeeService.CreateEmployee, _appStateService.LoggedUser.Username, employee);
-                if(created)
+                if (created != null)
+                {
                     _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Utworzono użytkownika", true);
+                    succeeded = true;
+                    isNew = false;
+                    objectId = created.Id;
+                    Clear();
+                    Setup(created);
+                }
                 else
                     _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Niepowodzenie przy zapisie", true);
+            }
+            else
+            {
+                var employee = GetEmployee();
+                if (PasswordChanged)
+                    employee.Password = password;
+
+                var updated = await ExecuteApiRequest(_employeeService.UpdateEmployee, _appStateService.LoggedUser.Username, employee);
+                if (updated != null)
+                {
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zapisano zmiany", true);
+                    succeeded = true;
+                    Clear();
+                    Setup(updated);
+                }
+                else
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Niepowodzenie przy zapisie", true);
+            }
+
+            if (succeeded)
+            {
+                IsLocked = true;
+                HasObjectChanged = false;
+                PasswordChanged = false;
+                await Load();
             }
         }
         catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
         {
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+        }
+        catch (MoriaApiException apiException)
+        {
+            if(apiException.Reason == MoriaApiExceptionReason.ValueIsNotUnique)
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "NAZWA UŻYTKOWNIKA musi być unikalna", true);
+            else
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, apiException.Reason.ToString(), true);
         }
         catch (Exception ex)
         {
@@ -140,18 +163,126 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         }
     }
 
+    public async Task SaveAndCloseEmployee(string password)
+    {
+        try
+        {
+            _appStateService.SetupLoading(true);
+            var succeeded = false;
+            if (isNew)
+            {
+                var employee = GetEmployee();
+                employee.Password = password;
+
+                var created = await ExecuteApiRequest(_employeeService.CreateEmployee, _appStateService.LoggedUser.Username, employee);
+                if (created != null)
+                {
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zapisano zmiany", true);
+                    succeeded = true;
+                }
+                else
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Niepowodzenie przy zapisie", true);
+            }
+            else
+            {
+                var employee = GetEmployee();
+                if (PasswordChanged)
+                    employee.Password = password;
+
+                var updated = await ExecuteApiRequest(_employeeService.UpdateEmployee, _appStateService.LoggedUser.Username, employee);
+                if (updated != null)
+                {
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Success, "Zapisano zmiany", true);
+                    succeeded = true;
+                }
+                else
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Niepowodzenie przy zapisie", true);
+            }
+
+            if (succeeded)
+            {
+                if (_navigationService.CanGoBack)
+                    _navigationService.GoBack();
+                else
+                    _navigationService.NavigateTo(typeof(EmployeeListViewModel), true);
+            }
+        }
+        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+        }
+        catch (MoriaApiException apiException)
+        {
+            if (apiException.Reason == MoriaApiExceptionReason.ValueIsNotUnique)
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "NAZWA UŻYTKOWNIKA musi być unikalna", true);
+            else
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, apiException.Reason.ToString(), true);
+        }
+        catch (Exception ex)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+        }
+        finally
+        {
+            _appStateService.SetupLoading();
+        }
+    }
+
+    protected override Type GetModelType() => typeof(EmployeeDo);
+
+    protected async override Task LoadObject()
+    {
+        Clear();
+
+        var employee = await ExecuteApiRequest(_employeeService.GetEmployee, _appStateService.LoggedUser.Username, objectId);
+        if (employee != null)
+            Setup(employee);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+    }
+
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)) || propertyName.Equals(nameof(Username)) || propertyName.Equals(nameof(PhoneNumber));
+
+    //overriden as empty method, because we need to pass password from control directly as parameter (safety issues)
+    protected async override Task<bool> SaveNewObject() => true;
+
+    //overriden as empty methods, because we need to pass password from control directly as parameter (safety issues)
+    protected async override Task<bool> UpdateExistingObject() => true;
+
+    //overriden as empty methods, because we need to pass password from control directly as parameter (safety issues)
+    protected async override Task Save()
+    {
+    }
+
+    //overriden as empty methods, because we need to pass password from control directly as parameter (safety issues)
+    protected async override Task SaveAndClose()
+    {
+    }
+
     void Setup(EmployeeDo employee)
     {
         FirstName = employee.FirstName;
         LastName = employee.LastName;
         PhoneNumber = employee.PhoneNumber;
         Username = employee.Username;
+        Position = employee.Position;
+    }
+
+    void Clear()
+    {
+        FirstName = string.Empty;
+        LastName = string.Empty;
+        PhoneNumber = string.Empty;
+        Username = string.Empty;
+        Position = null;
     }
 
     EmployeeDo GetEmployee()
     {
         return new()
         {
+            Id = objectId,
             FirstName = FirstName,
             LastName = LastName,
             PhoneNumber = PhoneNumber,

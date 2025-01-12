@@ -10,5 +10,9 @@ public interface IEmployeeControllerService
 
     Task<EmployeeDo> GetEmployee(int id);
 
-    Task<bool> CreateEmployee(EmployeeDo employee);
+    Task<EmployeeDo> CreateEmployee(EmployeeDo employee);
+
+    Task<EmployeeDo> UpdateEmployee(EmployeeDo employee);
+
+    Task<bool> DeleteEmployee(int id);
 }

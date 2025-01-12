@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces;
 using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.DriveComponents;
 public class DriveDetailViewModel : ViewModelBase
 {
-    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
+    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
         Title = "Napęd";
 

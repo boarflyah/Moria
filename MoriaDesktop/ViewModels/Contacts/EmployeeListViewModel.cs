@@ -1,22 +1,19 @@
-﻿using Microsoft.Extensions.Logging;
-using MoriaBaseServices;
+﻿using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Models.Contacts;
-using System.Collections.ObjectModel;
 
 namespace MoriaDesktop.ViewModels.Contacts;
 public sealed class EmployeeListViewModel : BaseListViewModel
 {
     readonly IApiEmployeeService _employeeService;
-    readonly INavigationService _navigationService;
 
-    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService) : base(logger, appStateService)
+    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
         _employeeService = employeeService;
-        _navigationService = navigationService;
 
         Employees = new();
         Title = "Pracownicy";
@@ -26,59 +23,35 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 
     public ObservableCollection<EmployeeDo> Employees { get; set; }
 
-
-    private EmployeeDo _Selected;
-    public EmployeeDo Selected
-    {
-        get => _Selected;
-        set
-        {
-            _Selected = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     #endregion
 
     #region commands
 
-    public async override Task OnLoaded()
+    protected async override Task LoadList()
     {
-        try
-        {
-            Employees.Clear();
-            _appStateService.SetupLoading(true);
+        Employees.Clear();
 
-            var employees = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
-            if (employees != null)
-            {
-                foreach (var employee in employees)
-                    Employees.Add(employee);
-            }
-            else
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
-        }
-        catch(MoriaAppException mae) when(mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+        var employees = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
+        if (employees != null)
         {
-            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+            foreach (var employee in employees)
+                Employees.Add(employee);
         }
-        catch(Exception ex)
-        {
-            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
-        }
-        finally
-        {
-            _appStateService.SetupLoading();
-        }
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
     public override void OnRowSelected(object row)
     {
         if (row is EmployeeDo edo)
                 _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, edo.Id);
-        else
-            _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, null);
     }
+
+    protected override void New() =>
+        _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, null);
+
+    protected async override Task<bool> SendDeleteRequest() => 
+        await ExecuteApiRequest(_employeeService.DeleteEmployee, _appStateService.LoggedUser.Username, (Selected as EmployeeDo)?.Id ?? 0);
 
     #endregion
 

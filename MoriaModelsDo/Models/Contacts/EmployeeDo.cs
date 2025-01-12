@@ -47,8 +47,8 @@ public class EmployeeDo: BaseDo
         }
     }
 
-    string _Password;
-    public string Password
+    string? _Password;
+    public string? Password
     {
         get => _Password;
         set
