@@ -8,6 +8,7 @@ using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services;
 using MoriaWebAPIServices.Services.Dictionaries;
+using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 using Serilog;
 
@@ -39,8 +40,10 @@ public class Program
             {
                 options.UseNpgsql(builder.Configuration.GetConnectionString("MoriaDatabase"));
             });
-            builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
+            builder.Services.AddSingleton<ModelTypeConverter>();
             builder.Services.AddScoped<ModelsCreator>();
+            builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
+            builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);

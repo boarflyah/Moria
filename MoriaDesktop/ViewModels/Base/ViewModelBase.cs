@@ -1,9 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.Logging;
-using System.Windows.Input;
+﻿using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Args;
 using MoriaDesktop.Services;
+using MoriaDesktopServices.Interfaces;
 using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.ViewModels.Base;
@@ -14,40 +13,16 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
 
     protected readonly ILogger<ViewModelBase> _logger;
     protected readonly AppStateService _appStateService;
+    protected readonly INavigationService _navigationService;
 
     #endregion
 
-    protected ViewModelBase(ILogger<ViewModelBase> logger, AppStateService appStateService)
+    protected ViewModelBase(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService)
     {
         _logger = logger;
-
+        _navigationService = navigationService;
         _appStateService = appStateService;
-        SaveCommand = new RelayCommand(Save);
-        SaveAndCloseCommand = new RelayCommand(SaveAndClose);
-        CloseCommand = new RelayCommand(Close);
-        EditCommand = new RelayCommand(Edit);
-    }
 
-    #region Commands
-
-    public ICommand SaveCommand { get; }
-    public ICommand SaveAndCloseCommand { get; }
-    public ICommand CloseCommand { get; }
-    public ICommand EditCommand { get; }
-
-    protected virtual void Save()
-    {
-        // 
-    }
-
-    protected virtual void SaveAndClose()
-    {
-        // 
-    }
-
-    protected virtual void Close()
-    {
-        // 
     }
 
     #region properties
@@ -166,11 +141,31 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         }
     }
 
-    #endregion
-
-    protected virtual void Edit()
+    protected async Task<TResult> ExecuteApiRequest<TResult, T1, T2, T3>(Func<T1, T2, T3, Task<TResult>> request, T1 param1, T2 param2, T3 param3)
     {
-        // 
+        try
+        {
+            return await request(param1, param2, param3);
+        }
+        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.AuthorizationTokenNotAvailable)
+        {
+            //invoking event indicating that passing login and password is needed
+            //after entering credentials call api for new token
+            InvokeViewEventArgs args = new();
+            var invokeResult = await InvokeOnReAuthorizationNeeded(this, args);
+            //login succesful, new token assigned
+            if (invokeResult.HasValue && invokeResult.Value == true)
+            {
+                //trying to execute api request once again, after loging in
+                return await request(param1, param2, param3);
+            }
+            //login failed, invoking event once again
+            else if (invokeResult.HasValue && invokeResult.Value == false)
+                return await ExecuteApiRequest(request, param1, param2, param3);
+            //login cancelled
+            else
+                throw new MoriaAppException(MoriaAppExceptionReason.ReAuthorizationCancelled, mae.Message, mae.InnerException);
+        }
     }
 
     #endregion

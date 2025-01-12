@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MoriaDesktop.Views.Contacts"
       mc:Ignorable="d" 
       Title="EmployeeListView"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      Style="{StaticResource GlobalListViewStyle}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,6 +18,8 @@
         <DataGrid x:Name="EmployeeDataGrid"
                   Grid.Row="1"
                   ItemsSource="{Binding Employees, Mode=OneWay}"
+                  SelectedItem="{Binding Selected, Mode=TwoWay}"
+                  IsReadOnly="True"
                   MouseDoubleClick="EmployeeDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa użytkownika"

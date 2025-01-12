@@ -7,10 +7,21 @@ public class MoriaApiException: Exception
     [JsonIgnore]
     public const int ApiExceptionThrownStatusCode = 700;
 
+    public MoriaApiException()
+    {
+    }
+
     public MoriaApiException(MoriaApiExceptionReason reason, int status)
     {
         Status = status;
         Reason = reason;
+    }
+
+    public MoriaApiException(MoriaApiExceptionReason reason, int status, string additionalMessage)
+    {
+        Status = status;
+        Reason = reason;
+        AdditionalMessage = additionalMessage;
     }
 
     /// <summary>
@@ -22,6 +33,11 @@ public class MoriaApiException: Exception
     }
 
     public MoriaApiExceptionReason Reason
+    {
+        get; set;
+    }
+
+    public string AdditionalMessage
     {
         get; set;
     }

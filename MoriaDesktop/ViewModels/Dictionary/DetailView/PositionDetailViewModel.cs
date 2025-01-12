@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 public class PositionDetailViewModel : ViewModelBase
 {
-    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
+    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
     }
 

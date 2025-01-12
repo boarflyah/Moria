@@ -10,15 +10,13 @@ public class LoginViewModel : ViewModelBase
 {
     #region services
 
-    readonly INavigationService _navigationService;
     readonly IApiTokenService _tokenService;
 
     #endregion
 
     public LoginViewModel(ILogger<ViewModelBase> logger, INavigationService navigationService, IApiTokenService tokenService,
-        AppStateService appStateService) : base(logger, appStateService)
+        AppStateService appStateService) : base(logger, appStateService, navigationService)
     {
-        _navigationService = navigationService;
         _tokenService = tokenService;
 
         Title = "Zaloguj się";

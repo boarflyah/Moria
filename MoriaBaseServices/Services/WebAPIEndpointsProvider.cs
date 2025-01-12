@@ -6,6 +6,7 @@ public class WebAPIEndpointsProvider
 
     public const string Token = "token";
     public const string Employee = "employee";
+    public const string Lock = "lock";
 
     #endregion
 
@@ -20,6 +21,23 @@ public class WebAPIEndpointsProvider
     public const string GetTokenGetTokenPath = $"{Token}/gettoken";
 
 #endif
+
+    #endregion
+
+    #region Lock
+
+    /// <summary>
+    /// Body: object of type LockHelper
+    /// <para>Return bool</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string PutLockPath = $"{Lock}/lock";
+    /// <summary>
+    /// Body: object of type LockHelper
+    /// <para>Return bool</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string PutUnlockPath = $"{Lock}/unlock";
 
     #endregion
 
@@ -41,9 +59,21 @@ public class WebAPIEndpointsProvider
 
     /// <summary>
     /// Body: EmployeeDo
-    /// <para>Return bool</para>
+    /// <para>Return EmployeeDo</para>
     /// </summary>
     public const string PostEmployeePath = $"{Employee}";
+
+    /// <summary>
+    /// Body: EmployeeDo
+    /// <para>Return EmployeeDo</para>
+    /// </summary>
+    public const string PutEmployeePath = $"{Employee}";
+
+    /// <summary>
+    /// Parameter from path: employee.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteEmployeePath = $"{Employee}";
 
     #endregion
 

@@ -12,6 +12,8 @@
     <None Remove="appsettings.json" />
     <None Remove="Images\back.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\create.png" />
+    <None Remove="Images\delete.png" />
     <None Remove="Images\edit.png" />
     <None Remove="Images\Exit.png" />
     <None Remove="Images\home.png" />
@@ -23,6 +25,7 @@
     <None Remove="Images\maximize.png" />
     <None Remove="Images\menu.png" />
     <None Remove="Images\minimize.png" />
+    <None Remove="Images\refresh.png" />
     <None Remove="Images\save.png" />
     <None Remove="Images\saveExit.png" />
     <None Remove="Images\setting.png" />
@@ -30,7 +33,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\create.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\delete.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\refresh.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

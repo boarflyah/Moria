@@ -24,13 +24,22 @@ public partial class EmployeeDetailView : Page, IViewModelContent
             saveButton.Click -= SaveButton_Click;
             saveButton.Click += SaveButton_Click;
         }
+
+        var saveAndCloseButton = (Button)this.Template.FindName("SaveAndCloseButton", this);
+        if (saveAndCloseButton != null)
+        {
+            saveAndCloseButton.Click -= SaveAndCloseButton_Click;
+            saveAndCloseButton.Click += SaveAndCloseButton_Click;
+        }
         PasswordBox.PasswordChanged += PasswordBox_PasswordChanged;
 
         await (DataContext as BaseDetailViewModel)!.Load();
     }
 
+
     private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
     {
+        (DataContext as BaseDetailViewModel).SetHasObjectChanged(true);
         (DataContext as EmployeeDetailViewModel).PasswordChanged = true;
     }
 
@@ -38,4 +47,11 @@ public partial class EmployeeDetailView : Page, IViewModelContent
     {
         await (DataContext as EmployeeDetailViewModel).SaveEmployee(PasswordBox.Password);
     }
+
+    private async void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
+    {
+        await (DataContext as EmployeeDetailViewModel).SaveAndCloseEmployee(PasswordBox.Password);
+
+    }
+
 }

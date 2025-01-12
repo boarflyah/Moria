@@ -31,7 +31,9 @@ public class NavigationService : INavigationService
     {
         _frame = (Frame)frame;
         _frame.Navigated += _frame_Navigated;
+        _frame.Navigating += _frame_Navigating;
     }
+
 
     public bool GoBack()
     {
@@ -68,8 +70,9 @@ public class NavigationService : INavigationService
                 while (frame.NavigationService.RemoveBackEntry() != null)
                 {
                 }
+            var navigationAware = (frame.Content as Page)?.DataContext as INavigationAware;
             OnNavigated?.Invoke(this, new OnNavigatedEventArgs(e.Content, e.ExtraData));
-            if (frame.Content is Page page && page.DataContext is INavigationAware navigationAware)
+            if (navigationAware != null)
             {
                 if (e.ExtraData is object[] array)
                     navigationAware.OnNavigatedTo(array);
@@ -78,4 +81,14 @@ public class NavigationService : INavigationService
             }
         }
     }
+
+    private async void _frame_Navigating(object sender, NavigatingCancelEventArgs e)
+    {
+        if (sender is Frame frame)
+        {
+            if ((frame.Content as Page)?.DataContext is INavigationAware navigationAware)
+                await navigationAware.OnNavigatingFrom();
+        }
+    }
+
 }

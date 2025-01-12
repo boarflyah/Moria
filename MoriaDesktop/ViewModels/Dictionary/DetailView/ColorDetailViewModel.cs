@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
-using MoriaModelsDo.Models.Dictionaries;
+using MoriaDesktopServices.Interfaces;
 using MoriaModelsDo.Models.DriveComponents;
-using System.Collections.ObjectModel;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 public class ColorDetailViewModel : ViewModelBase
 {
-    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService) : base(logger, appStateService)
+    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
         Listmotos = new ObservableCollection<MotorDo>();
         Listmotos.Add(new MotorDo() { Name = "Name1" });
