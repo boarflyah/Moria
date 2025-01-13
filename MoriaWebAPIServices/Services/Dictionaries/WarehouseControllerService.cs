@@ -2,10 +2,11 @@
 using MoriaModels.Models.Warehouses;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 
-public class WarehouseControllerService
+public class WarehouseControllerService : IWarehouseControllerService
 {
     private readonly ApplicationDbContext _context;
 

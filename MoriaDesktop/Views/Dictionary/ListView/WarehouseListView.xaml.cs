@@ -18,8 +18,6 @@ namespace MoriaDesktop.Views.Dictionary.ListView;
 
 public partial class WarehouseListView : Page
 {
-    public object GetViewModel() => DataContext;
-
     public WarehouseListView(WarehouseListViewModel warehouseListViewModel) : this()
     {
         DataContext = warehouseListViewModel;

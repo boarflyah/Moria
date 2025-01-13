@@ -2,10 +2,11 @@
 using MoriaModels.Models.DriveComponents;
 using MoriaModelsDo.Models.DriveComponents;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 
-public class MotorGearControllerService
+public class MotorGearControllerService : IMotorGearControllerService
 {
     private readonly ApplicationDbContext _context;
 

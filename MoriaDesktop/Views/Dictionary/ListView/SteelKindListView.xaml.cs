@@ -27,4 +27,9 @@ public partial class SteelKindListView : Page
     {
         InitializeComponent();
     }
+
+    private void SteelKindsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+
+    }
 }

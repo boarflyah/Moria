@@ -2,10 +2,11 @@
 using MoriaModels.Models.EntityPersonel;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 
-public class PositionControllerService
+public class PositionControllerService : IPositionControllerService
 {
     private readonly ApplicationDbContext _context;
 
@@ -55,7 +56,7 @@ public class PositionControllerService
     }
 
     public async Task<PositionDo?> EditPosition(PositionDo position)
-    {       
+    {
         var searchPosition = await _context.Positions.FindAsync(position.Id);
         if (searchPosition == null) return null;
 

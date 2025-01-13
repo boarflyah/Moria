@@ -1,58 +1,37 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using MoriaBaseServices;
 using MoriaBaseServices.Services;
+using MoriaBaseServices;
 using MoriaModelsDo.Models.Contacts;
-using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
+using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaWebAPI.Controllers;
 
 [ApiController]
 [Route("")]
 [Authorize]
-public class EmployeeController: ControllerBase
+public class MotorGearController : ControllerBase
 {
-    readonly IEmployeeControllerService _employeeService;
-    readonly ILogger<EmployeeController> _logger;
+    readonly IMotorGearControllerService _motorGearController;
+    readonly ILogger<MotorGearController> _logger;
 
-    public EmployeeController(IEmployeeControllerService employeeService, ILogger<EmployeeController> logger)
+    public MotorGearController(IMotorGearControllerService motorGearControllerService, ILogger<MotorGearController> logger)
     {
-        _employeeService = employeeService;
+        _motorGearController = motorGearControllerService;
         _logger = logger;
     }
 
-    [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Login(UserCredentials credentials)
-    {
-        try
-        {
-            var user = await _employeeService.LogIn(credentials.Username, credentials.Password);
-            if (user == null)
-                return Unauthorized();
 
-            return Ok(user);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"Method: {nameof(Login)}");
-            return StatusCode(501, ex.Message);
-        }
-
-    }
-
-    [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
-    [Produces<IEnumerable<EmployeeDo>>]
+    [HttpGet(WebAPIEndpointsProvider.GetMotorGearsPath)]
+    [Produces<IEnumerable<MotorGearDo>>]
     public async Task<IActionResult> Get()
     {
         try
         {
-            var user = await _employeeService.GetEmployees();
+            var motorGears = await _motorGearController.GetAllMotorGears();
 
-            return Ok(user);
+            return Ok(motorGears);
         }
         catch (MoriaApiException mae)
         {
@@ -65,15 +44,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpGet($"{WebAPIEndpointsProvider.GetEmployeePath}/{{id}}")]
-    [Produces<EmployeeDo>]
+    [HttpGet($"{WebAPIEndpointsProvider.GetMotorGearPath}/{{id}}")]
+    [Produces<MotorGearDo>]
     public async Task<IActionResult> Get(int id)
     {
         try
         {
-            var user = await _employeeService.GetEmployee(id);
+            var motorGear = await _motorGearController.GetMotorGearById(id);
 
-            return Ok(user);
+            return Ok(motorGear);
         }
         catch (MoriaApiException mae)
         {
@@ -86,15 +65,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPost($"{WebAPIEndpointsProvider.PostEmployeePath}")]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Post(EmployeeDo employee)
+    [HttpPost($"{WebAPIEndpointsProvider.PostMotorGearPath}")]
+    [Produces<MotorGearDo>]
+    public async Task<IActionResult> Post(MotorGearDo motorGearDo)
     {
         try
         {
-            var user = await _employeeService.CreateEmployee(employee);
+            var motorGear = await _motorGearController.CreateMotorGear(motorGearDo);
 
-            return Ok(user);
+            return Ok(motorGear);
         }
         catch (MoriaApiException mae)
         {
@@ -107,15 +86,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPut($"{WebAPIEndpointsProvider.PutEmployeePath}")]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Put(EmployeeDo employee)
+    [HttpPut($"{WebAPIEndpointsProvider.PutMotorGearPath}")]
+    [Produces<MotorGearDo>]
+    public async Task<IActionResult> Put(MotorGearDo motorGearDo)
     {
         try
         {
-            var user = await _employeeService.UpdateEmployee(employee);
+            var motorGear = await _motorGearController.EditMotorGear(motorGearDo);
 
-            return Ok(user);
+            return Ok(motorGear);
         }
         catch (MoriaApiException mae)
         {
@@ -128,15 +107,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpDelete($"{WebAPIEndpointsProvider.DeleteEmployeePath}/{{id}}")]
+    [HttpDelete($"{WebAPIEndpointsProvider.DeleteMotorGearPath}/{{id}}")]
     [Produces<bool>]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            var user = await _employeeService.DeleteEmployee(id);
+            var isDeleted = await _motorGearController.DeleteMotorGear(id);
 
-            return Ok(user);
+            return Ok(isDeleted);
         }
         catch (MoriaApiException mae)
         {

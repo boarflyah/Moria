@@ -2,9 +2,10 @@
 using MoriaModels.Models.Products;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
-public class ColorControllerService
+public class ColorControllerService : IColorControllerService
 {
     readonly ApplicationDbContext _context;
 

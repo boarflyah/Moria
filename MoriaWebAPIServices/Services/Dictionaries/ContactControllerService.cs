@@ -2,10 +2,11 @@
 using MoriaModels.Models.Orders;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 
-public class ContactControllerService
+public class ContactControllerService : IContactControllerService
 {
     private readonly ApplicationDbContext _context;
 

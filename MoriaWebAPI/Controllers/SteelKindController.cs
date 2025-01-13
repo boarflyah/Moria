@@ -1,11 +1,9 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using MoriaBaseServices;
 using MoriaBaseServices.Services;
+using MoriaBaseServices;
 using MoriaModelsDo.Models.Contacts;
-using MoriaWebAPI.Services.Interfaces;
+using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPI.Controllers;
@@ -13,46 +11,26 @@ namespace MoriaWebAPI.Controllers;
 [ApiController]
 [Route("")]
 [Authorize]
-public class EmployeeController: ControllerBase
+public class SteelKindController : ControllerBase
 {
-    readonly IEmployeeControllerService _employeeService;
-    readonly ILogger<EmployeeController> _logger;
+    readonly ISteelKindControllerService _steelKindService;
+    readonly ILogger<SteelKindController> _logger;
 
-    public EmployeeController(IEmployeeControllerService employeeService, ILogger<EmployeeController> logger)
+    public SteelKindController(ISteelKindControllerService steelKindControllerService, ILogger<SteelKindController> logger)
     {
-        _employeeService = employeeService;
+        _steelKindService = steelKindControllerService;
         _logger = logger;
     }
 
-    [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Login(UserCredentials credentials)
-    {
-        try
-        {
-            var user = await _employeeService.LogIn(credentials.Username, credentials.Password);
-            if (user == null)
-                return Unauthorized();
-
-            return Ok(user);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"Method: {nameof(Login)}");
-            return StatusCode(501, ex.Message);
-        }
-
-    }
-
-    [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
-    [Produces<IEnumerable<EmployeeDo>>]
+    [HttpGet(WebAPIEndpointsProvider.GeSteelKindsPath)]
+    [Produces<IEnumerable<SteelKindDo>>]
     public async Task<IActionResult> Get()
     {
         try
         {
-            var user = await _employeeService.GetEmployees();
+            var steelKinds = await _steelKindService.GetAllSteelKinds();
 
-            return Ok(user);
+            return Ok(steelKinds);
         }
         catch (MoriaApiException mae)
         {
@@ -65,15 +43,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpGet($"{WebAPIEndpointsProvider.GetEmployeePath}/{{id}}")]
-    [Produces<EmployeeDo>]
+    [HttpGet($"{WebAPIEndpointsProvider.GetSteelKindPath}/{{id}}")]
+    [Produces<SteelKindDo>]
     public async Task<IActionResult> Get(int id)
     {
         try
         {
-            var user = await _employeeService.GetEmployee(id);
+            var steelKind = await _steelKindService.GetSteelKindById(id);
 
-            return Ok(user);
+            return Ok(steelKind);
         }
         catch (MoriaApiException mae)
         {
@@ -86,15 +64,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPost($"{WebAPIEndpointsProvider.PostEmployeePath}")]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Post(EmployeeDo employee)
+    [HttpPost($"{WebAPIEndpointsProvider.PostSteelKindPath}")]
+    [Produces<SteelKindDo>]
+    public async Task<IActionResult> Post(SteelKindDo steelKindDo)
     {
         try
         {
-            var user = await _employeeService.CreateEmployee(employee);
+            var steelKind = await _steelKindService.CreateSteelKind(steelKindDo);
 
-            return Ok(user);
+            return Ok(steelKind);
         }
         catch (MoriaApiException mae)
         {
@@ -107,15 +85,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPut($"{WebAPIEndpointsProvider.PutEmployeePath}")]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Put(EmployeeDo employee)
+    [HttpPut($"{WebAPIEndpointsProvider.PutSteelKindPath}")]
+    [Produces<SteelKindDo>]
+    public async Task<IActionResult> Put(SteelKindDo steelKindDo)
     {
         try
         {
-            var user = await _employeeService.UpdateEmployee(employee);
+            var steelKind = await _steelKindService.EditSteelKind(steelKindDo);
 
-            return Ok(user);
+            return Ok(steelKind);
         }
         catch (MoriaApiException mae)
         {
@@ -128,15 +106,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpDelete($"{WebAPIEndpointsProvider.DeleteEmployeePath}/{{id}}")]
+    [HttpDelete($"{WebAPIEndpointsProvider.DeleteSteelKindPath}/{{id}}")]
     [Produces<bool>]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            var user = await _employeeService.DeleteEmployee(id);
+            var isDeleted = await _steelKindService.DeleteSteelKind(id);
 
-            return Ok(user);
+            return Ok(isDeleted);
         }
         catch (MoriaApiException mae)
         {

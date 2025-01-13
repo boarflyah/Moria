@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using MoriaModels.Models.Products;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPIServices.Services.Dictionaries;
 
-public class SteelKindControllerService
+public class SteelKindControllerService : ISteelKindControllerService
 {
     private readonly ApplicationDbContext _context;
 

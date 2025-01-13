@@ -7,8 +7,25 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SteelKindListView">
-
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="SteelKindDataGrid"
+           Grid.Row="1"
+           ItemsSource="{Binding SteelKinds, Mode=OneWay}"
+           MouseDoubleClick="SteelKindsDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol"
+                             Binding="{Binding Symbol}"
+                             Width="*"/>
+                <DataGridTextColumn Header="Nazwa" 
+                             Binding="{Binding Name}"
+                             Width="3*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

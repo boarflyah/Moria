@@ -1,58 +1,36 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
-using MoriaBaseServices;
 using MoriaBaseServices.Services;
+using MoriaBaseServices;
 using MoriaModelsDo.Models.Contacts;
-using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaWebAPI.Controllers;
 
 [ApiController]
 [Route("")]
 [Authorize]
-public class EmployeeController: ControllerBase
+public class WarehouseController : ControllerBase
 {
-    readonly IEmployeeControllerService _employeeService;
-    readonly ILogger<EmployeeController> _logger;
+    readonly IWarehouseControllerService _warehouseService;
+    readonly ILogger<WarehouseController> _logger;
 
-    public EmployeeController(IEmployeeControllerService employeeService, ILogger<EmployeeController> logger)
+    public WarehouseController(IWarehouseControllerService warehouseService, ILogger<WarehouseController> logger)
     {
-        _employeeService = employeeService;
+        _warehouseService = warehouseService;
         _logger = logger;
     }
 
-    [HttpPost(WebAPIEndpointsProvider.PostLoginPath)]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Login(UserCredentials credentials)
-    {
-        try
-        {
-            var user = await _employeeService.LogIn(credentials.Username, credentials.Password);
-            if (user == null)
-                return Unauthorized();
-
-            return Ok(user);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"Method: {nameof(Login)}");
-            return StatusCode(501, ex.Message);
-        }
-
-    }
-
-    [HttpGet(WebAPIEndpointsProvider.GetEmployeesPath)]
-    [Produces<IEnumerable<EmployeeDo>>]
+    [HttpGet(WebAPIEndpointsProvider.GetWarehousesPath)]
+    [Produces<IEnumerable<WarehouseDo>>]
     public async Task<IActionResult> Get()
     {
         try
         {
-            var user = await _employeeService.GetEmployees();
+            var warehouses = await _warehouseService.GetAllWarehouses();
 
-            return Ok(user);
+            return Ok(warehouses);
         }
         catch (MoriaApiException mae)
         {
@@ -65,15 +43,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpGet($"{WebAPIEndpointsProvider.GetEmployeePath}/{{id}}")]
-    [Produces<EmployeeDo>]
+    [HttpGet($"{WebAPIEndpointsProvider.GetWarehousePath}/{{id}}")]
+    [Produces<WarehouseDo>]
     public async Task<IActionResult> Get(int id)
     {
         try
         {
-            var user = await _employeeService.GetEmployee(id);
+            var warehouse = await _warehouseService.GetWarehouseById(id);
 
-            return Ok(user);
+            return Ok(warehouse);
         }
         catch (MoriaApiException mae)
         {
@@ -86,15 +64,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPost($"{WebAPIEndpointsProvider.PostEmployeePath}")]
-    [Produces<EmployeeDo>]
-    public async Task<IActionResult> Post(EmployeeDo employee)
+    [HttpPost($"{WebAPIEndpointsProvider.PostWarehousePath}")]
+    [Produces<WarehouseDo>]
+    public async Task<IActionResult> Post(WarehouseDo warehouseDo)
     {
         try
         {
-            var user = await _employeeService.CreateEmployee(employee);
+            var warehouse = await _warehouseService.CreateWarehouse(warehouseDo);
 
-            return Ok(user);
+            return Ok(warehouse);
         }
         catch (MoriaApiException mae)
         {
@@ -107,15 +85,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpPut($"{WebAPIEndpointsProvider.PutEmployeePath}")]
+    [HttpPut($"{WebAPIEndpointsProvider.PutWarehousePath}")]
     [Produces<EmployeeDo>]
-    public async Task<IActionResult> Put(EmployeeDo employee)
+    public async Task<IActionResult> Put(WarehouseDo warehouseDo)
     {
         try
         {
-            var user = await _employeeService.UpdateEmployee(employee);
+            var warehouse = await _warehouseService.EditWarehouse(warehouseDo);
 
-            return Ok(user);
+            return Ok(warehouse);
         }
         catch (MoriaApiException mae)
         {
@@ -128,15 +106,15 @@ public class EmployeeController: ControllerBase
         }
     }
 
-    [HttpDelete($"{WebAPIEndpointsProvider.DeleteEmployeePath}/{{id}}")]
+    [HttpDelete($"{WebAPIEndpointsProvider.DeleteWarehousePath}/{{id}}")]
     [Produces<bool>]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            var user = await _employeeService.DeleteEmployee(id);
+            var isDeleted = await _warehouseService.DeleteWarehouse(id);
 
-            return Ok(user);
+            return Ok(isDeleted);
         }
         catch (MoriaApiException mae)
         {
