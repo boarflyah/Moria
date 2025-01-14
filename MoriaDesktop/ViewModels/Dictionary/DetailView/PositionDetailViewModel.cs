@@ -4,13 +4,17 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Contacts;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 public class PositionDetailViewModel : BaseDetailViewModel
 {
-    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
+    readonly IApiPositionService _positionService;
+    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiPositionService positionService) : base(logger, appStateService, apiLockService, navigationService)
     {
+        _positionService = positionService;
     }
 
     #region properties
@@ -37,35 +41,38 @@ public class PositionDetailViewModel : BaseDetailViewModel
         }
     }
 
-    public override Task Load()
+
+    protected override Type GetModelType() => typeof(PositionDo);
+
+    protected async override Task LoadObject()
     {
-        throw new NotImplementedException();
+        Clear();
+
+        var position = await ExecuteApiRequest(_positionService.GetPosition, _appStateService.LoggedUser.Username, objectId);
+        if (position != null)
+            Setup(position);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+
     }
 
-    protected override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> SaveNewObject() => true;
 
-    protected override Task LoadObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> UpdateExistingObject() => true;
 
-    protected override Task<bool> SaveNewObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override Task<bool> UpdateExistingObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CheckPropertyName(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(Code)) || propertyName.Equals(nameof(Name));
 
     #endregion
+
+    void Clear()
+    {
+        Code = string.Empty;
+        Name = string.Empty;
+    }
+    void Setup(PositionDo position)
+    {
+        Code = position.Code;
+        Name = position.Name;
+    }
 }

@@ -6,9 +6,28 @@
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary.ListView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PositionListView">
+      Title="PositionListView"      
+      Loaded="Page_Loaded"
+      Style="{StaticResource GlobalListViewStyle}">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="PositionDataGrid"
+            Grid.Row="1"
+            ItemsSource="{Binding Positions, Mode=OneWay}"
+            MouseDoubleClick="PositionDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa"
+                              Binding="{Binding Name}"
+                              Width="*"/>
+                <DataGridTextColumn Header="Kod" 
+                              Binding="{Binding Code}"
+                              Width="3*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

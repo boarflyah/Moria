@@ -112,7 +112,7 @@ public class WebAPIEndpointsProvider
 
     #region SteelKind
 
-    public const string GeSteelKindsPath = $"{SteelKind}";
+    public const string GetSteelKindsPath = $"{SteelKind}";
     /// <summary>
     /// Parameter from path: steelKind.id
     /// </summary>

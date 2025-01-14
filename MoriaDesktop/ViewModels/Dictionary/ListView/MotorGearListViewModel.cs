@@ -2,15 +2,23 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
+using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 
 public sealed class MotorGearListViewModel : BaseListViewModel
 {
-    public MotorGearListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    readonly IApiMotorGearService _motorGearService;
+    public MotorGearListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorGearService apiMotorGearService) : base(logger, appStateService, navigationService)
     {
+        _motorGearService = apiMotorGearService;
+
+        MotorGears = new();
+        Title = "Przekładnie";
     }
 
     #region properties
@@ -20,14 +28,27 @@ public sealed class MotorGearListViewModel : BaseListViewModel
 
     #endregion
 
-    protected override Task LoadList() => throw new NotImplementedException();
+    protected async override Task LoadList()
+    {
+        MotorGears.Clear();
+
+        var motorGears = await ExecuteApiRequest(_motorGearService.GetMotorGears, _appStateService.LoggedUser.Username);
+        if (motorGears != null)
+        {
+            foreach (var motorGear in motorGears)
+                MotorGears.Add(motorGear);
+        }
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+    }
 
     public override void OnRowSelected(object row)
     {
-        throw new NotImplementedException();
+        if (row is MotorGearDo mdo)
+            _navigationService.NavigateTo(typeof(MotorGearDetailViewModel), false, mdo.Id);
     }
 
-    protected override void New() => throw new NotImplementedException();
-    
-    protected override Task<bool> SendDeleteRequest() => throw new NotImplementedException();
+    protected override void New() => _navigationService.NavigateTo(typeof(MotorGearDetailViewModel), false, null);
+
+    protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_motorGearService.DeleteMotorGear, _appStateService.LoggedUser.Username, (Selected as MotorGearDo)?.Id ?? 0);
 }

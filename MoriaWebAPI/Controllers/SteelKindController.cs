@@ -22,7 +22,7 @@ public class SteelKindController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet(WebAPIEndpointsProvider.GeSteelKindsPath)]
+    [HttpGet(WebAPIEndpointsProvider.GetSteelKindsPath)]
     [Produces<IEnumerable<SteelKindDo>>]
     public async Task<IActionResult> Get()
     {

@@ -6,7 +6,9 @@
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary.ListView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SteelKindListView">
+      Title="SteelKindListView"
+      Loaded="Page_Loaded"
+      Style="{StaticResource GlobalListViewStyle}">
     
     <Grid>
         <Grid.RowDefinitions>

@@ -5,12 +5,15 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class SteelKindDetailViewModel : BaseDetailViewModel
 {
-    public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
+    readonly IApiSteelKindService _steelKindService;
+    public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiSteelKindService steelKindService) : base(logger, appStateService, apiLockService, navigationService)
     {
+        _steelKindService = steelKindService;
     }
 
     #region properties
@@ -37,35 +40,37 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
         }
     }
 
-    public override Task Load()
+
+    protected override Type GetModelType() => typeof(SteelKindDo);
+
+    protected async override Task LoadObject()
     {
-        throw new NotImplementedException();
+        Clear();
+
+        var steelKind = await ExecuteApiRequest(_steelKindService.GetSteelKind, _appStateService.LoggedUser.Username, objectId);
+        if (steelKind != null)
+            Setup(steelKind);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+
     }
 
-    protected override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> SaveNewObject() => true;
 
-    protected override Task LoadObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> UpdateExistingObject() => true;
 
-    protected override Task<bool> SaveNewObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override Task<bool> UpdateExistingObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CheckPropertyName(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(Symbol)) || propertyName.Equals(nameof(Name));
 
     #endregion
+    void Clear()
+    {
+        Symbol = string.Empty;
+        Name = string.Empty;
+    }
+    void Setup(SteelKindDo steelKind)
+    {
+        Symbol = steelKind.Symbol;
+        Name = steelKind.Name;
+    }
 }

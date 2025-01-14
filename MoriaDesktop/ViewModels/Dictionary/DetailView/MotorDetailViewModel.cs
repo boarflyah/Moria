@@ -3,6 +3,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.DriveComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,10 @@ using System.Threading.Tasks;
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class MotorDetailViewModel : BaseDetailViewModel
 {
-    public MotorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
+    readonly IApiMotorService _motorService;
+    public MotorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiMotorService motorService) : base(logger, appStateService, apiLockService, navigationService)
     {
+        _motorService = motorService;
     }
 
     #region properties
@@ -51,34 +54,38 @@ public class MotorDetailViewModel : BaseDetailViewModel
         }
     }
 
-    public override Task Load()
+
+    protected override Type GetModelType() => typeof(MotorDo);
+
+    protected async override Task LoadObject()
     {
-        throw new NotImplementedException();
+        Clear();
+
+        var motor = await ExecuteApiRequest(_motorService.GetMotor, _appStateService.LoggedUser.Username, objectId);
+        if (motor != null)
+            Setup(motor);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> SaveNewObject() => true;
 
-    protected override Task LoadObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> UpdateExistingObject() => true;
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(Symbol)) || propertyName.Equals(nameof(Name)) || propertyName.Equals(nameof(Power));
 
-    protected override Task<bool> SaveNewObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override Task<bool> UpdateExistingObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CheckPropertyName(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
     #endregion
+
+    void Clear()
+    {
+        Symbol = string.Empty;
+        Name = string.Empty;
+        Power = 0;
+    }
+    void Setup(MotorDo motor)
+    {
+        Symbol = motor.Symbol;
+        Name = motor.Name;
+        Power = motor.Power;
+    }
 }

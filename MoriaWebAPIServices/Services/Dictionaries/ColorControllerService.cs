@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaModels.Models.Products;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
@@ -43,14 +44,28 @@ public class ColorControllerService : IColorControllerService
 
     public async Task<List<ColorDo>> GetAllColors()
     {
-        return await _context.Colors
+        /*return await _context.Colors
             .Select(color => new ColorDo
             {
                 Id = color.Id,
                 Name = color.Name,
                 Code = color.Code
             })
-            .ToListAsync();
+            .ToListAsync();*/
+        List<ColorDo> result = new();
+        foreach (var color in _context.Colors)
+        {
+            var cc = new ColorDo
+            {
+                Id = color.Id,
+                Name = color.Name,
+                Code = color.Code
+            };
+            result.Add(cc);
+        }
+
+
+        return result;
     }
 
     public async Task<ColorDo?> EditColor(ColorDo color)

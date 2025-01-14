@@ -43,6 +43,14 @@ public class Program
             builder.Services.AddSingleton<ModelTypeConverter>();
             builder.Services.AddScoped<ModelsCreator>();
             builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
+            builder.Services.AddScoped<IWarehouseControllerService, WarehouseControllerService>();
+            builder.Services.AddScoped<IColorControllerService, ColorControllerService>();
+            builder.Services.AddScoped<IContactControllerService, ContactControllerService>();
+            builder.Services.AddScoped<IMotorControllerService, MotorControllerService>();
+            builder.Services.AddScoped<IMotorGearControllerService, MotorGearControllerService>();
+            builder.Services.AddScoped<IPositionControllerService, PositionControllerService>();
+            builder.Services.AddScoped<ISteelKindControllerService, SteelKindControllerService>();
+
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {

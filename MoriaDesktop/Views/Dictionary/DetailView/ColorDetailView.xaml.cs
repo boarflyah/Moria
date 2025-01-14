@@ -1,4 +1,5 @@
-﻿using MoriaDesktop.ViewModels.Dictionary.DetailView;
+﻿using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.Views.Dictionary.Window;
 using MoriaModelsDo.Models.DriveComponents;
 using System;
@@ -28,5 +29,10 @@ public partial class ColorDetailView : Page
 
         bool? dialogResult = colorWindow.ShowDialog();
 
+    }
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        await(DataContext as BaseDetailViewModel)!.Load();
     }
 }

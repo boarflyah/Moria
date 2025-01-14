@@ -1,22 +1,23 @@
 ﻿using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Contacts;
+using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 public class ColorDetailViewModel : BaseDetailViewModel
 {
-    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
+    readonly IApiColorService _colorService;
+    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiColorService colorService) : base(logger, appStateService, apiLockService, navigationService)
     {
-        Listmotos = new ObservableCollection<MotorDo>();
-        Listmotos.Add(new MotorDo() { Name = "Name1" });
-        Listmotos.Add(new MotorDo() { Name = "Name2" });
+        _colorService = colorService;
     }
-    public ObservableCollection<MotorDo> Listmotos { get; set; }
 
     #region properties
 
@@ -42,35 +43,37 @@ public class ColorDetailViewModel : BaseDetailViewModel
         }
     }
 
-    public override Task Load()
+    protected override Type GetModelType() => typeof(ColorDo);
+
+    protected async override Task LoadObject()
     {
-        throw new NotImplementedException();
+        Clear();
+
+        var color = await ExecuteApiRequest(_colorService.GetColor, _appStateService.LoggedUser.Username, objectId);
+        if (color != null)
+            Setup(color);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> SaveNewObject() => true;
 
-    protected override Task LoadObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> UpdateExistingObject() => true;
 
-    protected override Task<bool> SaveNewObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(Name)) || propertyName.Equals(nameof(Code));
 
-    protected override Task<bool> UpdateExistingObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CheckPropertyName(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
 
     #endregion
+
+    void Clear()
+    {
+        Name = string.Empty;
+        Code = string.Empty;
+    }
+    void Setup(ColorDo color)
+    {
+        Name = color.Name;
+        Code = color.Code;
+    }
 }

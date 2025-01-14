@@ -6,9 +6,31 @@
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary.ListView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MotorGearListView">
+      Title="MotorGearListView"
+      Loaded="Page_Loaded"
+      Style="{StaticResource GlobalListViewStyle}">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="MotorGearDataGrid"
+            Grid.Row="1"
+            ItemsSource="{Binding MotorGears, Mode=OneWay}"
+            MouseDoubleClick="MotorGearDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol"
+                              Binding="{Binding Symbol}"
+                              Width="*"/>
+                <DataGridTextColumn Header="Nazwa" 
+                              Binding="{Binding Name}"
+                              Width="3*"/>
+                <DataGridTextColumn Header="Przekładnia" 
+                              Binding="{Binding Ratio}"
+                              Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

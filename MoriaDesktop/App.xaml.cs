@@ -93,6 +93,16 @@ public partial class App : Application
                          services.AddScoped<ApiTestService>();
                          services.AddScoped<ITokensManager, TokensManager>();
                          services.AddScoped<IApiEmployeeService, ApiEmployeeService>();
+                         services.AddScoped<IApiColorService, ApiColorService>();
+                         services.AddScoped<IApiContactService, ApiContactService>();
+                         services.AddScoped<IApiMotorGearService, ApiMotorGearService>();
+                         services.AddScoped<IApiMotorService, ApiMotorService>();
+                         services.AddScoped<IApiPositionService, ApiPositionService>();
+                         services.AddScoped<IApiSteelKindService, ApiSteelKindService>();
+                         services.AddScoped<IApiWarehouseService, ApiWarehouseService>();
+
+
+
                          services.AddScoped<IApiLockService, ApiLockService>();
                          services.AddHttpClient();
                          services.AddHttpClient(ApiRequestService.HttpsApiClientName)

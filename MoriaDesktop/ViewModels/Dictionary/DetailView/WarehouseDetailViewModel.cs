@@ -3,12 +3,16 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Contacts;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class WarehouseDetailViewModel : BaseDetailViewModel
 {
-    public WarehouseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService) : base(logger, appStateService, apiLockService, navigationService)
+    readonly IApiWarehouseService _warehouseService;
+    public WarehouseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiWarehouseService warehouseService) : base(logger, appStateService, apiLockService, navigationService)
     {
+        _warehouseService = warehouseService;
     }
 
     #region properties
@@ -35,35 +39,36 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
         }
     }
 
-    public override Task Load()
+    protected override Type GetModelType() => typeof(WarehouseDo);
+
+    protected async override Task LoadObject()
     {
-        throw new NotImplementedException();
+        Clear();
+
+        var warehouse = await ExecuteApiRequest(_warehouseService.GetWarehouse, _appStateService.LoggedUser.Username, objectId);
+        if (warehouse != null)
+            Setup(warehouse);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> SaveNewObject() => true;
 
-    protected override Task LoadObject()
-    {
-        throw new NotImplementedException();
-    }
+    protected async override Task<bool> UpdateExistingObject() => true;
 
-    protected override Task<bool> SaveNewObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override Task<bool> UpdateExistingObject()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override bool CheckPropertyName(string propertyName)
-    {
-        throw new NotImplementedException();
-    }
+    protected override bool CheckPropertyName(string propertyName) =>
+        propertyName.Equals(nameof(Symbol)) || propertyName.Equals(nameof(WarehouseName));
 
     #endregion
+
+    void Clear()
+    {
+        Symbol = string.Empty;
+        WarehouseName = string.Empty;
+    }
+    void Setup(WarehouseDo warehouse)
+    {
+        Symbol = warehouse.Symbol;
+        WarehouseName = warehouse.Name;
+    }
 }

@@ -6,9 +6,31 @@
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary.ListView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ContactListView">
+      Title="ContactListView"
+      Loaded="Page_Loaded"
+      Style="{StaticResource GlobalListViewStyle}">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="ContactDataGrid"
+         Grid.Row="1"
+         ItemsSource="{Binding Contacts, Mode=OneWay}"
+         MouseDoubleClick="ContactDataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa krótka"
+                           Binding="{Binding ShortName}"
+                           Width="*"/>
+                <DataGridTextColumn Header="Nazwa" 
+                           Binding="{Binding LongName}"
+                           Width="3*"/>
+                <DataGridTextColumn Header="Symbol" 
+                           Binding="{Binding Symbol}"
+                           Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

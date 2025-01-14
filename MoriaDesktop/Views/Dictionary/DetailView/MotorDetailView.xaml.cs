@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces.ViewModels;
@@ -31,5 +32,10 @@ public partial class MotorDetailView : Page, IViewModelContent
         {
             e.Handled = true;
         }
+    }
+
+    private async void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        await(DataContext as BaseDetailViewModel)!.Load();
     }
 }
