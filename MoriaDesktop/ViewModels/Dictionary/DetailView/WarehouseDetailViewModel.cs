@@ -3,6 +3,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 
@@ -18,6 +19,7 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
     #region properties
 
     string _Symbol;
+    [ObjectChangedValidate]
     public string Symbol
     {
         get => _Symbol;
@@ -29,6 +31,7 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
     }
 
     string _WarehouseName;
+    [ObjectChangedValidate]
     public string WarehouseName
     {
         get => _WarehouseName;
@@ -55,9 +58,6 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
     protected async override Task<bool> SaveNewObject() => true;
 
     protected async override Task<bool> UpdateExistingObject() => true;
-
-    protected override bool CheckPropertyName(string propertyName) =>
-        propertyName.Equals(nameof(Symbol)) || propertyName.Equals(nameof(WarehouseName));
 
     #endregion
 

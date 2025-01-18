@@ -4,6 +4,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Contacts;
@@ -20,6 +21,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
     #region properties
 
     string _FirstName;
+    [ObjectChangedValidate]
     public string FirstName
     {
         get => _FirstName;
@@ -31,6 +33,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
     }
 
     string _LastName;
+    [ObjectChangedValidate]
     public string LastName
     {
         get => _LastName;
@@ -42,6 +45,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
     }
 
     string _Username;
+    [ObjectChangedValidate]
     public string Username
     {
         get => _Username;
@@ -53,6 +57,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
     }
 
     string _PhoneNumber;
+    [ObjectChangedValidate]
     public string PhoneNumber
     {
         get => _PhoneNumber;
@@ -77,12 +82,26 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
 
 
     private PositionDo _Position;
+    [ObjectChangedValidate]
     public PositionDo Position
     {
         get => _Position;
         set
         {
             _Position = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private bool _Admin;
+    [ObjectChangedValidate]
+    public bool Admin
+    {
+        get => _Admin;
+        set
+        {
+            _Admin = value;
             RaisePropertyChanged(value);
         }
     }
@@ -241,9 +260,6 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected override bool CheckPropertyName(string propertyName) =>
-        propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)) || propertyName.Equals(nameof(Username)) || propertyName.Equals(nameof(PhoneNumber));
-
     //overriden as empty method, because we need to pass password from control directly as parameter (safety issues)
     protected async override Task<bool> SaveNewObject() => true;
 
@@ -267,6 +283,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         PhoneNumber = employee.PhoneNumber;
         Username = employee.Username;
         Position = employee.Position;
+        Admin = employee.Admin;
     }
 
     void Clear()
@@ -276,6 +293,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         PhoneNumber = string.Empty;
         Username = string.Empty;
         Position = null;
+        Admin = false;
     }
 
     EmployeeDo GetEmployee()
@@ -288,6 +306,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             PhoneNumber = PhoneNumber,
             Username = Username,
             LastModified = _appStateService.LoggedUser.Username,
+            Admin = Admin
         };
     }
 

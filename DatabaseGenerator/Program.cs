@@ -30,6 +30,7 @@ namespace DatabaseGenerator
                     LastName = "Admin",
                     Username = "admin",
                     Password = "admin",
+                    Admin = true,
                 });
 
                 context.SaveChanges();

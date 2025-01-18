@@ -15,6 +15,7 @@ public class Employee: BaseModel
 
     //public int PositionId { get; set; }
     public Position? Position { get; set; }
+    public bool Admin { get; set; }
 
     //public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 }

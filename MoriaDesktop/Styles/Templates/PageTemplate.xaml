@@ -43,6 +43,9 @@
                                     <Button x:Name="EditButton" Width="30" Height="30" Margin="5" ToolTip="Edytuj" Command="{Binding EditCommand}">
                                         <Image Source="/Images/edit.png" Width="20" Height="20"/>
                                     </Button>
+                                    <Button x:Name="UnlockButton" Width="30" Height="30" Margin="5" ToolTip="Odblokuj" Command="{Binding UnlockCommand}">
+                                        <Image Source="/Images/unlock.png" Width="20" Height="20"/>
+                                    </Button>
                                 </StackPanel>
 
                                 <!-- Tytuł strony -->
@@ -73,6 +76,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 
     <Style x:Key="GlobalListViewStyle" TargetType="Page">
         <Setter Property="Background" Value="White"/>

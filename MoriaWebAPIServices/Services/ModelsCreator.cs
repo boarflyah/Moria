@@ -23,6 +23,7 @@ public class ModelsCreator
             LastName = employee.LastName,
             PhoneNumber = employee.PhoneNumber,
             Username = employee.Username,
+            Admin = employee.Admin,
             Position = employee.Position != null ? new()
             {
                 Id = employee.Position.Id,
@@ -44,6 +45,7 @@ public class ModelsCreator
             Password = employee.Password,
             PhoneNumber = employee.PhoneNumber,
             LastModified = employee.LastModified,
+            Admin = employee.Admin,
         };
 
         if (employee.Position == null)
@@ -69,6 +71,7 @@ public class ModelsCreator
         if(employeeModel.Password != null)
             employee.Password = employeeModel.Password;
         employee.PhoneNumber = employeeModel.PhoneNumber;
+        employee.Admin = employeeModel.Admin;
         employee.LastModified = employeeModel.LastModified;
         employee.IsLocked = false;
         employee.LockedBy = string.Empty;

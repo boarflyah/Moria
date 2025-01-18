@@ -80,6 +80,17 @@ public class EmployeeDo: BaseDo
         }
     }
 
+    bool _Admin;
+    public bool Admin
+    {
+        get => _Admin;
+        set
+        {
+            _Admin = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     public string Token
     {
         get; set;

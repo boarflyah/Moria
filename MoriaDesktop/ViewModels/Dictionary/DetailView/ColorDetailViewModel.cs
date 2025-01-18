@@ -1,13 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
-using MoriaModelsDo.Models.Contacts;
+using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Dictionaries;
-using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
@@ -22,6 +19,7 @@ public class ColorDetailViewModel : BaseDetailViewModel
     #region properties
 
     string _Code;
+    [ObjectChangedValidate]
     public string Code
     {
         get => _Code;
@@ -33,6 +31,7 @@ public class ColorDetailViewModel : BaseDetailViewModel
     }
 
     string _Name;
+    [ObjectChangedValidate]
     public string Name
     {
         get => _Name;
@@ -59,10 +58,6 @@ public class ColorDetailViewModel : BaseDetailViewModel
     protected async override Task<bool> SaveNewObject() => true;
 
     protected async override Task<bool> UpdateExistingObject() => true;
-
-    protected override bool CheckPropertyName(string propertyName) =>
-        propertyName.Equals(nameof(Name)) || propertyName.Equals(nameof(Code));
-
 
     #endregion
 

@@ -3,6 +3,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.Products;
 
@@ -18,6 +19,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
 
 
     private string _Name;
+    [ObjectChangedValidate]
     public string Name
     {
         get => _Name;
@@ -29,6 +31,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     }
 
     private string _Symbol;
+    [ObjectChangedValidate]
     public string Symbol
     {
         get => _Symbol;
@@ -40,6 +43,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     }
 
     private bool _IsMainMachine;
+    [ObjectChangedValidate]
     public bool IsMainMachine
     {
         get => _IsMainMachine;
@@ -51,6 +55,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     }
 
     private string _SerialNumber;
+    [ObjectChangedValidate]
     public string SerialNumber
     {
         get => _SerialNumber;
@@ -62,6 +67,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     }
 
     private CategoryDo _Category;
+    [ObjectChangedValidate]
     public CategoryDo Category
     {
         get => _Category;
@@ -73,6 +79,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     }
 
     private SteelKindDo _SteelKind;
+    [ObjectChangedValidate]
     public SteelKindDo SteelKind
     {
         get => _SteelKind;
@@ -91,7 +98,6 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     protected override Task LoadObject() => throw new NotImplementedException();
     protected override Task<bool> SaveNewObject() => throw new NotImplementedException();
     protected override Task<bool> UpdateExistingObject() => throw new NotImplementedException();
-    protected override bool CheckPropertyName(string propertyName) => throw new NotImplementedException();
 
     #endregion
 }

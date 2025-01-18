@@ -5,6 +5,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
@@ -19,6 +20,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     #region properties
 
     string _Symbol;
+    [ObjectChangedValidate]
     public string Symbol
     {
         get => _Symbol;
@@ -30,6 +32,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     }
 
     string _Name;
+    [ObjectChangedValidate]
     public string Name
     {
         get => _Name;
@@ -58,9 +61,6 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     protected async override Task<bool> SaveNewObject() => true;
 
     protected async override Task<bool> UpdateExistingObject() => true;
-
-    protected override bool CheckPropertyName(string propertyName) =>
-        propertyName.Equals(nameof(Symbol)) || propertyName.Equals(nameof(Name));
 
     #endregion
     void Clear()

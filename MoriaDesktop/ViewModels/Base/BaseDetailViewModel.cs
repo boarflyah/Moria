@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Reflection;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
@@ -7,6 +8,7 @@ using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Attributes;
 
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
@@ -18,16 +20,29 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
     protected int objectId;
     protected bool isNew;
 
+    //set of properties names, which are decorated with ObjectChangedValidateAttribute 
+    private readonly Lazy<HashSet<string>> _objectChangingProperties;
+
     #endregion
 
     protected BaseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService) : base(logger, appStateService, navigationService)
     {
         _apiLockService = apiLockService;
 
+        _objectChangingProperties = new Lazy<HashSet<string>>(() =>
+        new HashSet<string>(
+                GetType()
+                .GetProperties()
+                .Where(x => x.GetCustomAttribute<ObjectChangedValidateAttribute>() != null)
+                .Select(x => x.Name)
+            )
+        );
+
         SaveCommand = new AsyncRelayCommand(Save, CanSave);
         SaveAndCloseCommand = new AsyncRelayCommand(SaveAndClose, CanSave);
         CloseCommand = new RelayCommand(Close);
         EditCommand = new AsyncRelayCommand(Edit, CanEdit);
+        UnlockCommand = new(Unlock, CanUnlock);
     }
 
     #region properties
@@ -71,6 +86,18 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         }
     }
 
+
+    private bool _IsAdminViewing;
+    public bool IsAdminViewing
+    {
+        get => _IsAdminViewing;
+        set
+        {
+            _IsAdminViewing = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region Commands
@@ -88,6 +115,11 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         get;
     }
     public AsyncRelayCommand EditCommand
+    {
+        get;
+    }
+
+    public AsyncRelayCommand UnlockCommand
     {
         get;
     }
@@ -207,13 +239,32 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 
     protected virtual bool CanEdit() => !isNew;
 
+    protected async virtual Task Unlock()
+    {
+        try
+        {
+            _appStateService.SetupLoading(true);
+            await _apiLockService.Unlock(_appStateService.LoggedUser.Username, _appStateService.CurrentDetailViewObjectType, _appStateService.CurrentDetailViewObjectId);
+        }
+        catch (Exception ex)
+        {
+        }
+        finally
+        {
+            _appStateService.SetupLoading();
+        }
+    }
+
+    protected virtual bool CanUnlock() => IsAdminViewing && IsLocked;
+
     #endregion
 
     #region events
 
     protected virtual void BaseDetailViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (CheckPropertyName(e.PropertyName))
+        //if (CheckPropertyName(e.PropertyName))
+        if (!HasObjectChanged && CheckHasObjectChanged(e.PropertyName))
             HasObjectChanged = true;
     }
 
@@ -282,7 +333,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
     /// </summary>
     /// <param name="propertyName"></param>
     /// <returns>true - if changed property enables ability to save object to database</returns>
-    protected abstract bool CheckPropertyName(string propertyName);
+    protected virtual bool CheckHasObjectChanged(string propertyName)
+    {
+        return _objectChangingProperties.Value.Contains(propertyName);
+    }
 
     #region INavigationAware implementation
 
@@ -298,6 +352,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         else
             isNew = true;
 
+        IsAdminViewing = _appStateService.LoggedUser?.Admin ?? false;
+
+        UnlockCommand.NotifyCanExecuteChanged();
         EditCommand.NotifyCanExecuteChanged();
     }
 
