@@ -23,7 +23,7 @@ public class ApiEmployeeService : IApiEmployeeService
 
     public async Task<IEnumerable<EmployeeDo>> GetEmployees(string username)
     {
-        var result = await _apiService.Get<IEnumerable<EmployeeDo>>(username, WebAPIEndpointsProvider.GetEmployeesPath, null);
+        var result = await _apiService.Get<IEnumerable<EmployeeDo>>(username, WebAPIEndpointsProvider.GetEmployeesPath, null, null);
         if (result == null)
             return new List<EmployeeDo>();
 
@@ -32,7 +32,7 @@ public class ApiEmployeeService : IApiEmployeeService
 
     public async Task<EmployeeDo> GetEmployee(string username, int id)
     {
-        return await _apiService.Get<EmployeeDo>(username, WebAPIEndpointsProvider.GetEmployeePath, null, id);
+        return await _apiService.Get<EmployeeDo>(username, WebAPIEndpointsProvider.GetEmployeePath, null, null, parameters: id);
     }
 
     public async Task<EmployeeDo> CreateEmployee(string username, EmployeeDo employee)

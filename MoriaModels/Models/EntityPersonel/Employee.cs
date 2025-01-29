@@ -6,7 +6,7 @@ namespace MoriaModels.Models.EntityPersonel;
 [Index(nameof(Username), IsUnique = true)]
 public class Employee: BaseModel
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Username { get; set; }

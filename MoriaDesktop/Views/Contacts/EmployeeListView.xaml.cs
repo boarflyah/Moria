@@ -1,8 +1,9 @@
-﻿using MoriaDesktop.ViewModels.Base;
-using MoriaDesktop.ViewModels.Contacts;
-using MoriaDesktopServices.Interfaces.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktop.Views.Base;
+using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Contacts;
 public partial class EmployeeListView : Page, IViewModelContent

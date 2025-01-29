@@ -1,25 +1,8 @@
 ﻿using MoriaModelsDo.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoriaModelsDo.Models.Dictionaries;
 public class SteelKindDo : BaseDo
 {
-
-    private int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     private string _Name;
     public string Name
     {

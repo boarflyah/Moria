@@ -80,7 +80,7 @@ public class ModelsCreator
             employee.Position = null;
         else
         {
-            employee.Position = await _context.Positions.FindAsync(employee.Position.Id);
+            employee.Position = await _context.Positions.FindAsync(employeeModel.Position.Id);
             if (employee.Position == null)
             {
                 employee.Position = await CreatePosition(employeeModel.Position);

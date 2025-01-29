@@ -23,7 +23,7 @@ public class ApiMotorService : IApiMotorService
 
     public async Task<IEnumerable<MotorDo>> GetMotors(string username)
     {
-        var result = await _apiService.Get<IEnumerable<MotorDo>>(username, WebAPIEndpointsProvider.GetMotorsPath, null);
+        var result = await _apiService.Get<IEnumerable<MotorDo>>(username, WebAPIEndpointsProvider.GetMotorsPath, null, null);
         if (result == null)
             return new List<MotorDo>();
 
@@ -32,7 +32,7 @@ public class ApiMotorService : IApiMotorService
 
     public async Task<MotorDo> GetMotor(string username, int id)
     {
-        return await _apiService.Get<MotorDo>(username, WebAPIEndpointsProvider.GetMotorPath, null, id);
+        return await _apiService.Get<MotorDo>(username, WebAPIEndpointsProvider.GetMotorPath, null, null, parameters: id);
     }
 
     public async Task<MotorDo> CreateMotor(string username, MotorDo motor)

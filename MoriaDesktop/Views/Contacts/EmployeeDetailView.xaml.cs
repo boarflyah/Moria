@@ -2,7 +2,9 @@
 using System.Windows.Controls;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.Views.Contacts;
 
@@ -10,10 +12,14 @@ public partial class EmployeeDetailView : Page, IViewModelContent
 {
     public object GetViewModel() => DataContext;
 
-    public EmployeeDetailView(EmployeeDetailViewModel vm)
+    readonly ILookupService _lookupService;
+
+    public EmployeeDetailView(EmployeeDetailViewModel vm, ILookupService lookupService)
     {
         InitializeComponent();
         DataContext = vm;
+
+        _lookupService = lookupService;
     }
 
     private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -54,4 +60,10 @@ public partial class EmployeeDetailView : Page, IViewModelContent
 
     }
 
+    private void PositionBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        var position = _lookupService.ShowLookup<PositionDo>();
+        if (position != null)
+            (DataContext as EmployeeDetailViewModel).Position = position;
+    }
 }

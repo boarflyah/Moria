@@ -18,7 +18,7 @@ public class ApiColorService : IApiColorService
 
     public async Task<IEnumerable<ColorDo>> GetColors(string username)
     {
-        var result = await _apiService.Get<IEnumerable<ColorDo>>(username, WebAPIEndpointsProvider.GetColorsPath, null);
+        var result = await _apiService.Get<IEnumerable<ColorDo>>(username, WebAPIEndpointsProvider.GetColorsPath, null, null);
         if (result == null)
             return new List<ColorDo>();
 
@@ -27,12 +27,12 @@ public class ApiColorService : IApiColorService
 
     public async Task<ColorDo> GetColor(string username, int id)
     {
-        return await _apiService.Get<ColorDo>(username, WebAPIEndpointsProvider.GetColorPath, null, id);
+        return await _apiService.Get<ColorDo>(username, WebAPIEndpointsProvider.GetColorPath, null, null, parameters: id);
     }
 
     public async Task<ColorDo> CreateColor(string username, ColorDo color)
     {
-        return await _apiService.Post<ColorDo>(username, WebAPIEndpointsProvider.PostColorPath, null, color);
+        return await _apiService.Post<ColorDo>(username, WebAPIEndpointsProvider.PostColorPath, null, null, parameters: color);
     }
 
     public async Task<ColorDo> UpdateColor(string username, ColorDo color)

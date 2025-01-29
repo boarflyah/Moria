@@ -3,17 +3,6 @@
 namespace MoriaModelsDo.Models.Contacts;
 public class EmployeeDo: BaseDo
 {
-    int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     string _FirstName;
     public string FirstName
     {
@@ -102,5 +91,4 @@ public class EmployeeDo: BaseDo
     }
 
     //public ObservableCollection<Permission> Permissions { get; set; } = new();
-
 }

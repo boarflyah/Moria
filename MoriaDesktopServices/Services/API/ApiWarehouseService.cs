@@ -22,7 +22,7 @@ public class ApiWarehouseService : IApiWarehouseService
 
     public async Task<IEnumerable<WarehouseDo>> GetWarehouses(string username)
     {
-        var result = await _apiService.Get<IEnumerable<WarehouseDo>>(username, WebAPIEndpointsProvider.GetWarehousesPath, null);
+        var result = await _apiService.Get<IEnumerable<WarehouseDo>>(username, WebAPIEndpointsProvider.GetWarehousesPath, null, null);
         if (result == null)
             return new List<WarehouseDo>();
 
@@ -31,7 +31,7 @@ public class ApiWarehouseService : IApiWarehouseService
 
     public async Task<WarehouseDo> GetWarehouse(string username, int id)
     {
-        return await _apiService.Get<WarehouseDo>(username, WebAPIEndpointsProvider.GetWarehousePath, null, id);
+        return await _apiService.Get<WarehouseDo>(username, WebAPIEndpointsProvider.GetWarehousePath, null, null, parameters: id);
     }
 
     public async Task<WarehouseDo> CreateWarehouse(string username, WarehouseDo warehouse)

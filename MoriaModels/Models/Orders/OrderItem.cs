@@ -7,7 +7,7 @@ namespace MoriaModels.Models.Orders;
 
 public class OrderItem : BaseModel
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public int Index { get; set; }
     public string Description { get; set; }
     public string Notes { get; set; }

@@ -1,17 +1,18 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using MoriaDesktop.ViewModels.Dictionary.DetailView;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Input;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktopServices.Interfaces;
+using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.Views.Dictionary.Window;
-public partial class ColorWindowView : System.Windows.Window 
+public partial class ColorWindowView : System.Windows.Window, IDetailedWindow
 {
-    private ColorDetailViewModel detailViewModel;
     public ColorWindowView(ColorDetailViewModel viewModel)
     {
         InitializeComponent();
         this.DataContext = viewModel;
-        detailViewModel = viewModel;
     }
 
     #region BaseWindowFunctionality
@@ -68,22 +69,34 @@ public partial class ColorWindowView : System.Windows.Window
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(detailViewModel.SaveCommand));
+        HandleCommand(nameof(ColorDetailViewModel.SaveCommand));
     }
 
     private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(detailViewModel.SaveAndCloseCommand));
+        HandleCommand(nameof(ColorDetailViewModel.SaveAndCloseCommand));
     }
 
     private void HandleCommand(string commandName)
     {
-        var command = detailViewModel.GetType()
+        var command = (DataContext as ColorDetailViewModel).GetType()
             .GetProperty(commandName)?
-            .GetValue(detailViewModel) as IRelayCommand;
+            .GetValue((DataContext as ColorDetailViewModel)) as IRelayCommand;
 
         command?.Execute(null);
     }
+
+    #endregion
+
+    #region IDetailedWindow implementation
+
+    public T ShowDialog<T>() where T : BaseDo, new()
+    {
+        //TODO;
+        return null;
+    }
+
+    public Type GetModelType() => typeof(ColorDo);
 
     #endregion
 }

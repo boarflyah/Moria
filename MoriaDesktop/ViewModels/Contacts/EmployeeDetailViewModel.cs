@@ -306,7 +306,8 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             PhoneNumber = PhoneNumber,
             Username = Username,
             LastModified = _appStateService.LoggedUser.Username,
-            Admin = Admin
+            Admin = Admin,
+            Position = Position
         };
     }
 

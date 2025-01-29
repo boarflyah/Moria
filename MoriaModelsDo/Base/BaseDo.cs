@@ -1,6 +1,19 @@
-﻿namespace MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+
+namespace MoriaModelsDo.Base;
 public abstract class BaseDo: BaseNotifyPropertyChanged
 {
+    int _Id;
+    public int Id
+    {
+        get => _Id;
+        set
+        {
+            _Id = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     bool _IsLocked;
     public bool IsLocked
     {
@@ -33,5 +46,10 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
             _LastModified = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public virtual void SetObject(LookupModel lookup)
+    {
+        Id = lookup.Id;
     }
 }

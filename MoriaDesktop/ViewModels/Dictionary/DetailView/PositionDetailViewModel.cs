@@ -1,19 +1,19 @@
-﻿
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Models.Contacts;
-using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 public class PositionDetailViewModel : BaseDetailViewModel
 {
     readonly IApiPositionService _positionService;
-    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiPositionService positionService) : base(logger, appStateService, apiLockService, navigationService)
+
+    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiPositionService positionService)
+        : base(logger, appStateService, apiLockService, navigationService)
     {
         _positionService = positionService;
     }

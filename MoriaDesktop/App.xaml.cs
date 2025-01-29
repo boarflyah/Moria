@@ -23,6 +23,9 @@ using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.Views.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
+using MoriaModelsDo.Models.Contacts;
+using MoriaDesktop.Views.Dictionary.Window;
+using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop;
 
@@ -83,6 +86,12 @@ public partial class App : Application
                          services.AddScoped<EmployeeDetailView>();
                          services.AddScoped<EmployeeDetailViewModel>();
 
+                         services.AddScoped<LookupWindow>();
+                         services.AddScoped<LookupWindowViewModel>();
+                         services.AddScoped<INewObjectService, NewObjectService>();
+
+                         services.AddScoped<IDetailedWindow, PositionWindowView>();
+                         services.AddScoped<IDetailedWindow, ColorWindowView>();
 
                          services.AddScoped<IPageService, DesktopPageService>();
                          services.AddSingleton<INavigationService, NavigationService>();
@@ -100,9 +109,9 @@ public partial class App : Application
                          services.AddScoped<IApiPositionService, ApiPositionService>();
                          services.AddScoped<IApiSteelKindService, ApiSteelKindService>();
                          services.AddScoped<IApiWarehouseService, ApiWarehouseService>();
+                         services.AddScoped<ILookupService, LookupService>();
 
-
-
+                         services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();
                          services.AddHttpClient();
                          services.AddHttpClient(ApiRequestService.HttpsApiClientName)

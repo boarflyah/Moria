@@ -13,6 +13,6 @@ public class ApiTestService
 
     public async Task<string> Get()
     {
-        return await _apiService.Get("123", WebAPIEndpointsProvider.GetTestPath, null);
+        return await _apiService.Get("123", WebAPIEndpointsProvider.GetTestPath, null, null);
     }
 }

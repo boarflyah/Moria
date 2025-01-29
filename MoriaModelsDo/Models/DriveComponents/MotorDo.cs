@@ -3,17 +3,6 @@
 namespace MoriaModelsDo.Models.DriveComponents;
 public class MotorDo: BaseDo
 {
-    private int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     private string _Name;
     public string Name
     {

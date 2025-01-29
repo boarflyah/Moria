@@ -33,7 +33,7 @@ public interface IApiService
     /// <param name="headers"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    Task<string> Get(string username, string endpointPath, Dictionary<string, string> headers, params object[] parameters);
+    Task<string> Get(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters);
     /// <summary>
     /// 
     /// </summary>
@@ -43,7 +43,7 @@ public interface IApiService
     /// <param name="headers"></param>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    Task<T> Get<T>(string username, string endpointPath, Dictionary<string, string> headers, params object[] parameters);
+    Task<T> Get<T>(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters);
     /// <summary>
     /// 
     /// </summary>
@@ -86,4 +86,5 @@ public interface IApiService
     /// <param name="parameters"></param>
     /// <returns></returns>
     Task<T> Put<T>(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters);
+    Dictionary<string, IEnumerable<string>> GetCurrentResponseHeaders();
 }

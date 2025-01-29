@@ -5,6 +5,10 @@ using MoriaBaseServices;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 using MoriaModelsDo.Models.Contacts;
+using Microsoft.Extensions.Primitives;
+using MoriaModels.Models.EntityPersonel;
+using System.Reflection;
+using MoriaBaseModels.Attributes;
 
 namespace MoriaWebAPI.Controllers;
 
@@ -126,5 +130,32 @@ public class PositionController : ControllerBase
             _logger.LogError(ex, $"Method: {nameof(Delete)}");
             return StatusCode(501, ex.Message);
         }
+    }
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetPositionLookupObjectsPath}/{{latestId?}}/{{pageSize?}}")]
+    [Produces<IEnumerable<PositionDo>>]
+    public async Task<IActionResult> GetLookupObjects(int latestId = 0, int pageSize = int.MaxValue)
+    {
+        try
+        {
+            if (typeof(Position).GetCustomAttribute(typeof(LookupHeadersAttribute)) is LookupHeadersAttribute attribute)
+            {
+                var headersMetadata = attribute.GetLookupHeadersMetadata();
+                if(headersMetadata != null)
+                    Response.Headers.Add(new(WebAPIEndpointsProvider.LookupMetadataHeaderKey, new StringValues(System.Text.Json.JsonSerializer.Serialize(headersMetadata))));
+            }
+            var lookupObjects = await _positionService.GetLookupObjects(latestId, pageSize);
+            return Ok(lookupObjects);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetLookupObjects)}");
+            return StatusCode(501, ex.Message);
+        }
+
     }
 }

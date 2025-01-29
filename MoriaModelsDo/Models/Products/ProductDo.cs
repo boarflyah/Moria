@@ -4,18 +4,6 @@ using MoriaModelsDo.Models.Dictionaries;
 namespace MoriaModelsDo.Models.Products;
 public class ProductDo: BaseDo
 {
-
-    private int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     private string _Name;
     public string Name
     {

@@ -17,7 +17,7 @@ public class ApiContactService : IApiContactService
 
     public async Task<IEnumerable<ContactDo>> GetContacts(string username)
     {
-        var result = await _apiService.Get<IEnumerable<ContactDo>>(username, WebAPIEndpointsProvider.GetContactsPath, null);
+        var result = await _apiService.Get<IEnumerable<ContactDo>>(username, WebAPIEndpointsProvider.GetContactsPath, null, null);
         if (result == null)
             return new List<ContactDo>();
 
@@ -26,7 +26,7 @@ public class ApiContactService : IApiContactService
 
     public async Task<ContactDo> GetContact(string username, int id)
     {
-        return await _apiService.Get<ContactDo>(username, WebAPIEndpointsProvider.GetContactPath, null, id);
+        return await _apiService.Get<ContactDo>(username, WebAPIEndpointsProvider.GetContactPath, null, null, parameters: id);
     }
 
     public async Task<ContactDo> CreateContact(string username, ContactDo contact)

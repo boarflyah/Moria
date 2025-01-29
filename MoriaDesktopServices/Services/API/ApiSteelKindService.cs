@@ -23,7 +23,7 @@ public class ApiSteelKindService : IApiSteelKindService
 
     public async Task<IEnumerable<SteelKindDo>> GetSteelKinds(string username)
     {
-        var result = await _apiService.Get<IEnumerable<SteelKindDo>>(username, WebAPIEndpointsProvider.GetSteelKindsPath, null);
+        var result = await _apiService.Get<IEnumerable<SteelKindDo>>(username, WebAPIEndpointsProvider.GetSteelKindsPath, null, null);
         if (result == null)
             return new List<SteelKindDo>();
 
@@ -32,7 +32,7 @@ public class ApiSteelKindService : IApiSteelKindService
 
     public async Task<SteelKindDo> GetSteelKind(string username, int id)
     {
-        return await _apiService.Get<SteelKindDo>(username, WebAPIEndpointsProvider.GetSteelKindPath, null, id);
+        return await _apiService.Get<SteelKindDo>(username, WebAPIEndpointsProvider.GetSteelKindPath, null, null, parameters: id);
     }
 
     public async Task<SteelKindDo> CreateSteelKind(string username, SteelKindDo steelKind)

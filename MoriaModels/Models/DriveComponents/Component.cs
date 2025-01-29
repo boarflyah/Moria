@@ -6,7 +6,7 @@ namespace MoriaModels.Models.DriveComponents;
 
 public class Component: BaseModel
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public string ElectricalDescription { get; set; }
 
     public int ProductId { get; set; }

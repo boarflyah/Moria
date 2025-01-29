@@ -14,4 +14,8 @@
     <Folder Include="Models\Settings\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MoriaBaseModels\MoriaBaseModels.csproj" />
+  </ItemGroup>
+
 </Project>

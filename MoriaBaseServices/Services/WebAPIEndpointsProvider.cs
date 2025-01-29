@@ -2,6 +2,14 @@
 
 public class WebAPIEndpointsProvider
 {
+    #region responseheaders
+
+    public const string LookupMetadataHeaderKey = "LookupMetadata";
+    public const string PagedListHasNextHeaderKey = "HasNext";
+    public const string PagedListLastId = "LastId";
+
+    #endregion
+
     #region controllers
 
     public const string Token = "token";
@@ -14,6 +22,7 @@ public class WebAPIEndpointsProvider
     public const string Contact = "contact";
     public const string Color = "color";
     public const string Lock = "lock";
+    public const string Lookup = "lookup";
 
     #endregion
 
@@ -45,6 +54,17 @@ public class WebAPIEndpointsProvider
     /// <para>Throws: </para>
     /// </summary>
     public const string PutUnlockPath = $"{Lock}/unlock";
+
+    #endregion
+
+    #region Lookup
+
+    /// <summary>
+    /// Body: object of type LookupBodyHelper
+    /// <para>Return paged list of LookupModel objects</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string GetLookupPath = $"{Lookup}";
 
     #endregion
 
@@ -160,6 +180,10 @@ public class WebAPIEndpointsProvider
     /// <para>Return bool</para>
     /// </summary>
     public const string DeletePositionPath = $"{Position}";
+    /// <summary>
+    /// Parameter from path: latestId, pageSize
+    /// </summary>
+    public const string GetPositionLookupObjectsPath = $"{Position}/getlookupobjects";
     #endregion
 
     #region MotorGear

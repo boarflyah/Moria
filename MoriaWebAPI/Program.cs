@@ -52,6 +52,7 @@ public class Program
             builder.Services.AddScoped<ISteelKindControllerService, SteelKindControllerService>();
 
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
+            builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);

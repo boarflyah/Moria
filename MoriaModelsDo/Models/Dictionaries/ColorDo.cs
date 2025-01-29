@@ -3,17 +3,6 @@
 namespace MoriaModelsDo.Models.Dictionaries;
 public class ColorDo: BaseDo
 {
-    int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     private string _Name;
     public string Name
     {

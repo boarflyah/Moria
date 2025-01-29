@@ -23,7 +23,7 @@ public class ApiPositionService : IApiPositionService
 
     public async Task<IEnumerable<PositionDo>> GetPositions(string username)
     {
-        var result = await _apiService.Get<IEnumerable<PositionDo>>(username, WebAPIEndpointsProvider.GetPositionsPath, null);
+        var result = await _apiService.Get<IEnumerable<PositionDo>>(username, WebAPIEndpointsProvider.GetPositionsPath, null, null);
         if (result == null)
             return new List<PositionDo>();
 
@@ -32,7 +32,7 @@ public class ApiPositionService : IApiPositionService
 
     public async Task<PositionDo> GetPosition(string username, int id)
     {
-        return await _apiService.Get<PositionDo>(username, WebAPIEndpointsProvider.GetPositionPath, null, id);
+        return await _apiService.Get<PositionDo>(username, WebAPIEndpointsProvider.GetPositionPath, null, null, parameters: id);
     }
 
     public async Task<PositionDo> CreatePosition(string username, PositionDo position)

@@ -1,10 +1,15 @@
-﻿using MoriaModels.Models.Base;
+﻿using MoriaBaseModels.Attributes;
+using MoriaBaseModels.Models;
+using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.EntityPersonel;
 
+[LookupHeaders(true, "Nazwa", true, "Kod")]
 public class Position : BaseModel
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public string Name { get; set; }
     public string Code { get; set; }
+
+    public override LookupModel GetLookupObject() => new(Id, Name, Code);
 }

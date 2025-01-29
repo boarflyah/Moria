@@ -4,7 +4,7 @@ namespace MoriaModels.Models.DriveComponents;
 
 public class Drive: BaseModel
 {
-    public int Id { get; set; }
+    //public int Id { get; set; }
     public bool Variator { get; set; }
     public bool Inverter { get; set; }
     public byte Quantity { get; set; }

@@ -24,6 +24,7 @@
                    HorizontalAlignment="Right"
                    Margin="0 0 80 0"/>
             <TextBox x:Name="UsernameTextBox"
+                     Style="{StaticResource NoLockTextBoxStyle}"
                      Width="200"
                      HorizontalAlignment="Right"
                      Margin="0 0 5 0"/>
@@ -36,9 +37,10 @@
                    HorizontalAlignment="Right"
                    Margin="0 0 167 0"/>
             <PasswordBox x:Name="PasswordBox"
-                     Width="200"
-                     HorizontalAlignment="Right"
-                     Margin="0 0 5 0"/>
+                         Style="{StaticResource NoLockPasswordBoxStyle}"
+                         Width="200"
+                         HorizontalAlignment="Right"
+                         Margin="0 0 5 0"/>
         </StackPanel>
 
         <Button x:Name ="LoginButton" Grid.Column="1"

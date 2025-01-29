@@ -21,18 +21,20 @@ public class MoriaApiService : IApiService
         _tokensManager = tokensManager;
     }
 
-    public async Task<T> Get<T>(string username, string endpointPath, Dictionary<string, string> headers, params object[] parameters)
+    public async Task<T> Get<T>(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters)
     {
         if(!string.IsNullOrWhiteSpace(username))
             AddAuthorizationHeader(ref headers, username);
-        return await _requestService.Get<T>(_credentialsService.GetScheme(), _credentialsService.GetHost(), _credentialsService.GetPortNumber(), endpointPath, headers, parameters);
+        return await _requestService.Get<T>(_credentialsService.GetScheme(), _credentialsService.GetHost(), _credentialsService.GetPortNumber(), endpointPath, 
+            headers, data != null ? _requestService.GetStringHttpContent(data) : null, parameters);
     }
 
-    public async Task<string> Get(string username, string endpointPath, Dictionary<string, string> headers, params object[] parameters)
+    public async Task<string> Get(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters)
     {
         if (!string.IsNullOrWhiteSpace(username))
             AddAuthorizationHeader(ref headers, username);
-        return await _requestService.Get(_credentialsService.GetScheme(), _credentialsService.GetHost(), _credentialsService.GetPortNumber(), endpointPath, headers, parameters);
+        return await _requestService.Get(_credentialsService.GetScheme(), _credentialsService.GetHost(), _credentialsService.GetPortNumber(), endpointPath,
+            headers, data != null ? _requestService.GetStringHttpContent(data) : null, parameters);
     }
 
     public async Task<T> Post<T>(string username, string endpointPath, Dictionary<string, string> headers, object data, params object[] parameters)
@@ -94,4 +96,6 @@ public class MoriaApiService : IApiService
         var authHeader = _requestService.GetAuthorizationHeader(tokenObject.Token);
         headers.Add(authHeader.Key, authHeader.Value);
     }
+
+    public Dictionary<string, IEnumerable<string>> GetCurrentResponseHeaders() => _requestService.CurrentResponseHeaders;
 }

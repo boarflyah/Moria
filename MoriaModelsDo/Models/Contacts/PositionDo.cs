@@ -1,18 +1,9 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Contacts;
 public class PositionDo: BaseDo
 {
-    int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id= value;
-            RaisePropertyChanged(value);
-        }
-    }
 
     string _Name;
     public string Name
@@ -34,5 +25,12 @@ public class PositionDo: BaseDo
             _Code = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Name = lookup.Property1;
+        Code = lookup.Property2;
     }
 }

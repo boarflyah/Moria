@@ -5,17 +5,6 @@ using MoriaModelsDo.Models.DriveComponents.Relations;
 namespace MoriaModelsDo.Models.DriveComponents;
 public class DriveDo : BaseDo
 {
-    private int _Id;
-    public int Id
-    {
-        get => _Id;
-        set
-        {
-            _Id = value;
-            RaisePropertyChanged(value);
-        }
-    }
-
     bool _Variator;
     public bool Variator
     {

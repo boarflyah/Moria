@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
@@ -23,6 +25,25 @@ public class ApplicationDbContext : DbContext
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("MoriaDataBase"));
     }
 
+    public IQueryable<BaseModel> Get(Type objectType)
+    {
+        var methodInfo = GetType().GetMethod(nameof(Set), Type.EmptyTypes);
+        if (methodInfo != null)
+        {
+            var method = methodInfo.MakeGenericMethod(objectType);
+            if (method != null)
+            {
+
+                var collection = method.Invoke(this, null);
+                if (collection is IQueryable<BaseModel> dbset)
+                {
+                    return dbset;
+                }
+            }
+        }
+        throw new InvalidOperationException("Failed to retrieve DbSet.");
+    }
+
     public DbSet<SteelKind> SteelKinds { get; set; }
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Warehouse> Warehouses { get; set; }
@@ -37,5 +58,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Component> Components { get; set; }
+
 
 }

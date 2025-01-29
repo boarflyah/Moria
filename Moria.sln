@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaDesktopServices", "Mor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoriaModelsDo", "MoriaModelsDo\MoriaModelsDo.csproj", "{654F372F-DB0A-47F8-8F95-D1DA65D682AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoriaBaseModels", "MoriaBaseModels\MoriaBaseModels.csproj", "{A2BA5373-2000-4A31-81B2-F5CEE764E8D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{654F372F-DB0A-47F8-8F95-D1DA65D682AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654F372F-DB0A-47F8-8F95-D1DA65D682AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654F372F-DB0A-47F8-8F95-D1DA65D682AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2BA5373-2000-4A31-81B2-F5CEE764E8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2BA5373-2000-4A31-81B2-F5CEE764E8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2BA5373-2000-4A31-81B2-F5CEE764E8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2BA5373-2000-4A31-81B2-F5CEE764E8D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

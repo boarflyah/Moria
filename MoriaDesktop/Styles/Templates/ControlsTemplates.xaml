@@ -53,6 +53,18 @@
     </Style>
 
     <!--#endregion-->
+    
+    <!--#region checkboxes-->
+
+    <Style TargetType="CheckBox">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">
+                <Setter Property="IsEnabled" Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--#endregion-->
 
     <!--#region textboxes-->
 
@@ -94,6 +106,36 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="PasswordBox" x:Key="NoLockPasswordBoxStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border CornerRadius="4" 
+                            Height="25"
+                                Background="White" 
+                                BorderBrush="SlateGray" 
+                                BorderThickness="0.7">
+                        <ScrollViewer Margin="2"
+                                      x:Name="PART_ContentHost" 
+                                      Focusable="False" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TextBox" x:Key="NoLockTextBoxStyle">
+        <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </Style.Resources>
     </Style>
 
     <!--#endregion-->

@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Models.Contacts;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaWebAPIServices.Services.Interfaces.Dictionaries
 {
@@ -9,5 +10,6 @@ namespace MoriaWebAPIServices.Services.Interfaces.Dictionaries
         Task<PositionDo> EditPosition(PositionDo position);
         Task<List<PositionDo>> GetAllPositions();
         Task<PositionDo> GetPositionById(int id);
+        Task<IEnumerable<LookupModel>> GetLookupObjects(int latestId, int pageSize);
     }
 }

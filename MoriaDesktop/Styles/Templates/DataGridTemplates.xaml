@@ -43,4 +43,6 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="DataGridCell" x:Key="NoLockDataGridCellStyle"/>
+
 </ResourceDictionary>

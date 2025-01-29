@@ -3,17 +3,18 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
 using System.Windows;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktopServices.Interfaces;
+using MoriaModelsDo.Models.Contacts;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.Views.Dictionary.Window;
 
-public partial class PositionWindowView : System.Windows.Window
+public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
 {
-    private PositionDetailViewModel detailViewModel;
     public PositionWindowView(PositionDetailViewModel viewModel)
     {
         InitializeComponent();
         this.DataContext = viewModel;
-        detailViewModel = viewModel;
     }
 
     #region BaseWindowFunctionality
@@ -69,22 +70,38 @@ public partial class PositionWindowView : System.Windows.Window
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(detailViewModel.SaveCommand));
+        HandleCommand(nameof(PositionDetailViewModel.SaveCommand));
     }
 
     private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(detailViewModel.SaveAndCloseCommand));
+        HandleCommand(nameof(PositionDetailViewModel.SaveAndCloseCommand));
     }
 
     private void HandleCommand(string commandName)
     {
-        var command = detailViewModel.GetType()
+        var command = (DataContext as PositionDetailViewModel).GetType()
             .GetProperty(commandName)?
-            .GetValue(detailViewModel) as IRelayCommand;
+            .GetValue((DataContext as PositionDetailViewModel)) as IRelayCommand;
 
         command?.Execute(null);
     }
+
+    #endregion
+
+    #region IDetailedWindow implementation
+
+    public T ShowDialog<T>() where T : BaseDo, new()
+    {
+        this.ShowDialog();
+
+        //TODO;
+
+        //return (DataContext as PositionDetailViewModel).GetPosition();
+        return null;
+    }
+
+    public Type GetModelType() => typeof(PositionDo);
 
     #endregion
 }

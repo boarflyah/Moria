@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseModels.Models;
+using MoriaBaseServices;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPIServices.Contexts;
@@ -9,10 +11,12 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class PositionControllerService : IPositionControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public PositionControllerService(ApplicationDbContext context)
+    public PositionControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<PositionDo> CreatePosition(PositionDo position)
@@ -33,25 +37,16 @@ public class PositionControllerService : IPositionControllerService
     public async Task<PositionDo?> GetPositionById(int id)
     {
         var searchPosition = await _context.Positions.FindAsync(id);
-        if (searchPosition == null) return null;
+        if (searchPosition == null)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new PositionDo
-        {
-            Id = searchPosition.Id,
-            Name = searchPosition.Name,
-            Code = searchPosition.Code
-        };
+        return _creator.GetPosition(searchPosition);
     }
 
     public async Task<List<PositionDo>> GetAllPositions()
     {
         return await _context.Positions
-            .Select(position => new PositionDo
-            {
-                Id = position.Id,
-                Name = position.Name,
-                Code = position.Code
-            })
+            .Select(position => _creator.GetPosition(position))
             .ToListAsync();
     }
 
@@ -76,4 +71,15 @@ public class PositionControllerService : IPositionControllerService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<IEnumerable<LookupModel>> GetLookupObjects(int latestId, int pageSize)
+    {
+        return await _context.Positions
+            .OrderBy(x => x.Id)
+            //.SkipWhile(x => x.Id < latestId)
+            .Take(pageSize)
+            .Select(position => position.GetLookupObject())
+            .ToListAsync();
+    }
+
 }

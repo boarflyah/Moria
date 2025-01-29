@@ -19,6 +19,13 @@ public class ApiRequestService
     #endregion
 
     readonly IHttpClientFactory _clientFactory;
+
+    public Dictionary<string, IEnumerable<string>> CurrentResponseHeaders
+    {
+        get;
+        private set;
+    }
+
     public ApiRequestService(IHttpClientFactory clientFactory)
     {
         _clientFactory = clientFactory;
@@ -39,9 +46,9 @@ public class ApiRequestService
     /// <param name="parameters">array of single parametrs</param>
     /// <returns>Deserialized api response to <typeparamref name="T"/></returns>
     /// <exception cref="MoriaApiException"/>
-    public async Task<T> Get<T>(string scheme, string host, int port, string endpointPath, Dictionary<string, string> headers, params object[] parameters)
+    public async Task<T> Get<T>(string scheme, string host, int port, string endpointPath, Dictionary<string, string> headers, HttpContent content, params object[] parameters)
     {
-        return await TrySendAsync<T>(HttpMethod.Get, scheme, host, port, endpointPath, headers, null, parameters);
+        return await TrySendAsync<T>(HttpMethod.Get, scheme, host, port, endpointPath, headers, content, parameters);
     }
 
     /// <summary>
@@ -56,9 +63,9 @@ public class ApiRequestService
     /// <param name="parameters">array of single parametrs</param>
     /// <returns>response read as <see cref="string"/></returns>
     /// <exception cref="MoriaApiException"/>
-    public async Task<string> Get(string scheme, string host, int port, string endpointPath, Dictionary<string, string> headers, params object[] parameters)
+    public async Task<string> Get(string scheme, string host, int port, string endpointPath, Dictionary<string, string> headers, HttpContent content, params object[] parameters)
     {
-        return await TrySendAsync(HttpMethod.Get, scheme, host, port, endpointPath, headers, null, parameters);
+        return await TrySendAsync(HttpMethod.Get, scheme, host, port, endpointPath, headers, content, parameters);
     }
 
     /// <summary>
@@ -202,6 +209,7 @@ public class ApiRequestService
         try
         {
             response.EnsureSuccessStatusCode();
+            CurrentResponseHeaders = response.Headers.ToDictionary();
 
             var responseDeserialized = await response.Content.ReadFromJsonAsync<T>();
             if (responseDeserialized == null)
