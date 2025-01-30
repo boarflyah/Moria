@@ -5,6 +5,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Contacts;
@@ -119,7 +120,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             var succeeded = false;
             if (isNew)
             {
-                var employee = GetEmployee();
+                var employee = GetDo() as EmployeeDo;
                 employee.Password = password;
 
                 var created = await ExecuteApiRequest(_employeeService.CreateEmployee, _appStateService.LoggedUser.Username, employee);
@@ -137,7 +138,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             }
             else
             {
-                var employee = GetEmployee();
+                var employee = GetDo() as EmployeeDo;
                 if (PasswordChanged)
                     employee.Password = password;
 
@@ -190,7 +191,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             var succeeded = false;
             if (isNew)
             {
-                var employee = GetEmployee();
+                var employee = GetDo() as EmployeeDo;
                 employee.Password = password;
 
                 var created = await ExecuteApiRequest(_employeeService.CreateEmployee, _appStateService.LoggedUser.Username, employee);
@@ -204,7 +205,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             }
             else
             {
-                var employee = GetEmployee();
+                var employee = GetDo() as EmployeeDo;
                 if (PasswordChanged)
                     employee.Password = password;
 
@@ -247,7 +248,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         }
     }
 
-    protected override Type GetModelType() => typeof(EmployeeDo);
+    public override Type GetModelType() => typeof(EmployeeDo);
 
     protected async override Task LoadObject()
     {
@@ -286,7 +287,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         Admin = employee.Admin;
     }
 
-    void Clear()
+    public override void Clear()
     {
         FirstName = string.Empty;
         LastName = string.Empty;
@@ -296,9 +297,9 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         Admin = false;
     }
 
-    EmployeeDo GetEmployee()
+    public override BaseDo GetDo()
     {
-        return new()
+        return new EmployeeDo()
         {
             Id = objectId,
             FirstName = FirstName,

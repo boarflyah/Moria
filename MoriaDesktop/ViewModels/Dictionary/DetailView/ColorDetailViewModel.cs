@@ -4,6 +4,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
@@ -42,7 +43,9 @@ public class ColorDetailViewModel : BaseDetailViewModel
         }
     }
 
-    protected override Type GetModelType() => typeof(ColorDo);
+    #endregion
+
+    public override Type GetModelType() => typeof(ColorDo);
 
     protected async override Task LoadObject()
     {
@@ -59,16 +62,22 @@ public class ColorDetailViewModel : BaseDetailViewModel
 
     protected async override Task<bool> UpdateExistingObject() => true;
 
-    #endregion
-
-    void Clear()
+    public override void Clear()
     {
         Name = string.Empty;
         Code = string.Empty;
     }
+
     void Setup(ColorDo color)
     {
         Name = color.Name;
         Code = color.Code;
     }
+
+    public override BaseDo GetDo()
+        => new ColorDo()
+        {
+            Code = this.Code,
+            Name = this.Name
+        };
 }

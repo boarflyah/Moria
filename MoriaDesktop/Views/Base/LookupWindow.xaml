@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:MoriaDesktop.Views.Base"
         xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"
         mc:Ignorable="d"
-        Title="LookupWindow"
+        Title="Wybierz"
         Width="800"
         Height="Auto"
         Loaded="Window_Loaded"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="CanResize">

@@ -4,6 +4,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
@@ -44,8 +45,7 @@ public class PositionDetailViewModel : BaseDetailViewModel
         }
     }
 
-
-    protected override Type GetModelType() => typeof(PositionDo);
+    public override Type GetModelType() => typeof(PositionDo);
 
     protected async override Task LoadObject()
     {
@@ -65,7 +65,7 @@ public class PositionDetailViewModel : BaseDetailViewModel
 
     #endregion
 
-    void Clear()
+    public override void Clear()
     {
         Code = string.Empty;
         Name = string.Empty;
@@ -75,4 +75,11 @@ public class PositionDetailViewModel : BaseDetailViewModel
         Code = position.Code;
         Name = position.Name;
     }
+
+    public override BaseDo GetDo()
+        => new PositionDo()
+        {
+            Code = this.Code,
+            Name = this.Name,
+        };
 }

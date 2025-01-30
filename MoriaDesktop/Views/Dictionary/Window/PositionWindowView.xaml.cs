@@ -1,11 +1,9 @@
-﻿
-using CommunityToolkit.Mvvm.Input;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
-using MoriaDesktopServices.Interfaces;
-using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Base;
+using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.Services.Interfaces;
 
 namespace MoriaDesktop.Views.Dictionary.Window;
 
@@ -36,72 +34,44 @@ public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
             exitButton.Click += ExitButton_Click;
         }
 
-        var saveButton = (Button)this.Template.FindName("SaveButton", this);
-        if (saveButton != null)
-        {
-            saveButton.Click -= SaveButton_Click;
-            saveButton.Click += SaveButton_Click;
-        }
-
         var saveAndCloseButton = (Button)this.Template.FindName("SaveAndCloseButton", this);
         if (saveAndCloseButton != null)
         {
             saveAndCloseButton.Click -= SaveAndCloseButton_Click;
             saveAndCloseButton.Click += SaveAndCloseButton_Click;
         }
-
-        var minimalizeButton = (Button)this.Template.FindName("MinimalizeButton", this);
-        if (minimalizeButton != null)
-        {
-            minimalizeButton.Click -= MinimalizeButton_Click;
-            minimalizeButton.Click += MinimalizeButton_Click;
-        }
-    }
-
-    private void MinimalizeButton_Click(object sender, RoutedEventArgs e)
-    {
-        this.WindowState = WindowState.Minimized;
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        HandleCommand(nameof(PositionDetailViewModel.SaveCommand));
+        Cancelled = true;
+        this.Hide();
     }
 
     private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(PositionDetailViewModel.SaveAndCloseCommand));
-    }
-
-    private void HandleCommand(string commandName)
-    {
-        var command = (DataContext as PositionDetailViewModel).GetType()
-            .GetProperty(commandName)?
-            .GetValue((DataContext as PositionDetailViewModel)) as IRelayCommand;
-
-        command?.Execute(null);
+        this.Hide();
     }
 
     #endregion
 
     #region IDetailedWindow implementation
 
-    public T ShowDialog<T>() where T : BaseDo, new()
+    public bool Cancelled
     {
-        this.ShowDialog();
-
-        //TODO;
-
-        //return (DataContext as PositionDetailViewModel).GetPosition();
-        return null;
+        get; private set;
     }
 
-    public Type GetModelType() => typeof(PositionDo);
+    //public BaseDo ShowNewDialog()
+    //{
+    //    this.ShowDialog();
+    //    var result = (DataContext as BaseDetailViewModel).GetDo();
+    //    (DataContext as BaseDetailViewModel).Clear();
+
+    //    return result;
+    //}
+
+    //public Type GetModelType() => (DataContext as BaseDetailViewModel).GetModelType();
 
     #endregion
 }

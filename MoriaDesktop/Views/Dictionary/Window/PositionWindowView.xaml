@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary.Window"
         mc:Ignorable="d"
-        Title="PositionWindowView" Height="450" Width="800"
+        Title="Nowe stanowisko" Height="450" Width="800"
         MouseLeftButtonDown="DragWindow"
         Style="{StaticResource GlobalWindowStyle}"
+        WindowStartupLocation="CenterScreen"
         Loaded="WinowLoaed">
     <Grid>
         <Grid.ColumnDefinitions>

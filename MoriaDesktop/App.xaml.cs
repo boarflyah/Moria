@@ -26,6 +26,7 @@ using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaModelsDo.Models.Contacts;
 using MoriaDesktop.Views.Dictionary.Window;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaDesktop.Services.Interfaces;
 
 namespace MoriaDesktop;
 

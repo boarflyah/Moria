@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
-using MoriaDesktop.Views.Dictionary;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
-using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
@@ -56,7 +55,7 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
         }
     }
 
-    protected override Type GetModelType() => typeof(MotorGearDo);
+    public override Type GetModelType() => typeof(MotorGearDo);
 
     protected async override Task LoadObject()
     {
@@ -74,7 +73,7 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
     protected async override Task<bool> UpdateExistingObject() => true;
 
     #endregion
-    void Clear()
+    public override void Clear()
     {
         Symbol = string.Empty;
         Name = string.Empty;
@@ -86,4 +85,12 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
         Name = motorGear.Name;
         Ratio = motorGear.Ratio;
     }
+
+    public override BaseDo GetDo()
+        => new MotorGearDo()
+        {
+            Name = this.Name,
+            Ratio = this.Ratio,
+            Symbol = this.Symbol
+        };
 }

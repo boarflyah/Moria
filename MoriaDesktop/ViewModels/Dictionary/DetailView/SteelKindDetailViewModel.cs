@@ -1,11 +1,10 @@
-﻿
-
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
@@ -43,8 +42,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
         }
     }
 
-
-    protected override Type GetModelType() => typeof(SteelKindDo);
+    public override Type GetModelType() => typeof(SteelKindDo);
 
     protected async override Task LoadObject()
     {
@@ -63,14 +61,22 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     protected async override Task<bool> UpdateExistingObject() => true;
 
     #endregion
-    void Clear()
+    public override void Clear()
     {
         Symbol = string.Empty;
         Name = string.Empty;
     }
+
     void Setup(SteelKindDo steelKind)
     {
         Symbol = steelKind.Symbol;
         Name = steelKind.Name;
     }
+
+    public override BaseDo GetDo()
+        => new SteelKindDo()
+        {
+            Name = this.Name,
+            Symbol = this.Symbol
+        };
 }

@@ -1,15 +1,7 @@
-﻿using MoriaDesktop.ViewModels.Base;
-using MoriaDesktop.ViewModels.Dictionary.DetailView;
-using MoriaDesktop.Views.Dictionary.Window;
-using MoriaModelsDo.Models.DriveComponents;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 namespace MoriaDesktop.Views.Dictionary.DetailView;
 public partial class ColorDetailView : Page
@@ -25,9 +17,6 @@ public partial class ColorDetailView : Page
 
     private void NewButton_Click(object sender, RoutedEventArgs e)
     {
-        var colorWindow = new ColorWindowView(cdvm);
-
-        bool? dialogResult = colorWindow.ShowDialog();
 
     }
 

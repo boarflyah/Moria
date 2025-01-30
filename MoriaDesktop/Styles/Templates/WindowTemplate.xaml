@@ -4,11 +4,11 @@
     <Style x:Key="GlobalWindowStyle" TargetType="Window">
         <Setter Property="Background" Value="White"/>
         <Setter Property="WindowStyle" Value="None"/>
-        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="AllowsTransparency" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
-                    <Border BorderBrush="Black" BorderThickness="1" Background="White">
+                    <Border BorderBrush="Black" BorderThickness="0" Background="White">
                         <Grid>
                             <!-- Główna struktura Window -->
                             <Grid.RowDefinitions>
@@ -33,9 +33,9 @@
 
                                 <!-- Ikony narzędzi -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz">
+                                    <!--<Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz">
                                         <Image Source="/Images/save.png"/>
-                                    </Button>
+                                    </Button>-->
                                     <Button x:Name="SaveAndCloseButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij">
                                         <Image Source="/Images/saveExit.png"/>
                                     </Button>
@@ -50,9 +50,9 @@
 
                                 <!-- Przyciski sterujące -->
                                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button x:Name="MinimalizeButton" Width="30" Height="30" Margin="5" ToolTip="Minimalizuj">
+                                    <!--<Button x:Name="MinimalizeButton" Width="30" Height="30" Margin="5" ToolTip="Minimalizuj">
                                         <Image Source="/Images/minimize.png"/>
-                                    </Button>
+                                    </Button>-->
                                     <Button x:Name="ExitButton" Width="30" Height="30" Margin="5" ToolTip="Zamknij">
                                         <Image Source="/Images/close.png"/>
                                     </Button>

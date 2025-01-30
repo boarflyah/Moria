@@ -9,6 +9,7 @@ using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Interfaces.ViewModels;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
@@ -308,7 +309,7 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
     /// 
     /// </summary>
     /// <returns>Type of BaseDo related with table in database</returns>
-    protected abstract Type GetModelType();
+    public abstract Type GetModelType();
 
     /// <summary>
     /// Clear view properties and send get request to obtain object from database, assign values to view properties
@@ -337,6 +338,17 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
     {
         return _objectChangingProperties.Value.Contains(propertyName);
     }
+
+    /// <summary>
+    /// Collects all properties and maps them to a single DO object
+    /// </summary>
+    /// <returns></returns>
+    public abstract BaseDo GetDo();
+
+    /// <summary>
+    /// Clears all viewmodel properties
+    /// </summary>
+    public abstract void Clear();
 
     #region INavigationAware implementation
 

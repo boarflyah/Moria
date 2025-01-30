@@ -4,6 +4,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.Products;
 
@@ -94,10 +95,30 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
 
     #region methods
 
-    protected override Type GetModelType() => typeof(ProductDo);
+    public override Type GetModelType() => typeof(ProductDo);
     protected override Task LoadObject() => throw new NotImplementedException();
     protected override Task<bool> SaveNewObject() => throw new NotImplementedException();
     protected override Task<bool> UpdateExistingObject() => throw new NotImplementedException();
+    public override void Clear()
+    {
+        Name = default;
+        Symbol = default;
+        IsMainMachine = default;
+        SerialNumber = default;
+        Category = null;
+        SteelKind = null;
+    }
+
+    public override BaseDo GetDo()
+        => new ProductDo()
+        {
+            Category = this.Category,
+            IsMainMachine = this.IsMainMachine,
+            Name = this.Name,
+            SerialNumber = this.SerialNumber,
+            SteelKind = this.SteelKind,
+            Symbol = this.Symbol
+        };
 
     #endregion
 }

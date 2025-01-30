@@ -4,9 +4,8 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
-using MoriaModelsDo.Models.DriveComponents;
-using System.Xml.Linq;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class ContactDetailViewModel : BaseDetailViewModel
@@ -55,7 +54,9 @@ public class ContactDetailViewModel : BaseDetailViewModel
         }
     }
 
-    protected override Type GetModelType() => typeof(ContactDo);
+    #endregion
+
+    public override Type GetModelType() => typeof(ContactDo);
 
     protected async override Task LoadObject()
     {
@@ -72,9 +73,7 @@ public class ContactDetailViewModel : BaseDetailViewModel
 
     protected async override Task<bool> UpdateExistingObject() => true;
 
-    #endregion
-
-    void Clear()
+    public override void Clear()
     {
         Symbol = string.Empty;
         LongName = string.Empty;
@@ -86,5 +85,13 @@ public class ContactDetailViewModel : BaseDetailViewModel
         LongName = contact.LongName;
         ShortName = contact.ShortName;
     }
+
+    public override BaseDo GetDo()
+        => new ContactDo()
+        {
+            LongName = this.LongName,
+            ShortName = this.ShortName,
+            Symbol = this.Symbol
+        };
 
 }

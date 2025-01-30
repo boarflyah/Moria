@@ -81,4 +81,12 @@ public partial class LookupWindow : Window
 
         return (DataContext as LookupWindowViewModel).OnClosed<T>();
     }
+
+    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+        {
+            this.DragMove();
+        }
+    }
 }
