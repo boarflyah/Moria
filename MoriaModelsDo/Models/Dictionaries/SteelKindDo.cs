@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Dictionaries;
 public class SteelKindDo : BaseDo
@@ -23,5 +24,12 @@ public class SteelKindDo : BaseDo
             _Symbol = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Name = lookup.Property1;
+        Symbol = lookup.Property2;
     }
 }

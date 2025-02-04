@@ -56,9 +56,28 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
 
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var steelKind = GetDo() as SteelKindDo;
+        var created = await ExecuteApiRequest(_steelKindService.CreateSteelKind, _appStateService.LoggedUser.Username, steelKind);
+        if (created != null)
+        {
+            objectId = created.Id;
+            return true;
+        }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+        return false;
+    }
+
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var steelKind = GetDo() as SteelKindDo;
+        var created = await ExecuteApiRequest(_steelKindService.UpdateSteelKind, _appStateService.LoggedUser.Username, steelKind);
+        if (created != null)
+            return true;
+
+        return false;
+    }
 
     #endregion
     public override void Clear()

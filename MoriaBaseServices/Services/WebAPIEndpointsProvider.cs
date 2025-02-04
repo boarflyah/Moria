@@ -23,6 +23,7 @@ public class WebAPIEndpointsProvider
     public const string Color = "color";
     public const string Lock = "lock";
     public const string Lookup = "lookup";
+    public const string Product = "product";
 
     #endregion
 
@@ -288,6 +289,36 @@ public class WebAPIEndpointsProvider
     /// <para>Return bool</para>
     /// </summary>
     public const string DeleteColorPath = $"{Color}";
+    #endregion
+
+    #region Product
+
+    public const string GetProductsPath = $"{Product}";
+
+    /// <summary>
+    /// Parameter from path: product.id
+    /// </summary>
+    public const string GetProductPath = $"{Product}";
+
+    /// <summary>
+    /// Body: ProductDo
+    /// <para>Return ProductDo</para>
+    /// </summary>
+    public const string PostProductPath = $"{Product}";
+
+    /// <summary>
+    /// Body: ProductDo
+    /// <para>Return ProductDo</para>
+    /// </summary>
+    public const string PutProductPath = $"{Product}";
+
+    /// <summary>
+    /// Parameter from path: product.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteProductPath = $"{Product}";
+
+
     #endregion
 
 #if DEBUG

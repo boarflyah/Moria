@@ -297,6 +297,8 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 _appStateService.SetupLoading();
                 PropertyChanged += BaseDetailViewModel_PropertyChanged;
             }
+        else
+            PropertyChanged += BaseDetailViewModel_PropertyChanged;
     }
 
     /// <summary>
