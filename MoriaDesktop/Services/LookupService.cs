@@ -14,9 +14,9 @@ public class LookupService: ILookupService
         _newObjectService = newObjectService;
     }
 
-    public T ShowLookup<T>() where T : BaseDo, new()
+    public async Task<T> ShowLookup<T>() where T : BaseDo, new()
     {
-        var wrapper = _lookupWindow.ShowDialog<T>();
+        var wrapper = await _lookupWindow.ShowDialog<T>();
         if (wrapper.Selected != null)
             return wrapper.Selected;
 

@@ -24,6 +24,7 @@ public class WebAPIEndpointsProvider
     public const string Lock = "lock";
     public const string Lookup = "lookup";
     public const string Product = "product";
+    public const string Category = "category";
 
     #endregion
 
@@ -318,6 +319,34 @@ public class WebAPIEndpointsProvider
     /// </summary>
     public const string DeleteProductPath = $"{Product}";
 
+    #endregion
+
+    #region Category
+
+    public const string GetCategoriesPath = $"{Category}";
+
+    /// <summary>
+    /// Parameter from path: category.id
+    /// </summary>
+    public const string GetCategoryPath = $"{Category}";
+
+    /// <summary>
+    /// Body: CategoryDo
+    /// <para>Return CategoryDo</para>
+    /// </summary>
+    public const string PostCategoryPath = $"{Category}";
+
+    /// <summary>
+    /// Body: CategoryDo
+    /// <para>Return CategoryDo</para>
+    /// </summary>
+    public const string PutCategoryPath = $"{Category}";
+
+    /// <summary>
+    /// Parameter from path: category.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteCategoryPath = $"{Category}";
 
     #endregion
 

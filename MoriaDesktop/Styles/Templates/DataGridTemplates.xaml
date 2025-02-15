@@ -30,6 +30,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="NestedListviewHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="#F3F3F3"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Padding" Value="3 0 3 0"/>
+    </Style>
+
     <Style TargetType="DataGridRow">
         <Setter Property="FontSize" Value="{StaticResource DefaultDataGridCellFontSize}"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>

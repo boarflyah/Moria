@@ -4,6 +4,11 @@ using MoriaModelsDo.Base;
 namespace MoriaModelsDo.Models.Products;
 public class CategoryDo : BaseDo
 {
+    public CategoryDo()
+    {
+        Products = new List<ProductDo>();
+    }
+
     private string _Name;
     public string Name
     {
@@ -13,6 +18,11 @@ public class CategoryDo : BaseDo
             _Name = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public IEnumerable<ProductDo> Products
+    {
+        get; set;
     }
 
     public override void SetObject(LookupModel lookup)

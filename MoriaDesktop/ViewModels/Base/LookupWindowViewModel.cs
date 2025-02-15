@@ -74,6 +74,7 @@ public class LookupWindowViewModel : ViewModelBase
 
     public async Task LoadNext()
     {
+        Objects.Clear();
         //TODO use ExecuteApiRequest and wrap with try catch
         var pagedList = await _apiService.GetObjects(_appStateService.LoggedUser.Username, currentType, 0, pageSize);
 

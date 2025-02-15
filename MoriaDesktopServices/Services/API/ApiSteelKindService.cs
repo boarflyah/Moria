@@ -1,12 +1,6 @@
 ﻿using MoriaBaseServices.Services;
 using MoriaDesktopServices.Interfaces.API;
-using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MoriaDesktopServices.Services.API;
 /// <summary>

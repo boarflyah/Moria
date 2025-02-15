@@ -151,7 +151,8 @@ public class ModelsCreator
         => new()
         {
             Id = category.Id,
-            Name = category.Name
+            Name = category.Name,
+            Products = category != null && category.Products.Any() ? category.Products.Select(GetNestedProductDo) : null,
         };
 
     public async Task<Category> CreateCategory(CategoryDo category)
@@ -163,8 +164,13 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdateCategory(Category category, CategoryDo categoryModel)
+    {
+        category.Name = categoryModel.Name;
+    }
+
     #endregion
-    
+
     #region Product
 
     public ProductDo GetProductDo(Product product)
@@ -178,6 +184,18 @@ public class ModelsCreator
             Symbol = product.Symbol,
             SteelKind = product.SteelKind != null ? GetSteelKindDo(product.SteelKind) : null,
             Category = product.Category != null ? GetCategoryDo(product.Category) : null,
+        };
+    }
+
+    public ProductDo GetNestedProductDo(Product product)
+    {
+        return new()
+        {
+            Id = product.Id,
+            IsMainMachine = product.IsMainMachine,
+            Name = product.Name,
+            SerialNumber = product.SerialNumber,
+            Symbol = product.Symbol,
         };
     }
 

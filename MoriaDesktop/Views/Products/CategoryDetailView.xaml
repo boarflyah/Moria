@@ -1,0 +1,58 @@
+﻿<Page x:Class="MoriaDesktop.Views.Products.CategoryDetailView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MoriaDesktop.Views.Products"
+      xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
+      xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Style="{StaticResource GlobalPageStyle}"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:InvertBoolConverter x:Key="boolinv"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Nazwa" 
+                   Grid.Row="0"
+                   Margin="0,0,0,5"/>
+            <TextBox Name="NameTextBox" 
+                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     Grid.Row="1"/>
+        </Grid>
+
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <controls:NestedListViewWrapper Grid.Row="1">
+            <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}"
+                      IsReadOnly="True"
+                      MouseDoubleClick="ProductsDataGrid_MouseDoubleClick"
+                      ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Symbol" 
+                            Binding="{Binding Symbol}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Nazwa" 
+                            Binding="{Binding Name}"
+                            Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </controls:NestedListViewWrapper>
+        </Grid>
+    </Grid>
+</Page>

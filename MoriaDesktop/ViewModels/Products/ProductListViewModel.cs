@@ -2,19 +2,22 @@
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
-using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
-using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Products;
-internal class ProductListViewModel : BaseListViewModel
+public class ProductListViewModel : BaseListViewModel
 {
-    readonly IApiEmployeeService _employeeService;
+    readonly IApiProductService _productService;
 
-    public ProductListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    public ProductListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiProductService productService)
+        : base(logger, appStateService, navigationService)
     {
+        _productService = productService;
+
+        Products = new();
+        Title = "Produkty";
     }
 
     #region properties
@@ -32,11 +35,11 @@ internal class ProductListViewModel : BaseListViewModel
     {
         Products.Clear();
 
-        var products = await ExecuteApiRequest(_employeeService.GetEmployees, _appStateService.LoggedUser.Username);
-        if (products != null)
+        var products = await ExecuteApiRequest(_productService.GetProducts, _appStateService.LoggedUser.Username);
+        if (products != null && products.Any())
         {
-            //foreach (var product in products)
-            //    Products.Add(product);
+            foreach (var product in products)
+                Products.Add(product);
         }
         else
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
@@ -44,15 +47,15 @@ internal class ProductListViewModel : BaseListViewModel
 
     public override void OnRowSelected(object row)
     {
-        if (row is EmployeeDo edo)
-            _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, edo.Id);
+        if (row is ProductDo pdo)
+            _navigationService.NavigateTo(typeof(ProductDetailViewModel), false, pdo.Id);
     }
 
     protected override void New() =>
-        _navigationService.NavigateTo(typeof(EmployeeDetailViewModel), false, null);
+        _navigationService.NavigateTo(typeof(ProductDetailViewModel), false, null);
 
     protected async override Task<bool> SendDeleteRequest() =>
-        await ExecuteApiRequest(_employeeService.DeleteEmployee, _appStateService.LoggedUser.Username, (Selected as EmployeeDo)?.Id ?? 0);
+        await ExecuteApiRequest(_productService.DeleteProduct, _appStateService.LoggedUser.Username, (Selected as ProductDo)?.Id ?? 0);
 
     #endregion
 }

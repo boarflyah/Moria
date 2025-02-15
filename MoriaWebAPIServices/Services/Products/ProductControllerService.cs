@@ -1,4 +1,5 @@
-﻿using MoriaBaseServices;
+﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces.Products;
@@ -17,7 +18,8 @@ public class ProductControllerService : IProductControllerService
 
     public async Task<ProductDo> GetProduct(int id)
     {
-        var product = await _context.Products.FindAsync(id);
+        //var product = await _context.Products.FindAsync(id);
+        var product = await _context.Products.Include(x => x.SteelKind).Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
             return null;
 
@@ -27,7 +29,7 @@ public class ProductControllerService : IProductControllerService
     public async Task<IEnumerable<ProductDo>> GetProducts()
     {
         List<ProductDo> result = new();
-        foreach (var product in _context.Products)
+        foreach (var product in _context.Products.Include(x => x.Category))
             result.Add(_creator.GetProductDo(product));
 
         return result;

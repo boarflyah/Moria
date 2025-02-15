@@ -26,16 +26,16 @@ public partial class ProductDetailView : Page, IViewModelContent
         await (DataContext as ProductDetailViewModel).Load();
     }
 
-    private void CategoryBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private async void CategoryBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        var category = _lookupService.ShowLookup<CategoryDo>();
+        var category = await _lookupService.ShowLookup<CategoryDo>();
         if (category != null)
             (DataContext as ProductDetailViewModel).Category = category;
     }
 
-    private void SteelKindBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private async void SteelKindBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        var steelKind = _lookupService.ShowLookup<SteelKindDo>();
+        var steelKind = await _lookupService.ShowLookup<SteelKindDo>();
         if (steelKind != null)
             (DataContext as ProductDetailViewModel).SteelKind = steelKind;
     }

@@ -6,27 +6,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoriaBaseServices.Services;
 using MoriaDesktop.Services;
+using MoriaDesktop.Services.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktop.ViewModels.Dictionary.ListView;
+using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.Views.Base;
-using MoriaDesktop.Views.Dictionary;
 using MoriaDesktop.Views.Contacts;
+using MoriaDesktop.Views.Dictionary;
+using MoriaDesktop.Views.Dictionary.DetailView;
+using MoriaDesktop.Views.Dictionary.ListView;
+using MoriaDesktop.Views.Dictionary.Window;
+using MoriaDesktop.Views.DriveComponents;
+using MoriaDesktop.Views.Products;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services;
 using MoriaDesktopServices.Services.API;
-using MoriaDesktop.Views.Dictionary.DetailView;
-using MoriaDesktop.Views.DriveComponents;
-using MoriaDesktop.ViewModels.DriveComponents;
-using MoriaDesktop.Views.Products;
-using MoriaDesktop.ViewModels.Products;
-using MoriaDesktop.ViewModels.Dictionary.DetailView;
-using MoriaDesktop.Views.Dictionary.ListView;
-using MoriaDesktop.ViewModels.Dictionary.ListView;
-using MoriaModelsDo.Models.Contacts;
-using MoriaDesktop.Views.Dictionary.Window;
-using MoriaModelsDo.Models.Dictionaries;
-using MoriaDesktop.Services.Interfaces;
 
 namespace MoriaDesktop;
 
@@ -86,6 +84,14 @@ public partial class App : Application
                          services.AddScoped<ProductDetailViewModel>();
                          services.AddScoped<EmployeeDetailView>();
                          services.AddScoped<EmployeeDetailViewModel>();
+                         services.AddScoped<ProductListView>();
+                         services.AddScoped<ProductListViewModel>();
+                         services.AddScoped<ProductDetailView>();
+                         services.AddScoped<ProductDetailViewModel>();
+                         services.AddScoped<CategoryListView>();
+                         services.AddScoped<CategoryListViewModel>();
+                         services.AddScoped<CategoryDetailView>();
+                         services.AddScoped<CategoryDetailViewModel>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -93,7 +99,10 @@ public partial class App : Application
 
                          services.AddScoped<IDetailedWindow, PositionWindowView>();
                          services.AddScoped<IDetailedWindow, ColorWindowView>();
+                         services.AddScoped<IDetailedWindow, SteelKindWindowView>();
+                         services.AddScoped<IDetailedWindow, CategoryWindowView>();
 
+                         services.AddScoped<ILookupService, LookupService>();
                          services.AddScoped<IPageService, DesktopPageService>();
                          services.AddSingleton<INavigationService, NavigationService>();
                          services.AddScoped<ApiRequestService>();
@@ -110,7 +119,8 @@ public partial class App : Application
                          services.AddScoped<IApiPositionService, ApiPositionService>();
                          services.AddScoped<IApiSteelKindService, ApiSteelKindService>();
                          services.AddScoped<IApiWarehouseService, ApiWarehouseService>();
-                         services.AddScoped<ILookupService, LookupService>();
+                         services.AddScoped<IApiProductService, ApiProductService>();
+                         services.AddScoped<IApiCatergoryService, ApiCategoryService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

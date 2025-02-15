@@ -17,8 +17,6 @@ public partial class LookupWindow : Window
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        await (DataContext as LookupWindowViewModel).LoadNext();
-
         CreateColumns();
     }
 
@@ -74,9 +72,11 @@ public partial class LookupWindow : Window
         Hide();
     }
 
-    public LookupWrapper<T> ShowDialog<T>() where T : BaseDo, new()
+    public async Task<LookupWrapper<T>> ShowDialog<T>() where T : BaseDo, new()
     {
         (DataContext as LookupWindowViewModel).SetType<T>();
+
+        await (DataContext as LookupWindowViewModel).LoadNext();
         this.ShowDialog();
 
         return (DataContext as LookupWindowViewModel).OnClosed<T>();

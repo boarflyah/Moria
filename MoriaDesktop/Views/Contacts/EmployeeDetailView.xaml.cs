@@ -60,9 +60,9 @@ public partial class EmployeeDetailView : Page, IViewModelContent
 
     }
 
-    private void PositionBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private async void PositionBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        var position = _lookupService.ShowLookup<PositionDo>();
+        var position = await _lookupService.ShowLookup<PositionDo>();
         if (position != null)
             (DataContext as EmployeeDetailViewModel).Position = position;
     }

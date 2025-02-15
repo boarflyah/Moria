@@ -1,21 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using MoriaDesktop.Services.Interfaces;
-using MoriaDesktop.ViewModels.Dictionary.DetailView;
+using MoriaDesktop.ViewModels.Products;
 
-namespace MoriaDesktop.Views.Dictionary.Window;
+namespace MoriaDesktop.Views.Products;
 
-public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
+public partial class CategoryWindowView : Window, IDetailedWindow
 {
-    public PositionWindowView(PositionDetailViewModel viewModel)
+    public CategoryWindowView(CategoryDetailViewModel vm)
     {
         InitializeComponent();
-        this.DataContext = viewModel;
+        DataContext = vm;
     }
 
-    #region BaseWindowFunctionality
-
-    private void DragWindow(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
         {
@@ -23,7 +21,7 @@ public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
         }
     }
 
-    private void WinowLoaed(object sender, RoutedEventArgs e)
+    private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         var exitButton = (Button)this.Template.FindName("ExitButton", this);
         if (exitButton != null)
@@ -37,7 +35,13 @@ public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
         {
             saveAndCloseButton.Click -= SaveAndCloseButton_Click;
             saveAndCloseButton.Click += SaveAndCloseButton_Click;
+            ;
         }
+    }
+
+    private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
+    {
+        this.Hide();
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -46,30 +50,12 @@ public partial class PositionWindowView : System.Windows.Window, IDetailedWindow
         this.Hide();
     }
 
-    private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
-    {
-        this.Hide();
-    }
-
-    #endregion
-
     #region IDetailedWindow implementation
 
     public bool Cancelled
     {
         get; private set;
     }
-
-    //public BaseDo ShowNewDialog()
-    //{
-    //    this.ShowDialog();
-    //    var result = (DataContext as BaseDetailViewModel).GetDo();
-    //    (DataContext as BaseDetailViewModel).Clear();
-
-    //    return result;
-    //}
-
-    //public Type GetModelType() => (DataContext as BaseDetailViewModel).GetModelType();
 
     #endregion
 }

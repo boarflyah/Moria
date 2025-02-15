@@ -61,6 +61,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Słowniki",
             Items = new()
         };
+        NavigationItem node4 = new()
+        {
+            Title = "Produkty",
+            Items = new()
+        };
         NavigationItem node3 = new()
         {
             Title = "Testy",
@@ -69,6 +74,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
         Navigation.Add(node1);
         Navigation.Add(node2);
+        Navigation.Add(node4);
         Navigation.Add(node3);
 
         node1.Items.Add(new()
@@ -117,6 +123,17 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         {
             Title = "Test",
             ViewModelType = typeof(ColorDetailViewModel),
+        });
+
+        node4.Items.Add(new()
+        {
+            Title = "Produkty",
+            ViewModelType = typeof(ProductListViewModel)
+        });
+        node4.Items.Add(new()
+        {
+            Title = "Kategorie",
+            ViewModelType = typeof(CategoryListViewModel)
         });
 
 

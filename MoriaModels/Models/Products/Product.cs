@@ -11,11 +11,11 @@ public class Product : BaseModel
     public bool IsMainMachine { get; set; }
     public string SerialNumber { get; set; }
 
-    public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    public int? CategoryId { get; set; }
+    public Category? Category { get; set; }
 
-    public int SteelKindId { get; set; }
-    public SteelKind SteelKind { get; set; }
+    public int? SteelKindId { get; set; }
+    public SteelKind? SteelKind { get; set; }
 
     public ICollection<Component> Components { get; set; } = new List<Component>();
 }

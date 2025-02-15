@@ -11,8 +11,14 @@ using MoriaModelsDo.Models.Products;
 namespace MoriaDesktop.ViewModels.Products;
 public sealed class ProductDetailViewModel : BaseDetailViewModel
 {
-    public ProductDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService lockService, INavigationService navigationService) : base(logger, appStateService, lockService, navigationService)
+    readonly IApiProductService _productService;
+
+    public ProductDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService lockService,
+        INavigationService navigationService, IApiProductService productService) 
+        : base(logger, appStateService, lockService, navigationService)
     {
+        _productService = productService;
+
         Title = "Nowy produkt";
     }
 
@@ -96,9 +102,34 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
     #region methods
 
     public override Type GetModelType() => typeof(ProductDo);
-    protected override Task LoadObject() => throw new NotImplementedException();
-    protected override Task<bool> SaveNewObject() => throw new NotImplementedException();
-    protected override Task<bool> UpdateExistingObject() => throw new NotImplementedException();
+    protected async override Task LoadObject()
+    {
+        Clear();
+
+        var employee = await ExecuteApiRequest(_productService.GetProduct, _appStateService.LoggedUser.Username, objectId);
+        if (employee != null)
+            Setup(employee);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+
+    }
+    protected async override Task<bool> SaveNewObject()
+    {
+        var product = GetDo() as ProductDo;
+        var newObject = await _productService.CreateProduct(_appStateService.LoggedUser.Username, product);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }    
+        return false;
+    }
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var product = GetDo() as ProductDo;
+        var updated = await _productService.UpdateProduct(_appStateService.LoggedUser.Username, product);
+        return updated != null;
+    }
     public override void Clear()
     {
         Name = default;
@@ -109,6 +140,16 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
         SteelKind = null;
     }
 
+    void Setup(ProductDo product)
+    {
+        Name = product.Name;
+        Symbol = product.Symbol;
+        IsMainMachine = product.IsMainMachine;
+        SerialNumber = product.SerialNumber;
+        Category = product.Category;
+        SteelKind = product.SteelKind;
+    }
+
     public override BaseDo GetDo()
         => new ProductDo()
         {
@@ -117,7 +158,8 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
             Name = this.Name,
             SerialNumber = this.SerialNumber,
             SteelKind = this.SteelKind,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            Id = objectId
         };
 
     #endregion
