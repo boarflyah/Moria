@@ -41,7 +41,6 @@
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
                       IsReadOnly="True"
-                      MouseDoubleClick="ProductsDataGrid_MouseDoubleClick"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Symbol" 

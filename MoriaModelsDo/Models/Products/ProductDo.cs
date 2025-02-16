@@ -1,9 +1,16 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaModelsDo.Models.Products;
 public class ProductDo: BaseDo
 {
+    public ProductDo()
+    {
+        Components = new List<ComponentDo>();
+    }
+
     private string _Name;
     public string Name
     {
@@ -68,5 +75,17 @@ public class ProductDo: BaseDo
             _SteelKind = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public IEnumerable<ComponentDo> Components
+    {
+        get; set;
+    }
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Symbol = lookup.Property1;
+        Name = lookup.Property2;
     }
 }

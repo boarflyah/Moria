@@ -1,4 +1,5 @@
 ﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base.Enums;
 
 namespace MoriaModelsDo.Base;
 public abstract class BaseDo: BaseNotifyPropertyChanged
@@ -46,6 +47,11 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
             _LastModified = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public SystemChangeType ChangeType
+    {
+        get; set;
     }
 
     public virtual void SetObject(LookupModel lookup)

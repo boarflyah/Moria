@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MoriaDesktop.Views.Products"
+      xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Style="{StaticResource GlobalPageStyle}"
@@ -82,6 +83,24 @@
             <Label Content="Główna maszyna" Grid.Row="0" Margin="0,0,0,5"/>
             <CheckBox Name="IsMainMachineCheckBox" IsChecked="{Binding IsMainMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
+
+        <controls:NestedListViewWrapper Grid.Row="2"
+                                        Grid.ColumnSpan="3">
+            <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}"
+                      BeginningEdit="DataGrid_BeginningEdit"
+                      ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Produkt" 
+                            Binding="{Binding ComponentProduct.Name}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Specyfikacja elektryczna" 
+                            Binding="{Binding ElectricalDescription}"
+                            Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </controls:NestedListViewWrapper>
+
 
     </Grid>
 </Page>

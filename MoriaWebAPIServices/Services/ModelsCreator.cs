@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaModels.Models.Base;
+using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Products;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.DriveComponents;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
 
@@ -171,6 +174,36 @@ public class ModelsCreator
 
     #endregion
 
+    #region Component
+
+    public ComponentDo GetComponentDo(Component component)
+    {
+        return new()
+        {
+            Id = component.Id,
+            ElectricalDescription = component.ElectricalDescription,
+            ComponentProduct = component.ComponentProduct != null ? GetNestedProductDo(component.ComponentProduct) : null,
+        };
+    }
+
+    public async Task<Component> CreateComponent(ComponentDo component)
+    {
+        return new()
+        {
+            ElectricalDescription = component.ElectricalDescription,
+            LastModified = component.LastModified,
+            ComponentProduct = await GetModelInContext(CreateProduct, component.ComponentProduct, _context.Products),
+        };
+    }
+
+    public async Task UpdateComponent(Component component, ComponentDo componentModel)
+    {
+        component.ElectricalDescription = componentModel.ElectricalDescription;
+        component.ComponentProduct = await GetModelInContext(CreateProduct, componentModel.ComponentProduct, _context.Products);
+    }
+
+    #endregion
+
     #region Product
 
     public ProductDo GetProductDo(Product product)
@@ -184,6 +217,7 @@ public class ModelsCreator
             Symbol = product.Symbol,
             SteelKind = product.SteelKind != null ? GetSteelKindDo(product.SteelKind) : null,
             Category = product.Category != null ? GetCategoryDo(product.Category) : null,
+            Components = product.Components != null && product.Components.Any() ? product.Components.Select(GetComponentDo) : null,
         };
     }
 
@@ -212,7 +246,8 @@ public class ModelsCreator
         result.SteelKind = await GetModelInContext(CreateSteelKind, product.SteelKind, _context.SteelKinds);
         result.Category = await GetModelInContext(CreateCategory, product.Category, _context.Categories);
 
-        //TODO resolve components
+        foreach (var component in product.Components.Where(x => x.ChangeType == SystemChangeType.Added))
+            result.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
 
         return result;
     }
@@ -226,6 +261,28 @@ public class ModelsCreator
 
         product.SteelKind = await GetModelInContext(CreateSteelKind, productModel.SteelKind, _context.SteelKinds);
         product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
+
+        foreach (var component in productModel.Components.Where(x => x.ChangeType != SystemChangeType.None))
+        {
+            switch (component.ChangeType)
+            {
+                case SystemChangeType.Added:
+                    product.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
+                    break;
+                case SystemChangeType.Modified:
+                    var contextComponent = await _context.Components.Include(x => x.ComponentProduct).FirstOrDefaultAsync(x => x.Id == component.Id);
+                    if (contextComponent != null)
+                        await UpdateComponent(contextComponent, component);
+                    break;
+                case SystemChangeType.Deleted:
+                    var searchComponent = await _context.Components.FindAsync(component.Id);
+                    if (searchComponent != null)
+                        _context.Components.Remove(searchComponent);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     #endregion

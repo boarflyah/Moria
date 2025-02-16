@@ -17,7 +17,7 @@ public partial class LookupWindow : Window
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        CreateColumns();
+        //CreateColumns();
     }
 
     private void LookupDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -77,6 +77,8 @@ public partial class LookupWindow : Window
         (DataContext as LookupWindowViewModel).SetType<T>();
 
         await (DataContext as LookupWindowViewModel).LoadNext();
+        CreateColumns();
+
         this.ShowDialog();
 
         return (DataContext as LookupWindowViewModel).OnClosed<T>();

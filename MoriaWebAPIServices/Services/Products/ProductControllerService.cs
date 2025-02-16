@@ -19,7 +19,7 @@ public class ProductControllerService : IProductControllerService
     public async Task<ProductDo> GetProduct(int id)
     {
         //var product = await _context.Products.FindAsync(id);
-        var product = await _context.Products.Include(x => x.SteelKind).Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == id);
+        var product = await _context.Products.Include(x => x.SteelKind).Include(x => x.Category).Include(x => x.Components).ThenInclude(x => x.ComponentProduct).FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
             return null;
 
@@ -44,7 +44,7 @@ public class ProductControllerService : IProductControllerService
 
     public async Task<ProductDo> UpdateProduct(ProductDo product)
     {
-        var searchProduct = await _context.Products.FindAsync(product.Id);
+        var searchProduct = await _context.Products.Include(x => x.SteelKind).Include(x => x.Category).Include(x => x.Components).FirstOrDefaultAsync(x => x.Id == product.Id);
         if (searchProduct == null)
             throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 

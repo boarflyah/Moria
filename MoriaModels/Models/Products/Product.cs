@@ -1,8 +1,12 @@
-﻿using MoriaModels.Models.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MoriaBaseModels.Attributes;
+using MoriaBaseModels.Models;
+using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 
 namespace MoriaModels.Models.Products;
 
+[LookupHeaders(true, "Symbol", true, "Nazwa")]
 public class Product : BaseModel
 {
     //public int Id { get; set; }
@@ -17,5 +21,11 @@ public class Product : BaseModel
     public int? SteelKindId { get; set; }
     public SteelKind? SteelKind { get; set; }
 
+    [InverseProperty(nameof(Component.Product))]
     public ICollection<Component> Components { get; set; } = new List<Component>();
+
+    public override LookupModel GetLookupObject()
+    {
+        return new(Id, Symbol, Name);
+    }
 }

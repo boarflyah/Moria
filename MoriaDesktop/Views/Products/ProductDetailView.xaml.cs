@@ -3,7 +3,9 @@ using System.Windows.Controls;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.DriveComponents;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.Views.Products;
@@ -38,5 +40,27 @@ public partial class ProductDetailView : Page, IViewModelContent
         var steelKind = await _lookupService.ShowLookup<SteelKindDo>();
         if (steelKind != null)
             (DataContext as ProductDetailViewModel).SteelKind = steelKind;
+    }
+
+    private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+    {
+        if (e.Column.SortMemberPath.Contains(nameof(ComponentDo.ElectricalDescription)))
+        {
+
+        }
+        else
+        {
+            if (e.Row.DataContext is ComponentDo cdo)
+            {
+                var componentProduct = await _lookupService.ShowLookup<ProductDo>();
+                if (componentProduct != null)
+                {
+                    cdo.ComponentProduct = componentProduct;
+                    if (cdo.ChangeType != SystemChangeType.Added)
+                        cdo.ChangeType = SystemChangeType.Modified;
+                }
+            }
+            e.Cancel = true;
+        }
     }
 }

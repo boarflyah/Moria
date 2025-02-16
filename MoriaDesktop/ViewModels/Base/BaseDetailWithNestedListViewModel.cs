@@ -62,12 +62,20 @@ public abstract class BaseDetailWithNestedListViewModel : BaseDetailViewModel
     
     }
 
+    /// <summary>
+    /// Button not visible in UI when false
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool CanNestedNew() => true;
 
     protected async virtual Task NestedDelete()
     {
     }
 
+    /// <summary>
+    /// Button not visible in UI when false
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool CanNestedDelete() => Selected != null;
 
     #endregion

@@ -20,9 +20,4 @@ public partial class CategoryDetailView : Page, IViewModelContent
     {
         await (DataContext as BaseDetailViewModel).Load();
     }
-
-    private void ProductsDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-
-    }
 }

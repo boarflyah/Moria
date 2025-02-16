@@ -212,7 +212,7 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 IsLocked = false;
             else
                 _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nie udało się włączyć edycji obiektu", true);
-
+            Clear();
             await Load();
         }
         catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)

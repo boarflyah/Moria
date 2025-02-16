@@ -6,10 +6,11 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.DriveComponents;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Products;
-public sealed class ProductDetailViewModel : BaseDetailViewModel
+public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiProductService _productService;
 
@@ -99,7 +100,23 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
 
     #endregion
 
+    #region nestedlistview methods
+
+    protected async override Task NestedNew()
+    {
+        Objects.Add(new ComponentDo()
+        {
+            ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Added,
+        });
+
+        HasObjectChanged = true;
+    }
+
+    #endregion
+
     #region methods
+
+    protected override string GetObjectsListViewTitle() => "Komponenty";
 
     public override Type GetModelType() => typeof(ProductDo);
     protected async override Task LoadObject()
@@ -138,6 +155,7 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
         SerialNumber = default;
         Category = null;
         SteelKind = null;
+        Objects?.Clear();
     }
 
     void Setup(ProductDo product)
@@ -148,10 +166,15 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
         SerialNumber = product.SerialNumber;
         Category = product.Category;
         SteelKind = product.SteelKind;
+
+        if (product.Components != null && product.Components.Any())
+            foreach (var component in product.Components)
+                Objects.Add(component);
     }
 
     public override BaseDo GetDo()
-        => new ProductDo()
+    {
+        var result = new ProductDo()
         {
             Category = this.Category,
             IsMainMachine = this.IsMainMachine,
@@ -162,5 +185,10 @@ public sealed class ProductDetailViewModel : BaseDetailViewModel
             Id = objectId
         };
 
+        foreach (var component in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<ComponentDo>())
+            result.Components = result.Components.Append(component);
+
+        return result;
+    }
     #endregion
 }
