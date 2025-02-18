@@ -25,6 +25,7 @@ public class WebAPIEndpointsProvider
     public const string Lookup = "lookup";
     public const string Product = "product";
     public const string Category = "category";
+    public const string Drive = "drive";
 
     #endregion
 
@@ -347,6 +348,35 @@ public class WebAPIEndpointsProvider
     /// <para>Return bool</para>
     /// </summary>
     public const string DeleteCategoryPath = $"{Category}";
+
+    #endregion
+
+    #region drive
+
+    public const string GetDrivesPath = $"{Drive}";
+
+    /// <summary>
+    /// Parameter from path: drive.id
+    /// </summary>
+    public const string GetDrivePath = $"{Drive}";
+
+    /// <summary>
+    /// Body: DriveDo
+    /// <para>Return DriveDo</para>
+    /// </summary>
+    public const string PostDrivePath = $"{Drive}";
+
+    /// <summary>
+    /// Body: DriveDo
+    /// <para>Return DriveDo</para>
+    /// </summary>
+    public const string PutDrivePath = $"{Drive}";
+
+    /// <summary>
+    /// Parameter from path: drive.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteDrivePath = $"{Drive}";
 
     #endregion
 

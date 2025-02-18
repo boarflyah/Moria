@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
+using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Products;
@@ -23,6 +24,15 @@ public class ApplicationDbContext : DbContext
         //https://www.youtube.com/watch?v=z7G6HV7WWz0
         //base.OnConfiguring(optionsBuilder);
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("MoriaDataBase"));
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Drive>()
+            .HasMany(e => e.MotorGears)
+            .WithMany(e => e.Drives)
+            .UsingEntity<MotorGearToDrive>();
     }
 
     public IQueryable<BaseModel> Get(Type objectType)
@@ -58,6 +68,4 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Component> Components { get; set; }
-
-
 }

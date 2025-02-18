@@ -49,7 +49,7 @@ public class DriveDo : BaseDo
         }
     }
 
-    public ObservableCollection<MotorGearToDriveDo> Gearboxes { get; set; } = new ObservableCollection<MotorGearToDriveDo>();
+    public IEnumerable<MotorGearToDriveDo> Gearboxes { get; set; } = new List<MotorGearToDriveDo>();
 
 
 }

@@ -68,9 +68,24 @@ public class MotorDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var motor = GetDo() as MotorDo;
+        var newObject = await _motorService.CreateMotor(_appStateService.LoggedUser.Username, motor);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var motor = GetDo() as MotorDo;
+        var updated = await _motorService.UpdateMotor(_appStateService.LoggedUser.Username, motor);
+        return updated != null;
+    }
 
     #endregion
 
@@ -92,6 +107,7 @@ public class MotorDetailViewModel : BaseDetailViewModel
         {
             Name = this.Name,
             Power = this.Power,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            LastModified = _appStateService.LoggedUser.Username,
         };
 }

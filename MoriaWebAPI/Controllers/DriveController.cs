@@ -1,33 +1,34 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MoriaBaseServices.Services;
 using MoriaBaseServices;
-using MoriaModelsDo.Models.Products;
-using MoriaWebAPIServices.Services.Interfaces.Products;
+using MoriaBaseServices.Services;
+using MoriaModelsDo.Models.DriveComponents;
+using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
+using MoriaWebAPIServices.Services.Interfaces.DriveComponents;
 
 namespace MoriaWebAPI.Controllers;
 
-[Authorize]
 [ApiController]
+[Authorize]
 [Route("")]
-public class CategoryController: ControllerBase
+public class DriveController: ControllerBase
 {
-    readonly ICategoryControllerService _controllerService;
+    readonly IDriveControllerService _controllerService;
     readonly ILogger<CategoryController> _logger;
 
-    public CategoryController(ICategoryControllerService controllerService, ILogger<CategoryController> logger)
+    public DriveController(IDriveControllerService controllerService, ILogger<CategoryController> logger)
     {
         _controllerService = controllerService;
         _logger = logger;
     }
 
-    [HttpGet(WebAPIEndpointsProvider.GetCategoriesPath)]
-    [Produces<IEnumerable<CategoryDo>>]
+    [HttpGet(WebAPIEndpointsProvider.GetDrivesPath)]
+    [Produces<IEnumerable<DriveDo>>]
     public async Task<IActionResult> Get()
     {
         try
         {
-            var categories = await _controllerService.GetCategories();
+            var categories = await _controllerService.GetDrives();
 
             return Ok(categories);
         }
@@ -42,13 +43,13 @@ public class CategoryController: ControllerBase
         }
     }
 
-    [HttpGet($"{WebAPIEndpointsProvider.GetCategoryPath}/{{id}}")]
-    [Produces<CategoryDo>]
+    [HttpGet($"{WebAPIEndpointsProvider.GetDrivePath}/{{id}}")]
+    [Produces<DriveDo>]
     public async Task<IActionResult> Get(int id)
     {
         try
         {
-            var category = await _controllerService.GetCategory(id);
+            var category = await _controllerService.GetDrive(id);
 
             return Ok(category);
         }
@@ -63,13 +64,13 @@ public class CategoryController: ControllerBase
         }
     }
 
-    [HttpPost($"{WebAPIEndpointsProvider.PostCategoryPath}")]
-    [Produces<CategoryDo>]
-    public async Task<IActionResult> Post(CategoryDo category)
+    [HttpPost($"{WebAPIEndpointsProvider.PostDrivePath}")]
+    [Produces<DriveDo>]
+    public async Task<IActionResult> Post(DriveDo drive)
     {
         try
         {
-            var createdCategory = await _controllerService.CreateCategory(category);
+            var createdCategory = await _controllerService.CreateDrive(drive);
 
             return base.Ok((object)createdCategory);
         }
@@ -84,13 +85,13 @@ public class CategoryController: ControllerBase
         }
     }
 
-    [HttpPut($"{WebAPIEndpointsProvider.PutCategoryPath}")]
-    [Produces<CategoryDo>]
-    public async Task<IActionResult> Put(CategoryDo category)
+    [HttpPut($"{WebAPIEndpointsProvider.PutDrivePath}")]
+    [Produces<DriveDo>]
+    public async Task<IActionResult> Put(DriveDo drive)
     {
         try
         {
-            var updatedCategory = await _controllerService.UpdateCategory(category);
+            var updatedCategory = await _controllerService.UpdateDrive(drive);
 
             return Ok(updatedCategory);
         }
@@ -105,13 +106,13 @@ public class CategoryController: ControllerBase
         }
     }
 
-    [HttpDelete($"{WebAPIEndpointsProvider.DeleteCategoryPath}/{{id}}")]
+    [HttpDelete($"{WebAPIEndpointsProvider.DeleteDrivePath}/{{id}}")]
     [Produces<bool>]
     public async Task<IActionResult> Delete(int id)
     {
         try
         {
-            var deleted = await _controllerService.DeleteCategory(id);
+            var deleted = await _controllerService.DeleteDrive(id);
 
             return Ok(deleted);
         }

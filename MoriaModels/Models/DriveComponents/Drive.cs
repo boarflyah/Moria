@@ -1,4 +1,5 @@
 ﻿using MoriaModels.Models.Base;
+using MoriaModels.Models.DriveComponents.Relations;
 
 namespace MoriaModels.Models.DriveComponents;
 
@@ -9,8 +10,14 @@ public class Drive: BaseModel
     public bool Inverter { get; set; }
     public byte Quantity { get; set; }
 
-    public int MotorId { get; set; }
-    public Motor Motor { get; set; }
-
-    public ICollection<MotorGear> Gearboxes { get; set; } = new List<MotorGear>();
+    public int? MotorId { get; set; }
+    public Motor? Motor { get; set; }
+    public List<MotorGear> MotorGears
+    {
+        get;
+    } = [];
+    public List<MotorGearToDrive> MotorGearToDrives
+    {
+        get;
+    } = [];
 }

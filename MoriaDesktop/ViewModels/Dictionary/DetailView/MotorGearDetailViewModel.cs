@@ -6,6 +6,7 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.DriveComponents;
+using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
@@ -68,9 +69,24 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var motorgear = GetDo() as MotorGearDo;
+        var newObject = await _motorGearService.CreateMotorGear(_appStateService.LoggedUser.Username, motorgear);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var motorGear = GetDo() as MotorGearDo;
+        var updated = await _motorGearService.UpdateMotorGear(_appStateService.LoggedUser.Username, motorGear);
+        return updated != null;
+    }
 
     #endregion
     public override void Clear()
@@ -91,6 +107,7 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
         {
             Name = this.Name,
             Ratio = this.Ratio,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            LastModified = _appStateService.LoggedUser.Username,
         };
 }

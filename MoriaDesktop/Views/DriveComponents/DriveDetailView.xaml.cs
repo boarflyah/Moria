@@ -31,4 +31,9 @@ public partial class DriveDetailView : Page, IViewModelContent
     {
         return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
     }
+
+    private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+    {
+
+    }
 }
