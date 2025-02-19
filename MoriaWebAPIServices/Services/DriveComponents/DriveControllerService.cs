@@ -20,21 +20,21 @@ public class DriveControllerService : IDriveControllerService
 
     public async Task<DriveDo> CreateDrive(DriveDo drive)
     {
-        var entity = await _context.AddAsync(await _creator.CreateDrive(product));
+        var entity = await _context.AddAsync(await _creator.CreateDrive(drive));
         var created = await _context.SaveChangesAsync();
-        return _creator.GetProductDo(entity.Entity);
+        return _creator.GetDriveDo(entity.Entity);
     }
 
     public async Task<DriveDo> UpdateDrive(DriveDo drive)
     {
-        var searchProduct = await _context.Drives.Include(x => x.Motor).Include(x => x.MotorGearToDrives).ThenInclude(x => x.MotorGear).FirstOrDefaultAsync(x => x.Id == drive.Id);
-        if (searchProduct == null)
+        var searchDrive = await _context.Drives.Include(x => x.Motor).Include(x => x.MotorGearToDrives).ThenInclude(x => x.MotorGear).FirstOrDefaultAsync(x => x.Id == drive.Id);
+        if (searchDrive == null)
             throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        await _creator.UpdateProduct(searchProduct, product);
+        await _creator.UpdateDrive(searchDrive, drive);
 
         var created = await _context.SaveChangesAsync();
-        return _creator.GetProductDo(searchProduct);
+        return _creator.GetDriveDo(searchDrive);
     }
 
     public async Task<bool> DeleteDrive(int id)
