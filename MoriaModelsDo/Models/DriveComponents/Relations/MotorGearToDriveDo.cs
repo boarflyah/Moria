@@ -26,4 +26,16 @@ public class MotorGearToDriveDo: BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+
+    private int _Quantity;
+    public int Quantity
+    {
+        get => _Quantity;
+        set
+        {
+            _Quantity = value;
+            RaisePropertyChanged(value);
+        }
+    }
 }

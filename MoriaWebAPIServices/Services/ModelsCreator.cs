@@ -286,4 +286,71 @@ public class ModelsCreator
     }
 
     #endregion
+
+    #region drive
+
+    public DriveDo GetDriveDo(Drive drive)
+    {
+        return new()
+        {
+            Id = drive.Id,
+            Inverter = drive.Inverter,
+            Variator = drive.Variator,
+            Quantity = drive.Quantity,
+            //Motor = drive.Motor != null ? GetMotorDo(drive.Motor) : null,
+            //Gearboxes = drive.MotorGearToDrives != null && drive.MotorGearToDrives.Any() ? GetDoMotorGearBoxToDrives(drive.MotorGearToDrives) : null,
+            LastModified = drive.LastModified,
+        };
+    }
+
+    public async Task<Drive> CreateDrive(DriveDo drive)
+    {
+        var result = new Drive()
+        {
+            Inverter = drive.Inverter,
+            Quantity = drive.Quantity,
+            Variator = drive.Variator,
+        };
+
+        //result.Motor = await GetModelInContext(CreateMotorr, drive.Motor, _context.Motors);
+
+        //foreach (var component in product.Components.Where(x => x.ChangeType == SystemChangeType.Added))
+        //    result.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
+
+        return result;
+    }
+
+    public async Task UpdateDrive(Drive drive, DriveDo driveModel)
+    {
+        drive.Inverter = driveModel.Inverter;
+        drive.Variator = driveModel.Variator;
+        drive.Quantity = driveModel.Quantity;
+
+        //product.SteelKind = await GetModelInContext(CreateSteelKind, productModel.SteelKind, _context.SteelKinds);
+        //product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
+
+        //foreach (var component in productModel.Components.Where(x => x.ChangeType != SystemChangeType.None))
+        //{
+        //    switch (component.ChangeType)
+        //    {
+        //        case SystemChangeType.Added:
+        //            product.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
+        //            break;
+        //        case SystemChangeType.Modified:
+        //            var contextComponent = await _context.Components.Include(x => x.ComponentProduct).FirstOrDefaultAsync(x => x.Id == component.Id);
+        //            if (contextComponent != null)
+        //                await UpdateComponent(contextComponent, component);
+        //            break;
+        //        case SystemChangeType.Deleted:
+        //            var searchComponent = await _context.Components.FindAsync(component.Id);
+        //            if (searchComponent != null)
+        //                _context.Components.Remove(searchComponent);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+    }
+
+    #endregion
 }
