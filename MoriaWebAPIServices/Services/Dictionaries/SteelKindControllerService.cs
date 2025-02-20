@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModels.Models.Products;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
@@ -10,19 +11,18 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class SteelKindControllerService : ISteelKindControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public SteelKindControllerService(ApplicationDbContext context)
+    public SteelKindControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<SteelKindDo> CreateSteelKind(SteelKindDo steelKind)
     {
-        var createdSteelKind = new SteelKind
-        {
-            Name = steelKind.Name,
-            Symbol = steelKind.Symbol
-        };
+
+        var createdSteelKind = await _creator.CreateSteelKind(steelKind);
 
         _context.SteelKinds.Add(createdSteelKind);
         await _context.SaveChangesAsync();
@@ -34,39 +34,27 @@ public class SteelKindControllerService : ISteelKindControllerService
     public async Task<SteelKindDo?> GetSteelKindById(int id)
     {
         var steelKind = await _context.SteelKinds.FindAsync(id);
-        if (steelKind == null) return null;
+        if (steelKind == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new SteelKindDo
-        {
-            Id = steelKind.Id,
-            Name = steelKind.Name,
-            Symbol = steelKind.Symbol
-        };
+        return _creator.GetSteelKindDo(steelKind);
     }
 
     public async Task<List<SteelKindDo>> GetAllSteelKinds()
     {
         return await _context.SteelKinds
-            .Select(steelKind => new SteelKindDo
-            {
-                Id = steelKind.Id,
-                Name = steelKind.Name,
-                Symbol = steelKind.Symbol
-            })
+            .Select(steelKind => _creator.GetSteelKindDo(steelKind))
             .ToListAsync();
     }
 
     public async Task<SteelKindDo?> EditSteelKind(SteelKindDo steelKind)
     {
         var searchSteelKind = await _context.SteelKinds.FindAsync(steelKind.Id);
-        if (searchSteelKind == null) return null;
+        if (searchSteelKind == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchSteelKind.Name = steelKind.Name;
-        searchSteelKind.Symbol = steelKind.Symbol;
-
+        await _creator.UpdateSteelKind(searchSteelKind, steelKind);
         await _context.SaveChangesAsync();
 
-        return steelKind;
+        return _creator.GetSteelKindDo(searchSteelKind);
     }
     public async Task<bool> DeleteSteelKind(int id)
     {

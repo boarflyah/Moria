@@ -2,7 +2,9 @@
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.EntityPersonel;
+using MoriaModels.Models.Orders;
 using MoriaModels.Models.Products;
+using MoriaModels.Models.Warehouses;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Contacts;
@@ -124,6 +126,12 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdatePosition(Position position, PositionDo positionModel)
+    {
+        position.Code = positionModel.Code;
+        position.Name = positionModel.Name;
+    }
+
     #endregion
 
     #region SteelKind
@@ -146,6 +154,166 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdateSteelKind(SteelKind steelKind, SteelKindDo steelKindModel)
+    {
+        steelKind.Name = steelKindModel.Name;
+        steelKind.Symbol = steelKindModel.Symbol;
+    }
+
+    #endregion
+
+    #region Color
+
+    public ColorDo GetColorDo(Color color)
+    {
+        return new ColorDo()
+        {
+            Id = color.Id,
+            Name = color.Name,
+            Code = color.Code,
+        };
+    }
+
+    public async Task<Color> CreateColor(ColorDo colorDo)
+    {
+        return new()
+        {
+            Name = colorDo.Name,
+            Code = colorDo.Code,
+        };
+    }
+
+    public async Task UpdateColor(Color color, ColorDo colorModel)
+    {
+        color.Name = colorModel.Name;
+        color.Code = colorModel.Code;
+    }
+
+    #endregion
+
+    #region Contact
+
+    public ContactDo GetContact(Contact contact)
+    {
+        return new ContactDo()
+        {
+            Id = contact.Id,
+            LongName = contact.LongName,
+            ShortName = contact.ShortName,
+            Symbol = contact.Symbol,
+        };
+    }
+
+    public async Task<Contact> CreateContact(ContactDo contactDo)
+    {
+        return new()
+        {
+            Symbol = contactDo.Symbol,
+            LongName = contactDo.LongName,
+            ShortName = contactDo.ShortName,
+
+        };
+    }
+
+    public async Task UpdateContact(Contact contact, ContactDo contactModel)
+    {
+        contact.Symbol = contactModel.Symbol;
+        contact.LongName = contactModel.LongName;
+        contact.ShortName = contactModel.ShortName;
+    }
+
+    #endregion
+
+    #region Motor
+
+    public MotorDo GetMotor(Motor motor)
+    {
+        return new MotorDo()
+        {
+            Id = motor.Id,
+            Name = motor.Name,
+            Power = motor.Power,
+            Symbol = motor.Symbol,
+        };
+    }
+
+    public async Task<Motor> CreateMotor(MotorDo motorDo)
+    {
+        return new()
+        {
+            Symbol = motorDo.Symbol,
+            Power = motorDo.Power,
+            Name = motorDo.Name,
+
+        };
+    }
+
+    public async Task UpdateMotor(Motor motor, MotorDo motorModel)
+    {
+        motor.Symbol = motorModel.Symbol;
+        motor.Power = motorModel.Power;
+        motor.Name = motorModel.Name;
+    }
+    #endregion
+
+    #region MotorGear
+
+    public MotorGearDo GetMotorGear(MotorGear motorGear)
+    {
+        return new MotorGearDo()
+        {
+            Id = motorGear.Id,
+            Name = motorGear.Name,
+            Ratio = motorGear.Ratio,
+            Symbol = motorGear.Symbol,
+        };
+    }
+
+    public async Task<MotorGear> CreateMotorGear(MotorGearDo motorGearDo)
+    {
+        return new()
+        {
+            Symbol = motorGearDo.Symbol,
+            Name = motorGearDo.Name,
+            Ratio = motorGearDo.Ratio
+
+        };
+    }
+
+    public async Task UpdateMotorGear(MotorGear motorGear, MotorGearDo motorGearModel)
+    {
+        motorGear.Symbol = motorGearModel.Symbol;
+        motorGear.Ratio = motorGearModel.Ratio;
+        motorGear.Name = motorGearModel.Name;
+    }
+
+    #endregion
+
+    #region Warehouse
+    public WarehouseDo GetWarehouse(Warehouse warehouse)
+    {
+        return new WarehouseDo()
+        {
+            Id = warehouse.Id,
+            Name = warehouse.Name,
+            Symbol = warehouse.Symbol,            
+        };
+    }
+
+    public async Task<Warehouse> CreateWarehouse(WarehouseDo warehouseDo)
+    {
+        return new()
+        {
+            Name = warehouseDo.Name,
+            Symbol = warehouseDo.Symbol,
+        };
+    }
+
+    public async Task UpdateWarehouse(Warehouse warehouse, WarehouseDo warehouseModel)
+    {
+        warehouse.Symbol = warehouseModel.Symbol;
+        warehouse.Name = warehouseModel.Name;
+    }
     #endregion
 
     #region Category
@@ -287,7 +455,7 @@ public class ModelsCreator
 
     #endregion
 
-    #region drive
+    #region Drive
 
     public DriveDo GetDriveDo(Drive drive)
     {

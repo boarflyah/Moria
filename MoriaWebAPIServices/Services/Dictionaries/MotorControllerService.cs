@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModels.Models.DriveComponents;
 using MoriaModelsDo.Models.DriveComponents;
 using MoriaWebAPIServices.Contexts;
@@ -9,22 +10,18 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class MotorControllerService : IMotorControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public MotorControllerService(ApplicationDbContext context)
+    public MotorControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<MotorDo> CreateMotor(MotorDo motor)
     {
-
-        var createdMotor = new Motor
-        {
-            Name = motor.Name,
-            Symbol = motor.Symbol,
-            Power = motor.Power
-        };
-
+        var createdMotor = await _creator.CreateMotor(motor);
+       
         _context.Motors.Add(createdMotor);
         await _context.SaveChangesAsync();
 
@@ -35,41 +32,27 @@ public class MotorControllerService : IMotorControllerService
     public async Task<MotorDo?> GetMotorById(int id)
     {
         var searchMotor = await _context.Motors.FindAsync(id);
-        if (searchMotor == null) return null;
+        if (searchMotor == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new MotorDo
-        {
-            Id = searchMotor.Id,
-            Name = searchMotor.Name,
-            Symbol = searchMotor.Symbol,
-            Power = searchMotor.Power
-        };
+        return _creator.GetMotor(searchMotor);
     }
 
     public async Task<List<MotorDo>> GetAllMotors()
     {
         return await _context.Motors
-            .Select(motor => new MotorDo
-            {
-                Id = motor.Id,
-                Name = motor.Name,
-                Symbol = motor.Symbol,
-                Power = motor.Power
-            })
+            .Select(motor => _creator.GetMotor(motor))          
             .ToListAsync();
     }
 
     public async Task<MotorDo?> EditMotor(MotorDo motor)
     {
         var searchMotor = await _context.Motors.FindAsync(motor.Id);
-        if (searchMotor == null) return null;
+        if (searchMotor == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchMotor.Name = motor.Name;
-        searchMotor.Symbol = motor.Symbol;
-        searchMotor.Power = motor.Power;
+       await _creator.UpdateMotor(searchMotor, motor);
 
         await _context.SaveChangesAsync();
-        return motor;
+        return _creator.GetMotor(searchMotor);
     }
 
     public async Task<bool> DeleteMotor(int id)

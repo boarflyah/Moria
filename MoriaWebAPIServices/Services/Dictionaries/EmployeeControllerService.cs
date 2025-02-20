@@ -33,7 +33,6 @@ public class EmployeeControllerService : IEmployeeControllerService
             return null;
 
         return _creator.GetEmployeeDo(employee);
-
     }
 
     public async Task<IEnumerable<EmployeeDo>> GetEmployees()

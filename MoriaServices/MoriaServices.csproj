@@ -33,31 +33,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="InsERT.Moria.API">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Moria.API.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.API.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.BibliotekaDokumentow">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Moria.BibliotekaDokumentow.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.BibliotekaDokumentow.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.DaneDomyslne">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Moria.DaneDomyslne.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.DaneDomyslne.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.ModelDanych">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Moria.ModelDanych.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.ModelDanych.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Moria.Security">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.Security.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.Security.Core">
       <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\x86\InsERT.Moria.Security.Core.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.Sfera">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Moria.Sfera.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Moria.Sfera.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.Core">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Mox.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Mox.Core.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.EntityFramework.Core">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Mox.EntityFramework.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Mox.EntityFramework.Core.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.EntityFrameworkSupport">
-      <HintPath>..\..\..\..\..\Downloads\nexoSDK_51.0.3.7563\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_54.0.0.8119\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>

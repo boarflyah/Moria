@@ -53,13 +53,11 @@ public class PositionControllerService : IPositionControllerService
     public async Task<PositionDo?> EditPosition(PositionDo position)
     {
         var searchPosition = await _context.Positions.FindAsync(position.Id);
-        if (searchPosition == null) return null;
+        if (searchPosition == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchPosition.Name = position.Name;
-        searchPosition.Code = position.Code;
-
+        await _creator.UpdatePosition(searchPosition, position);
         await _context.SaveChangesAsync();
-        return position;
+        return _creator.GetPosition(searchPosition);
     }
 
     public async Task<bool> DeletePosition(int id)

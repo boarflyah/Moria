@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModels.Models.Orders;
 using MoriaModelsDo.Models.Contacts;
 using MoriaWebAPIServices.Contexts;
@@ -9,20 +10,18 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class ContactControllerService : IContactControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public ContactControllerService(ApplicationDbContext context)
+
+    public ContactControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<ContactDo> CreateContact(ContactDo contact)
     {
-        var createdContact = new Contact
-        {
-            ShortName = contact.ShortName,
-            LongName = contact.LongName,
-            Symbol = contact.Symbol
-        };
+        var createdContact = await _creator.CreateContact(contact);
 
         _context.Contacts.Add(createdContact);
         await _context.SaveChangesAsync();
@@ -34,42 +33,27 @@ public class ContactControllerService : IContactControllerService
     public async Task<ContactDo?> GetContactById(int id)
     {
         var contact = await _context.Contacts.FindAsync(id);
-        if (contact == null) return null;
+        if (contact == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new ContactDo
-        {
-            Id = contact.Id,
-            ShortName = contact.ShortName,
-            LongName = contact.LongName,
-            Symbol = contact.Symbol
-        };
+        return _creator.GetContact(contact);
     }
 
     public async Task<List<ContactDo>> GetAllContacts()
     {
         return await _context.Contacts
-            .Select(contact => new ContactDo
-            {
-                Id = contact.Id,
-                ShortName = contact.ShortName,
-                LongName = contact.LongName,
-                Symbol = contact.Symbol
-            })
+            .Select(contact => _creator.GetContact(contact))
             .ToListAsync();
     }
 
     public async Task<ContactDo?> EditContact(ContactDo contact)
     {
         var searchContact = await _context.Contacts.FindAsync(contact.Id);
-        if (searchContact == null) return null;
-
-        searchContact.ShortName = contact.ShortName;
-        searchContact.LongName = contact.LongName;
-        searchContact.Symbol = contact.Symbol;
-
+        if (searchContact == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
+        
+        await _creator.UpdateContact(searchContact, contact);
         await _context.SaveChangesAsync();
 
-        return contact;
+        return _creator.GetContact(searchContact);
     }
 
     public async Task<bool> DeleteContact(int id)

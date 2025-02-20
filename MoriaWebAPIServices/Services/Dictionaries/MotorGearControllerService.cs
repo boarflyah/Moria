@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModels.Models.DriveComponents;
 using MoriaModelsDo.Models.DriveComponents;
 using MoriaWebAPIServices.Contexts;
@@ -9,20 +10,17 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class MotorGearControllerService : IMotorGearControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public MotorGearControllerService(ApplicationDbContext context)
+    public MotorGearControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<MotorGearDo> CreateMotorGear(MotorGearDo motorGear)
     {
-        var createdMotorGear = new MotorGear
-        {
-            Name = motorGear.Name,
-            Symbol = motorGear.Symbol,
-            Ratio = motorGear.Ratio
-        };
+        var createdMotorGear = await _creator.CreateMotorGear(motorGear);      
 
         _context.MotorGears.Add(createdMotorGear);
         await _context.SaveChangesAsync();
@@ -34,41 +32,26 @@ public class MotorGearControllerService : IMotorGearControllerService
     public async Task<MotorGearDo?> GetMotorGearById(int id)
     {
         var searchMotorGear = await _context.MotorGears.FindAsync(id);
-        if (searchMotorGear == null) return null;
+        if (searchMotorGear == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new MotorGearDo
-        {
-            Id = searchMotorGear.Id,
-            Name = searchMotorGear.Name,
-            Symbol = searchMotorGear.Symbol,
-            Ratio = searchMotorGear.Ratio
-        };
+        return _creator.GetMotorGear(searchMotorGear);
     }
 
     public async Task<List<MotorGearDo>> GetAllMotorGears()
     {
         return await _context.MotorGears
-            .Select(motorGear => new MotorGearDo
-            {
-                Id = motorGear.Id,
-                Name = motorGear.Name,
-                Symbol = motorGear.Symbol,
-                Ratio = motorGear.Ratio
-            })
+            .Select(motorGear => _creator.GetMotorGear(motorGear))            
             .ToListAsync();
     }
 
     public async Task<MotorGearDo?> EditMotorGear(MotorGearDo motorGear)
     {
         var searchMotorGear = await _context.MotorGears.FindAsync(motorGear.Id);
-        if (searchMotorGear == null) return null;
+        if (searchMotorGear == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchMotorGear.Name = motorGear.Name;
-        searchMotorGear.Symbol = motorGear.Symbol;
-        searchMotorGear.Ratio = motorGear.Ratio;
-
+        await _creator.UpdateMotorGear(searchMotorGear, motorGear);
         await _context.SaveChangesAsync();
-        return motorGear;
+        return _creator.GetMotorGear(searchMotorGear);
     }
 
     public async Task<bool> DeleteMotorGear(int id)

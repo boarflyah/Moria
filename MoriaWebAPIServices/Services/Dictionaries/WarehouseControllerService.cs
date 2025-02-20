@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseServices;
 using MoriaModels.Models.Warehouses;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaWebAPIServices.Contexts;
@@ -9,19 +10,17 @@ namespace MoriaWebAPIServices.Services.Dictionaries;
 public class WarehouseControllerService : IWarehouseControllerService
 {
     private readonly ApplicationDbContext _context;
+    readonly ModelsCreator _creator;
 
-    public WarehouseControllerService(ApplicationDbContext context)
+    public WarehouseControllerService(ApplicationDbContext context, ModelsCreator creator)
     {
         _context = context;
+        _creator = creator;
     }
 
     public async Task<WarehouseDo> CreateWarehouse(WarehouseDo warehouse)
     {
-        var createdWarehouse = new Warehouse
-        {
-            Name = warehouse.Name,
-            Symbol = warehouse.Symbol
-        };
+        var createdWarehouse = await _creator.CreateWarehouse(warehouse);
 
         _context.Warehouses.Add(createdWarehouse);
         await _context.SaveChangesAsync();
@@ -33,38 +32,26 @@ public class WarehouseControllerService : IWarehouseControllerService
     public async Task<WarehouseDo?> GetWarehouseById(int id)
     {
         var searchWarehouse = await _context.Warehouses.FindAsync(id);
-        if (searchWarehouse == null) return null;
+        if (searchWarehouse == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        return new WarehouseDo
-        {
-            Id = searchWarehouse.Id,
-            Name = searchWarehouse.Name,
-            Symbol = searchWarehouse.Symbol
-        };
+        return _creator.GetWarehouse(searchWarehouse);
     }
 
     public async Task<List<WarehouseDo>> GetAllWarehouses()
     {
         return await _context.Warehouses
-            .Select(warehouse => new WarehouseDo
-            {
-                Id = warehouse.Id,
-                Name = warehouse.Name,
-                Symbol = warehouse.Symbol
-            })
+            .Select(warehouse => _creator.GetWarehouse(warehouse))
             .ToListAsync();
     }
 
     public async Task<WarehouseDo?> EditWarehouse(WarehouseDo warehouse)
     {
         var searchWarehouse = await _context.Warehouses.FindAsync(warehouse.Id);
-        if (searchWarehouse == null) return null;
+        if (searchWarehouse == null) throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
-        searchWarehouse.Name = warehouse.Name;
-        searchWarehouse.Symbol = warehouse.Symbol;
-
+        await _creator.UpdateWarehouse(searchWarehouse, warehouse);
         await _context.SaveChangesAsync();
-        return warehouse;
+        return _creator.GetWarehouse(searchWarehouse);
     }
 
     public async Task<bool> DeleteWarehouse(int id)
