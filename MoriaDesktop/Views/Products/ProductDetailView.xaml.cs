@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
@@ -46,7 +47,7 @@ public partial class ProductDetailView : Page, IViewModelContent
     {
         if (e.Column.SortMemberPath.Contains(nameof(ComponentDo.ElectricalDescription)))
         {
-
+            (DataContext as BaseDetailViewModel).HasObjectChanged = true;
         }
         else
         {
@@ -58,6 +59,7 @@ public partial class ProductDetailView : Page, IViewModelContent
                     cdo.ComponentProduct = componentProduct;
                     if (cdo.ChangeType != SystemChangeType.Added)
                         cdo.ChangeType = SystemChangeType.Modified;
+                    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
                 }
             }
             e.Cancel = true;

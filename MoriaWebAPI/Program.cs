@@ -8,8 +8,10 @@ using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services;
 using MoriaWebAPIServices.Services.Dictionaries;
+using MoriaWebAPIServices.Services.DriveComponents;
 using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
+using MoriaWebAPIServices.Services.Interfaces.DriveComponents;
 using MoriaWebAPIServices.Services.Interfaces.Products;
 using MoriaWebAPIServices.Services.Products;
 using Serilog;
@@ -54,6 +56,7 @@ public class Program
             builder.Services.AddScoped<ISteelKindControllerService, SteelKindControllerService>();
             builder.Services.AddScoped<IProductControllerService, ProductControllerService>();
             builder.Services.AddScoped<ICategoryControllerService, CategoryControllerService>();
+            builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
 
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();

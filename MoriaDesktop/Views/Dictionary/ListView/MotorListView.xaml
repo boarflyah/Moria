@@ -27,7 +27,7 @@
                 <DataGridTextColumn Header="Symbol" 
                             Binding="{Binding Symbol}"
                             Width="3*"/>
-                <DataGridTextColumn Header="Moc" 
+                <DataGridTextColumn Header="Moc (kV)" 
                             Binding="{Binding Power}"
                             Width="*"/>
             </DataGrid.Columns>

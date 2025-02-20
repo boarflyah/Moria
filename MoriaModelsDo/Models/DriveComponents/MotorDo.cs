@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.DriveComponents;
 public class MotorDo: BaseDo
@@ -34,5 +35,13 @@ public class MotorDo: BaseDo
             _Power = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Symbol = lookup.Property1;
+        Name = lookup.Property2;
+        decimal.TryParse(lookup.Property3, out _Power);
     }
 }

@@ -7,7 +7,7 @@ using MoriaModels.Models.Products;
 
 namespace MoriaModels.Models.DriveComponents;
 
-[LookupHeaders(true, "Produkt", true, "Specyfikacja elektryczna")]
+[LookupHeaders(true, "Produkt", true, "Ilość", true, "Specyfikacja elektryczna")]
 public class Component : BaseModel
 {
     public string ElectricalDescription
@@ -31,8 +31,13 @@ public class Component : BaseModel
         get; set;
     }
 
+    public double Quantity
+    {
+        get; set;
+    }
+
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public override LookupModel GetLookupObject()
-        => new(Id, Product.Name, ElectricalDescription);
+        => new(Id, Product.Name, Quantity.ToString(), ElectricalDescription);
 }

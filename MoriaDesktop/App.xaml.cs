@@ -92,6 +92,10 @@ public partial class App : Application
                          services.AddScoped<CategoryListViewModel>();
                          services.AddScoped<CategoryDetailView>();
                          services.AddScoped<CategoryDetailViewModel>();
+                         services.AddScoped<DriveDetailView>();
+                         services.AddScoped<DriveDetailViewModel>();
+                         services.AddScoped<DriveListView>();
+                         services.AddScoped<DriveListViewModel>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -101,6 +105,7 @@ public partial class App : Application
                          services.AddScoped<IDetailedWindow, ColorWindowView>();
                          services.AddScoped<IDetailedWindow, SteelKindWindowView>();
                          services.AddScoped<IDetailedWindow, CategoryWindowView>();
+                         services.AddScoped<IDetailedWindow, MotorWindowView>();
 
                          services.AddScoped<ILookupService, LookupService>();
                          services.AddScoped<IPageService, DesktopPageService>();
@@ -121,6 +126,7 @@ public partial class App : Application
                          services.AddScoped<IApiWarehouseService, ApiWarehouseService>();
                          services.AddScoped<IApiProductService, ApiProductService>();
                          services.AddScoped<IApiCatergoryService, ApiCategoryService>();
+                         services.AddScoped<IApiDriveService, ApiDriveService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

@@ -132,6 +132,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         });
         node4.Items.Add(new()
         {
+            Title = "Napędy",
+            ViewModelType = typeof(DriveListViewModel)
+        });
+        node4.Items.Add(new()
+        {
             Title = "Kategorie",
             ViewModelType = typeof(CategoryListViewModel)
         });

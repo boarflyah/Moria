@@ -70,6 +70,11 @@ public abstract class BaseDetailWithNestedListViewModel : BaseDetailViewModel
 
     protected async virtual Task NestedDelete()
     {
+        if (Selected != null)
+        {
+            Selected.ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Deleted;
+            HasObjectChanged = true;
+        }
     }
 
     /// <summary>

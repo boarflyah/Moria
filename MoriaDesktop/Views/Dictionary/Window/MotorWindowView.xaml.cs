@@ -1,21 +1,22 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Input;
-using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktop.Services.Interfaces;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 
 namespace MoriaDesktop.Views.Dictionary.Window;
-public partial class MotorWindowView : System.Windows.Window
+public partial class MotorWindowView : System.Windows.Window, IDetailedWindow
 {
-    private MotorDetailViewModel detailViewModel;
     public MotorWindowView(MotorDetailViewModel viewModel)
     {
         InitializeComponent();
-        this.DataContext = viewModel;
-        detailViewModel = viewModel;
+        DataContext = viewModel;
     }
 
+    public bool Cancelled
+    {
+        get; private set;
+    }
 
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
@@ -54,55 +55,23 @@ public partial class MotorWindowView : System.Windows.Window
             exitButton.Click += ExitButton_Click;
         }
 
-        var saveButton = (Button)this.Template.FindName("SaveButton", this);
-        if (saveButton != null)
-        {
-            saveButton.Click -= SaveButton_Click;
-            saveButton.Click += SaveButton_Click;
-        }
-
         var saveAndCloseButton = (Button)this.Template.FindName("SaveAndCloseButton", this);
         if (saveAndCloseButton != null)
         {
             saveAndCloseButton.Click -= SaveAndCloseButton_Click;
             saveAndCloseButton.Click += SaveAndCloseButton_Click;
         }
-
-        var minimalizeButton = (Button)this.Template.FindName("MinimalizeButton", this);
-        if (minimalizeButton != null)
-        {
-            minimalizeButton.Click -= MinimalizeButton_Click;
-            minimalizeButton.Click += MinimalizeButton_Click;
-        }
-    }
-
-    private void MinimalizeButton_Click(object sender, RoutedEventArgs e)
-    {
-        this.WindowState = WindowState.Minimized;
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
     {
+        Cancelled = true;
         this.Close();
-    }
-
-    private void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        HandleCommand(nameof(detailViewModel.SaveCommand));
     }
 
     private void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
     {
-        HandleCommand(nameof(detailViewModel.SaveAndCloseCommand));
-    }
-
-    private void HandleCommand(string commandName)
-    {
-        var command = detailViewModel.GetType()
-            .GetProperty(commandName)?
-            .GetValue(detailViewModel) as IRelayCommand;
-
-        command?.Execute(null);
+        Hide();
     }
 
     #endregion
