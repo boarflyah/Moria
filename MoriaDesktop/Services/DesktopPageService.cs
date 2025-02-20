@@ -44,5 +44,6 @@ public class DesktopPageService: PageService
         Register(typeof(WarehouseListViewModel), typeof(WarehouseListView));
         Register(typeof(ProductListViewModel), typeof(ProductListView));
         Register(typeof(CategoryListViewModel), typeof(CategoryListView));
+        Register(typeof(DriveListViewModel), typeof(DriveListView));
     }
 }

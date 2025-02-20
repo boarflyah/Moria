@@ -11,9 +11,13 @@ using MoriaModelsDo.Models.DriveComponents.Relations;
 namespace MoriaDesktop.ViewModels.DriveComponents;
 public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
 {
-    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService) 
+    readonly IApiDriveService _apiService;
+
+    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiDriveService apiService) 
         : base(logger, appStateService, apiLockService, navigationService)
     {
+        _apiService = apiService;
+
         Title = "Napęd";
     }
 
@@ -88,17 +92,47 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
     #region Methods
 
     public override Type GetModelType() => typeof(DriveDo);
-    protected override Task LoadObject() => throw new NotImplementedException();
-    protected override Task<bool> SaveNewObject() => throw new NotImplementedException();
-    protected override Task<bool> UpdateExistingObject() => throw new NotImplementedException();
+    protected async override Task LoadObject()
+    {
+        Clear();
+
+        var drive = await ExecuteApiRequest(_apiService.GetDrive, _appStateService.LoggedUser.Username, objectId);
+        if (drive != null)
+            Setup(drive);
+        else
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+
+    }
+
+    protected async override Task<bool> SaveNewObject()
+    {
+        var drive = GetDo() as DriveDo;
+        var newObject = await _apiService.CreateDrive(_appStateService.LoggedUser.Username, drive);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
+
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var product = GetDo() as DriveDo;
+        var updated = await _apiService.UpdateDrive(_appStateService.LoggedUser.Username, product);
+        return updated != null;
+    }
+
     public override BaseDo GetDo()
     {
         var result = new DriveDo()
         {
+            Id = objectId,
             Inverter = Inverter,
             Variator = Variator,
             Quantity = Quantity,
             Motor = Motor,
+            LastModified = _appStateService.LoggedUser.Username,
         };
 
         foreach (var gearbox in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<MotorGearToDriveDo>())
