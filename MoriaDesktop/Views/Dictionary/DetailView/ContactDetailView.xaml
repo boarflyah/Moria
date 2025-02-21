@@ -4,12 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary"
+      xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ContactView"
       Style="{StaticResource GlobalPageStyle}"
       Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,7 +25,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10"
+          IsEnabled="{Binding Permission_Symbol.CanWrite}"
+          Visibility="{Binding Permission_Symbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -29,7 +36,9 @@
             <TextBox Name="TextBox1" Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10"
+          IsEnabled="{Binding Permission_LongName.CanWrite}"
+          Visibility="{Binding Permission_LongName.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -38,13 +47,15 @@
             <TextBox Name="TextBox2" Text="{Binding LongName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="10"
+          IsEnabled="{Binding Permission_ShortName.CanWrite}"
+          Visibility="{Binding Permission_ShortName.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Nazwa krótka" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="TextBox3" Text="{Binding LongName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <TextBox Name="TextBox3" Text="{Binding ShortName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
     </Grid>

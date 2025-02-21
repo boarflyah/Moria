@@ -3,12 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:MoriaDesktop.Views.Products"
+      xmlns:local="clr-namespace:MoriaDesktop.Views.Products"             
+      xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
       xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Style="{StaticResource GlobalPageStyle}"
       Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -22,7 +27,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_Name.CanWrite}"
+           Visibility="{Binding Permission_Name.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -31,7 +38,9 @@
             <TextBox Name="NameTextBox" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_Symbol.CanWrite}"
+           Visibility="{Binding Permission_Symbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -40,7 +49,9 @@
             <TextBox Name="SymbolTextBox" Text="{Binding Symbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="2" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="2" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_SerialNumber.CanWrite}"
+           Visibility="{Binding Permission_SerialNumber.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -49,7 +60,9 @@
             <TextBox Name="SerialNumberTextBox" Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_Category.CanWrite}"
+           Visibility="{Binding Permission_Category.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -62,7 +75,9 @@
                      PreviewMouseDown="CategoryBox_PreviewMouseDown"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_SteelKind.CanWrite}"
+           Visibility="{Binding Permission_SteelKind.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -75,7 +90,9 @@
                      PreviewMouseDown="SteelKindBox_PreviewMouseDown"/>
         </Grid>
 
-        <Grid Grid.Column="2" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="2" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_IsMainMachine.CanWrite}"
+           Visibility="{Binding Permission_IsMainMachine.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

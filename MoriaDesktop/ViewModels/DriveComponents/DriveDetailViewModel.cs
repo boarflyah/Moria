@@ -71,6 +71,51 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+
+    PermissionDo _Permission_Motor;
+    public PermissionDo Permission_Motor
+    {
+        get => _Permission_Motor;
+        set
+        {
+            _Permission_Motor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Variator;
+    public PermissionDo Permission_Variator
+    {
+        get => _Permission_Variator;
+        set
+        {
+            _Permission_Variator = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Inverter;
+    public PermissionDo Permission_Inverter
+    {
+        get => _Permission_Inverter;
+        set
+        {
+            _Permission_Inverter = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Quantity;
+    public PermissionDo Permission_Quantity
+    {
+        get => _Permission_Quantity;
+        set
+        {
+            _Permission_Quantity = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region Nestedlistview methods

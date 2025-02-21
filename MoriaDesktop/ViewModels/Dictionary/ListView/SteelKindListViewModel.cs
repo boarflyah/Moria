@@ -4,6 +4,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using System.Collections.ObjectModel;
@@ -19,12 +20,37 @@ public sealed class SteelKindListViewModel : BaseListViewModel
 
         SteelKinds = new();
         Title = "Rodzaje stali";
+
+        //var symbol = _appStateService.LoggedUser.Position.Permissions.FirstOrDefault(x => x.PropertyName.Equals("SteelKind_Symbol"));
+        //if (symbol != null)
+        //    Permission_Symbol = symbol;
     }
 
     #region properties
 
     public ObservableCollection<SteelKindDo> SteelKinds { get; set; }
 
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
     #endregion
 
     protected async override Task LoadList()

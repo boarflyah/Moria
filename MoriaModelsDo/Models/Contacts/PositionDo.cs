@@ -27,6 +27,8 @@ public class PositionDo: BaseDo
         }
     }
 
+    public IList<PermissionDo>  Permissions {  get; set; } = new List<PermissionDo>();
+    
     public override void SetObject(LookupModel lookup)
     {
         base.SetObject(lookup);

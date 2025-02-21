@@ -31,16 +31,27 @@ namespace MoriaDesktop.Views.Dictionary.ListView
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await(DataContext as PositionListViewModel).OnLoaded();
-        }
-
         private void PositionDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is DataGrid dg)
             {
                 (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
+            }
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await (DataContext as PositionListViewModel).OnLoaded();
+
+            var vm = DataContext as PositionListViewModel;
+            if (vm != null && !vm.Permission_Name.CanRead)
+            {
+                PositionDataGrid.Columns[0].Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            if (vm != null && !vm.Permission_Code.CanRead)
+            {
+                PositionDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

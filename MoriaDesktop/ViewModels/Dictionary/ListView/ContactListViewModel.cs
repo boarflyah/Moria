@@ -5,6 +5,7 @@ using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using System.Collections.ObjectModel;
@@ -26,6 +27,39 @@ public sealed class ContactListViewModel : BaseListViewModel
     #region properties
 
     public ObservableCollection<ContactDo> Contacts { get; set; }
+
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_ShortName;
+    public PermissionDo Permission_ShortName
+    {
+        get => _Permission_ShortName;
+        set
+        {
+            _Permission_ShortName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_LongName;
+    public PermissionDo Permission_LongName
+    {
+        get => _Permission_LongName;
+        set
+        {
+            _Permission_LongName = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     #endregion
 

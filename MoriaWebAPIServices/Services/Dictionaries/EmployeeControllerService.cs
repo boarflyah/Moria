@@ -19,7 +19,7 @@ public class EmployeeControllerService : IEmployeeControllerService
 
     public async Task<EmployeeDo> LogIn(string username, string password)
     {
-        var employee = _context.Employees.FirstOrDefault(x => x.Username.Equals(username));
+        var employee = _context.Employees.Include(x => x.Position).ThenInclude(y => y.Permissions).FirstOrDefault(x => x.Username.Equals(username));
         if (employee == null || !employee.Password.Equals(password))
             return null;
 

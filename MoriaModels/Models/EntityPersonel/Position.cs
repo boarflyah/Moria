@@ -11,5 +11,8 @@ public class Position : BaseModel
     public string Name { get; set; }
     public string Code { get; set; }
 
+    public ICollection<Permission> Permissions { get; set; }
+
+
     public override LookupModel GetLookupObject() => new(Id, Name, Code);
 }

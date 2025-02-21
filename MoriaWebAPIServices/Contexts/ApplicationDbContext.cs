@@ -6,6 +6,7 @@ using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
+using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 
@@ -33,6 +34,14 @@ public class ApplicationDbContext : DbContext
             .HasMany(e => e.MotorGears)
             .WithMany(e => e.Drives)
             .UsingEntity<MotorGearToDrive>();
+        modelBuilder.Entity<Component>()
+            .HasMany(e => e.OrderItems)
+            .WithMany(e => e.Components)
+            .UsingEntity<ComponentToOrderItem>();
+        modelBuilder.Entity<Component>()
+            .HasMany(e => e.Drives)
+            .WithMany(e => e.Components)
+            .UsingEntity<DriveToComponent>();
     }
 
     public IQueryable<BaseModel> Get(Type objectType)

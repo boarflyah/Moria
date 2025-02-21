@@ -56,14 +56,8 @@ public class ModelsCreator
             PhoneNumber = employee.PhoneNumber,
             Username = employee.Username,
             Admin = employee.Admin,
-            Position = employee.Position != null ? new()
-            {
-                Id = employee.Position.Id,
-                Code = employee.Position.Code,
-                LastModified = employee.Position.LastModified,
-                Name = employee.Position.Name,
-                IsLocked = employee.Position.IsLocked
-            } : null,
+            Position = employee.Position != null ? 
+            GetPosition(employee.Position): null,
         };
     }
 
@@ -113,6 +107,19 @@ public class ModelsCreator
             Code = position.Code,
             Name = position.Name,
             LastModified = position.LastModified,
+            Permissions =  position.Permissions?.Any() == true ? position.Permissions.Select(GetPermissionDo).ToList() : new()
+        };
+    }
+
+    public PermissionDo GetPermissionDo(Permission permission)
+    {
+        return new()
+        {
+            Id = permission.Id,
+            CanRead = permission.CanRead,
+            CanWrite = permission.CanWrite,
+            DisplayName = permission.DisplayName,
+            PropertyName = permission.PropertyName,
         };
     }
 
@@ -348,8 +355,7 @@ public class ModelsCreator
     {
         return new()
         {
-            Id = component.Id,
-            ElectricalDescription = component.ElectricalDescription,
+            Id = component.Id,            
             ComponentProduct = component.ComponentProduct != null ? GetNestedProductDo(component.ComponentProduct) : null,
         };
     }
@@ -358,7 +364,6 @@ public class ModelsCreator
     {
         return new()
         {
-            ElectricalDescription = component.ElectricalDescription,
             LastModified = component.LastModified,
             ComponentProduct = await GetModelInContext(CreateProduct, component.ComponentProduct, _context.Products),
         };
@@ -366,7 +371,6 @@ public class ModelsCreator
 
     public async Task UpdateComponent(Component component, ComponentDo componentModel)
     {
-        component.ElectricalDescription = componentModel.ElectricalDescription;
         component.ComponentProduct = await GetModelInContext(CreateProduct, componentModel.ComponentProduct, _context.Products);
     }
 

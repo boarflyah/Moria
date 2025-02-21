@@ -54,6 +54,39 @@ public class ContactDetailViewModel : BaseDetailViewModel
         }
     }
 
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_ShortName;
+    public PermissionDo Permission_ShortName
+    {
+        get => _Permission_ShortName;
+        set
+        {
+            _Permission_ShortName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_LongName;
+    public PermissionDo Permission_LongName
+    {
+        get => _Permission_LongName;
+        set
+        {
+            _Permission_LongName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     public override Type GetModelType() => typeof(ContactDo);

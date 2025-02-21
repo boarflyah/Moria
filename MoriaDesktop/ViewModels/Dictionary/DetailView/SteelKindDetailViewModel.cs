@@ -14,6 +14,9 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiSteelKindService steelKindService) : base(logger, appStateService, apiLockService, navigationService)
     {
         _steelKindService = steelKindService;
+        //var symbol = _appStateService.LoggedUser.Position.Permissions.FirstOrDefault(x => x.PropertyName.Equals("SteelKind_Symbol"));
+        //if (symbol != null)
+        //    Permission_Symbol = symbol;
     }
 
     #region properties
@@ -38,6 +41,28 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
         set
         {
             _Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
             RaisePropertyChanged(value);
         }
     }
@@ -80,6 +105,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     }
 
     #endregion
+
     public override void Clear()
     {
         Symbol = string.Empty;
@@ -99,3 +125,4 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
             Symbol = this.Symbol
         };
 }
+

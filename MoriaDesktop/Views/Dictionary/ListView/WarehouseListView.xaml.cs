@@ -39,5 +39,16 @@ public partial class WarehouseListView : Page
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         await(DataContext as WarehouseListViewModel).OnLoaded();
+
+        var vm = DataContext as WarehouseListViewModel;
+        if (vm != null && !vm.Permission_Symbol.CanRead)
+        {
+            WarehouseDataGrid.Columns[0].Visibility = Visibility.Collapsed;
+        }
+
+        if (vm != null && !vm.Permission_WarehouseName.CanRead)
+        {
+            WarehouseDataGrid.Columns[1].Visibility = Visibility.Collapsed;
+        }
     }
 }

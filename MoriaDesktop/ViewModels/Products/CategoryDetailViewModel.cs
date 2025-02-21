@@ -35,6 +35,17 @@ public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region Commands methods

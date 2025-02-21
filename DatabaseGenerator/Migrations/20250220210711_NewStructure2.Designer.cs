@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250220210711_NewStructure2")]
+    partial class NewStructure2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,6 +116,9 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("LockedBy")
                         .HasColumnType("text");
 
+                    b.Property<int?>("OrderItemId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
@@ -124,6 +130,8 @@ namespace DatabaseGenerator.Migrations
                     b.HasIndex("ComponentColorId");
 
                     b.HasIndex("ComponentProductId");
+
+                    b.HasIndex("OrderItemId");
 
                     b.HasIndex("ProductId");
 
@@ -457,9 +465,6 @@ namespace DatabaseGenerator.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ComponentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -493,6 +498,9 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("ProductNameId")
+                        .HasColumnType("integer");
+
                     b.Property<double>("Quantity")
                         .HasColumnType("double precision");
 
@@ -504,8 +512,6 @@ namespace DatabaseGenerator.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ComponentId");
-
                     b.HasIndex("DesignerId");
 
                     b.HasIndex("DriveId");
@@ -513,6 +519,8 @@ namespace DatabaseGenerator.Migrations
                     b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductNameId");
 
                     b.HasIndex("WarehouseId");
 
@@ -766,6 +774,10 @@ namespace DatabaseGenerator.Migrations
                         .WithMany()
                         .HasForeignKey("ComponentProductId");
 
+                    b.HasOne("MoriaModels.Models.Orders.OrderItem", null)
+                        .WithMany("Components")
+                        .HasForeignKey("OrderItemId");
+
                     b.HasOne("MoriaModels.Models.Products.Product", "Product")
                         .WithMany("Components")
                         .HasForeignKey("ProductId")
@@ -856,10 +868,6 @@ namespace DatabaseGenerator.Migrations
 
             modelBuilder.Entity("MoriaModels.Models.Orders.OrderItem", b =>
                 {
-                    b.HasOne("MoriaModels.Models.DriveComponents.Component", "Component")
-                        .WithMany()
-                        .HasForeignKey("ComponentId");
-
                     b.HasOne("MoriaModels.Models.EntityPersonel.Employee", "Designer")
                         .WithMany()
                         .HasForeignKey("DesignerId")
@@ -878,19 +886,23 @@ namespace DatabaseGenerator.Migrations
                         .WithMany()
                         .HasForeignKey("ProductId");
 
+                    b.HasOne("MoriaModels.Models.DriveComponents.Component", "ProductName")
+                        .WithMany()
+                        .HasForeignKey("ProductNameId");
+
                     b.HasOne("MoriaModels.Models.Warehouses.Warehouse", "Warehouse")
                         .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Component");
-
                     b.Navigation("Designer");
 
                     b.Navigation("Drive");
 
                     b.Navigation("Product");
+
+                    b.Navigation("ProductName");
 
                     b.Navigation("Warehouse");
                 });
@@ -971,6 +983,8 @@ namespace DatabaseGenerator.Migrations
             modelBuilder.Entity("MoriaModels.Models.Orders.OrderItem", b =>
                 {
                     b.Navigation("ComponentToOrderItems");
+
+                    b.Navigation("Components");
                 });
 
             modelBuilder.Entity("MoriaModels.Models.Products.Category", b =>

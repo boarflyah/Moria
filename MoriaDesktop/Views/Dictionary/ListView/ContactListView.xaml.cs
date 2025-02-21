@@ -32,16 +32,32 @@ namespace MoriaDesktop.Views.Dictionary.ListView
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await(DataContext as ContactListViewModel).OnLoaded();
-        }
-
         private void ContactDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is DataGrid dg)
             {
                 (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
+            }
+        }
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await (DataContext as ContactListViewModel).OnLoaded();
+
+            var vm = DataContext as ContactListViewModel;
+            if (vm != null && !vm.Permission_ShortName.CanRead)
+            {
+                ContactDataGrid.Columns[0].Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            if (vm != null && !vm.Permission_LongName.CanRead)
+            {
+                ContactDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            if (vm != null && !vm.Permission_Symbol.CanRead)
+            {
+                ContactDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

@@ -24,4 +24,5 @@ public partial class ColorDetailView : Page
     {
         await(DataContext as BaseDetailViewModel)!.Load();
     }
+
 }

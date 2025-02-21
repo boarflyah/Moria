@@ -3,12 +3,17 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
       xmlns:local="clr-namespace:MoriaDesktop.Views.Contacts"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeeDetailView" Loaded="Page_Loaded"
       Style="{StaticResource GlobalPageStyle}">
 
+    <Page.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -21,7 +26,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10"
+          IsEnabled="{Binding Permission_FirstName.CanWrite}"
+          Visibility="{Binding Permission_FirstName.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -32,7 +39,9 @@
                      Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_LastName.CanWrite}"
+           Visibility="{Binding Permission_LastName.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -45,7 +54,9 @@
                      Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_Username.CanWrite}"
+           Visibility="{Binding Permission_Username.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -70,7 +81,9 @@
                          Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="2" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="2" Margin="10"
+          IsEnabled="{Binding Permission_PhoneNumber.CanWrite}"
+          Visibility="{Binding Permission_PhoneNumber.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -81,7 +94,9 @@
                      Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="2" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="2" Margin="10"
+          IsEnabled="{Binding Permission_Position.CanWrite}"
+          Visibility="{Binding Permission_Position.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -89,11 +104,13 @@
             <Label Content="Stanowisko" Grid.Row="0" Margin="0,0,0,5"/>
             <TextBox Name="PositionBox" 
                      Text="{Binding Position.Name}" 
-                     Grid.Row="1"
+                     Grid.Row="1"                     
                      IsReadOnly="True"
                      PreviewMouseDown="PositionBox_PreviewMouseDown"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3" Margin="10">
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3" Margin="10"
+          IsEnabled="{Binding Permission_Admin.CanWrite}"
+          Visibility="{Binding Permission_Admin.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Label Content="Admin" Grid.Row="0" Margin="0,0,10,0"/>
             <CheckBox x:Name="AdminCheckBox"
                       VerticalAlignment="Center"

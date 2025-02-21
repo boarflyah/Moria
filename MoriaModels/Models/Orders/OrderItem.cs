@@ -1,5 +1,9 @@
-﻿using MoriaModels.Models.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MoriaModels.Models.Base;
+using MoriaModels.Models.DriveComponents;
+using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
+using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 
@@ -13,13 +17,28 @@ public class OrderItem : BaseModel
     public string Notes { get; set; }
     public decimal MachineWeight { get; set; }
     public string TechnicalDrawingLink { get; set; }
+    public double Quantity { get; set; }
 
-    public int ProductId { get; set; }
-    public Product Product { get; set; }
+    // only one choise 
+    public Product? Product { get; set; }
+
+    public Component? Component { get; set; }
+
+    public Drive? Drive { get; set; }
 
     public int WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; }
 
     public int DesignerId { get; set; }
     public Employee Designer { get; set; }
+
+    [NotMapped]
+    public List<Component> Components
+    {
+        get;
+    } = [];
+    public List<ComponentToOrderItem> ComponentToOrderItems
+    {
+        get;
+    } = [];
 }

@@ -5,6 +5,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
 
@@ -25,6 +26,38 @@ public sealed class MotorGearListViewModel : BaseListViewModel
 
     public ObservableCollection<MotorGearDo> MotorGears { get; set; }
 
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Ratio;
+    public PermissionDo Permission_Ratio
+    {
+        get => _Permission_Ratio;
+        set
+        {
+            _Permission_Ratio = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     #endregion
 

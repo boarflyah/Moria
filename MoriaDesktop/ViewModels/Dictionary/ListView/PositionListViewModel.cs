@@ -5,6 +5,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Dictionary.ListView;
@@ -24,6 +25,27 @@ public sealed class PositionListViewModel : BaseListViewModel
 
     public ObservableCollection<PositionDo> Positions { get; set; }
 
+    PermissionDo _Permission_Code;
+    public PermissionDo Permission_Code
+    {
+        get => _Permission_Code;
+        set
+        {
+            _Permission_Code = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
     #endregion
 
     protected async override Task LoadList()

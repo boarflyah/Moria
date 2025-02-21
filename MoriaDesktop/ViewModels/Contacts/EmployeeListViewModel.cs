@@ -4,6 +4,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Contacts;
@@ -23,6 +24,71 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 
     public ObservableCollection<EmployeeDo> Employees { get; set; }
 
+    PermissionDo _Permission_FirstName;
+    public PermissionDo Permission_FirstName
+    {
+        get => _Permission_FirstName;
+        set
+        {
+            _Permission_FirstName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_LastName;
+    public PermissionDo Permission_LastName
+    {
+        get => _Permission_LastName;
+        set
+        {
+            _Permission_LastName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Username;
+    public PermissionDo Permission_Username
+    {
+        get => _Permission_Username;
+        set
+        {
+            _Permission_Username = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_PhoneNumber;
+    public PermissionDo Permission_PhoneNumber
+    {
+        get => _Permission_PhoneNumber;
+        set
+        {
+            _Permission_PhoneNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Position;
+    public PermissionDo Permission_Position
+    {
+        get => _Permission_Position;
+        set
+        {
+            _Permission_Position = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Admin;
+    public PermissionDo Permission_Admin
+    {
+        get => _Permission_Admin;
+        set
+        {
+            _Permission_Admin = value;
+            RaisePropertyChanged(value);
+        }
+    }
     #endregion
 
     #region commands

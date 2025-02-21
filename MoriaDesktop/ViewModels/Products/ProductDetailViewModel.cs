@@ -98,6 +98,72 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_IsMainMachine;
+    public PermissionDo Permission_IsMainMachine
+    {
+        get => _Permission_IsMainMachine;
+        set
+        {
+            _Permission_IsMainMachine = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_SerialNumber;
+    public PermissionDo Permission_SerialNumber
+    {
+        get => _Permission_SerialNumber;
+        set
+        {
+            _Permission_SerialNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Category;
+    public PermissionDo Permission_Category
+    {
+        get => _Permission_Category;
+        set
+        {
+            _Permission_Category = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_SteelKind;
+    public PermissionDo Permission_SteelKind
+    {
+        get => _Permission_SteelKind;
+        set
+        {
+            _Permission_SteelKind = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region nestedlistview methods

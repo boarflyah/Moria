@@ -2,19 +2,16 @@
 using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
 using MoriaModels.Models.Base;
+using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.Orders;
+using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
 
 namespace MoriaModels.Models.DriveComponents;
 
-[LookupHeaders(true, "Produkt", true, "Ilość", true, "Specyfikacja elektryczna")]
+[LookupHeaders(true, "Produkt", true, "Ilość")]
 public class Component : BaseModel
 {
-    public string ElectricalDescription
-    {
-        get; set;
-    }
-
     [ForeignKey(nameof(Product))]
     public int ProductId
     {
@@ -36,8 +33,31 @@ public class Component : BaseModel
         get; set;
     }
 
-    public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public Color? ComponentColor
+    {
+        get; set;
+    }
+
+    public List<Drive> Drives
+    {
+        get;
+    } = [];
+    public List<DriveToComponent> DriveToComponents
+    {
+        get;
+    } = [];
+
+    [NotMapped]
+    public List<OrderItem> OrderItems
+    {
+        get;
+    } = [];
+
+    public List<ComponentToOrderItem> ComponentToOrders
+    {
+        get;
+    } = [];
 
     public override LookupModel GetLookupObject()
-        => new(Id, Product.Name, Quantity.ToString(), ElectricalDescription);
+        => new(Id, Product.Name, Quantity.ToString());
 }

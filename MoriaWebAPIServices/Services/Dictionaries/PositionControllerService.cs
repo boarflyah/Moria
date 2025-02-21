@@ -36,7 +36,7 @@ public class PositionControllerService : IPositionControllerService
 
     public async Task<PositionDo?> GetPositionById(int id)
     {
-        var searchPosition = await _context.Positions.FindAsync(id);
+        var searchPosition = await _context.Positions.Include(x => x.Permissions).FirstOrDefaultAsync(x => x.Id == id);
         if (searchPosition == null)
             throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.Views.Base;
 using MoriaDesktopServices.Interfaces.ViewModels;
 
@@ -20,16 +21,36 @@ public partial class EmployeeListView : Page, IViewModelContent
         InitializeComponent();
     }
 
-    private async void Page_Loaded(object sender, RoutedEventArgs e)
-    {
-        await (DataContext as EmployeeListViewModel).OnLoaded();
-    }
-
     private void EmployeeDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         if (e.Source is DataGrid dg)
         {
             (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
+        }
+    }
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        await (DataContext as EmployeeListViewModel).OnLoaded();
+
+        var vm = DataContext as EmployeeListViewModel;
+        if (vm != null && !vm.Permission_Username.CanRead)
+        {
+            EmployeeDataGrid.Columns[0].Visibility = Visibility.Collapsed;
+        }
+
+        if (vm != null && !vm.Permission_FirstName.CanRead)
+        {
+            EmployeeDataGrid.Columns[1].Visibility = Visibility.Collapsed;
+        }
+
+        if (vm != null && !vm.Permission_LastName.CanRead)
+        {
+            EmployeeDataGrid.Columns[2].Visibility = Visibility.Collapsed;
+        }
+
+        if (vm != null && !vm.Permission_PhoneNumber.CanRead)
+        {
+            EmployeeDataGrid.Columns[3].Visibility = Visibility.Collapsed;
         }
     }
 }

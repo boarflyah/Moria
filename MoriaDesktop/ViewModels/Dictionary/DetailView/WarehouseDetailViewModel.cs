@@ -42,6 +42,28 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
         }
     }
 
+    PermissionDo _Permission_Symbol;
+    public PermissionDo Permission_Symbol
+    {
+        get => _Permission_Symbol;
+        set
+        {
+            _Permission_Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_WarehouseName;
+    public PermissionDo Permission_WarehouseName
+    {
+        get => _Permission_WarehouseName;
+        set
+        {
+            _Permission_WarehouseName = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     public override Type GetModelType() => typeof(WarehouseDo);
 
     protected async override Task LoadObject()

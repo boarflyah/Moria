@@ -32,16 +32,32 @@ namespace MoriaDesktop.Views.Dictionary.ListView
             InitializeComponent();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await(DataContext as MotorGearListViewModel).OnLoaded();
-        }
 
         private void MotorGearDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.Source is DataGrid dg)
             {
                 (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
+            }
+        }
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await (DataContext as MotorGearListViewModel).OnLoaded();
+
+            var vm = DataContext as MotorGearListViewModel;
+            if (vm != null && !vm.Permission_Symbol.CanRead)
+            {
+                MotorGearDataGrid.Columns[0].Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            if (vm != null && !vm.Permission_Name.CanRead)
+            {
+                MotorGearDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
+            }
+
+            if (vm != null && !vm.Permission_Ratio.CanRead)
+            {
+                MotorGearDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

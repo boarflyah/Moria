@@ -3,14 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MoriaDesktop.Views.Products"
+        xmlns:local="clr-namespace:MoriaDesktop.Views.Products"               
+        xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
         mc:Ignorable="d"
         Title="CategoryWindowView" Height="450" Width="800"
         Style="{StaticResource GlobalWindowStyle}"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Loaded="Window_Loaded">
+    
+    <Window.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+    
     <Grid>
-        <Grid Grid.Column="0" Grid.Row="0" Margin="10">
+        <Grid Grid.Column="0" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_Name.CanWrite}"
+           Visibility="{Binding Permission_Name.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

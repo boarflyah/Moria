@@ -40,5 +40,16 @@ public partial class SteelKindListView : Page
     private async void Page_Loaded(object sender, RoutedEventArgs e)
     {
         await(DataContext as SteelKindListViewModel).OnLoaded();
+
+        var vm = DataContext as SteelKindListViewModel;
+        if (vm != null && !vm.Permission_Symbol.CanRead)
+        {
+            SteelKindDataGrid.Columns[0].Visibility = Visibility.Collapsed; 
+        }
+
+        if (vm != null && !vm.Permission_Name.CanRead)
+        {
+            SteelKindDataGrid.Columns[1].Visibility = Visibility.Collapsed;
+        }
     }
 }

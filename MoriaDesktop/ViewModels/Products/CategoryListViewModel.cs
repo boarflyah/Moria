@@ -4,6 +4,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Products;
@@ -23,6 +24,17 @@ public class CategoryListViewModel : BaseListViewModel
     public ObservableCollection<CategoryDo> Categories
     {
         get; set;
+    }
+
+    PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
     }
 
     #endregion
