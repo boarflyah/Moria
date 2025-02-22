@@ -20,10 +20,6 @@ public sealed class SteelKindListViewModel : BaseListViewModel
 
         SteelKinds = new();
         Title = "Rodzaje stali";
-
-        //var symbol = _appStateService.LoggedUser.Position.Permissions.FirstOrDefault(x => x.PropertyName.Equals("SteelKind_Symbol"));
-        //if (symbol != null)
-        //    Permission_Symbol = symbol;
     }
 
     #region properties

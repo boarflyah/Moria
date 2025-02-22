@@ -14,9 +14,6 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiSteelKindService steelKindService) : base(logger, appStateService, apiLockService, navigationService)
     {
         _steelKindService = steelKindService;
-        //var symbol = _appStateService.LoggedUser.Position.Permissions.FirstOrDefault(x => x.PropertyName.Equals("SteelKind_Symbol"));
-        //if (symbol != null)
-        //    Permission_Symbol = symbol;
     }
 
     #region properties

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Reflection;
+using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Args;
 using MoriaDesktop.Services;
@@ -22,6 +23,8 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         _logger = logger;
         _navigationService = navigationService;
         _appStateService = appStateService;
+
+        InitializePermissions();
 
     }
 
@@ -168,5 +171,31 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         }
     }
 
+    #endregion
+
+    #region Permission
+    protected void InitializePermissions()
+    {        
+        string modelName = this.GetType().Name
+            .Replace("DetailViewModel", "")
+            .Replace("ListViewModel", "");
+               
+        var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (var prop in properties)
+        {
+            if (prop.PropertyType == typeof(PermissionDo))
+            {
+                string permissionPropertyName = $"{modelName}_{prop.Name.Substring(11)}";
+
+                var permission = _appStateService.LoggedUser.Position.Permissions
+                    .FirstOrDefault(x => x.PropertyName.Equals(permissionPropertyName));
+
+                if (permission != null)
+                    prop.SetValue(this, permission);
+                
+            }
+        }
+    }
     #endregion
 }
