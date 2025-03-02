@@ -10,8 +10,8 @@ using MoriaModelsDo.Models.Products;
 namespace MoriaDesktop.ViewModels.Products;
 public class CategoryListViewModel : BaseListViewModel
 {
-    readonly IApiCatergoryService _apiService;
-    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCatergoryService apiService) : base(logger, appStateService, navigationService)
+    readonly IApiCategoryService _apiService;
+    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCategoryService apiService) : base(logger, appStateService, navigationService)
     {
         _apiService = apiService;
 

@@ -1,9 +1,22 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.DriveComponents.Relations;
 
 namespace MoriaModelsDo.Models.DriveComponents;
 public class DriveDo : BaseDo
 {
+
+    private string _Name;
+    public string Name
+    {
+        get => _Name;
+        set
+        {
+            _Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     bool _Variator;
     public bool Variator
     {
@@ -50,5 +63,9 @@ public class DriveDo : BaseDo
 
     public IEnumerable<MotorGearToDriveDo> Gearboxes { get; set; } = new List<MotorGearToDriveDo>();
 
-
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Name = lookup.Property1;
+    }
 }

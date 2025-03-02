@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -6,7 +7,6 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.DriveComponents;
-using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
@@ -34,6 +34,7 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
 
     string _Name;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Name
     {
         get => _Name;
@@ -127,12 +128,14 @@ public class MotorGearDetailViewModel : BaseDetailViewModel
         Symbol = string.Empty;
         Name = string.Empty;
         Ratio = string.Empty;
+        LastModified = string.Empty;
     }
     void Setup(MotorGearDo motorGear)
     {
         Symbol = motorGear.Symbol;
         Name = motorGear.Name;
         Ratio = motorGear.Ratio;
+        LastModified = motorGear.LastModified;
     }
 
     public override BaseDo GetDo()

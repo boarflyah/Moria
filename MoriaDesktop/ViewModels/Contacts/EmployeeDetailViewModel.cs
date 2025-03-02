@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -47,6 +48,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
 
     string _Username;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Username
     {
         get => _Username;
@@ -352,6 +354,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         Username = employee.Username;
         Position = employee.Position;
         Admin = employee.Admin;
+        LastModified = employee.LastModified;
     }
 
     public override void Clear()
@@ -362,6 +365,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         Username = string.Empty;
         Position = null;
         Admin = false;
+        LastModified = string.Empty;
     }
 
     public override BaseDo GetDo()

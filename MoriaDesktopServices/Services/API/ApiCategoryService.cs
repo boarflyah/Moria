@@ -3,7 +3,7 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktopServices.Services.API;
-public class ApiCategoryService : IApiCatergoryService
+public class ApiCategoryService : IApiCategoryService
 {
     readonly IApiService _apiService;
 

@@ -9,7 +9,7 @@ using MoriaModels.Models.Products;
 
 namespace MoriaModels.Models.DriveComponents;
 
-[LookupHeaders(true, "Produkt", true, "Ilość")]
+[LookupHeaders(true, "Produkt", true, "Ilość", true, "Kolor")]
 public class Component : BaseModel
 {
     [ForeignKey(nameof(Product))]
@@ -24,6 +24,11 @@ public class Component : BaseModel
     }
 
     public Product? ComponentProduct
+    {
+        get; set;
+    }
+
+    public string Name
     {
         get; set;
     }
@@ -59,5 +64,5 @@ public class Component : BaseModel
     } = [];
 
     public override LookupModel GetLookupObject()
-        => new(Id, Product.Name, Quantity.ToString());
+        => new(Id, ComponentProduct.Name, Quantity.ToString(), ComponentColor?.Name);
 }

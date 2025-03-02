@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250224222613_motorgeartodrives_set")]
+    partial class motorgeartodrives_set
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,9 +116,6 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("LockedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
@@ -155,9 +155,6 @@ namespace DatabaseGenerator.Migrations
 
                     b.Property<int?>("MotorId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
 
                     b.Property<byte>("Quantity")
                         .HasColumnType("smallint");

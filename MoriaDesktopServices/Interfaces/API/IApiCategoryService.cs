@@ -1,7 +1,7 @@
 ﻿using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktopServices.Interfaces.API;
-public interface IApiCatergoryService
+public interface IApiCategoryService
 {
     Task<CategoryDo> CreateCategory(string username, CategoryDo category);
     Task<bool> DeleteCategory(string username, int id);

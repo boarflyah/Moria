@@ -19,7 +19,17 @@ public class ProductControllerService : IProductControllerService
     public async Task<ProductDo> GetProduct(int id)
     {
         //var product = await _context.Products.FindAsync(id);
-        var product = await _context.Products.Include(x => x.SteelKind).Include(x => x.Category).Include(x => x.Components).ThenInclude(x => x.ComponentProduct).FirstOrDefaultAsync(x => x.Id == id);
+        var product = await _context.Products
+            .Include(x => x.SteelKind)
+            .Include(x => x.Category)
+            .Include(x => x.Components)
+                .ThenInclude(x => x.ComponentProduct)
+            .Include(x => x.Components)
+                .ThenInclude(x => x.ComponentColor)
+            .Include(x => x.Components)
+                .ThenInclude(x => x.DriveToComponents)
+                .ThenInclude(x => x.Drive)
+            .FirstOrDefaultAsync(x => x.Id == id);
         if (product == null)
             return null;
 

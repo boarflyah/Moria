@@ -57,6 +57,7 @@ public class Program
             builder.Services.AddScoped<IProductControllerService, ProductControllerService>();
             builder.Services.AddScoped<ICategoryControllerService, CategoryControllerService>();
             builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
+            builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();
 
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();

@@ -14,37 +14,79 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="CanResize">
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
-        </Grid.Resources>
-        <DataGrid x:Name="LookupDataGrid"
+        <Border BorderBrush="Black" BorderThickness="0" Background="White">
+            <Grid>
+                <!-- Główna struktura Window -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!-- Pasek tytułu -->
+                    <RowDefinition Height="*"/>
+                    <!-- Główna zawartość -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Stopka -->
+                </Grid.RowDefinitions>
+
+                <!-- Pasek tytułu -->
+                <Grid Grid.Row="0" Background="#EEE" Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Ikony -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- Tytuł -->
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Przyciski sterujące -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Ikony narzędzi -->
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!--<Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz">
+                                        <Image Source="/Images/save.png"/>
+                                    </Button>-->
+                        <Button x:Name="NewButton" Width="30" Height="30" Margin="5"
+                                ToolTip="Nowy"
+                                Click="NewButton_Click"
+                                ClickMode="Release">
+                            <Image Source="/Images/create.png"/>
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Tytuł okna -->
+                    <TextBlock Grid.Column="1" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}"
+                                           VerticalAlignment="Center" 
+                                           FontWeight="Bold" FontSize="16" 
+                                           HorizontalAlignment="Center"/>
+
+                    <!-- Przyciski sterujące -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="CloseButton" Width="30" Height="30" Margin="5" ToolTip="Zamknij"
+                                Click="CloseButton_Click"
+                                ClickMode="Release">
+                            <Image Source="/Images/close.png"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
+                    </Grid.Resources>
+                    <DataGrid x:Name="LookupDataGrid"
                   ItemsSource="{Binding Objects, Mode=OneWay}"
                   IsReadOnly="True"
                   SelectionUnit="FullRow"
                   MouseDoubleClick="LookupDataGrid_MouseDoubleClick"
                   CellStyle="{StaticResource NoLockDataGridCellStyle}">
-        </DataGrid>
+                    </DataGrid>
+                </Grid>
 
-        <StackPanel Orientation="Horizontal"
-                        Grid.Row="1"
-                        HorizontalAlignment="Right"
-                        Margin="10">
-            <Button x:Name="NewButton"
-                Margin="0 0 10 0"
-                Content="Nowy"
-                Width="100"
-                ClickMode="Release"
-                Click="NewButton_Click"/>
-            <Button x:Name="CloseButton"
-                Content="Zamknij"
-                Width="100"
-                ClickMode="Release"
-                Click="CloseButton_Click"/>
-        </StackPanel>
+
+            </Grid>
+        </Border>
     </Grid>
 </Window>

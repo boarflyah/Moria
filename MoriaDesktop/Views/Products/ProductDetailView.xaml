@@ -105,14 +105,15 @@
                                         Grid.ColumnSpan="3">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
-                      BeginningEdit="DataGrid_BeginningEdit"
+                      IsReadOnly="true"
+                      MouseDoubleClick="DataGrid_MouseDoubleClick"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nazwa" 
+                            Binding="{Binding Name}"
+                            Width="*"/>
                     <DataGridTextColumn Header="Produkt" 
                             Binding="{Binding ComponentProduct.Name}"
-                            Width="*"/>
-                    <DataGridTextColumn Header="Specyfikacja elektryczna" 
-                            Binding="{Binding ElectricalDescription}"
                             Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

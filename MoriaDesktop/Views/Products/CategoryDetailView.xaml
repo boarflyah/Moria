@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MoriaDesktop.Views.Products"
       xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
-      xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"       
-      xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
+      xmlns:converters="clr-namespace:MoriaDesktop.Styles.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Style="{StaticResource GlobalPageStyle}"
@@ -14,7 +13,7 @@
     
     <Page.Resources>
         <converters:InvertBoolConverter x:Key="boolinv"/>
-        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>    
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>    
     </Page.Resources>
     
     <Grid>

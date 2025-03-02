@@ -31,24 +31,29 @@ public partial class DriveListView : Page, IViewModelContent
         await (DataContext as BaseListViewModel).OnLoaded();
 
         var vm = DataContext as DriveListViewModel;
-        if (vm != null && !vm.Permission_Motor.CanRead)
+        if (vm != null && !vm.Permission_Name?.CanRead == true)
         {
             DriveDatagrid.Columns[0].Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_Quantity.CanRead)
+        if (vm != null && !vm.Permission_Motor?.CanRead == true)
         {
             DriveDatagrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_Inverter.CanRead)
+        if (vm != null && !vm.Permission_Quantity?.CanRead == true)
         {
-            DriveDatagrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
+            DriveDatagrid.Columns[2].Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_Variator.CanRead)
+        if (vm != null && !vm.Permission_Inverter?.CanRead == true)
         {
-            DriveDatagrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
+            DriveDatagrid.Columns[3].Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        if (vm != null && !vm.Permission_Variator?.CanRead == true)
+        {
+            DriveDatagrid.Columns[4].Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

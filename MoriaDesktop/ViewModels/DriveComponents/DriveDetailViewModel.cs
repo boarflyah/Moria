@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -22,6 +23,20 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
     }
 
     #region Properties
+
+
+    private string _Name;
+    [ObjectChangedValidate]
+    [DefaultProperty]
+    public string Name
+    {
+        get => _Name;
+        set
+        {
+            _Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     MotorDo _Motor;
     [ObjectChangedValidate]
@@ -116,6 +131,17 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Name;
+    public PermissionDo Permission_Name
+    {
+        get => _Permission_Name;
+        set
+        {
+            _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region Nestedlistview methods
@@ -177,11 +203,15 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
             Variator = Variator,
             Quantity = Quantity,
             Motor = Motor,
+            Name = Name,
             LastModified = _appStateService.LoggedUser.Username,
         };
 
         foreach (var gearbox in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<MotorGearToDriveDo>())
+        {
+            gearbox.LastModified = _appStateService.LoggedUser.Username;
             result.Gearboxes = result.Gearboxes.Append(gearbox);
+        }
 
         return result;
     }
@@ -190,7 +220,9 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         Inverter = default;
         Variator = default;
         Quantity = default;
+        Name = string.Empty;
         Motor = null;
+        LastModified = string.Empty;
         Objects?.Clear();
     }
 
@@ -200,6 +232,8 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         Motor = drive.Motor;
         Quantity = drive.Quantity;
         Variator = drive.Variator;
+        Name = drive.Name;
+        LastModified = drive.LastModified;
         if (drive.Gearboxes != null && drive.Gearboxes.Any())
             foreach (var gearbox in drive.Gearboxes)
                 Objects.Add(gearbox);

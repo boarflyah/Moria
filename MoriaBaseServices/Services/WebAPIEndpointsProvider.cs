@@ -26,6 +26,7 @@ public class WebAPIEndpointsProvider
     public const string Product = "product";
     public const string Category = "category";
     public const string Drive = "drive";
+    public const string Component = "component";
 
     #endregion
 
@@ -377,6 +378,15 @@ public class WebAPIEndpointsProvider
     /// <para>Return bool</para>
     /// </summary>
     public const string DeleteDrivePath = $"{Drive}";
+
+    #endregion
+
+    #region component
+
+    /// <summary>
+    /// Parameter from path: component.id
+    /// </summary>
+    public const string GetComponentPath = $"{Component}";
 
     #endregion
 

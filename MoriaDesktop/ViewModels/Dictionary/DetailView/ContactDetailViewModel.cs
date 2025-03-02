@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -20,6 +21,7 @@ public class ContactDetailViewModel : BaseDetailViewModel
 
     string _Symbol;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Symbol
     {
         get => _Symbol;
@@ -102,21 +104,38 @@ public class ContactDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var contact = GetDo() as ContactDo;
+        var newObject = await _contactService.CreateContact(_appStateService.LoggedUser.Username, contact);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var contact = GetDo() as ContactDo;
+        var updated = await _contactService.UpdateContact(_appStateService.LoggedUser.Username, contact);
+        return updated != null;
+    }
 
     public override void Clear()
     {
         Symbol = string.Empty;
         LongName = string.Empty;
         ShortName = string.Empty;
+        LastModified = string.Empty;
     }
     void Setup(ContactDo contact)
     {
         Symbol = contact.Symbol;
         LongName = contact.LongName;
         ShortName = contact.ShortName;
+        LastModified = contact.LastModified;
     }
 
     public override BaseDo GetDo()
@@ -124,7 +143,8 @@ public class ContactDetailViewModel : BaseDetailViewModel
         {
             LongName = this.LongName,
             ShortName = this.ShortName,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            LastModified = _appStateService.LoggedUser.Username
         };
 
 }

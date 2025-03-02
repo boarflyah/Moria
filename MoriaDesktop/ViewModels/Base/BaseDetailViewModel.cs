@@ -3,6 +3,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
@@ -87,6 +88,17 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         }
     }
 
+
+    private string _LastModified;
+    public string LastModified
+    {
+        get => _LastModified;
+        set
+        {
+            _LastModified = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     private bool _IsAdminViewing;
     public bool IsAdminViewing
@@ -284,6 +296,12 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 _appStateService.SetupLoading(true);
 
                 await LoadObject();
+
+                var property = GetType().GetProperties().FirstOrDefault(x => x.GetCustomAttribute<DefaultPropertyAttribute>() != null);
+                if (property == null)
+                    property = GetType().GetProperties().FirstOrDefault();
+
+                _appStateService.SetupTitle(property?.GetValue(this)?.ToString() ?? "");
             }
             catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
             {

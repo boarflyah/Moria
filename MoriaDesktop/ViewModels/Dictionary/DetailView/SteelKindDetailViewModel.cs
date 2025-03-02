@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -32,6 +33,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
 
     string _Name;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Name
     {
         get => _Name;
@@ -107,19 +109,22 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     {
         Symbol = string.Empty;
         Name = string.Empty;
+        LastModified = string.Empty;
     }
 
     void Setup(SteelKindDo steelKind)
     {
         Symbol = steelKind.Symbol;
         Name = steelKind.Name;
+        LastModified = steelKind.LastModified;
     }
 
     public override BaseDo GetDo()
         => new SteelKindDo()
         {
             Name = this.Name,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            LastModified = _appStateService.LoggedUser.Username
         };
 }
 

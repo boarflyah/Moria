@@ -77,7 +77,7 @@ public class ProductDo: BaseDo
         }
     }
 
-    public IEnumerable<ComponentDo> Components
+    public IList<ComponentDo> Components
     {
         get; set;
     }

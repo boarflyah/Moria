@@ -45,24 +45,30 @@ public partial class ProductDetailView : Page, IViewModelContent
 
     private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
     {
-        if (e.Column.SortMemberPath.Contains(nameof(ComponentDo.ElectricalDescription)))
-        {
-            (DataContext as BaseDetailViewModel).HasObjectChanged = true;
-        }
-        else
-        {
-            if (e.Row.DataContext is ComponentDo cdo)
-            {
-                var componentProduct = await _lookupService.ShowLookup<ProductDo>();
-                if (componentProduct != null)
-                {
-                    cdo.ComponentProduct = componentProduct;
-                    if (cdo.ChangeType != SystemChangeType.Added)
-                        cdo.ChangeType = SystemChangeType.Modified;
-                    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
-                }
-            }
-            e.Cancel = true;
-        }
+        //if (e.Column.SortMemberPath.Contains(nameof(ComponentDo.ElectricalDescription)))
+        //{
+        //    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+        //}
+        //else
+        //{
+        //    if (e.Row.DataContext is ComponentDo cdo)
+        //    {
+        //        var componentProduct = await _lookupService.ShowLookup<ProductDo>();
+        //        if (componentProduct != null)
+        //        {
+        //            cdo.ComponentProduct = componentProduct;
+        //            if (cdo.ChangeType != SystemChangeType.Added)
+        //                cdo.ChangeType = SystemChangeType.Modified;
+        //            (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+        //        }
+        //    }
+        //    e.Cancel = true;
+        //}
+    }
+
+    private void DataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (e.OriginalSource is FrameworkElement fe && fe.DataContext is ComponentDo cdo)
+            (DataContext as ProductDetailViewModel).OnComponentSelected(cdo);
     }
 }
