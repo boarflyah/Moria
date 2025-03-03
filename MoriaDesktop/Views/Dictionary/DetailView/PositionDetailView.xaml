@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MoriaDesktop.Views.Dictionary"  
       xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
+      xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PositionView"     
@@ -22,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="0" Grid.Row="0" Margin="10"
@@ -47,6 +48,25 @@
             <TextBox Name="TextBox2" Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
         </Grid>
 
+        <controls:NestedListViewWrapper Grid.Row="1" Grid.ColumnSpan="2"
+                                        Visibility="{Binding IsAdmin, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}"
+                      BeginningEdit="DataGrid_BeginningEdit"
+                      ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nazwa" 
+                            Binding="{Binding DisplayName}"
+                            Width="*"/>
+                    <DataGridCheckBoxColumn Header="Odczyt" 
+                            Binding="{Binding CanRead}"
+                            Width="*"/>               
+                    <DataGridCheckBoxColumn Header="Edycja" 
+                            Binding="{Binding CanWrite}"
+                            Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </controls:NestedListViewWrapper>
 
     </Grid>
 </Page>

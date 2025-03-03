@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
+using MoriaDesktop.Models;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -21,10 +24,15 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         _productService = productService;
 
         Title = "Nowy produkt";
+
+
+        WeakReferenceMessenger.Default.Register<NavigationMessage<ProductDo>>(this, OnMessageReceived);
     }
 
     #region properties
 
+    bool isRenavigated;
+    ProductDo onRenavigationReturned;
 
     private string _Name;
     [ObjectChangedValidate]
@@ -40,6 +48,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
 
     private string _Symbol;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Symbol
     {
         get => _Symbol;
@@ -170,32 +179,59 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
 
     protected async override Task NestedNew()
     {
-        Objects.Add(new ComponentDo()
+        var newComponent = new ComponentDo()
         {
             ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Added,
-        });
+        };
+        Objects.Add(newComponent);
 
         HasObjectChanged = true;
+
+        CreateUpdateComponent(newComponent);
     }
+
+    protected override string GetObjectsListViewTitle() => "Komponenty";
 
     #endregion
 
     #region methods
 
-    protected override string GetObjectsListViewTitle() => "Komponenty";
-
     public override Type GetModelType() => typeof(ProductDo);
+
+    public override void OnNavigatedTo(params object[] parameters)
+    {
+        base.OnNavigatedTo(parameters);
+
+        if (isRenavigated)
+        {
+            Clear();
+            Setup(onRenavigationReturned);
+            HasObjectChanged = true;
+            isNew = false;
+            objectId = onRenavigationReturned?.Id ?? -1;
+        }
+    }
+
+    public override Task OnNavigatingFrom()
+    {
+        WeakReferenceMessenger.Default.Unregister<NavigationMessage<ProductDo>>(this);
+        return base.OnNavigatingFrom();
+    }
+
     protected async override Task LoadObject()
     {
-        Clear();
+        if (!isRenavigated)
+        {
+            Clear();
 
-        var employee = await ExecuteApiRequest(_productService.GetProduct, _appStateService.LoggedUser.Username, objectId);
-        if (employee != null)
-            Setup(employee);
-        else
-            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
-
+            var employee = await ExecuteApiRequest(_productService.GetProduct, _appStateService.LoggedUser.Username, objectId);
+            if (employee != null)
+                Setup(employee);
+            else
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+        }
     }
+
     protected async override Task<bool> SaveNewObject()
     {
         var product = GetDo() as ProductDo;
@@ -207,12 +243,14 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         }    
         return false;
     }
+
     protected async override Task<bool> UpdateExistingObject()
     {
         var product = GetDo() as ProductDo;
         var updated = await _productService.UpdateProduct(_appStateService.LoggedUser.Username, product);
         return updated != null;
     }
+
     public override void Clear()
     {
         Name = default;
@@ -232,6 +270,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         SerialNumber = product.SerialNumber;
         Category = product.Category;
         SteelKind = product.SteelKind;
+        LastModified = product.LastModified;
 
         if (product.Components != null && product.Components.Any())
             foreach (var component in product.Components)
@@ -252,9 +291,32 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         };
 
         foreach (var component in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<ComponentDo>())
-            result.Components = result.Components.Append(component);
+            result.Components.Add(component);
 
         return result;
     }
+
+    public void OnComponentSelected(ComponentDo component)
+    {
+        CreateUpdateComponent(component);
+    }
+
+    void CreateUpdateComponent(ComponentDo component)
+    {
+        var product = GetDo() as ProductDo;
+        foreach (var cmp in Objects.OfType<ComponentDo>())
+            if (!product.Components.Any(x => x == cmp))
+                product.Components.Add(cmp);
+
+        _navigationService.NavigateTo(typeof(ComponentDetailViewModel), false, component, product);
+    }
+
+    void OnMessageReceived(object recipient, NavigationMessage<ProductDo> message)
+    {
+        if (message.Value != null)
+            isRenavigated = true;
+        onRenavigationReturned = message.Value;
+    }
+
     #endregion
 }

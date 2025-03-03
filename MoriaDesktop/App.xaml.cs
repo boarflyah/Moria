@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -97,6 +98,8 @@ public partial class App : Application
                          services.AddScoped<DriveDetailViewModel>();
                          services.AddScoped<DriveListView>();
                          services.AddScoped<DriveListViewModel>();
+                         services.AddScoped<ComponentDetailView>();
+                         services.AddScoped<ComponentDetailViewModel>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -107,10 +110,12 @@ public partial class App : Application
                          services.AddScoped<IDetailedWindow, SteelKindWindowView>();
                          services.AddScoped<IDetailedWindow, CategoryWindowView>();
                          services.AddScoped<IDetailedWindow, MotorWindowView>();
+                         services.AddScoped<IDetailedWindow, MotorGearWindowView>();
 
                          services.AddScoped<ILookupService, LookupService>();
                          services.AddScoped<IPageService, DesktopPageService>();
                          services.AddSingleton<INavigationService, NavigationService>();
+                         //services.AddSingleton<IMessenger, WeakReferenceMessenger>();
                          services.AddScoped<ApiRequestService>();
                          services.AddScoped<IApiCredentialsService, MoriaApiCredentialsService>();
                          services.AddScoped<IApiService, MoriaApiService>();
@@ -126,8 +131,9 @@ public partial class App : Application
                          services.AddScoped<IApiSteelKindService, ApiSteelKindService>();
                          services.AddScoped<IApiWarehouseService, ApiWarehouseService>();
                          services.AddScoped<IApiProductService, ApiProductService>();
-                         services.AddScoped<IApiCatergoryService, ApiCategoryService>();
+                         services.AddScoped<IApiCategoryService, ApiCategoryService>();
                          services.AddScoped<IApiDriveService, ApiDriveService>();
+                         services.AddScoped<IApiComponentService, ApiComponentService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

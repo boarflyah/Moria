@@ -63,7 +63,7 @@ public class DriveControllerService : IDriveControllerService
     public async Task<IEnumerable<DriveDo>> GetDrives()
     {
         List<DriveDo> result = new();
-        foreach (var drive in _context.Drives)
+        foreach (var drive in _context.Drives.Include(x => x.Motor))
             result.Add(_creator.GetDriveDo(drive));
 
         return result;

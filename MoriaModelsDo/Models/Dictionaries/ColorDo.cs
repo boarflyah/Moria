@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Dictionaries;
 public class ColorDo: BaseDo
@@ -23,5 +24,12 @@ public class ColorDo: BaseDo
             _Code = value;
             RaisePropertyChanged(value);
         }
+    }
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Name = lookup.Property1;
+        Code = lookup.Property2;
     }
 }

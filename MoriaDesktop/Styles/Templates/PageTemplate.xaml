@@ -49,13 +49,13 @@
                                 </StackPanel>
 
                                 <!-- Tytuł strony -->
-                                <TextBlock Grid.Column="1" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Page}}"
+                                <!--<TextBlock Grid.Column="1" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Page}}"
                                            VerticalAlignment="Center" 
                                            FontWeight="Bold" FontSize="16" 
-                                           HorizontalAlignment="Center"/>
+                                           HorizontalAlignment="Center"/>-->
 
                                 <!-- Informacje użytkownika -->
-                                <TextBlock Grid.Column="2" Text="Edit by user"
+                                <TextBlock Grid.Column="2" Text="{Binding Path=LastModified, StringFormat='Ostatnia modyfikacja: {0}'}"
                                            VerticalAlignment="Center" Margin="10"/>
                             </Grid>
 

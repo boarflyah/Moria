@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -6,6 +7,7 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
@@ -34,6 +36,7 @@ public class ColorDetailViewModel : BaseDetailViewModel
 
     string _Name;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Name
     {
         get => _Name;
@@ -81,26 +84,44 @@ public class ColorDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var color = GetDo() as ColorDo;
+        var newObject = await _colorService.CreateColor(_appStateService.LoggedUser.Username, color);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var color = GetDo() as ColorDo;
+        var updated = await _colorService.UpdateColor(_appStateService.LoggedUser.Username, color);
+        return updated != null;
+    }
 
     public override void Clear()
     {
         Name = string.Empty;
         Code = string.Empty;
+        LastModified = string.Empty;
     }
 
     void Setup(ColorDo color)
     {
         Name = color.Name;
         Code = color.Code;
+        LastModified = color.LastModified;
     }
 
     public override BaseDo GetDo()
         => new ColorDo()
         {
             Code = this.Code,
-            Name = this.Name
+            Name = this.Name,
+            LastModified = _appStateService.LoggedUser.Username,
         };
 }

@@ -1,9 +1,9 @@
 ﻿using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaModelsDo.Models.Orders;
 public class OrderDo: BaseDo
 {
-
     private string _OrderNumberSymbol;
     public string OrderNumberSymbol
     {
@@ -15,7 +15,6 @@ public class OrderDo: BaseDo
         }
     }
 
-
     private string _Remarks;
     public string Remarks
     {
@@ -26,7 +25,6 @@ public class OrderDo: BaseDo
             RaisePropertyChanged(value);
         }
     }
-
 
     private string _CatalogLink;
     public string CatalogLink
@@ -46,6 +44,28 @@ public class OrderDo: BaseDo
         set
         {
             _ClientSymbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ContactDo _OrderingContact;
+    public ContactDo OrderingContact
+    {
+        get => _OrderingContact;
+        set
+        {
+            _OrderingContact = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ContactDo _ReceivingContact;
+    public ContactDo ReceivingContact
+    {
+        get => _ReceivingContact;
+        set
+        {
+            _ReceivingContact = value;
             RaisePropertyChanged(value);
         }
     }

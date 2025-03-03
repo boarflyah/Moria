@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -6,6 +7,7 @@ using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Dictionaries;
+using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class WarehouseDetailViewModel : BaseDetailViewModel
@@ -33,6 +35,7 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
 
     string _WarehouseName;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string WarehouseName
     {
         get => _WarehouseName;
@@ -78,9 +81,24 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var warehouse = GetDo() as WarehouseDo;
+        var newObject = await _warehouseService.CreateWarehouse(_appStateService.LoggedUser.Username, warehouse);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var warehouse = GetDo() as WarehouseDo;
+        var updated = await _warehouseService.UpdateWarehouse(_appStateService.LoggedUser.Username, warehouse);
+        return updated != null;
+    }
 
     #endregion
 
@@ -88,17 +106,20 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
     {
         Symbol = string.Empty;
         WarehouseName = string.Empty;
+        LastModified = string.Empty;
     }
     void Setup(WarehouseDo warehouse)
     {
         Symbol = warehouse.Symbol;
         WarehouseName = warehouse.Name;
+        LastModified = warehouse.LastModified;
     }
 
     public override BaseDo GetDo()
         => new WarehouseDo()
         {
             Name = this.WarehouseName,
-            Symbol = this.Symbol
+            Symbol = this.Symbol,
+            LastModified = _appStateService.LoggedUser.Username
         };
 }

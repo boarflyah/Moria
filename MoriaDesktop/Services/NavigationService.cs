@@ -1,7 +1,9 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using MoriaBaseServices.Args;
+using MoriaDesktop.Models;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
 
@@ -72,6 +74,7 @@ public class NavigationService : INavigationService
                 }
             var navigationAware = (frame.Content as Page)?.DataContext as INavigationAware;
             OnNavigated?.Invoke(this, new OnNavigatedEventArgs(e.Content, e.ExtraData));
+
             if (navigationAware != null)
             {
                 if (e.ExtraData is object[] array)

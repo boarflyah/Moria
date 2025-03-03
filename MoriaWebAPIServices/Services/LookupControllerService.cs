@@ -1,4 +1,5 @@
-﻿using MoriaBaseModels.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseModels.Models;
 using MoriaBaseServices;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces;
@@ -11,6 +12,7 @@ public class LookupControllerService : ILookupControllerService
     public LookupControllerService(ApplicationDbContext context)
     {
         _context = context;
+        _context.Drives.Include(x => x.Motor);
     }
 
     public async Task<PagedList<LookupModel>> GetObjects(Type entityType, int lastId, int pageSize)

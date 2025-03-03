@@ -77,4 +77,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Component> Components { get; set; }
+    public DbSet<MotorGearToDrive> MotorGearToDrives
+    {
+        get; set;
+    }
+    public DbSet<DriveToComponent> DriveToComponents
+    {
+        get; set;
+    }
 }

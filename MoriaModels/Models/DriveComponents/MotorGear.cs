@@ -1,8 +1,11 @@
-﻿using MoriaModels.Models.Base;
+﻿using MoriaBaseModels.Attributes;
+using MoriaBaseModels.Models;
+using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents.Relations;
 
 namespace MoriaModels.Models.DriveComponents;
 
+[LookupHeaders(true, "Symbol", true, "Nazwa", true, "Przełożenie")]
 public class MotorGear: BaseModel
 {
     //public int Id { get; set; }
@@ -17,4 +20,7 @@ public class MotorGear: BaseModel
     {
         get;
     } = [];
+
+    public override LookupModel GetLookupObject()
+        => new(Id, Symbol, Name, Ratio);
 }

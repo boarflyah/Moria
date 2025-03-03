@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
+using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Products;
@@ -10,6 +11,7 @@ using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
+using MoriaModelsDo.Models.DriveComponents.Relations;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
 
@@ -56,8 +58,8 @@ public class ModelsCreator
             PhoneNumber = employee.PhoneNumber,
             Username = employee.Username,
             Admin = employee.Admin,
-            Position = employee.Position != null ? 
-            GetPosition(employee.Position): null,
+            Position = employee.Position != null ?
+            GetPosition(employee.Position) : null,
         };
     }
 
@@ -107,7 +109,7 @@ public class ModelsCreator
             Code = position.Code,
             Name = position.Name,
             LastModified = position.LastModified,
-            Permissions =  position.Permissions?.Any() == true ? position.Permissions.Select(GetPermissionDo).ToList() : new()
+            Permissions = position.Permissions?.Any() == true ? position.Permissions.Select(GetPermissionDo).ToList() : new()
         };
     }
 
@@ -137,6 +139,17 @@ public class ModelsCreator
     {
         position.Code = positionModel.Code;
         position.Name = positionModel.Name;
+        position.LastModified = positionModel.LastModified;
+
+        foreach (var permission in positionModel.Permissions.Where(x => x.ChangeType == SystemChangeType.Modified))
+        {
+            var contextPermission = position.Permissions.FirstOrDefault(x => x.Id == permission.Id);
+            if (contextPermission != null)
+            {
+                contextPermission.CanWrite = permission.CanWrite;
+                contextPermission.CanRead = permission.CanRead;
+            }
+        }
     }
 
     #endregion
@@ -148,7 +161,8 @@ public class ModelsCreator
         {
             Id = steelKind.Id,
             Name = steelKind.Name,
-            Symbol = steelKind.Symbol
+            Symbol = steelKind.Symbol,
+            LastModified = steelKind.LastModified,
         };
 
     public async Task<SteelKind> CreateSteelKind(SteelKindDo steelKind)
@@ -165,6 +179,7 @@ public class ModelsCreator
     {
         steelKind.Name = steelKindModel.Name;
         steelKind.Symbol = steelKindModel.Symbol;
+        steelKind.LastModified = steelKindModel.LastModified;
     }
 
     #endregion
@@ -178,6 +193,7 @@ public class ModelsCreator
             Id = color.Id,
             Name = color.Name,
             Code = color.Code,
+            LastModified = color.LastModified,
         };
     }
 
@@ -187,6 +203,7 @@ public class ModelsCreator
         {
             Name = colorDo.Name,
             Code = colorDo.Code,
+            LastModified = colorDo.LastModified,
         };
     }
 
@@ -194,6 +211,7 @@ public class ModelsCreator
     {
         color.Name = colorModel.Name;
         color.Code = colorModel.Code;
+        color.LastModified = colorModel.LastModified;
     }
 
     #endregion
@@ -208,6 +226,7 @@ public class ModelsCreator
             LongName = contact.LongName,
             ShortName = contact.ShortName,
             Symbol = contact.Symbol,
+            LastModified = contact.LastModified,
         };
     }
 
@@ -218,7 +237,7 @@ public class ModelsCreator
             Symbol = contactDo.Symbol,
             LongName = contactDo.LongName,
             ShortName = contactDo.ShortName,
-
+            LastModified = contactDo.LastModified
         };
     }
 
@@ -227,6 +246,7 @@ public class ModelsCreator
         contact.Symbol = contactModel.Symbol;
         contact.LongName = contactModel.LongName;
         contact.ShortName = contactModel.ShortName;
+        contact.LastModified = contactModel.LastModified;
     }
 
     #endregion
@@ -241,6 +261,7 @@ public class ModelsCreator
             Name = motor.Name,
             Power = motor.Power,
             Symbol = motor.Symbol,
+            LastModified = motor.LastModified
         };
     }
 
@@ -251,7 +272,7 @@ public class ModelsCreator
             Symbol = motorDo.Symbol,
             Power = motorDo.Power,
             Name = motorDo.Name,
-
+            LastModified = motorDo.LastModified
         };
     }
 
@@ -260,6 +281,7 @@ public class ModelsCreator
         motor.Symbol = motorModel.Symbol;
         motor.Power = motorModel.Power;
         motor.Name = motorModel.Name;
+        motor.LastModified = motorModel.LastModified;
     }
     #endregion
 
@@ -273,6 +295,7 @@ public class ModelsCreator
             Name = motorGear.Name,
             Ratio = motorGear.Ratio,
             Symbol = motorGear.Symbol,
+            LastModified = motorGear.LastModified
         };
     }
 
@@ -282,8 +305,8 @@ public class ModelsCreator
         {
             Symbol = motorGearDo.Symbol,
             Name = motorGearDo.Name,
-            Ratio = motorGearDo.Ratio
-
+            Ratio = motorGearDo.Ratio,
+            LastModified = motorGearDo.LastModified,
         };
     }
 
@@ -292,6 +315,7 @@ public class ModelsCreator
         motorGear.Symbol = motorGearModel.Symbol;
         motorGear.Ratio = motorGearModel.Ratio;
         motorGear.Name = motorGearModel.Name;
+        motorGear.LastModified = motorGearModel.LastModified;
     }
 
     #endregion
@@ -303,7 +327,8 @@ public class ModelsCreator
         {
             Id = warehouse.Id,
             Name = warehouse.Name,
-            Symbol = warehouse.Symbol,            
+            Symbol = warehouse.Symbol,
+            LastModified = warehouse.LastModified,
         };
     }
 
@@ -313,6 +338,7 @@ public class ModelsCreator
         {
             Name = warehouseDo.Name,
             Symbol = warehouseDo.Symbol,
+            LastModified = warehouseDo.LastModified
         };
     }
 
@@ -320,6 +346,7 @@ public class ModelsCreator
     {
         warehouse.Symbol = warehouseModel.Symbol;
         warehouse.Name = warehouseModel.Name;
+        warehouse.LastModified = warehouseModel.LastModified;
     }
     #endregion
 
@@ -330,6 +357,7 @@ public class ModelsCreator
         {
             Id = category.Id,
             Name = category.Name,
+            LastModified = category.LastModified,
             Products = category != null && category.Products.Any() ? category.Products.Select(GetNestedProductDo) : null,
         };
 
@@ -345,6 +373,7 @@ public class ModelsCreator
     public async Task UpdateCategory(Category category, CategoryDo categoryModel)
     {
         category.Name = categoryModel.Name;
+        category.LastModified = categoryModel.LastModified;
     }
 
     #endregion
@@ -353,25 +382,65 @@ public class ModelsCreator
 
     public ComponentDo GetComponentDo(Component component)
     {
-        return new()
+        var result = new ComponentDo()
         {
-            Id = component.Id,            
+            Id = component.Id,
             ComponentProduct = component.ComponentProduct != null ? GetNestedProductDo(component.ComponentProduct) : null,
+            ComponentColor = component.ComponentColor != null ? GetColorDo(component.ComponentColor) : null,
+            LastModified = component.LastModified,
+            Name = component.Name,
+            Quantity = component.Quantity,
+            Drives = component.DriveToComponents != null && component.DriveToComponents.Any() ? GetDriveToComponents(component.DriveToComponents) : null
         };
+
+        return result;
     }
 
     public async Task<Component> CreateComponent(ComponentDo component)
     {
-        return new()
+        var result = new Component()
         {
             LastModified = component.LastModified,
             ComponentProduct = await GetModelInContext(CreateProduct, component.ComponentProduct, _context.Products),
+            ComponentColor = await GetModelInContext(CreateColor, component.ComponentColor, _context.Colors),
+            Name = component.Name,
+            Quantity = component.Quantity,
         };
+
+        foreach (var dtc in component.Drives.Where(x => x.ChangeType != SystemChangeType.Deleted))
+            result.DriveToComponents.Add(await GetModelInContext(CreateDriveToComponent, dtc, _context.DriveToComponents));
+
+        return result;
     }
 
     public async Task UpdateComponent(Component component, ComponentDo componentModel)
     {
         component.ComponentProduct = await GetModelInContext(CreateProduct, componentModel.ComponentProduct, _context.Products);
+        component.ComponentColor = await GetModelInContext(CreateColor, componentModel.ComponentColor, _context.Colors);
+        component.LastModified = componentModel.LastModified;
+        component.Name = componentModel.Name;
+        component.Quantity = componentModel.Quantity;
+
+        if (componentModel?.Drives?.Any() == true)
+            foreach (var dtc in componentModel.Drives.Where(x => x.ChangeType != SystemChangeType.None))
+            {
+                switch (dtc.ChangeType)
+                {
+                    case SystemChangeType.Added:
+                        component.DriveToComponents.Add(await GetModelInContext(CreateDriveToComponent, dtc, _context.DriveToComponents));
+                        break;
+                    case SystemChangeType.Modified:
+                        var contextDtc = await _context.DriveToComponents.FirstOrDefaultAsync(x => x.Id == dtc.Id);
+                        if (contextDtc != null)
+                            await UpdateDriveToComponent(contextDtc, dtc);
+                        break;
+                    case SystemChangeType.Deleted:
+                        var searchDtc = await _context.DriveToComponents.FirstOrDefaultAsync(x => x.Id == dtc.Id);
+                        if (searchDtc != null)
+                            _context.DriveToComponents.Remove(searchDtc);
+                        break;
+                }
+            }
     }
 
     #endregion
@@ -389,7 +458,8 @@ public class ModelsCreator
             Symbol = product.Symbol,
             SteelKind = product.SteelKind != null ? GetSteelKindDo(product.SteelKind) : null,
             Category = product.Category != null ? GetCategoryDo(product.Category) : null,
-            Components = product.Components != null && product.Components.Any() ? product.Components.Select(GetComponentDo) : null,
+            Components = product.Components != null && product.Components.Any() ? product.Components.Select(GetComponentDo).ToList() : null,
+            LastModified = product.LastModified,
         };
     }
 
@@ -412,7 +482,8 @@ public class ModelsCreator
             IsMainMachine = product.IsMainMachine,
             Name = product.Name,
             SerialNumber = product.SerialNumber,
-            Symbol = product.Symbol
+            Symbol = product.Symbol,
+            LastModified = product.LastModified,
         };
 
         result.SteelKind = await GetModelInContext(CreateSteelKind, product.SteelKind, _context.SteelKinds);
@@ -430,6 +501,7 @@ public class ModelsCreator
         product.Name = productModel.Name;
         product.SerialNumber = productModel.SerialNumber;
         product.Symbol = productModel.Symbol;
+        product.LastModified = productModel.LastModified;
 
         product.SteelKind = await GetModelInContext(CreateSteelKind, productModel.SteelKind, _context.SteelKinds);
         product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
@@ -461,7 +533,7 @@ public class ModelsCreator
 
     #region Drive
 
-    public DriveDo GetDriveDo(Drive drive)
+    public DriveDo GetDriveDo(Drive drive, bool getGearboxes = true)
     {
         return new()
         {
@@ -469,8 +541,9 @@ public class ModelsCreator
             Inverter = drive.Inverter,
             Variator = drive.Variator,
             Quantity = drive.Quantity,
-            //Motor = drive.Motor != null ? GetMotorDo(drive.Motor) : null,
-            //Gearboxes = drive.MotorGearToDrives != null && drive.MotorGearToDrives.Any() ? GetDoMotorGearBoxToDrives(drive.MotorGearToDrives) : null,
+            Name = drive.Name,
+            Motor = drive.Motor != null ? GetMotor(drive.Motor) : null,
+            Gearboxes = getGearboxes && drive.MotorGearToDrives != null && drive.MotorGearToDrives.Any() ? GetDoMotorGearBoxToDrives(drive.MotorGearToDrives) : null,
             LastModified = drive.LastModified,
         };
     }
@@ -482,12 +555,14 @@ public class ModelsCreator
             Inverter = drive.Inverter,
             Quantity = drive.Quantity,
             Variator = drive.Variator,
+            Name = drive.Name,
+            LastModified = drive.LastModified,
         };
 
-        //result.Motor = await GetModelInContext(CreateMotorr, drive.Motor, _context.Motors);
+        result.Motor = await GetModelInContext(CreateMotor, drive.Motor, _context.Motors);
 
-        //foreach (var component in product.Components.Where(x => x.ChangeType == SystemChangeType.Added))
-        //    result.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
+        foreach (var mgtd in drive.Gearboxes.Where(x => x.ChangeType == SystemChangeType.Added))
+            result.MotorGearToDrives.Add(await GetModelInContext(CreateMotorGearToDrive, mgtd, _context.MotorGearToDrives));
 
         return result;
     }
@@ -497,31 +572,117 @@ public class ModelsCreator
         drive.Inverter = driveModel.Inverter;
         drive.Variator = driveModel.Variator;
         drive.Quantity = driveModel.Quantity;
+        drive.Name = driveModel.Name;
+        drive.LastModified = driveModel.LastModified;
 
-        //product.SteelKind = await GetModelInContext(CreateSteelKind, productModel.SteelKind, _context.SteelKinds);
+        drive.Motor = await GetModelInContext(CreateMotor, driveModel.Motor, _context.Motors);
         //product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
 
-        //foreach (var component in productModel.Components.Where(x => x.ChangeType != SystemChangeType.None))
-        //{
-        //    switch (component.ChangeType)
-        //    {
-        //        case SystemChangeType.Added:
-        //            product.Components.Add(await GetModelInContext(CreateComponent, component, _context.Components));
-        //            break;
-        //        case SystemChangeType.Modified:
-        //            var contextComponent = await _context.Components.Include(x => x.ComponentProduct).FirstOrDefaultAsync(x => x.Id == component.Id);
-        //            if (contextComponent != null)
-        //                await UpdateComponent(contextComponent, component);
-        //            break;
-        //        case SystemChangeType.Deleted:
-        //            var searchComponent = await _context.Components.FindAsync(component.Id);
-        //            if (searchComponent != null)
-        //                _context.Components.Remove(searchComponent);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        foreach (var motorgear in driveModel.Gearboxes.Where(x => x.ChangeType != SystemChangeType.None))
+        {
+            motorgear.Drive = driveModel;
+            switch (motorgear.ChangeType)
+            {
+                case SystemChangeType.Added:
+                    drive.MotorGearToDrives.Add(await GetModelInContext(CreateMotorGearToDrive, motorgear, _context.MotorGearToDrives));
+                    break;
+                case SystemChangeType.Modified:
+                    var contextMotorGearToDrive = await _context.MotorGearToDrives.Include(x => x.MotorGear).FirstOrDefaultAsync(x => x.Id == motorgear.Id);
+                    if (contextMotorGearToDrive != null)
+                        await UpdateMotorGearToDrive(contextMotorGearToDrive, motorgear);
+                    break;
+                case SystemChangeType.Deleted:
+                    var searchMotorGearToDrive = await _context.MotorGearToDrives.FindAsync(motorgear.Id);
+                    if (searchMotorGearToDrive != null)
+                        _context.MotorGearToDrives.Remove(searchMotorGearToDrive);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    #endregion
+
+    #region MotorGearToDrive
+
+    public async Task<MotorGearToDrive> CreateMotorGearToDrive(MotorGearToDriveDo motorGearToDrive)
+    {
+        return new()
+        {
+            Quantity = motorGearToDrive.Quantity,
+            MotorGear = await GetModelInContext(CreateMotorGear, motorGearToDrive.MotorGear, _context.MotorGears),
+            Drive = await GetModelInContext(CreateDrive, motorGearToDrive.Drive, _context.Drives),
+            LastModified = motorGearToDrive.LastModified,
+        };
+    }
+
+    public async Task UpdateMotorGearToDrive(MotorGearToDrive mgtd, MotorGearToDriveDo model)
+    {
+        mgtd.LastModified = model.LastModified;
+        mgtd.Quantity = model.Quantity;
+        mgtd.MotorGear = await GetModelInContext(CreateMotorGear, model.MotorGear, _context.MotorGears);
+    }
+
+    public IEnumerable<MotorGearToDriveDo> GetDoMotorGearBoxToDrives(IEnumerable<MotorGearToDrive> motorGearToDrives)
+    {
+        var result = new List<MotorGearToDriveDo>();
+
+        foreach (var mgtd in motorGearToDrives)
+            result.Add(GetDoMotorGearBoxToDrive(mgtd));
+
+        return result;
+    }
+
+    public MotorGearToDriveDo GetDoMotorGearBoxToDrive(MotorGearToDrive motorGearToDrive)
+        => new()
+        {
+            Id = motorGearToDrive.Id,
+            Drive = motorGearToDrive.Drive != null ? GetDriveDo(motorGearToDrive.Drive, false) : null,
+            MotorGear = motorGearToDrive.MotorGear != null ? GetMotorGear(motorGearToDrive.MotorGear) : null,
+            Quantity = motorGearToDrive.Quantity,
+            LastModified = motorGearToDrive.LastModified
+        };
+
+
+    #endregion
+
+    #region DriveToComponent
+
+    public IList<DriveToComponentDo> GetDriveToComponents(IEnumerable<DriveToComponent> drives)
+    {
+        var result = new List<DriveToComponentDo>();
+
+        foreach (var dtc in drives)
+            result.Add(GetDriveToComponentDo(dtc));
+
+        return result;
+    }
+
+    public DriveToComponentDo GetDriveToComponentDo(DriveToComponent drive)
+    => new()
+    {
+        Id = drive.Id,
+        Drive = drive.Drive != null ? GetDriveDo(drive.Drive, false) : null,
+        LastModified = drive.LastModified,
+        Quantity = drive.Quantity
+    };
+
+    public async Task<DriveToComponent> CreateDriveToComponent(DriveToComponentDo model)
+    {
+        return new()
+        {
+            Quantity = model.Quantity,
+            Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null,
+            LastModified = model.LastModified,
+        };
+    }
+
+    public async Task UpdateDriveToComponent(DriveToComponent dtc, DriveToComponentDo model)
+    {
+        dtc.Quantity = model.Quantity;
+        dtc.LastModified = model.LastModified;
+        dtc.Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null;
     }
 
     #endregion

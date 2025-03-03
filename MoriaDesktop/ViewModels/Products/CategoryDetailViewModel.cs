@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -10,7 +11,7 @@ using MoriaModelsDo.Models.Products;
 namespace MoriaDesktop.ViewModels.Products;
 public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
 {
-    readonly IApiCatergoryService _apiService;
+    readonly IApiCategoryService _apiService;
 
     public CategoryDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiCatergoryService apiService, IKeepAliveWorker keepAliveWorker)
         : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
@@ -25,6 +26,7 @@ public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
 
     private string _Name;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Name
     {
         get => _Name;
@@ -96,6 +98,7 @@ public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
     public override void Clear()
     {
         Name = string.Empty;
+        LastModified = string.Empty;
         if (Objects != null)
             Objects.Clear();
     }
@@ -113,6 +116,7 @@ public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
     void Setup(CategoryDo category)
     {
         Name = category.Name;
+        LastModified = category.LastModified;
         if (category.Products != null)
             foreach (var product in category.Products)
                 Objects.Add(product);

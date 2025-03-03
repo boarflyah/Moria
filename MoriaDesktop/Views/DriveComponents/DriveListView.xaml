@@ -22,13 +22,16 @@
                   IsReadOnly="True"
                   MouseDoubleClick="DriveDatagrid_MouseDoubleClick">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Nazwa"
+                                    Binding="{Binding Name}"
+                                    Width="2*"/>
                 <DataGridTextColumn Header="Silnik"
                                     Binding="{Binding Motor.Name}"
                                     Width="2*"/>
                 <DataGridTextColumn Header="Ilość" 
                                     Binding="{Binding Quantity}"
                                     Width="*"/>
-                <DataGridCheckBoxColumn Header="Numer seryjny" 
+                <DataGridCheckBoxColumn Header="Falownik" 
                                     Binding="{Binding Inverter}" 
                                     Width="*"/>
                 <DataGridCheckBoxColumn Header="Wariator" 

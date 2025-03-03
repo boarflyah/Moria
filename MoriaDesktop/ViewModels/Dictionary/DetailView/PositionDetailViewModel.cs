@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
@@ -9,7 +10,7 @@ using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 
-public class PositionDetailViewModel : BaseDetailViewModel
+public class PositionDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiPositionService _positionService;
 
@@ -35,6 +36,7 @@ public class PositionDetailViewModel : BaseDetailViewModel
 
     string _Name;
     [ObjectChangedValidate]
+    [DefaultProperty]
     public string Name
     {
         get => _Name;
@@ -81,27 +83,69 @@ public class PositionDetailViewModel : BaseDetailViewModel
 
     }
 
-    protected async override Task<bool> SaveNewObject() => true;
+    protected async override Task<bool> SaveNewObject()
+    {
+        var position = GetDo() as PositionDo;
+        var newObject = await _positionService.CreatePosition(_appStateService.LoggedUser.Username, position);
+        if (newObject != null)
+        {
+            objectId = newObject.Id;
+            return true;
+        }
+        return false;
+    }
 
-    protected async override Task<bool> UpdateExistingObject() => true;
+    protected async override Task<bool> UpdateExistingObject()
+    {
+        var position = GetDo() as PositionDo;
+        var updated = await _positionService.UpdatePosition(_appStateService.LoggedUser.Username, position);
+        return updated != null;
+    }
 
     #endregion
+
+    #region nestedlistview methods
+
+    protected override string GetObjectsListViewTitle() => "Uprawnienia";
+    protected override bool CanNestedNew() => false;
+    protected override bool CanNestedDelete() => false;
+
+    #endregion
+
+    #region methods
 
     public override void Clear()
     {
         Code = string.Empty;
         Name = string.Empty;
+        LastModified = string.Empty;
     }
     void Setup(PositionDo position)
     {
         Code = position.Code;
         Name = position.Name;
+        LastModified = position.LastModified;
+        if (position.Permissions != null)
+            foreach (var permission in position.Permissions)
+                Objects.Add(permission);
     }
 
     public override BaseDo GetDo()
-        => new PositionDo()
+    {
+        var position = new PositionDo()
         {
+            Id = objectId,
             Code = this.Code,
             Name = this.Name,
+            LastModified = _appStateService.LoggedUser.Username,
         };
+
+        foreach (var permission in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<PermissionDo>())
+            position.Permissions.Add(permission);
+
+        return position;
+    }
+
+    #endregion
+
 }

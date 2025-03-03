@@ -1,8 +1,11 @@
-﻿using MoriaModels.Models.Base;
+﻿using MoriaBaseModels.Attributes;
+using MoriaBaseModels.Models;
+using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents.Relations;
 
 namespace MoriaModels.Models.DriveComponents;
 
+[LookupHeaders(true, "Nazwa", true, "Ilość", true, "Falownik", true, "Wariator")]
 public class Drive: BaseModel
 {
     //public int Id { get; set; }
@@ -10,6 +13,10 @@ public class Drive: BaseModel
     public bool Inverter { get; set; }
     public byte Quantity { get; set; }
     public Motor? Motor { get; set; }
+    public string Name
+    {
+        get; set;
+    }
     public List<MotorGear> MotorGears
     {
         get;
@@ -27,4 +34,7 @@ public class Drive: BaseModel
     {
         get;
     } = [];
+
+    public override LookupModel GetLookupObject()
+        => new(Id, Name, Quantity.ToString(), Inverter ? "TAK" : "NIE", Variator ? "TAK" : "NIE");
 }
