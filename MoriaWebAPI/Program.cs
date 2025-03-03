@@ -46,6 +46,7 @@ public class Program
             });
             builder.Services.AddSingleton<ModelTypeConverter>();
             builder.Services.AddScoped<ModelsCreator>();
+            builder.Services.AddSingleton<LockService>();
             builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
             builder.Services.AddScoped<IWarehouseControllerService, WarehouseControllerService>();
             builder.Services.AddScoped<IColorControllerService, ColorControllerService>();
@@ -57,7 +58,7 @@ public class Program
             builder.Services.AddScoped<IProductControllerService, ProductControllerService>();
             builder.Services.AddScoped<ICategoryControllerService, CategoryControllerService>();
             builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
-
+            
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
@@ -113,6 +114,9 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            var lockService = app.Services.GetRequiredService<LockService>();
+            lockService.Start();
 
             app.UseAuthentication();
             app.UseAuthorization();

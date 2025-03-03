@@ -13,8 +13,8 @@ public class PositionDetailViewModel : BaseDetailViewModel
 {
     readonly IApiPositionService _positionService;
 
-    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiPositionService positionService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public PositionDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiPositionService positionService, IKeepAliveWorker keepAliveWorker)
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _positionService = positionService;
     }

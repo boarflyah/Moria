@@ -13,8 +13,8 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiDriveService _apiService;
 
-    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiDriveService apiService) 
-        : base(logger, appStateService, apiLockService, navigationService)
+    public DriveDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiDriveService apiService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _apiService = apiService;
 

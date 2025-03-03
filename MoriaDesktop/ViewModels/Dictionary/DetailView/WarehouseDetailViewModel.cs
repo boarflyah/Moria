@@ -11,7 +11,8 @@ namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class WarehouseDetailViewModel : BaseDetailViewModel
 {
     readonly IApiWarehouseService _warehouseService;
-    public WarehouseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiWarehouseService warehouseService) : base(logger, appStateService, apiLockService, navigationService)
+    public WarehouseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiWarehouseService warehouseService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _warehouseService = warehouseService;
     }

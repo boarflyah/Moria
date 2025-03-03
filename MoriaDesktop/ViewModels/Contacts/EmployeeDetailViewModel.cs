@@ -1,20 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaDesktopServices.Services.API;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Contacts;
 public sealed class EmployeeDetailViewModel : BaseDetailViewModel
-{
+{   
     readonly IApiEmployeeService _employeeService;
 
-    public EmployeeDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IApiLockService apiLockService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public EmployeeDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IApiLockService apiLockService, IServiceScopeFactory scopeFactory, IKeepAliveWorker keepAliveWorker)
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _employeeService = employeeService;
     }
@@ -180,7 +183,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
     #region methods
 
     public async Task SaveEmployee(string password)
-    {
+    {        
         try
         {
             _appStateService.SetupLoading(true);
@@ -223,6 +226,8 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
 
             if (succeeded)
             {
+                _keepAliveWorker.RemoveLock(objectId);
+                await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
                 IsLocked = true;
                 HasObjectChanged = false;
                 PasswordChanged = false;
@@ -288,6 +293,8 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
 
             if (succeeded)
             {
+                _keepAliveWorker.RemoveLock(objectId);
+                await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
                 if (_navigationService.CanGoBack)
                     _navigationService.GoBack();
                 else

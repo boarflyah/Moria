@@ -13,7 +13,8 @@ namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class MotorGearDetailViewModel : BaseDetailViewModel
 {
     readonly IApiMotorGearService _motorGearService;
-    public MotorGearDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiMotorGearService motorGearService) : base(logger, appStateService, apiLockService, navigationService)
+    public MotorGearDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiMotorGearService motorGearService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _motorGearService = motorGearService;
     }

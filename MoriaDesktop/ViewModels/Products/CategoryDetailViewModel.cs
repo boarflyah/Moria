@@ -12,8 +12,8 @@ public class CategoryDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiCatergoryService _apiService;
 
-    public CategoryDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiCatergoryService apiService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public CategoryDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiCatergoryService apiService, IKeepAliveWorker keepAliveWorker)
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _apiService = apiService;
 

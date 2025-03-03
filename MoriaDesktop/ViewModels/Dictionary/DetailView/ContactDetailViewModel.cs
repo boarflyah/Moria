@@ -11,7 +11,8 @@ namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class ContactDetailViewModel : BaseDetailViewModel
 {
     readonly IApiContactService _contactService;
-    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiContactService contactService) : base(logger, appStateService, apiLockService, navigationService)
+    public ContactDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiContactService contactService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _contactService = contactService;
     }

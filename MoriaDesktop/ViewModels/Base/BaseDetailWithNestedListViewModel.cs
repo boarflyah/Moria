@@ -9,8 +9,8 @@ using MoriaModelsDo.Base;
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseDetailWithNestedListViewModel : BaseDetailViewModel
 {
-    protected BaseDetailWithNestedListViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService) 
-        : base(logger, appStateService, apiLockService, navigationService)
+    protected BaseDetailWithNestedListViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         Objects = new();
         NestedNewCommand = new(NestedNew, CanNestedNew);

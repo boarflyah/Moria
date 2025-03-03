@@ -11,7 +11,7 @@ namespace MoriaWebAPI.Controllers;
 [ApiController]
 [Route("")]
 [Authorize]
-public class LockController: ControllerBase
+public class LockController : ControllerBase
 {
     readonly ILogger<LockController> _logger;
     readonly ILockControllerService _controllerService;
@@ -60,6 +60,48 @@ public class LockController: ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Method: {nameof(Unlock)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpPut($"{WebAPIEndpointsProvider.KeepAlivePath}")]
+    [Produces<bool>]
+    public async Task<IActionResult> KeepAlive(LockHelper lockHelper)
+    {
+        try
+        {
+            var result = await _controllerService.KeepAlive(lockHelper);
+            
+            return Ok();
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(KeepAlive)}");
+            return StatusCode(501, ex.Message);
+        }
+    }   
+
+    [HttpDelete($"{WebAPIEndpointsProvider.RemoveObjectKeepAlivePath}/{{id}}")]
+    [Produces<bool>]
+    public async Task<IActionResult> RemoveObjectKeepAlive(int id)
+    {
+        try
+        {
+            var result = await _controllerService.RemoveObjectKeepAlive(id);
+            ;
+            return Ok();
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(RemoveObjectKeepAlive)}");
             return StatusCode(501, ex.Message);
         }
     }

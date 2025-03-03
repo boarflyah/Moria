@@ -4,4 +4,6 @@ public interface IApiLockService
     Task<bool> Lock(string username, Type modelType, int id);
 
     Task<bool> Unlock(string username, Type modelType, int id);
+
+    Task<bool> RemoveObjectKeepAlive(string username, int id);
 }

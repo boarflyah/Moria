@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Net.Http;
+using System.Reflection;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
@@ -16,7 +18,8 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 {
     #region fields
 
-    readonly IApiLockService _apiLockService;
+    protected readonly IApiLockService _apiLockService;
+    protected readonly IKeepAliveWorker _keepAliveWorker;
 
     protected int objectId;
     protected bool isNew;
@@ -26,9 +29,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 
     #endregion
 
-    protected BaseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    protected BaseDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IKeepAliveWorker keepAliveWorker) : base(logger, appStateService, navigationService)
     {
         _apiLockService = apiLockService;
+        _keepAliveWorker = keepAliveWorker;
 
         _objectChangingProperties = new Lazy<HashSet<string>>(() =>
         new HashSet<string>(
@@ -138,6 +142,8 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 
             if (succeeded)
             {
+                _keepAliveWorker.RemoveLock(objectId);
+                await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
                 IsLocked = true;
                 HasObjectChanged = false;
                 isNew = false;
@@ -171,6 +177,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 
             if (succeeded)
             {
+                _keepAliveWorker.RemoveLock(objectId);
+                await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
+
                 if (_navigationService.CanGoBack)
                     _navigationService.GoBack();
                 else
@@ -214,6 +223,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nie udało się włączyć edycji obiektu", true);
             Clear();
             HasObjectChanged = false;
+
+            _keepAliveWorker.LockObject(new() { Id = objectId, ModelDoType = GetModelType().AssemblyQualifiedName, Username = _appStateService.LoggedUser.Username });
+
             await Load();
         }
         catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
@@ -383,6 +395,7 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 _appStateService.SetupLoading(true);
 
                 await ExecuteApiRequest(_apiLockService.Unlock, _appStateService.LoggedUser.Username, GetModelType(), objectId);
+                _keepAliveWorker.RemoveLock(objectId);
             }
             catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
             {

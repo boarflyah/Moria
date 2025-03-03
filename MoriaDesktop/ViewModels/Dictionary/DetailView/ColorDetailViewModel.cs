@@ -12,7 +12,8 @@ namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class ColorDetailViewModel : BaseDetailViewModel
 {
     readonly IApiColorService _colorService;
-    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiColorService colorService) : base(logger, appStateService, apiLockService, navigationService)
+    public ColorDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiColorService colorService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _colorService = colorService;
     }
