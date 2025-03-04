@@ -92,8 +92,8 @@ public class LockController : ControllerBase
         try
         {
             var result = await _controllerService.RemoveObjectKeepAlive(id);
-            ;
-            return Ok();
+            
+            return Ok(result);
         }
         catch (MoriaApiException mae)
         {

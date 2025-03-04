@@ -18,8 +18,8 @@ namespace MoriaDesktop.ViewModels.Products;
 public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiComponentService _apiService;
-    public ComponentDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiComponentService apiService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public ComponentDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiComponentService apiService, IKeepAliveWorker keepAliveWorker)
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _apiService = apiService;
     }
