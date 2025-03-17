@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MoriaWebAPI.Controllers;
 using MoriaWebAPI.Services;
 using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Contexts;
@@ -59,6 +60,7 @@ public class Program
             builder.Services.AddScoped<ICategoryControllerService, CategoryControllerService>();
             builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
             builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();
+            builder.Services.AddScoped<IListViewControllerService, ListViewService>();
 
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();

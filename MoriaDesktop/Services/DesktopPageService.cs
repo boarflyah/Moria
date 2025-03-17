@@ -33,6 +33,7 @@ public class DesktopPageService: PageService
         Register(typeof(ProductDetailViewModel), typeof(ProductDetailView));
         Register(typeof(CategoryDetailViewModel), typeof(CategoryDetailView));
         Register(typeof(ComponentDetailViewModel), typeof(ComponentDetailView));
+        Register(typeof(CalendarViewModel), typeof(CalendarView));
 
         //ListView
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));

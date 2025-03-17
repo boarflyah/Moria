@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.CodeDom;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
 using Microsoft.Extensions.Logging;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
@@ -12,7 +14,7 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 {
     readonly IApiEmployeeService _employeeService;
 
-    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _employeeService = employeeService;
 
@@ -118,6 +120,32 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 
     protected async override Task<bool> SendDeleteRequest() => 
         await ExecuteApiRequest(_employeeService.DeleteEmployee, _appStateService.LoggedUser.Username, (Selected as EmployeeDo)?.Id ?? 0);
+
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<EmployeeDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Employees.Clear();
+                    foreach (var item in result)
+                    {
+                        Employees.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 
     #endregion
 

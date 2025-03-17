@@ -16,7 +16,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class ContactListViewModel : BaseListViewModel
 {
     readonly IApiContactService _contactService;
-    public ContactListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiContactService apiContactService) : base(logger, appStateService, navigationService)
+    public ContactListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiContactService apiContactService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _contactService = apiContactService;
 
@@ -81,6 +81,31 @@ public sealed class ContactListViewModel : BaseListViewModel
     {
         if (row is ContactDo cdo)
             _navigationService.NavigateTo(typeof(ContactDetailViewModel), false, cdo.Id);
+    }
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<ContactDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Contacts.Clear();
+                    foreach (var item in result)
+                    {
+                        Contacts.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
     }
 
     protected override void New() => _navigationService.NavigateTo(typeof(ContactDetailViewModel), false, null);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
@@ -20,16 +21,21 @@ public class OrderItem : BaseModel
     public double Quantity { get; set; }
 
     // only one choise 
+    [Searchable]
     public Product? Product { get; set; }
 
+    [Searchable]
     public Component? Component { get; set; }
 
+    [Searchable]
     public Drive? Drive { get; set; }
 
     public int WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; }
 
     public int DesignerId { get; set; }
+
+    [Searchable]
     public Employee Designer { get; set; }
 
     [NotMapped]

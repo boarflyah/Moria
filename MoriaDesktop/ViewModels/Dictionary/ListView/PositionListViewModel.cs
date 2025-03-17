@@ -13,7 +13,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class PositionListViewModel : BaseListViewModel
 {
     readonly IApiPositionService _positionService;
-    public PositionListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiPositionService apiPositionService) : base(logger, appStateService, navigationService)
+    public PositionListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiPositionService apiPositionService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _positionService = apiPositionService;
 
@@ -71,4 +71,29 @@ public sealed class PositionListViewModel : BaseListViewModel
     protected override void New() => _navigationService.NavigateTo(typeof(PositionDetailViewModel), false, null);
 
     protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_positionService.DeletePosition, _appStateService.LoggedUser.Username, (Selected as PositionDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<PositionDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Positions.Clear();
+                    foreach (var item in result)
+                    {
+                        Positions.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 }

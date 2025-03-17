@@ -408,6 +408,10 @@ public class WebAPIEndpointsProvider
     public const string GetTestPath = $"{Test}";
 
 #endif
+    /// <summary>
+    /// Body: type and searchtext string
+    /// </summary>
+    public const string GetSearchPath = $"SearchText";
 
     #endregion
 }

@@ -117,6 +117,15 @@
                                     <Button x:Name="RefreshButton" Width="30" Height="30" Margin="5" ToolTip="Odśwież" Command="{Binding RefreshCommand}">
                                         <Image Source="/Images/refresh.png" Width="20" Height="20"/>
                                     </Button>
+                                    <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="5" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Return" Command="{Binding SearchCommand}" />
+                                        </TextBox.InputBindings>                                        
+                                    </TextBox>
+                                    <Button x:Name="SearchButton" Width="30" Height="30" Margin="5" ToolTip="Szukaj" Command="{Binding SearchCommand}">
+                                        <Image Source="/Images/search.png"/>
+                                    </Button>
+
                                 </StackPanel>
 
                                 <!-- Tytuł strony -->

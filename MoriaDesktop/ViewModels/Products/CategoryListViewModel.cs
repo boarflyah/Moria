@@ -5,13 +5,14 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Products;
 public class CategoryListViewModel : BaseListViewModel
 {
     readonly IApiCategoryService _apiService;
-    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCategoryService apiService) : base(logger, appStateService, navigationService)
+    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCategoryService apiService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _apiService = apiService;
 
@@ -66,6 +67,31 @@ public class CategoryListViewModel : BaseListViewModel
 
     protected async override Task<bool> SendDeleteRequest()
         => await ExecuteApiRequest(_apiService.DeleteCategory, _appStateService.LoggedUser.Username, (Selected as CategoryDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<CategoryDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Categories.Clear();
+                    foreach (var item in result)
+                    {
+                        Categories.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 
     #endregion
 }

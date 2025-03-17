@@ -27,10 +27,10 @@ public class LockService : BackgroundWorker
             RunWorkerAsync();
     }
 
-    protected override void OnDoWork(DoWorkEventArgs e)
+    protected async override void OnDoWork(DoWorkEventArgs e)
     {
         while (!CancellationPending)
-        {
+        {           
             var now = DateTime.UtcNow;
             foreach (var key in _lockedObjects.Keys.ToList())
             {

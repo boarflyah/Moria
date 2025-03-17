@@ -47,6 +47,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <!--#region Titlebar-->
@@ -182,8 +183,26 @@
                 </TreeView.ItemContainerStyle>-->
             </TreeView>
 
-            <StackPanel x:Name="FooterButtonsPanel"
-                        Grid.Row="2"
+
+            <Grid Grid.Row="2">
+
+                <Calendar x:Name="myCalendar"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                            Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}"
+                          SelectedDatesChanged="myCalendar_SelectedDatesChanged">
+               
+                </Calendar>
+
+
+            </Grid>
+
+
+
+
+
+        <StackPanel x:Name="FooterButtonsPanel"
+                        Grid.Row="3"
                         Margin="10 0 0 5"
                         Orientation="Horizontal"
                         HorizontalAlignment="Left">

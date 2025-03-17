@@ -103,6 +103,9 @@ public partial class App : Application
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
+
+                         services.AddScoped<CalendarView>();
+                         services.AddScoped<CalendarViewModel>();
                          services.AddScoped<INewObjectService, NewObjectService>();
 
                          services.AddScoped<IDetailedWindow, PositionWindowView>();
@@ -134,6 +137,7 @@ public partial class App : Application
                          services.AddScoped<IApiCategoryService, ApiCategoryService>();
                          services.AddScoped<IApiDriveService, ApiDriveService>();
                          services.AddScoped<IApiComponentService, ApiComponentService>();
+                         services.AddScoped<IListViewService, ListViewService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

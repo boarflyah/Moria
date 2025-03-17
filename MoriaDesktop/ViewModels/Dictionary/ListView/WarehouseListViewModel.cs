@@ -6,6 +6,7 @@ using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using System.Collections.ObjectModel;
 
@@ -14,7 +15,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class WarehouseListViewModel : BaseListViewModel
 {
     readonly IApiWarehouseService _warehouseService;
-    public WarehouseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiWarehouseService apiWarehouseService) : base(logger, appStateService, navigationService)
+    public WarehouseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiWarehouseService apiWarehouseService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _warehouseService = apiWarehouseService;
 
@@ -71,4 +72,29 @@ public sealed class WarehouseListViewModel : BaseListViewModel
     protected override void New() => _navigationService.NavigateTo(typeof(WarehouseDetailViewModel), false, null);
 
     protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_warehouseService.DeleteWarehouse, _appStateService.LoggedUser.Username, (Selected as WarehouseDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<WarehouseDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Warehouses.Clear();
+                    foreach (var item in result)
+                    {
+                        Warehouses.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 }
