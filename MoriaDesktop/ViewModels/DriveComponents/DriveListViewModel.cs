@@ -5,6 +5,7 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.DriveComponents;
 using MoriaModelsDo.Models.Products;
 
@@ -13,7 +14,7 @@ public sealed class DriveListViewModel : BaseListViewModel
 {
     readonly IApiDriveService _apiService;
 
-    public DriveListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiDriveService apiService) : base(logger, appStateService, navigationService)
+    public DriveListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiDriveService apiService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _apiService = apiService;
 
@@ -112,6 +113,31 @@ public sealed class DriveListViewModel : BaseListViewModel
 
     protected async override Task<bool> SendDeleteRequest()
         => await ExecuteApiRequest(_apiService.DeleteDrive, _appStateService.LoggedUser.Username, (Selected as BaseDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<DriveDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Drives.Clear();
+                    foreach (var item in result)
+                    {
+                        Drives.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 
     #endregion
 }

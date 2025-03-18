@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MoriaBaseServices\MoriaBaseServices.csproj" />
     <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
+    <ProjectReference Include="..\MoriaModels\MoriaModels.csproj" />
   </ItemGroup>
 
 </Project>

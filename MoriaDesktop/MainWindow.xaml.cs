@@ -1,8 +1,10 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Contacts;
 
 namespace MoriaDesktop;
 
@@ -109,5 +111,12 @@ public partial class MainWindow : Window
         {
             (DataContext as MainWindowViewModel)!.OnNavigationSelectionChanged(ni);
         }
+    }
+
+    private void myCalendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+
+        DateTime date = (sender as Calendar)?.SelectedDate ?? new DateTime();
+        (DataContext as MainWindowViewModel)!.NavigateToCalendar(date);
     }
 }

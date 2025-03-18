@@ -3,6 +3,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MoriaWebAPI.Controllers;
 using MoriaWebAPI.Services;
 using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Contexts;
@@ -48,6 +49,7 @@ public class Program
             });
             builder.Services.AddSingleton<ModelTypeConverter>();
             builder.Services.AddScoped<ModelsCreator>();
+            builder.Services.AddSingleton<LockService>();
             builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
             builder.Services.AddScoped<IWarehouseControllerService, WarehouseControllerService>();
             builder.Services.AddScoped<IColorControllerService, ColorControllerService>();
@@ -61,6 +63,7 @@ public class Program
             builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
             builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();
             builder.Services.AddScoped<IOrderControllerService, OrderControllerService>();
+            builder.Services.AddScoped<IListViewControllerService, ListViewService>();
 
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
@@ -117,6 +120,9 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            var lockService = app.Services.GetRequiredService<LockService>();
+            lockService.Start();
 
             app.UseAuthentication();
             app.UseAuthorization();

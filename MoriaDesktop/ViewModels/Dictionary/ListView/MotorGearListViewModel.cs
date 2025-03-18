@@ -6,6 +6,7 @@ using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
 
@@ -14,7 +15,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class MotorGearListViewModel : BaseListViewModel
 {
     readonly IApiMotorGearService _motorGearService;
-    public MotorGearListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorGearService apiMotorGearService) : base(logger, appStateService, navigationService)
+    public MotorGearListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorGearService apiMotorGearService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _motorGearService = apiMotorGearService;
 
@@ -84,4 +85,29 @@ public sealed class MotorGearListViewModel : BaseListViewModel
     protected override void New() => _navigationService.NavigateTo(typeof(MotorGearDetailViewModel), false, null);
 
     protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_motorGearService.DeleteMotorGear, _appStateService.LoggedUser.Username, (Selected as MotorGearDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<MotorGearDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    MotorGears.Clear();
+                    foreach (var item in result)
+                    {
+                        MotorGears.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 }

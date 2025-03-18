@@ -12,7 +12,8 @@ namespace MoriaDesktop.ViewModels.Dictionary.DetailView;
 public class SteelKindDetailViewModel : BaseDetailViewModel
 {
     readonly IApiSteelKindService _steelKindService;
-    public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiSteelKindService steelKindService) : base(logger, appStateService, apiLockService, navigationService)
+    public SteelKindDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, INavigationService navigationService, IApiLockService apiLockService, IApiSteelKindService steelKindService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, apiLockService, navigationService, keepAliveWorker)
     {
         _steelKindService = steelKindService;
     }

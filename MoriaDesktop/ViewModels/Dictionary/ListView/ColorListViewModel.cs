@@ -5,15 +5,17 @@ using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 
 public sealed class ColorListViewModel : BaseListViewModel
 {
     readonly IApiColorService _colorService;
-    public ColorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiColorService apiColorService) : base(logger, appStateService, navigationService)
+    public ColorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiColorService apiColorService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _colorService = apiColorService;
 
@@ -68,6 +70,31 @@ public sealed class ColorListViewModel : BaseListViewModel
     {
         if (row is ColorDo cdo)
             _navigationService.NavigateTo(typeof(ColorDetailViewModel), false, cdo.Id);
+    }
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<ColorDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Colors.Clear();
+                    foreach (var item in result)
+                    {
+                        Colors.Add(item);
+                    }
+                }            
+            }
+            catch (Exception ex)
+            {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
     }
 
     protected override void New() => _navigationService.NavigateTo(typeof(ColorDetailViewModel), false, null);

@@ -18,8 +18,8 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
     readonly IApiProductService _productService;
 
     public ProductDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService lockService,
-        INavigationService navigationService, IApiProductService productService) 
-        : base(logger, appStateService, lockService, navigationService)
+        INavigationService navigationService, IApiProductService productService, IKeepAliveWorker keepAliveWorker) 
+        : base(logger, appStateService, lockService, navigationService, keepAliveWorker)
     {
         _productService = productService;
 

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.Orders;
@@ -18,16 +19,19 @@ public class Component : BaseModel
         get; set;
     }
 
+    [Searchable]
     public Product Product
     {
         get; set;
     }
 
+    [Searchable]
     public Product? ComponentProduct
     {
         get; set;
     }
 
+    [Searchable]
     public string Name
     {
         get; set;
@@ -43,6 +47,7 @@ public class Component : BaseModel
         get; set;
     }
 
+    [Searchable]
     public List<Drive> Drives
     {
         get;
@@ -51,6 +56,7 @@ public class Component : BaseModel
     {
         get;
     } = [];
+
 
     [NotMapped]
     public List<OrderItem> OrderItems

@@ -1,5 +1,6 @@
 ﻿using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.DriveComponents;
@@ -8,7 +9,10 @@ namespace MoriaModels.Models.DriveComponents;
 public class Motor: BaseModel
 {
     //public int Id { get; set; }
+    [Searchable]
     public string Name { get; set; }
+
+    [Searchable]
     public string Symbol { get; set; }
     public decimal Power { get; set; }
 

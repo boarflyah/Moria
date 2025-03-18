@@ -14,7 +14,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class SteelKindListViewModel : BaseListViewModel
 {
     readonly IApiSteelKindService _steelKindService;
-    public SteelKindListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiSteelKindService apiSteelKindService) : base(logger, appStateService, navigationService)
+    public SteelKindListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiSteelKindService apiSteelKindService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _steelKindService = apiSteelKindService;
 
@@ -71,4 +71,29 @@ public sealed class SteelKindListViewModel : BaseListViewModel
 
     protected override void New() => _navigationService.NavigateTo(typeof(SteelKindDetailViewModel), false, null);
     protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_steelKindService.DeleteSteelKind, _appStateService.LoggedUser.Username, (Selected as SteelKindDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<SteelKindDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    SteelKinds.Clear();
+                    foreach (var item in result)
+                    {
+                        SteelKinds.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 }

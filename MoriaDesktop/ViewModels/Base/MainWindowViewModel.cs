@@ -361,6 +361,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         return true;
     }
 
+    public void NavigateToCalendar(DateTime date)
+    {
+        _navigationService.NavigateTo(typeof(CalendarViewModel), false, date);
+    }
+
     public void NavigateToFirstView()
     {
         //_navigationService.NavigateTo(typeof(DriveDetailViewModel), true);

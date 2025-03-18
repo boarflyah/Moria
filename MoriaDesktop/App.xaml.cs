@@ -28,6 +28,7 @@ using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaDesktopServices.Services;
 using MoriaDesktopServices.Services.API;
+using MoriaModelsDo.Base;
 
 namespace MoriaDesktop;
 
@@ -110,6 +111,9 @@ public partial class App : Application
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
+
+                         services.AddScoped<CalendarView>();
+                         services.AddScoped<CalendarViewModel>();
                          services.AddScoped<INewObjectService, NewObjectService>();
 
                          services.AddScoped<IDetailedWindow, PositionWindowView>();
@@ -142,10 +146,13 @@ public partial class App : Application
                          services.AddScoped<IApiCategoryService, ApiCategoryService>();
                          services.AddScoped<IApiDriveService, ApiDriveService>();
                          services.AddScoped<IApiComponentService, ApiComponentService>();
+                         services.AddScoped<IListViewService, ListViewService>();
                          services.AddScoped<IApiOrderService, ApiOrderService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();
+                         services.AddSingleton<IKeepAliveWorker, KeepAliveWorker>();
+
                          services.AddHttpClient();
                          services.AddHttpClient(ApiRequestService.HttpsApiClientName)
                          .ConfigurePrimaryHttpMessageHandler(c =>
@@ -182,6 +189,9 @@ public partial class App : Application
         var navigationService = AppHost.Services.GetRequiredService<INavigationService>();
         navigationService.SetFrame(wnd.NavigationFrame);
 
+        var keepAliveWorker = AppHost.Services.GetRequiredService<IKeepAliveWorker>();
+        keepAliveWorker.Start();
+
         var appStateService = AppHost.Services.GetRequiredService<AppStateService>();
         appStateService.SetMainViewModel(AppHost.Services.GetRequiredService<MainWindowViewModel>());
 
@@ -193,12 +203,12 @@ public partial class App : Application
 
     private async void Wnd_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
-        await UnlockObject();
+        //await UnlockObject();
     }
 
     private async void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
     {
-        await UnlockObject();
+        //await UnlockObject();
     }
 
     async Task UnlockObject()

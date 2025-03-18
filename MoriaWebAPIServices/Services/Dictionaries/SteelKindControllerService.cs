@@ -41,6 +41,16 @@ public class SteelKindControllerService : ISteelKindControllerService
 
     public async Task<List<SteelKindDo>> GetAllSteelKinds()
     {
+        //var sql = @"
+        //SELECT * FROM Categories
+        //WHERE Symbol ILIKE @p0 OR Name ILIKE @p0
+        //ORDER BY Name
+        //LIMIT 100";  
+
+        //return await _context.Categories
+        //    .FromSqlRaw(sql, $"%{keyword}%")
+        //    .ToListAsync();
+
         return await _context.SteelKinds
             .Select(steelKind => _creator.GetSteelKindDo(steelKind))
             .ToListAsync();

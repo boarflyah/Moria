@@ -22,4 +22,8 @@ public class ApiLockService: IApiLockService
         return await _apiService.Put<bool>(username, WebAPIEndpointsProvider.PutUnlockPath, null, new LockHelper() { Id = id, ModelDoType = modelType.AssemblyQualifiedName, Username = username });
     }
 
+    public async Task<bool> RemoveObjectKeepAlive(string username,  int id)
+    {
+        return await _apiService.Delete<bool>(username, WebAPIEndpointsProvider.RemoveObjectKeepAlivePath, null, id);
+    }
 }

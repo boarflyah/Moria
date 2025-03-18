@@ -1,5 +1,6 @@
 ﻿using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents.Relations;
 
@@ -12,7 +13,11 @@ public class Drive: BaseModel
     public bool Variator { get; set; }
     public bool Inverter { get; set; }
     public byte Quantity { get; set; }
+
+    [Searchable]
     public Motor? Motor { get; set; }
+
+    [Searchable]
     public string Name
     {
         get; set;

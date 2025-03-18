@@ -1,4 +1,5 @@
-﻿using MoriaBaseServices;
+﻿using System.Collections.Concurrent;
+using MoriaBaseServices;
 using MoriaModels.Models.Base;
 using MoriaModelsDo.Base;
 using MoriaWebAPIServices.Contexts;
@@ -7,13 +8,15 @@ using MoriaWebAPIServices.Services.Interfaces;
 namespace MoriaWebAPIServices.Services;
 public class LockControllerService : ILockControllerService
 {
+    private readonly LockService _lockService;
     readonly ModelTypeConverter _typeConverter;
     readonly ApplicationDbContext _context;
 
-    public LockControllerService(ModelTypeConverter typeConverter, ApplicationDbContext context)
+    public LockControllerService(ModelTypeConverter typeConverter, ApplicationDbContext context, LockService lockService)
     {
         _typeConverter = typeConverter;
         _context = context;
+        _lockService = lockService;
     }
 
     public async Task<bool> Lock(LockHelper lockHelper)
@@ -37,6 +40,8 @@ public class LockControllerService : ILockControllerService
         entity.IsLocked = true;
         entity.LockedBy = lockHelper.Username;
 
+        _lockService.LockObject(lockHelper);
+
         return await _context.SaveChangesAsync() == 1;
     }
 
@@ -54,6 +59,18 @@ public class LockControllerService : ILockControllerService
         entity.IsLocked = false;
         entity.LockedBy = string.Empty;
 
+        _lockService.RemoveLock(lockHelper.Id);
+
         return await _context.SaveChangesAsync() == 1;
+    }
+
+    public async Task<bool> KeepAlive(LockHelper lockHelper)
+    {
+        return await _lockService.RefreshLock(lockHelper.Id);
+    }
+
+    public async Task<bool> RemoveObjectKeepAlive(int id)
+    {
+        return await _lockService.RemoveLock(id);
     }
 }

@@ -6,6 +6,7 @@ using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.ViewModels.Dictionary.ListView;
@@ -13,7 +14,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class MotorListViewModel : BaseListViewModel
 {
     readonly IApiMotorService _motorService;
-    public MotorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorService apiMotorService) : base(logger, appStateService, navigationService)
+    public MotorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorService apiMotorService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _motorService = apiMotorService;
 
@@ -84,5 +85,30 @@ public sealed class MotorListViewModel : BaseListViewModel
 
 
     protected async override Task<bool> SendDeleteRequest() => await ExecuteApiRequest(_motorService.DeleteMotor, _appStateService.LoggedUser.Username, (Selected as MotorDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<MotorDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Motors.Clear();
+                    foreach (var item in result)
+                    {
+                        Motors.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 }
 

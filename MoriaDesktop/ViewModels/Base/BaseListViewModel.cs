@@ -1,18 +1,25 @@
-﻿using System.Windows.Input;
+﻿using System.CodeDom;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktopServices.Interfaces;
+using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseListViewModel : ViewModelBase
 {
-    protected BaseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService) : base(logger, appStateService, navigationService)
+    protected readonly IListViewService _listViewService;
+    protected BaseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IListViewService listViewService) : base(logger, appStateService, navigationService)
     {
+        _listViewService = listViewService;
         NewCommand = new RelayCommand(New);
         DeleteCommand = new AsyncRelayCommand(Delete, CanDelete);
         RefreshCommand = new AsyncRelayCommand(Refresh);
+        SearchCommand = new AsyncRelayCommand(Search);
     }
 
     #region properties
@@ -27,6 +34,17 @@ public abstract class BaseListViewModel : ViewModelBase
             _Selected = value;
             RaisePropertyChanged(value);
             DeleteCommand.NotifyCanExecuteChanged();
+        }
+    }
+
+    private string _searchText;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            _searchText = value;
+            OnPropertyChanged(nameof(SearchText));
         }
     }
 
@@ -47,10 +65,18 @@ public abstract class BaseListViewModel : ViewModelBase
         get;
     }
 
+    public AsyncRelayCommand SearchCommand
+    {
+        get;
+    }
+
     /// <summary>
     /// Implementation - navigate to object's detailview without any parameters, do not clear navigation
     /// </summary>
     protected abstract void New();
+
+
+    protected abstract Task Search();
 
     protected async virtual Task Delete()
     {

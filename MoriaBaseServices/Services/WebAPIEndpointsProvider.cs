@@ -59,6 +59,18 @@ public class WebAPIEndpointsProvider
     /// <para>Throws: </para>
     /// </summary>
     public const string PutUnlockPath = $"{Lock}/unlock";
+    /// <summary>
+    /// Body: object of type LockHelper
+    /// <para>Return bool</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string KeepAlivePath = $"{Lock}/keepalive";
+    /// <summary>
+    /// Parameter from path: object.id
+    /// <para>Return bool</para>
+    /// <para>Throws: </para>
+    /// </summary>
+    public const string RemoveObjectKeepAlivePath = $"{Lock}/removeobjectkeepalive";
 
     #endregion
 
@@ -427,6 +439,10 @@ public class WebAPIEndpointsProvider
     public const string GetTestPath = $"{Test}";
 
 #endif
+    /// <summary>
+    /// Body: type and searchtext string
+    /// </summary>
+    public const string GetSearchPath = $"SearchText";
 
     #endregion
 }
