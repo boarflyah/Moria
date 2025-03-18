@@ -25,7 +25,6 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
 
         Title = "Nowy produkt";
 
-
         WeakReferenceMessenger.Default.Register<NavigationMessage<ProductDo>>(this, OnMessageReceived);
     }
 

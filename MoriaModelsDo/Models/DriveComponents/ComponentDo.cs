@@ -79,16 +79,16 @@ public class ComponentDo: BaseDo
     {
         base.SetObject(lookup);
         Name = lookup.Property1;
-        ComponentProduct = new()
-        {
-            Name = lookup.Property2,
-        };
-        ComponentColor = new()
-        {
-            Name = lookup.Property4
-        };
+        //ComponentProduct = new()
+        //{
+        //    Name = lookup.Property2,
+        //};
+        //ComponentColor = new()
+        //{
+        //    Name = lookup.Property4
+        //};
         double quantity;
-        if (double.TryParse(lookup.Property3, out quantity))
+        if (double.TryParse(lookup.Property2, out quantity))
             Quantity = quantity;
     }
 }

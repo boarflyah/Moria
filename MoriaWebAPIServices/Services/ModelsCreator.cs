@@ -4,6 +4,7 @@ using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
+using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 using MoriaModelsDo.Base;
@@ -12,6 +13,8 @@ using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
 using MoriaModelsDo.Models.DriveComponents.Relations;
+using MoriaModelsDo.Models.Orders;
+using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
 
@@ -600,6 +603,223 @@ public class ModelsCreator
                     break;
             }
         }
+    }
+
+    #endregion
+
+    #region order
+
+    public OrderDo GetOrderDo(Order order)
+    {
+        var result = new OrderDo()
+        {
+            Id = order.Id,
+            LastModified = order.LastModified,
+            OrderNumberSymbol = order.OrderNumberSymbol,
+            Remarks = order.Remarks,
+            CatalogLink = order.CatalogLink,
+            ClientSymbol = order.ClientSymbol,
+            OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
+            ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact)
+        };
+
+        if (order.OrderItems != null)
+            foreach (var oi in order.OrderItems)
+                result.OrderItems.Add(GetOrdetItemDo(oi));
+
+        return result;
+    }
+
+    public async Task<Order> CreateOrder(OrderDo model)
+    {
+        var result = new Order()
+        {
+            CatalogLink = model.CatalogLink,
+            ClientSymbol = model.ClientSymbol,
+            LastModified = model.LastModified,
+            Remarks = model.Remarks,
+            OrderingContact = model.OrderingContact != null ? await GetModelInContext(CreateContact, model.OrderingContact, _context.Contacts) : null,
+            ReceivingContact = model.ReceivingContact != null ? await GetModelInContext(CreateContact, model.ReceivingContact, _context.Contacts) : null,
+            OrderNumberSymbol = model.OrderNumberSymbol,
+        };
+
+        if (model.OrderItems != null)
+        {
+            foreach (var oi in model.OrderItems.Where(x => x.ChangeType == SystemChangeType.Added))
+                result.OrderItems.Add(await CreateOrderItem(oi));
+        }
+
+        return result;
+    }
+
+    public async Task UpdateOrder(Order order, OrderDo model)
+    {
+        order.ClientSymbol = model.ClientSymbol;
+        order.Remarks = model.Remarks;
+        order.OrderNumberSymbol = model.OrderNumberSymbol;
+        order.LastModified = model.LastModified;
+
+        order.OrderingContact = await GetModelInContext(CreateContact, model.OrderingContact, _context.Contacts);
+        order.ReceivingContact = await GetModelInContext(CreateContact, model.ReceivingContact, _context.Contacts);
+
+        foreach (var oi in model.OrderItems.Where(x => x.ChangeType != SystemChangeType.None))
+        {
+            //motorgear.Drive = model;
+            switch (oi.ChangeType)
+            {
+                case SystemChangeType.Added:
+                    order.OrderItems.Add(await CreateOrderItem(oi));
+                    break;
+                case SystemChangeType.Modified:
+                    var contextOrderItem = await _context.OrderItems.Include(x => x.Component).Include(x => x.Product)
+                        .Include(x => x.Drive).Include(x => x.Designer).Include(x => x.Warehouse)
+                        .Include(x => x.ComponentToOrderItems)
+                            .ThenInclude(x => x.Component)
+                        .Include(x => x.ComponentToOrderItems)
+                            .ThenInclude(x => x.Color)
+                        .FirstOrDefaultAsync(x => x.Id == oi.Id);
+                    if (contextOrderItem != null)
+                        await UpdateOrderItem(contextOrderItem, oi);
+                    break;
+                case SystemChangeType.Deleted:
+                    var searchOrderItem = await _context.OrderItems.FindAsync(oi.Id);
+                    if (searchOrderItem != null)
+                        _context.OrderItems.Remove(searchOrderItem);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    #endregion
+
+    #region orderitem
+
+    public OrderItemDo GetOrdetItemDo(OrderItem oi)
+    {
+        var result = new OrderItemDo()
+        {
+            Id = oi.Id,
+            Index = oi.Index,
+            Description = oi.Description,
+            Notes = oi.Notes,
+            MachineWeight = oi.MachineWeight,
+            TechnicalDrawingLink = oi.TechnicalDrawingLink,
+            Quantity = oi.Quantity,
+            LastModified = oi.LastModified,
+            Product = oi.Product != null ? GetNestedProductDo(oi.Product) : null,
+            Component = oi.Component != null ? GetComponentDo(oi.Component) : null,
+            Drive = oi.Drive != null ? GetDriveDo(oi.Drive, false) : null,
+            Designer = oi.Designer != null ? GetEmployeeDo(oi.Designer) : null,
+            Warehouse = oi.Warehouse != null ? GetWarehouse(oi.Warehouse) : null,
+        };
+
+        if (oi.ComponentToOrderItems != null)
+            foreach (var ctoi in oi.ComponentToOrderItems)
+                result.ComponentsToOrderItem.Add(GetComponentToOrderItemDo(ctoi));
+
+        return result;
+    }
+
+    public async Task<OrderItem> CreateOrderItem(OrderItemDo model)
+    {
+        var result = new OrderItem()
+        {
+            Description = model.Description,
+            Index = model.Index,
+            MachineWeight = model.MachineWeight,
+            Notes = model.Notes,
+            LastModified = model.LastModified,
+            Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null,
+            Product = model.Product != null ? await GetModelInContext(CreateProduct, model.Product, _context.Products) : null,
+            Designer = model.Designer != null ? await GetModelInContext(CreateEmployee, model.Designer, _context.Employees) : null,
+            Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null,
+            Quantity = model.Quantity,
+            Warehouse = model.Warehouse != null ? await GetModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses) : null,
+        };
+
+        if (model.ComponentsToOrderItem != null)
+        {
+            foreach (var ctoi in model.ComponentsToOrderItem.Where(x => x.ChangeType == SystemChangeType.Added))
+                result.ComponentToOrderItems.Add(await CreateComponentToOrderItem(ctoi));
+        }
+
+        return result;
+    }
+
+    public async Task UpdateOrderItem(OrderItem orderItem, OrderItemDo model)
+    {
+        orderItem.Description = model.Description;
+        orderItem.Index = model.Index;
+        orderItem.MachineWeight = model.MachineWeight;
+        orderItem.Notes = model.Notes;
+        orderItem.LastModified = model.LastModified;
+        orderItem.Quantity = model.Quantity;
+
+        orderItem.Component = await GetModelInContext(CreateComponent, model.Component, _context.Components);
+        orderItem.Product = await GetModelInContext(CreateProduct, model.Product, _context.Products);
+        orderItem.Designer = await GetModelInContext(CreateEmployee, model.Designer, _context.Employees);
+        orderItem.Drive = await GetModelInContext(CreateDrive, model.Drive, _context.Drives);
+        orderItem.Warehouse = await GetModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses);
+
+        foreach (var ctoi in model.ComponentsToOrderItem.Where(x => x.ChangeType != SystemChangeType.None))
+        {
+            //motorgear.Drive = model;
+            switch (ctoi.ChangeType)
+            {
+                case SystemChangeType.Added:
+                    orderItem.ComponentToOrderItems.Add(await CreateComponentToOrderItem(ctoi));
+                    break;
+                case SystemChangeType.Modified:
+                    var contextComponentToOrderItem = await _context.ComponentToOrderItems.Include(x => x.Component).FirstOrDefaultAsync(x => x.Id == ctoi.Id);
+                    if (contextComponentToOrderItem  != null)
+                        await UpdateComponentToOrderItem(contextComponentToOrderItem, ctoi);
+                    break;
+                case SystemChangeType.Deleted:
+                    var searchComponentToOrderItem = await _context.ComponentToOrderItems.FindAsync(ctoi.Id);
+                    if (searchComponentToOrderItem != null)
+                        _context.ComponentToOrderItems.Remove(searchComponentToOrderItem);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    #endregion
+
+    #region componenttoorderitem
+
+    public ComponentToOrderItemDo GetComponentToOrderItemDo(ComponentToOrderItem ctoi)
+    {
+        return new()
+        {
+            Id = ctoi.Id,
+            LastModified = ctoi.LastModified,
+            ElectricalDescription = ctoi.ElectricialDescription,
+            Color = ctoi.Color == null ? null : GetColorDo(ctoi.Color),
+            Component = ctoi.Component == null ? null : GetComponentDo(ctoi.Component),
+        };
+    }
+
+    public async Task<ComponentToOrderItem> CreateComponentToOrderItem(ComponentToOrderItemDo model)
+    {
+        return new()
+        {
+            Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null,
+            Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null,
+            ElectricialDescription = model.ElectricalDescription,
+            LastModified = model.LastModified,
+        };
+    }
+
+    public async Task UpdateComponentToOrderItem(ComponentToOrderItem ctoi, ComponentToOrderItemDo model)
+    {
+        ctoi.Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null;
+        ctoi.Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null;
+        ctoi.ElectricialDescription = model.ElectricalDescription;
+        ctoi.LastModified = model.LastModified;
     }
 
     #endregion

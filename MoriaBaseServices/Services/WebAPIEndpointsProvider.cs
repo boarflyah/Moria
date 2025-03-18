@@ -27,6 +27,7 @@ public class WebAPIEndpointsProvider
     public const string Category = "category";
     public const string Drive = "drive";
     public const string Component = "component";
+    public const string Order = "order";
 
     #endregion
 
@@ -387,6 +388,36 @@ public class WebAPIEndpointsProvider
     /// Parameter from path: component.id
     /// </summary>
     public const string GetComponentPath = $"{Component}";
+
+    #endregion
+
+    #region order
+
+    public const string GetOrdersPath = $"{Order}";
+
+    /// <summary>
+    /// Parameter from path: order.id
+    /// </summary>
+    public const string GetOrderPath = $"{Order}";
+
+    /// <summary>
+    /// Body: OrderDo
+    /// <para>Return OrderDo</para>
+    /// </summary>
+    public const string PostOrderPath = $"{Order}";
+
+    /// <summary>
+    /// Body: OrderDo
+    /// <para>Return OrderDo</para>
+    /// </summary>
+    public const string PutOrderPath = $"{Order}";
+
+    /// <summary>
+    /// Parameter from path: order.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteOrderPath = $"{Order}";
+
 
     #endregion
 

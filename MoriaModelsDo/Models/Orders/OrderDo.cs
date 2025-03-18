@@ -69,4 +69,9 @@ public class OrderDo: BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    public IList<OrderItemDo> OrderItems
+    {
+        get; set;
+    } = new List<OrderItemDo>();
 }

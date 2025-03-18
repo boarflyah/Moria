@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Contacts;
 public class ContactDo : BaseDo
@@ -36,4 +37,11 @@ public class ContactDo : BaseDo
         }
     }
 
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        Symbol = lookup.Property1;
+        ShortName = lookup.Property2;
+        LongName = lookup.Property3;
+    }
 }

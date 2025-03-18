@@ -8,6 +8,7 @@ using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
+using MoriaModelsDo.Models.Orders;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaWebAPIServices.Services;
@@ -31,6 +32,9 @@ public class ModelTypeConverter
         Register<MotorGearDo, MotorGear>();
         Register<CategoryDo, Category>();
         Register<ProductDo, Product>();
+        Register<OrderDo, Order>();
+        Register<OrderItemDo, OrderItem>();
+        Register<ComponentDo, Component>();
     }
 
     protected void Register<T1, T2>() 

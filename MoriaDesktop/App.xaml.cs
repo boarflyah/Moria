@@ -13,6 +13,7 @@ using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.Views.Base;
 using MoriaDesktop.Views.Contacts;
@@ -21,6 +22,7 @@ using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.Views.Dictionary.ListView;
 using MoriaDesktop.Views.Dictionary.Window;
 using MoriaDesktop.Views.DriveComponents;
+using MoriaDesktop.Views.Orders;
 using MoriaDesktop.Views.Products;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
@@ -99,6 +101,12 @@ public partial class App : Application
                          services.AddScoped<DriveListViewModel>();
                          services.AddScoped<ComponentDetailView>();
                          services.AddScoped<ComponentDetailViewModel>();
+                         services.AddScoped<OrderListView>();
+                         services.AddScoped<OrderListViewModel>();
+                         services.AddScoped<OrderDetailView>();
+                         services.AddScoped<OrderDetailViewModel>();
+                         services.AddScoped<OrderItemDetailView>();
+                         services.AddScoped<OrderItemDetailViewModel>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -110,6 +118,7 @@ public partial class App : Application
                          services.AddScoped<IDetailedWindow, CategoryWindowView>();
                          services.AddScoped<IDetailedWindow, MotorWindowView>();
                          services.AddScoped<IDetailedWindow, MotorGearWindowView>();
+                         services.AddScoped<IDetailedWindow, WarehouseWindowView>();
 
                          services.AddScoped<ILookupService, LookupService>();
                          services.AddScoped<IPageService, DesktopPageService>();
@@ -133,6 +142,7 @@ public partial class App : Application
                          services.AddScoped<IApiCategoryService, ApiCategoryService>();
                          services.AddScoped<IApiDriveService, ApiDriveService>();
                          services.AddScoped<IApiComponentService, ApiComponentService>();
+                         services.AddScoped<IApiOrderService, ApiOrderService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

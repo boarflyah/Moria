@@ -12,6 +12,8 @@ using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.Views.Products;
 using MoriaDesktop.Views.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
+using MoriaDesktop.Views.Orders;
+using MoriaDesktop.ViewModels.Orders;
 
 namespace MoriaDesktop.Services;
 public class DesktopPageService: PageService
@@ -33,6 +35,8 @@ public class DesktopPageService: PageService
         Register(typeof(ProductDetailViewModel), typeof(ProductDetailView));
         Register(typeof(CategoryDetailViewModel), typeof(CategoryDetailView));
         Register(typeof(ComponentDetailViewModel), typeof(ComponentDetailView));
+        Register(typeof(OrderDetailViewModel), typeof(OrderDetailView));
+        Register(typeof(OrderItemDetailViewModel), typeof(OrderItemDetailView));
 
         //ListView
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
@@ -46,5 +50,6 @@ public class DesktopPageService: PageService
         Register(typeof(ProductListViewModel), typeof(ProductListView));
         Register(typeof(CategoryListViewModel), typeof(CategoryListView));
         Register(typeof(DriveListViewModel), typeof(DriveListView));
+        Register(typeof(OrderListViewModel), typeof(OrderListView));
     }
 }

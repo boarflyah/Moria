@@ -15,6 +15,7 @@ using MoriaDesktop.Views.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
+using MoriaDesktop.ViewModels.Orders;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -66,6 +67,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Produkty",
             Items = new()
         };
+        NavigationItem node5 = new()
+        {
+            Title = "Zamówienia",
+            ViewModelType = typeof(OrderListViewModel)
+        };
         NavigationItem node3 = new()
         {
             Title = "Testy",
@@ -75,6 +81,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         Navigation.Add(node1);
         Navigation.Add(node2);
         Navigation.Add(node4);
+        Navigation.Add(node5);
         Navigation.Add(node3);
 
         node1.Items.Add(new()

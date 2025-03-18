@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaBaseModels.Attributes;
+using MoriaBaseModels.Models;
 using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.EntityPersonel;
 
 [Index(nameof(Username), IsUnique = true)]
+[LookupHeaders(true, "Imię", true, "Nazwisko", true, "Nazwa użytkownika")]
 public class Employee: BaseModel
 {
     //public int Id { get; set; }
@@ -18,4 +21,6 @@ public class Employee: BaseModel
     public bool Admin { get; set; }
 
     //public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
+
+    public override LookupModel GetLookupObject() => new(Id, FirstName, LastName, Username);
 }

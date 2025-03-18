@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaBaseModels.Models;
+using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.Contacts;
 public class EmployeeDo: BaseDo
@@ -91,4 +92,12 @@ public class EmployeeDo: BaseDo
     }
 
     //public ObservableCollection<Permission> Permissions { get; set; } = new();
+
+    public override void SetObject(LookupModel lookup)
+    {
+        base.SetObject(lookup);
+        FirstName = lookup.Property1;
+        LastName = lookup.Property2;
+        Username = lookup.Property3;
+    }
 }

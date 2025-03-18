@@ -85,4 +85,8 @@ public class ApplicationDbContext : DbContext
     {
         get; set;
     }
+    public DbSet<ComponentToOrderItem> ComponentToOrderItems
+    {
+        get; set;
+    }
 }
