@@ -183,19 +183,18 @@
                 </TreeView.ItemContainerStyle>-->
             </TreeView>
 
-
-            <Grid Grid.Row="2">
+            <Viewbox Grid.Row="2" Stretch="Uniform" StretchDirection="DownOnly" Margin="10">
 
                 <Calendar x:Name="myCalendar"
                          HorizontalAlignment="Center"
-                         VerticalAlignment="Top"
-                            Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}"
+                         VerticalAlignment="Stretch"
+                          Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}"
                           SelectedDatesChanged="myCalendar_SelectedDatesChanged">
-               
+                    <Calendar.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource CalendarHeaderButtonStyle}"/>
+                    </Calendar.Resources>
                 </Calendar>
-
-
-            </Grid>
+            </Viewbox>
 
 
 

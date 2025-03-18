@@ -5,4 +5,5 @@
     <system:Double x:Key="DefaultFontSize">15</system:Double>
     <system:Double x:Key="DefaultDataGridCellFontSize">13</system:Double>
     <system:Double x:Key="DefaultDataGridHeaderFontSize">11</system:Double>
+    <!--<system:Double x:Key="DefaultCalendarItemFontSize">8</system:Double>-->
 </ResourceDictionary>

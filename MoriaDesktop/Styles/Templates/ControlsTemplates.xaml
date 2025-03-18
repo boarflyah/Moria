@@ -33,6 +33,10 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="Button" x:Key="CalendarHeaderButtonStyle">
+        <Setter Property="FontSize" Value="5"/>
+    </Style>
+
     <!--#endregion-->
 
     <!--#region textblocks-->
