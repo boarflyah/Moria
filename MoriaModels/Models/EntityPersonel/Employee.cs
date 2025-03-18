@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.EntityPersonel;

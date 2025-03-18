@@ -4,6 +4,7 @@ using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Orders;
 using MoriaModelsDo.Models.Products;
 
@@ -12,8 +13,8 @@ public class OrderListViewModel: BaseListViewModel
 {
     readonly IApiOrderService _orderService;
 
-    public OrderListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiOrderService orderService)
-        : base(logger, appStateService, navigationService)
+    public OrderListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiOrderService orderService, IListViewService listViewService)
+        : base(logger, appStateService, navigationService, listViewService)
     {
         _orderService = orderService;
 
@@ -57,6 +58,31 @@ public class OrderListViewModel: BaseListViewModel
 
     protected async override Task<bool> SendDeleteRequest() =>
         await ExecuteApiRequest(_orderService.DeleteOrder, _appStateService.LoggedUser.Username, (Selected as OrderDo)?.Id ?? 0);
+
+    protected async override Task Search()
+    {
+        if (SearchText != null)
+        {
+            try
+            {
+                var result = await ExecuteApiRequest(_listViewService.Search<OrderDo>, _appStateService.LoggedUser.Username, SearchText);
+                if (result != null)
+                {
+                    Orders.Clear();
+                    foreach (var item in result)
+                    {
+                        Orders.Add(item);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, $"Brak danych do wczytania. {ex.Message}", true);
+            }
+        }
+        else
+            await LoadList();
+    }
 
 
     #endregion

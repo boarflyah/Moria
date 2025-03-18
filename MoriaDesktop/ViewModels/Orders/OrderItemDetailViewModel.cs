@@ -20,8 +20,8 @@ using MoriaModelsDo.Models.Products;
 namespace MoriaDesktop.ViewModels.Orders;
 public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 {
-    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IKeepAliveWorker worker)
+        : base(logger, appStateService, apiLockService, navigationService, worker)
     {
     }
 

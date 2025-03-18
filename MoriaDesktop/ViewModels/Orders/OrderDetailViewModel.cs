@@ -20,8 +20,8 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiOrderService _orderService;
 
-    public OrderDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiOrderService orderService)
-        : base(logger, appStateService, apiLockService, navigationService)
+    public OrderDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IApiOrderService orderService, IKeepAliveWorker worker)
+        : base(logger, appStateService, apiLockService, navigationService, worker)
     {
         _orderService = orderService;
 
