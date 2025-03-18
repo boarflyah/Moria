@@ -203,11 +203,17 @@ public partial class App : Application
 
     private async void Wnd_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
+        var keepAlive = AppHost.Services.GetRequiredService<IKeepAliveWorker>();
+        keepAlive.RemoveLock();
+        Environment.Exit(0);
         //await UnlockObject();
     }
 
     private async void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
     {
+        var keepAlive = AppHost.Services.GetRequiredService<IKeepAliveWorker>();
+        keepAlive.RemoveLock();
+        Environment.Exit(0);
         //await UnlockObject();
     }
 

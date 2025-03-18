@@ -11,6 +11,6 @@ public interface IKeepAliveWorker : IDisposable
 {
     void LockObject(LockHelper lockHelper);
     void RemoveLock(int objectID);
-
     void Start();
+    void RemoveLock();
 }
