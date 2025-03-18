@@ -206,7 +206,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
             Clear();
             Setup(onRenavigationReturned);
             HasObjectChanged = true;
-            isNew = false;
+            isNew = objectId <= 0 ? true : false;
             objectId = onRenavigationReturned?.Id ?? -1;
         }
     }
