@@ -65,6 +65,7 @@ public class Program
             builder.Services.AddScoped<IOrderControllerService, OrderControllerService>();
             builder.Services.AddScoped<IListViewControllerService, ListViewService>();
 
+            builder.Services.AddScoped<ICatalogService, CatalogService>();
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>

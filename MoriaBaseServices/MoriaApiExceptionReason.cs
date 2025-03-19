@@ -6,4 +6,5 @@ public enum MoriaApiExceptionReason
     ObjectIsLocked = 100,
     ObjectNotFound = 110,
     ValueIsNotUnique = 120,
+    CreateCatalogError = 130,
 }
