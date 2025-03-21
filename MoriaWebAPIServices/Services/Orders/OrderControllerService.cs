@@ -2,6 +2,7 @@
 using MoriaBaseServices;
 using MoriaModelsDo.Models.Orders;
 using MoriaWebAPIServices.Contexts;
+using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Orders;
 
 namespace MoriaWebAPIServices.Services.Orders;
@@ -9,16 +10,23 @@ public class OrderControllerService : IOrderControllerService
 {
     readonly ApplicationDbContext _context;
     readonly ModelsCreator _creator;
+    readonly ICatalogService _catalogService;
 
-    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator)
+    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator, ICatalogService catalogService)
     {
         _context = context;
         _creator = creator;
+        _catalogService = catalogService;
     }
 
     public async Task<OrderDo> CreateOrder(OrderDo order)
     {
         var entity = await _context.AddAsync(await _creator.CreateOrder(order));
+
+        var result = await _catalogService.CreateCatalogs(order.OrderNumberSymbol);
+        if (!result)
+            throw new MoriaApiException(MoriaApiExceptionReason.CreateCatalogError, MoriaApiException.ApiExceptionThrownStatusCode);
+
         var created = await _context.SaveChangesAsync();
         return _creator.GetOrderDo(entity.Entity);
     }
