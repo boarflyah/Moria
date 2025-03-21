@@ -64,80 +64,80 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Margin="10"
-              IsEnabled="{Binding Permission_Name.CanWrite}"
-              Visibility="{Binding Permission_Name.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                          IsEnabled="{Binding Permission_Name.CanWrite}"
+                          Visibility="{Binding Permission_Name.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Nazwa" 
-                   Grid.Row="0"
-                   Margin="0,0,0,5"/>
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
                         <TextBox Name="NameTextBox" 
-                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Grid.Row="1"/>
+                                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Grid.Row="1"/>
                     </Grid>
 
                     <Grid Grid.Row="0" Margin="10"
-              Grid.Column="1"
-              IsEnabled="{Binding Permission_ComponentProduct.CanWrite}"
-              Visibility="{Binding Permission_ComponentProduct.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                          Grid.Column="1"
+                          IsEnabled="{Binding Permission_ComponentProduct.CanWrite}"
+                          Visibility="{Binding Permission_ComponentProduct.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Produkt" 
-                   Grid.Row="0"
-                   Margin="0,0,0,5"/>
-                        <TextBox Name="ComponentProductTextBox" 
-                     Text="{Binding ComponentProduct.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Grid.Row="1"
-                     IsReadOnly="True"
-                     PreviewMouseDown="ComponentProductTextBox_PreviewMouseDown"/>
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <controls:LookupObjectControl x:Name="ProductLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding ComponentProduct, Mode=TwoWay}"
+                                                      NameText="{Binding ComponentProduct.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="ProductLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="1" Margin="10"
-              Grid.Column="0"
-              IsEnabled="{Binding Permission_ComponentColor.CanWrite}"
-              Visibility="{Binding Permission_ComponentColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                          Grid.Column="0"
+                          IsEnabled="{Binding Permission_ComponentColor.CanWrite}"
+                          Visibility="{Binding Permission_ComponentColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Kolor" 
-                   Grid.Row="0"
-                   Margin="0,0,0,5"/>
-                        <TextBox Name="ComponentColorTextBox" 
-                     Text="{Binding ComponentColor.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                     Grid.Row="1"
-                     IsReadOnly="True"
-                     PreviewMouseDown="ComponentColorTextBox_PreviewMouseDown"/>
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <controls:LookupObjectControl x:Name="ColorLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding ComponentColor, Mode=TwoWay}"
+                                                      NameText="{Binding ComponentColor.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="ColorLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="1" Margin="10"
-              Grid.Column="1"
-              IsEnabled="{Binding Permission_Quantity.CanWrite}"
-              Visibility="{Binding Permission_Quantity.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                          Grid.Column="1"
+                          IsEnabled="{Binding Permission_Quantity.CanWrite}"
+                          Visibility="{Binding Permission_Quantity.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Label Content="Ilość" 
-                   Grid.Row="0"
-                   Margin="0,0,0,5"/>
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
                         <TextBox Name="QuantityTextBox" 
-                     Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     PreviewTextInput="QuantityTextBox_PreviewTextInput"
-                     Grid.Row="1"/>
+                                 Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 PreviewTextInput="QuantityTextBox_PreviewTextInput"
+                                 Grid.Row="1"/>
                     </Grid>
 
                     <Grid Grid.ColumnSpan="2"
-              Grid.Row="2">
+                          Grid.Row="2">
                         <controls:NestedListViewWrapper>
                             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
-                          SelectedItem="{Binding Selected, Mode=TwoWay}"
-                          ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}"
-                          BeginningEdit="DataGrid_BeginningEdit">
+                                      SelectedItem="{Binding Selected, Mode=TwoWay}"
+                                      ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}"
+                                      BeginningEdit="DataGrid_BeginningEdit">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Nazwa" 
                                             Binding="{Binding Drive.Name}"

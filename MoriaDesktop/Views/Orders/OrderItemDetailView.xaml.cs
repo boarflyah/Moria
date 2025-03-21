@@ -30,27 +30,6 @@ public partial class OrderItemDetailView : Page, IViewModelContent
         await (DataContext as BaseDetailViewModel).Load();
     }
 
-    private async void ProductTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        var product = await _lookupService.ShowLookup<ProductDo>();
-        if (product != null)
-            (DataContext as OrderItemDetailViewModel).Product = product;
-    }
-
-    private async void ComponentTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        var component = await _lookupService.ShowLookup<ComponentDo>();
-        if (component != null)
-            (DataContext as OrderItemDetailViewModel).Component = component;
-    }
-
-    private async void DriveTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        var drive = await _lookupService.ShowLookup<DriveDo>();
-        if (drive != null)
-            (DataContext as OrderItemDetailViewModel).Drive = drive;
-    }
-
     private static bool IsTextAllowed(string text)
     {
         return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
@@ -61,17 +40,38 @@ public partial class OrderItemDetailView : Page, IViewModelContent
         e.Handled = !IsTextAllowed(e.Text);
     }
 
-    private async void WarehouseTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private async void DesignerLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var employee = await _lookupService.ShowLookup<EmployeeDo>();
+        if (employee != null)
+            (DataContext as OrderItemDetailViewModel).Designer = employee;
+    }
+
+    private async void WarehouseLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
         var warehouse = await _lookupService.ShowLookup<WarehouseDo>();
         if (warehouse != null)
             (DataContext as OrderItemDetailViewModel).Warehouse = warehouse;
     }
 
-    private async void DesignerTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private async void DriveLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var employee = await _lookupService.ShowLookup<EmployeeDo>();
-        if (employee != null)
-            (DataContext as OrderItemDetailViewModel).Designer = employee;
+        var drive = await _lookupService.ShowLookup<DriveDo>();
+        if (drive != null)
+            (DataContext as OrderItemDetailViewModel).Drive = drive;
+    }
+
+    private async void ComponentLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var component = await _lookupService.ShowLookup<ComponentDo>();
+        if (component != null)
+            (DataContext as OrderItemDetailViewModel).Component = component;
+    }
+
+    private async void ProductLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var product = await _lookupService.ShowLookup<ProductDo>();
+        if (product != null)
+            (DataContext as OrderItemDetailViewModel).Product = product;
     }
 }

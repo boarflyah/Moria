@@ -29,23 +29,23 @@ public partial class OrderDetailView : Page, IViewModelContent
 
     }
 
-    private async void ReceivingContactTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        var contact = await _lookupService.ShowLookup<ContactDo>();
-        if (contact != null)
-            (DataContext as OrderDetailViewModel).ReceivingContact = contact;
+        if (e.OriginalSource is FrameworkElement fe && fe.DataContext is OrderItemDo oido)
+            (DataContext as OrderDetailViewModel).OnOrderItemSelected(oido);
     }
 
-    private async void OrderingContactTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private async void OrderingLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
         var contact = await _lookupService.ShowLookup<ContactDo>();
         if (contact != null)
             (DataContext as OrderDetailViewModel).OrderingContact = contact;
     }
 
-    private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    private async void ReceivingLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        if (e.OriginalSource is FrameworkElement fe && fe.DataContext is OrderItemDo oido)
-            (DataContext as OrderDetailViewModel).OnOrderItemSelected(oido);
+        var contact = await _lookupService.ShowLookup<ContactDo>();
+        if (contact != null)
+            (DataContext as OrderDetailViewModel).ReceivingContact = contact;
     }
 }

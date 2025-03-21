@@ -66,7 +66,7 @@ public partial class DriveDetailView : Page, IViewModelContent
         await (DataContext as BaseDetailViewModel).Load();
     }
 
-    private async void TextBox1_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private async void MotorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
         var motor = await _lookupService.ShowLookup<MotorDo>();
         if (motor != null)

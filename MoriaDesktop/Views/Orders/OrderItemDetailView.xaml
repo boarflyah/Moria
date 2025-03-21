@@ -78,11 +78,11 @@
                         <Label Content="Produkt" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="ProductTextBox" 
-                                 Text="{Binding Product.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"
-                                 IsReadOnly="True"
-                                 PreviewMouseDown="ProductTextBox_PreviewMouseDown"/>
+                        <controls:LookupObjectControl x:Name="ProductLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding Product, Mode=TwoWay}"
+                                                      NameText="{Binding Product.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="ProductLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="0"
@@ -97,11 +97,11 @@
                         <Label Content="Komponent" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="ComponentTextBox" 
-                                 Text="{Binding Component.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"
-                                 IsReadOnly="True"
-                                 PreviewMouseDown="ComponentTextBox_PreviewMouseDown"/>
+                        <controls:LookupObjectControl x:Name="ComponentLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding Component, Mode=TwoWay}"
+                                                      NameText="{Binding Component.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="ComponentLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="0"
@@ -116,11 +116,11 @@
                         <Label Content="Napęd" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="DriveTextBox" 
-                                 Text="{Binding Drive.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"
-                                 IsReadOnly="True"
-                                 PreviewMouseDown="DriveTextBox_PreviewMouseDown"/>
+                        <controls:LookupObjectControl x:Name="DriveLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding Drive, Mode=TwoWay}"
+                                                      NameText="{Binding Drive.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="DriveLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="0"
@@ -224,11 +224,11 @@
                         <Label Content="Magazyn" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="WarehouseTextBox" 
-                                 Text="{Binding Warehouse.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"
-                                 IsReadOnly="True"
-                                 PreviewMouseDown="WarehouseTextBox_PreviewMouseDown"/>
+                        <controls:LookupObjectControl x:Name="WarehouseLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding Warehouse, Mode=TwoWay}"
+                                                      NameText="{Binding Warehouse.Name, Mode=OneWay}"
+                                                      OnLookupInvoked="WarehouseLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="2"
@@ -243,11 +243,11 @@
                         <Label Content="Projektant" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="DesignerTextBox" 
-                                 Text="{Binding Designer.Username, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"
-                                 IsReadOnly="True"
-                                 PreviewMouseDown="DesignerTextBox_PreviewMouseDown"/>
+                        <controls:LookupObjectControl x:Name="DesignerLookupObjectControl"
+                                                      Grid.Row="1"
+                                                      LookupObject="{Binding Designer, Mode=TwoWay}"
+                                                      NameText="{Binding Designer.Username, Mode=OneWay}"
+                                                      OnLookupInvoked="DesignerLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
                     <Grid Grid.Row="2"

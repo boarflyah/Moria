@@ -27,66 +27,80 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="0" Grid.Row="0" Margin="10"
-           IsEnabled="{Binding Permission_OrderNumberSymbol.CanWrite}"
-           Visibility="{Binding Permission_OrderNumberSymbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+              IsEnabled="{Binding Permission_OrderNumberSymbol.CanWrite}"
+              Visibility="{Binding Permission_OrderNumberSymbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Nr zamówienia" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="OrderNumberSymbolTextBox" Text="{Binding OrderNumberSymbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <Label Content="Nr zamówienia"
+                   Grid.Row="0" 
+                   Margin="0,0,0,5"/>
+            <TextBox Name="OrderNumberSymbolTextBox" 
+                     Text="{Binding OrderNumberSymbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="1"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="0" Margin="10"
-           IsEnabled="{Binding Permission_ClientSymbol.CanWrite}"
-           Visibility="{Binding Permission_ClientSymbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+              IsEnabled="{Binding Permission_ClientSymbol.CanWrite}"
+              Visibility="{Binding Permission_ClientSymbol.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Nr klienta" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="ClientSymbolTextBox" Text="{Binding ClientSymbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <Label Content="Nr klienta" 
+                   Grid.Row="0" 
+                   Margin="0,0,0,5"/>
+            <TextBox Name="ClientSymbolTextBox"
+                     Text="{Binding ClientSymbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     Grid.Row="1"/>
         </Grid>
         
         <Grid Grid.Column="2" Grid.Row="0" Margin="10"
-           IsEnabled="{Binding Permission_Remarks.CanWrite}"
-           Visibility="{Binding Permission_Remarks.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+              IsEnabled="{Binding Permission_Remarks.CanWrite}"
+              Visibility="{Binding Permission_Remarks.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Uwagi" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="RemarksTextBox" Text="{Binding Remarks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+            <Label Content="Uwagi" 
+                   Grid.Row="0" 
+                   Margin="0,0,0,5"/>
+            <TextBox Name="RemarksTextBox" 
+                     Text="{Binding Remarks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Grid.Row="1"/>
         </Grid>
 
         <Grid Grid.Column="0" Grid.Row="1" Margin="10"
-           IsEnabled="{Binding Permission_OrderingContact.CanWrite}"
-           Visibility="{Binding Permission_OrderingContact.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+              IsEnabled="{Binding Permission_OrderingContact.CanWrite}"
+              Visibility="{Binding Permission_OrderingContact.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Zamawiający" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="OrderingContactTextBox"
-                     Text="{Binding OrderingContact.ShortName, Mode=OneWay}" 
-                     Grid.Row="1"
-                     IsReadOnly="True"
-                     PreviewMouseDown="OrderingContactTextBox_PreviewMouseDown"/>
+            <controls:LookupObjectControl x:Name="OrderingLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding OrderingContact, Mode=TwoWay}"
+                                          NameText="{Binding OrderingContact.ShortName, Mode=OneWay}"
+                                          OnLookupInvoked="OrderingLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="1" Margin="10"
-           IsEnabled="{Binding Permission_ReceivingContact.CanWrite}"
-           Visibility="{Binding Permission_ReceivingContact.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+              IsEnabled="{Binding Permission_ReceivingContact.CanWrite}"
+              Visibility="{Binding Permission_ReceivingContact.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Odbierający" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="ReceivingContactTextBox" 
-                     Text="{Binding ReceivingContact.ShortName, Mode=OneWay}" 
-                     Grid.Row="1"
-                     IsReadOnly="True"
-                     PreviewMouseDown="ReceivingContactTextBox_PreviewMouseDown"/>
+            <Label Content="Odbierający" 
+                   Grid.Row="0"
+                   Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="ReceivingLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding ReceivingContact, Mode=TwoWay}"
+                                          NameText="{Binding ReceivingContact.ShortName, Mode=OneWay}"
+                                          OnLookupInvoked="ReceivingLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
         <controls:NestedListViewWrapper Grid.Row="2"

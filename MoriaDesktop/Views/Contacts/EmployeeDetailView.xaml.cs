@@ -57,10 +57,9 @@ public partial class EmployeeDetailView : Page, IViewModelContent
     private async void SaveAndCloseButton_Click(object sender, RoutedEventArgs e)
     {
         await (DataContext as EmployeeDetailViewModel).SaveAndCloseEmployee(PasswordBox.Password);
-
     }
 
-    private async void PositionBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private async void PositionLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
         var position = await _lookupService.ShowLookup<PositionDo>();
         if (position != null)

@@ -47,11 +47,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Silnik" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="TextBox1"
-                     Text="{Binding Motor.Name, Mode=OneWay}"
-                     IsReadOnly="True"
-                     PreviewMouseDown="TextBox1_PreviewMouseDown"
-                     Grid.Row="1"/>
+            <controls:LookupObjectControl x:Name="MotorLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Motor, Mode=TwoWay}"
+                                          NameText="{Binding Motor.Name, Mode=OneWay}"
+                                          OnLookupInvoked="MotorLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="0" Margin="10"

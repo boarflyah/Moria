@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:conv="clr-namespace:MoriaDesktop.Styles.Converters"
       xmlns:local="clr-namespace:MoriaDesktop.Views.Contacts"
+      xmlns:controls="clr-namespace:MoriaDesktop.Styles.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeeDetailView" Loaded="Page_Loaded"
@@ -102,11 +103,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Stanowisko" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="PositionBox" 
-                     Text="{Binding Position.Name}" 
-                     Grid.Row="1"                     
-                     IsReadOnly="True"
-                     PreviewMouseDown="PositionBox_PreviewMouseDown"/>
+            <controls:LookupObjectControl x:Name="PositionLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Position, Mode=TwoWay}"
+                                          NameText="{Binding Position.Name, Mode=OneWay}"
+                                          OnLookupInvoked="PositionLookupObjectControl_OnLookupInvoked"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3" Margin="10"
           IsEnabled="{Binding Permission_Admin.CanWrite}"

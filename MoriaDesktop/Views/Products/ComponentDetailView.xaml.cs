@@ -32,13 +32,6 @@ public partial class ComponentDetailView : Page, IViewModelContent
         await (DataContext as BaseDetailViewModel).Load();
     }
 
-    private async void ComponentProductTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        var product = await _lookupService.ShowLookup<ProductDo>();
-        if (product != null)
-            (DataContext as ComponentDetailViewModel).ComponentProduct = product;
-    }
-
     private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
     {
         if (e.Column.SortMemberPath.Contains(nameof(DriveToComponentDo.Drive)))
@@ -60,12 +53,6 @@ public partial class ComponentDetailView : Page, IViewModelContent
             (DataContext as BaseDetailViewModel).HasObjectChanged = true;
     }
 
-    private async void ComponentColorTextBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        var color = await _lookupService.ShowLookup<ColorDo>();
-        if (color != null)
-            (DataContext as ComponentDetailViewModel).ComponentColor = color;
-    }
 
     private static bool IsTextAllowed(string text)
     {
@@ -75,5 +62,19 @@ public partial class ComponentDetailView : Page, IViewModelContent
     private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         e.Handled = !IsTextAllowed(e.Text);
+    }
+
+    private async void ColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var color = await _lookupService.ShowLookup<ColorDo>();
+        if (color != null)
+            (DataContext as ComponentDetailViewModel).ComponentColor = color;
+    }
+
+    private async void ProductLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var product = await _lookupService.ShowLookup<ProductDo>();
+        if (product != null)
+            (DataContext as ComponentDetailViewModel).ComponentProduct = product;
     }
 }
