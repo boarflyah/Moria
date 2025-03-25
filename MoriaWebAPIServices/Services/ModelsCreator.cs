@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoriaDTObjects.Models;
+using MoriaDTObjects.Models.Interfaces;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
+using MoriaModels.Models.Interfaces;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
@@ -39,6 +42,21 @@ public class ModelsCreator
         if (model == null)
         {
             model = await creator(dO);
+            await _context.AddAsync(model);
+        }
+
+        return model;
+    }
+
+    public async Task<T1> GetSubiektModelInContext<T1, T2>(Func<T2, Task<T1>> creator, T2 subiektObject, DbSet<T1> set) where T1 : BaseModel, ISubiektModel, new() where T2: ISubiektBaseObject
+    {
+        if (subiektObject == null)
+            return null;
+
+        var model = await set.FirstOrDefaultAsync(x => x.SubiektId == subiektObject.Id);
+        if (model == null)
+        {
+            model = await creator(subiektObject);
             await _context.AddAsync(model);
         }
 
@@ -244,6 +262,17 @@ public class ModelsCreator
         };
     }
 
+    public async Task<Contact> CreateContact(MoriaEntity model)
+    {
+        return new()
+        {
+            Symbol = model.Symbol,
+            LongName = model.LongName,
+            ShortName = model.ShortName,
+            SubiektId = model.Id,
+        };
+    }
+
     public async Task UpdateContact(Contact contact, ContactDo contactModel)
     {
         contact.Symbol = contactModel.Symbol;
@@ -342,6 +371,16 @@ public class ModelsCreator
             Name = warehouseDo.Name,
             Symbol = warehouseDo.Symbol,
             LastModified = warehouseDo.LastModified
+        };
+    }
+
+    public async Task<Warehouse> CreateWarehouse(MoriaWarehouse model)
+    {
+        return new()
+        {
+            SubiektId = model.Id,
+            Name = model.Name,
+            Symbol = model.Symbol
         };
     }
 
@@ -498,6 +537,17 @@ public class ModelsCreator
         return result;
     }
 
+    public async Task<Product> CreateProduct(MoriaProduct model)
+    {
+        return new Product()
+        {
+            SubiektId = model.Id,
+            Name = model.Name,
+            SerialNumber = model.SerialNumber,
+            Symbol = model.Symbol
+        };
+    }
+
     public async Task UpdateProduct(Product product, ProductDo productModel)
     {
         product.IsMainMachine = productModel.IsMainMachine;
@@ -652,6 +702,34 @@ public class ModelsCreator
         return result;
     }
 
+    public async Task<Order> CreateOrder(MoriaSalesOrder model)
+    {
+        var result = new Order()
+        {
+            SubiektId = model.Id,
+            OrderNumberSymbol = model.Symbol,
+            Remarks = model.Remarks,
+            OrderingContact = await GetSubiektModelInContext(CreateContact, model.Client, _context.Contacts),
+            ReceivingContact = await GetSubiektModelInContext(CreateContact, model.Recipient, _context.Contacts),
+            OrderDate = model.DocumentDate,
+            DueDate = model.DueDate
+        };
+
+        if (model.SalesOrderItems != null && model.SalesOrderItems.Any())
+        {
+            result.OrderItems = new List<OrderItem>();
+            var warehouse = await GetSubiektModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses);
+            foreach (var soi in model.SalesOrderItems)
+            {
+                var oi = await CreateOrderItem(soi);
+                oi.Warehouse = warehouse;
+                result.OrderItems.Add(oi);
+            }
+        }
+
+        return result;
+    }
+
     public async Task UpdateOrder(Order order, OrderDo model)
     {
         order.ClientSymbol = model.ClientSymbol;
@@ -746,6 +824,18 @@ public class ModelsCreator
         }
 
         return result;
+    }
+
+    public async Task<OrderItem> CreateOrderItem(MoriaSalesOrderItem model)
+    {
+        return new()
+        {
+            SubiektId = model.Id,
+            Index = model.Index,
+            Quantity = (double)model.Quantity,
+            Description = model.Remarks,
+            Product = await GetSubiektModelInContext(CreateProduct, model.Product, _context.Products),
+        };
     }
 
     public async Task UpdateOrderItem(OrderItem orderItem, OrderItemDo model)

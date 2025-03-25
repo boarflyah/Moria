@@ -74,6 +74,9 @@ public class Program
                 return service;
             });
 
+#if RELEASE
+            builder.Services.AddHostedService<SubiektOrderUpdater>();
+#endif
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;

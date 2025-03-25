@@ -188,7 +188,7 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
             {
                 string permissionPropertyName = $"{modelName}_{prop.Name.Substring(11)}";
 
-                var permission = _appStateService.LoggedUser.Position.Permissions
+                var permission = _appStateService.LoggedUser.Position?.Permissions
                     .FirstOrDefault(x => x.PropertyName.Equals(permissionPropertyName));
 
                 if (permission != null)

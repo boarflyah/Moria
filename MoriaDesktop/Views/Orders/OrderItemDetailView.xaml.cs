@@ -42,7 +42,7 @@ public partial class OrderItemDetailView : Page, IViewModelContent
 
     private async void DesignerLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var employee = await _lookupService.ShowLookup<EmployeeDo>();
+        var employee = await _lookupService.ShowLookup<EmployeeDo>(false);
         if (employee != null)
             (DataContext as OrderItemDetailViewModel).Designer = employee;
     }
@@ -56,21 +56,21 @@ public partial class OrderItemDetailView : Page, IViewModelContent
 
     private async void DriveLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var drive = await _lookupService.ShowLookup<DriveDo>();
+        var drive = await _lookupService.ShowLookup<DriveDo>(false);
         if (drive != null)
             (DataContext as OrderItemDetailViewModel).Drive = drive;
     }
 
     private async void ComponentLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var component = await _lookupService.ShowLookup<ComponentDo>();
+        var component = await _lookupService.ShowLookup<ComponentDo>(false);
         if (component != null)
             (DataContext as OrderItemDetailViewModel).Component = component;
     }
 
     private async void ProductLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var product = await _lookupService.ShowLookup<ProductDo>();
+        var product = await _lookupService.ShowLookup<ProductDo>(false);
         if (product != null)
             (DataContext as OrderItemDetailViewModel).Product = product;
     }

@@ -33,22 +33,22 @@ public partial class EmployeeListView : Page, IViewModelContent
         await (DataContext as EmployeeListViewModel).OnLoaded();
 
         var vm = DataContext as EmployeeListViewModel;
-        if (vm != null && !vm.Permission_Username.CanRead)
+        if (vm != null && vm.Permission_Username?.CanRead != true)
         {
             EmployeeDataGrid.Columns[0].Visibility = Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_FirstName.CanRead)
+        if (vm != null && vm.Permission_FirstName?.CanRead != true)
         {
             EmployeeDataGrid.Columns[1].Visibility = Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_LastName.CanRead)
+        if (vm != null && vm.Permission_LastName?.CanRead != true)
         {
             EmployeeDataGrid.Columns[2].Visibility = Visibility.Collapsed;
         }
 
-        if (vm != null && !vm.Permission_PhoneNumber.CanRead)
+        if (vm != null && vm.Permission_PhoneNumber?.CanRead != true)
         {
             EmployeeDataGrid.Columns[3].Visibility = Visibility.Collapsed;
         }

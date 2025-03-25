@@ -16,7 +16,10 @@ namespace MoriaWCFContracts.Interfaces
         
         [OperationContract]
         List<MoriaSalesOrder> GetSalesOrdersSimplified(DateTime dateFrom);
-        
+
+        [OperationContract]
+        IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids);
+
         [OperationContract]
         MoriaSalesOrder GetSalesOrder(int id);
 

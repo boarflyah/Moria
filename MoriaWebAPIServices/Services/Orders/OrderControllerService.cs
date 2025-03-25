@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaBaseServices;
+using MoriaDTObjects.Models;
 using MoriaModelsDo.Models.Orders;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Orders;
+using SubiektSalesOrders;
 
 namespace MoriaWebAPIServices.Services.Orders;
 public class OrderControllerService : IOrderControllerService
@@ -108,5 +110,52 @@ public class OrderControllerService : IOrderControllerService
 
         var created = await _context.SaveChangesAsync();
         return _creator.GetOrderDo(searchOrder);
+    }
+
+    public async Task ImportOrders()
+    {
+        var client = new SalesOrderContractClient();
+        try
+        {
+
+            var settings = await _context.Settings.FirstOrDefaultAsync();
+            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
+
+            if (orders.Any())
+            {
+                var ids = await GetOrderIds(orders);
+                if (ids.Any())
+                {
+                    var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
+                    foreach (var order in ordersToImport)
+                    {
+                        var newOrder = await _creator.CreateOrder(order);
+                        await _context.AddAsync(newOrder);
+                        await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
+                    }
+                }
+                if (settings != null)
+                    settings.LastSubiektImport = DateTime.Now;
+
+                _context.SaveChanges();
+            }
+        }
+        finally
+        {
+            await client.CloseAsync();
+        }
+    }
+
+    async Task<IEnumerable<int>> GetOrderIds(IEnumerable<MoriaSalesOrder> orders)
+    {
+        var ids = new List<int>();
+
+        foreach (var order in orders)
+        {
+            if (!await _context.Orders.AnyAsync(x => x.SubiektId == order.Id))
+                ids.Add(order.Id);
+        }
+
+        return ids;
     }
 }

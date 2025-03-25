@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using MoriaDTObjects.Models.Interfaces;
 
 namespace MoriaDTObjects.Models
 {
     [DataContract]
-    public class MoriaSalesOrder
+    public class MoriaSalesOrder : ISubiektBaseObject
     {
         public MoriaSalesOrder()
         {
@@ -32,24 +33,28 @@ namespace MoriaDTObjects.Models
         /// <summary>
         /// Odbiorca
         /// </summary>
+        [DataMember]
         public MoriaEntity Recipient
         {
             get;
             set;
         }
 
+        [DataMember]
         public string Symbol
         {
             get;
             set;
         }
 
+        [DataMember]
         public string StateName
         {
             get;
             set;
         }
 
+        [DataMember]
         public DateTime DocumentDate
         {
             get;
@@ -59,6 +64,7 @@ namespace MoriaDTObjects.Models
         /// <summary>
         /// Termin realizacji
         /// </summary>
+        [DataMember]
         public DateTime DueDate
         {
             get;
@@ -68,18 +74,21 @@ namespace MoriaDTObjects.Models
         /// <summary>
         /// Uwagi
         /// </summary>
+        [DataMember]
         public string Remarks
         {
             get;
             set;
         }
 
+        [DataMember]
         public MoriaWarehouse Warehouse
         {
             get;
             set;
         }
 
+        [DataMember]
         public List<MoriaSalesOrderItem> SalesOrderItems
         {
             get;

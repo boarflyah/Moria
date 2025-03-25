@@ -1,9 +1,11 @@
-﻿using MoriaModels.Attributes;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
+using MoriaModels.Models.Interfaces;
 
 namespace MoriaModels.Models.Orders;
 
-public class Order : BaseModel
+public class Order : BaseModel, ISubiektModel
 {
     //public int Id { get; set; }
     [Searchable]
@@ -21,6 +23,24 @@ public class Order : BaseModel
 
     [Searchable]
     public Contact ReceivingContact { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime OrderDate
+    {
+        get; set;
+    }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime DueDate
+    {
+        get; set;
+    }
+
+    public int SubiektId
+    {
+        get;
+        set;
+    }
 
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

@@ -127,4 +127,25 @@ public class OrderController: ControllerBase
         }
     }
 
+    [HttpGet(WebAPIEndpointsProvider.GetImportOrdersPath)]
+    [AllowAnonymous]
+    public async Task<IActionResult> ImportOrders()
+    {
+        try
+        {
+            await _controllerService.ImportOrders();
+
+            return Ok();
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(ImportOrders)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
 }

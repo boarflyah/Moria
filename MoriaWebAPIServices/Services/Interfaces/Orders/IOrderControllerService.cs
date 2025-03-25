@@ -12,4 +12,5 @@ public interface IOrderControllerService
     Task<OrderDo> UpdateOrder(OrderDo category);
 
     Task<bool> DeleteOrder(int id);
+    Task ImportOrders();
 }

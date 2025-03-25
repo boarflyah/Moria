@@ -115,22 +115,43 @@ namespace MoriaServices.Services
             return result;
         }
 
-        public MoriaSalesOrder GetSalesOrder(int id)
+        public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids)
         {
             var moriaHandler = _handlerService.GetHandler();
             if (_handlerService?.Login(moriaHandler) == true)
             {
-                var document = moriaHandler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == id);
-                if (document != null)
-                    return CreateSalesOrder(document);
-
-                return null;
+                IList<MoriaSalesOrder> result = new List<MoriaSalesOrder>();
+                foreach (var id in ids)
+                {
+                    var order = GetSalesOrder(moriaHandler, id);
+                    if (order != null)
+                        result.Add(order);
+                }
+                return result;
             }
             else
                 throw new ArgumentException("Nie udało się zalogować do Sfery");
         }
 
+        public MoriaSalesOrder GetSalesOrder(int id)
+        {
+            var moriaHandler = _handlerService.GetHandler();
+            if (_handlerService?.Login(moriaHandler) == true)
+            {
+                return GetSalesOrder(moriaHandler, id);
+            }
+            else
+                throw new ArgumentException("Nie udało się zalogować do Sfery");
+        }
 
+        MoriaSalesOrder GetSalesOrder(Uchwyt handler, int id)
+        {
+            var document = handler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == id);
+            if (document != null)
+                return CreateSalesOrder(document);
+
+            return null;
+        }
 
         MoriaSalesOrder CreateSalesOrder(DokumentZK document)
         {

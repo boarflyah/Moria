@@ -4,11 +4,12 @@ using MoriaBaseModels.Models;
 using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
+using MoriaModels.Models.Interfaces;
 
 namespace MoriaModels.Models.Products;
 
 [LookupHeaders(true, "Symbol", true, "Nazwa")]
-public class Product : BaseModel
+public class Product : BaseModel, ISubiektModel
 {
     //public int Id { get; set; }
 
@@ -31,6 +32,10 @@ public class Product : BaseModel
 
     [Searchable]
     public SteelKind? SteelKind { get; set; }
+    public int SubiektId
+    {
+        get; set;
+    }
 
     [InverseProperty(nameof(Component.Product))]
     public ICollection<Component> Components { get; set; } = new List<Component>();

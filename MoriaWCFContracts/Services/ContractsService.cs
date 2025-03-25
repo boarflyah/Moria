@@ -29,13 +29,20 @@ namespace MoriaWCFContracts.Services
         {
             return _salesOrderService.GetClosedSalesOrdersSimplified(dateFrom);
         }
+
         public MoriaSalesOrder GetSalesOrder(int id)
         {
             return _salesOrderService.GetSalesOrder(id);
         }
+
         public List<MoriaSalesOrder> GetSalesOrdersSimplified(DateTime dateFrom)
         {
             return _salesOrderService.GetSalesOrdersSimplified(dateFrom);
+        }
+
+        public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids)
+        {
+            return _salesOrderService.GetDetailedSalesOrders(ids);
         }
 
         #endregion

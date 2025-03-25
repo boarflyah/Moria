@@ -24,6 +24,16 @@ namespace DatabaseGenerator
                 
                 context.Database.Migrate();
 
+                context.CreatePPermissionsTrigger();
+
+                var adminPosition = new MoriaModels.Models.EntityPersonel.Position()
+                {
+                    Name = "Administrator",
+                    Code = "ADM"
+                };
+
+                context.Positions.Add(adminPosition);
+
                 context.Employees.Add(new MoriaModels.Models.EntityPersonel.Employee()
                 {
                     FirstName = "Admin",
@@ -31,7 +41,14 @@ namespace DatabaseGenerator
                     Username = "admin",
                     Password = "admin",
                     Admin = true,
+                    Position = adminPosition
                 });
+
+                context.Settings.Add(new MoriaModels.Models.Base.Settings()
+                {
+                    LastSubiektImport = new DateTime(2025, 1, 1)
+                });
+                ;
 
                 context.SaveChanges();
 

@@ -72,10 +72,11 @@ public partial class LookupWindow : Window
         Hide();
     }
 
-    public async Task<LookupWrapper<T>> ShowDialog<T>() where T : BaseDo, new()
+    public async Task<LookupWrapper<T>> ShowDialog<T>(bool canAddNew) where T : BaseDo, new()
     {
         (DataContext as LookupWindowViewModel).SetType<T>();
 
+        NewButton.Visibility = canAddNew ? Visibility.Visible : Visibility.Hidden;
         await (DataContext as LookupWindowViewModel).LoadNext();
         CreateColumns();
 

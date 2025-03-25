@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20250323090414_SettingsAdded.cs" />
+    <Compile Remove="Migrations\20250323090414_SettingsAdded.Designer.cs" />
+    <Compile Remove="Migrations\20250323091647_SettingsAdded2.cs" />
+    <Compile Remove="Migrations\20250323091647_SettingsAdded2.Designer.cs" />
+    <Compile Remove="Migrations\20250323092105_202503251021.cs" />
+    <Compile Remove="Migrations\20250323092105_202503251021.Designer.cs" />
+    <Compile Remove="Migrations\20250323182014_DateTimeUpdated.cs" />
+    <Compile Remove="Migrations\20250323182014_DateTimeUpdated.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>

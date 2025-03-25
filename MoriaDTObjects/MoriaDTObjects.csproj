@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Interfaces\ISubiektBaseObject.cs" />
     <Compile Include="Models\MoriaComponent.cs" />
     <Compile Include="Models\MoriaEntity.cs" />
     <Compile Include="Models\MoriaProduct.cs" />

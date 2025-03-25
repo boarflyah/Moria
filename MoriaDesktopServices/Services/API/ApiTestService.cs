@@ -11,8 +11,10 @@ public class ApiTestService
         _apiService = apiService;
     }
 
+#if DEBUG
     public async Task<string> Get()
     {
         return await _apiService.Get("123", WebAPIEndpointsProvider.GetTestPath, null, null);
     }
+#endif
 }

@@ -11,16 +11,19 @@ namespace MoriaWebAPIServices.Services;
 public class ListViewService : IListViewControllerService
 {
     readonly ApplicationDbContext _context;
+    readonly ModelTypeConverter _typeConverter;
 
-    public ListViewService(ApplicationDbContext context)
+    public ListViewService(ApplicationDbContext context, ModelTypeConverter typeConverter)
     {
         _context = context;
+        _typeConverter = typeConverter;
     }
 
     public async Task<IEnumerable<TDo>> SearchAsync<TDo>(string searchText)
         where TDo : class
     {
-        Type entityType = ResolveEntityType(typeof(TDo));
+        //Type entityType = ResolveEntityType(typeof(TDo));
+        Type entityType = _typeConverter.GetModelType(typeof(TDo));
         var method = typeof(ListViewService).GetMethod(nameof(SearchDynamicAsync))
             ?.MakeGenericMethod(entityType, typeof(TDo));
 

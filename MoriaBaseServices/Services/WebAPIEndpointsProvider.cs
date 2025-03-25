@@ -429,7 +429,7 @@ public class WebAPIEndpointsProvider
     /// <para>Return bool</para>
     /// </summary>
     public const string DeleteOrderPath = $"{Order}";
-
+    public const string GetImportOrdersPath = $"{Order}/import";
 
     #endregion
 

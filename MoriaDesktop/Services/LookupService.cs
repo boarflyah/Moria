@@ -14,13 +14,13 @@ public class LookupService: ILookupService
         _newObjectService = newObjectService;
     }
 
-    public async Task<T> ShowLookup<T>() where T : BaseDo, new()
+    public async Task<T> ShowLookup<T>(bool canAddNew = true) where T : BaseDo, new()
     {
-        var wrapper = await _lookupWindow.ShowDialog<T>();
+        var wrapper = await _lookupWindow.ShowDialog<T>(canAddNew);
         if (wrapper.Selected != null)
             return wrapper.Selected;
 
-        if (wrapper.CreateNew)
+        if (wrapper.CreateNew && canAddNew)
             return _newObjectService.GetNewObject<T>();
 
         return null;

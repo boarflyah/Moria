@@ -1,0 +1,20 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "http://localhost:8080/MyService?singleWsdl"
+    ],
+    "collectionTypes": [
+      "System.Array",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "namespaceMappings": [
+      "*, SubiektSalesOrders"
+    ],
+    "references": [
+      "C:\\Users\\boarf\\Desktop\\Visual Studio Workspace\\Repos new\\Moria\\MoriaWebAPIServices\\bin\\Release\\net8.0\\MoriaDTObjects.dll"
+    ],
+    "sync": true,
+    "targetFramework": "net8.0",
+    "typeReuseMode": "Specified"
+  }
+}

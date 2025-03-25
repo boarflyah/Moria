@@ -4,13 +4,14 @@ using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
 using MoriaModels.Models.EntityPersonel;
+using MoriaModels.Models.Interfaces;
 using MoriaModels.Models.Orders.Relations;
 using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 
 namespace MoriaModels.Models.Orders;
 
-public class OrderItem : BaseModel
+public class OrderItem : BaseModel, ISubiektModel
 {
     //public int Id { get; set; }
     public int Index { get; set; }
@@ -30,13 +31,18 @@ public class OrderItem : BaseModel
     [Searchable]
     public Drive? Drive { get; set; }
 
-    public int WarehouseId { get; set; }
-    public Warehouse Warehouse { get; set; }
+    public int? WarehouseId { get; set; }
+    public Warehouse? Warehouse { get; set; }
 
-    public int DesignerId { get; set; }
+    public int? DesignerId { get; set; }
 
     [Searchable]
-    public Employee Designer { get; set; }
+    public Employee? Designer { get; set; }
+
+    public int SubiektId
+    {
+        get; set;
+    }
 
     [NotMapped]
     public List<Component> Components

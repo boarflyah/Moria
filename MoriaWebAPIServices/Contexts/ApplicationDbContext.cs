@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MoriaModels.Models.Base;
@@ -29,6 +30,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.UseSerialColumns();
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Drive>()
             .HasMany(e => e.MotorGears)
@@ -42,6 +44,13 @@ public class ApplicationDbContext : DbContext
             .HasMany(e => e.Drives)
             .WithMany(e => e.Components)
             .UsingEntity<DriveToComponent>();
+        //modelBuilder.Entity<Settings>()
+        //        .Property(e => e.LastSubiektImport )
+        //        .HasColumnType("timestamp without time zone")
+        //        .HasConversion(
+        //            v => v,
+        //            v => DateTime.SpecifyKind(v, DateTimeKind.Unspecified)
+        //        );
     }
 
     public IQueryable<BaseModel> Get(Type objectType)
@@ -88,5 +97,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<ComponentToOrderItem> ComponentToOrderItems
     {
         get; set;
+    }
+
+    public DbSet<Settings> Settings
+    {
+        get;
+        set;
     }
 }

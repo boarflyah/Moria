@@ -8,11 +8,12 @@ namespace MoriaWebAPIServices.Services;
 public class LookupControllerService : ILookupControllerService
 {
     readonly ApplicationDbContext _context;
+    readonly IListViewControllerService _listViewControllerService;
 
-    public LookupControllerService(ApplicationDbContext context)
+    public LookupControllerService(ApplicationDbContext context, IListViewControllerService listViewControllerService)
     {
         _context = context;
-        _context.Drives.Include(x => x.Motor);
+        _listViewControllerService = listViewControllerService;
     }
 
     public async Task<PagedList<LookupModel>> GetObjects(Type entityType, int lastId, int pageSize)
@@ -31,5 +32,10 @@ public class LookupControllerService : ILookupControllerService
         var filteredToPageSize = filtered.Take(pageSize);
 
         return new(filteredToPageSize, filteredToPageSize.Any() ? filteredToPageSize.Last().Id : -1, filtered.Count() > pageSize);
+    }
+
+    public async Task<IEnumerable<LookupModel>> SearchObjects(Type entityType)
+    {
+        return null;
     }
 }

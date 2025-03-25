@@ -80,7 +80,8 @@ namespace MoriaServices.Services
             return new MoriaComponent()
             {
                 Product = CreateProduct(component.Skladnik),
-                Quantity = component.Ilosc
+                Quantity = component.Ilosc,
+                Id = component.Id
             };
         }
 

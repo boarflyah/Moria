@@ -1,37 +1,39 @@
 ﻿using System.Runtime.Serialization;
+using MoriaDTObjects.Models.Interfaces;
 
 namespace MoriaDTObjects.Models
 {
     [DataContract]
-    public class MoriaEntity
+    public class MoriaEntity : ISubiektBaseObject
     {
-        //[DataMember]
+        [DataMember]
         public int Id
         {
             get;
             set;
         }
 
-        //[DataMember]
+        [DataMember]
         public string ShortName
         {
             get;
             set;
         }
 
-        //[DataMember]
+        [DataMember]
         public string LongName
         {
             get; set;
         }
 
-        //[DataMember]
+        [DataMember]
         public string Symbol
         {
             get;
             set;
         }
 
+        [DataMember]
         public string NIP
         {
             get;

@@ -3,5 +3,5 @@
 namespace MoriaDesktopServices.Interfaces;
 public interface ILookupService
 {
-    Task<T> ShowLookup<T>() where T : BaseDo, new();
+    Task<T> ShowLookup<T>(bool canAddNew = true) where T : BaseDo, new();
 }
