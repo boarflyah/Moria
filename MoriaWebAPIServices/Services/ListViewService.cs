@@ -22,8 +22,7 @@ public class ListViewService : IListViewControllerService
     public async Task<IEnumerable<TDo>> SearchAsync<TDo>(string searchText)
         where TDo : class
     {
-        //Type entityType = ResolveEntityType(typeof(TDo));
-        Type entityType = _typeConverter.GetModelType(typeof(TDo));
+        Type entityType = typeof(TDo);
         var method = typeof(ListViewService).GetMethod(nameof(SearchDynamicAsync))
             ?.MakeGenericMethod(entityType, typeof(TDo));
 
@@ -46,6 +45,8 @@ public class ListViewService : IListViewControllerService
         var properties = GetSearchableProperties(typeof(T));
 
         Expression? combinedExpression = null;
+        var toLowerMethod = typeof(string).GetMethod("ToLower", Type.EmptyTypes)!;
+        var searchTextExpression = Expression.Constant(searchText.ToLower());
         foreach (var property in properties)
         {
             var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) })!;
@@ -56,7 +57,9 @@ public class ListViewService : IListViewControllerService
                 propertyExpression = Expression.Property(propertyExpression, property.Item2);
             }
 
-            var searchExpression = Expression.Call(propertyExpression, containsMethod, Expression.Constant(searchText));
+            var lowerPropertyExpression = Expression.Call(propertyExpression, toLowerMethod);
+            var searchExpression = Expression.Call(lowerPropertyExpression, containsMethod, searchTextExpression);
+            //var searchExpression = Expression.Call(propertyExpression, containsMethod, Expression.Constant(searchText));
             combinedExpression = combinedExpression == null ? searchExpression : Expression.OrElse(combinedExpression, searchExpression);
         }
 

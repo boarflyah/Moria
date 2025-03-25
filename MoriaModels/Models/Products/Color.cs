@@ -12,6 +12,7 @@ public class Color: BaseModel
 
     [Searchable]
     public string Name { get; set; }
+    [Searchable]
     public string Code { get; set; }
 
     public override LookupModel GetLookupObject()
