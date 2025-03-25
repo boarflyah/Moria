@@ -32,7 +32,7 @@ public class ApiColorService : IApiColorService
 
     public async Task<ColorDo> CreateColor(string username, ColorDo color)
     {
-        return await _apiService.Post<ColorDo>(username, WebAPIEndpointsProvider.PostColorPath, null, null, parameters: color);
+        return await _apiService.Post<ColorDo>(username, WebAPIEndpointsProvider.PostColorPath, null, color);
     }
 
     public async Task<ColorDo> UpdateColor(string username, ColorDo color)

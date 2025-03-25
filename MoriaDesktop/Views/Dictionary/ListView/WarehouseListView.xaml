@@ -25,7 +25,7 @@
                                 Binding="{Binding Symbol}"
                                 Width="*"/>
                 <DataGridTextColumn Header="Nazwa" 
-                                Binding="{Binding WarehouseName}"
+                                Binding="{Binding Name}"
                                 Width="3*"/>                
             </DataGrid.Columns>
         </DataGrid>
