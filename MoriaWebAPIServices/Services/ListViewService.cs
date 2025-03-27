@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Contexts;
+using System.Collections;
 
 namespace MoriaWebAPIServices.Services;
 
@@ -104,7 +105,12 @@ public class ListViewService : IListViewControllerService
     private List<PropertyInfo> GetNavigationalProperties(Type type)
     {
         return type.GetProperties()
-            .Where(p => !p.PropertyType.IsPrimitive && !p.PropertyType.IsEnum && p.PropertyType != typeof(string))
+            .Where(p => !p.PropertyType.IsPrimitive 
+            && !p.PropertyType.IsEnum 
+            && p.PropertyType != typeof(string) 
+            && p.PropertyType != typeof(decimal)
+            && !(p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) &&
+                Nullable.GetUnderlyingType(p.PropertyType).IsPrimitive))
             .ToList();
     }
 
@@ -119,7 +125,7 @@ public class ListViewService : IListViewControllerService
         {
             var entityProp = entityProperties.FirstOrDefault(p => p.Name == dtoProp.Name);
 
-            if (entityProp != null)
+            if (entityProp != null && !entityProp.PropertyType.IsArray && !(typeof(IEnumerable).IsAssignableFrom(entityProp.PropertyType) && entityProp.PropertyType != typeof(string)))
             {
                 var value = entityProp.GetValue(entity);
 
@@ -148,7 +154,7 @@ public class ListViewService : IListViewControllerService
         {
             var entityProp = entityProperties.FirstOrDefault(p => p.Name == dtoProp.Name);
 
-            if (entityProp != null)
+            if (entityProp != null && !entityProp.PropertyType.IsArray && !(typeof(IEnumerable).IsAssignableFrom(entityProp.PropertyType) && entityProp.PropertyType != typeof(string)))
             {
                 var value = entityProp.GetValue(entity);
 

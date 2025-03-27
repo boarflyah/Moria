@@ -143,6 +143,7 @@ public class MotorDetailViewModel : BaseDetailViewModel
     public override BaseDo GetDo()
         => new MotorDo()
         {
+            Id = objectId,
             Name = this.Name,
             Power = this.Power,
             Symbol = this.Symbol,

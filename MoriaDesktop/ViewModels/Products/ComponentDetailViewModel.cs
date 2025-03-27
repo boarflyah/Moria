@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using System.Reflection;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
+using MoriaBaseServices;
 using MoriaDesktop.Attributes;
 using MoriaDesktop.Models;
 using MoriaDesktop.Services;
@@ -167,7 +169,7 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
         if (currentComponent.Drives == null)
             currentComponent.Drives = new List<DriveToComponentDo>();
         foreach (var dtc in Objects.OfType<DriveToComponentDo>())
-            if(!currentComponent.Drives.Any(x => x == dtc))
+            if (!currentComponent.Drives.Any(x => x == dtc))
                 currentComponent.Drives.Add(dtc);
 
         return currentComponent;
@@ -187,27 +189,34 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
 
     protected async override Task LoadObject()
     {
-        Clear();
-        Setup(currentComponent);
+    }
 
-        //Clear();
+    public async override Task Load()
+    {
+        PropertyChanged -= BaseDetailViewModel_PropertyChanged;
+        try
+        {
+            Clear();
+            Setup(currentComponent);
 
-        //var component = await ExecuteApiRequest(_apiService.GetComponent, _appStateService.LoggedUser.Username, objectId);
-        //if (currentComponent != null && currentComponent.Drives?.Any() == true)
-        //{
-        //    if (component.Drives == null)
-        //        component.Drives = new List<DriveToComponentDo>();
+            var property = GetType().GetProperties().FirstOrDefault(x => x.GetCustomAttribute<DefaultPropertyAttribute>() != null);
+            if (property == null)
+                property = GetType().GetProperties().FirstOrDefault();
 
-        //    foreach (var dtc in currentComponent.Drives)
-        //    {
-        //        if (!component.Drives.Any(x => x.Id == dtc.Id))
-        //            component.Drives.Add(dtc);
-        //    }
-        //}
-        //if (component != null)
-        //    Setup(component);
-        //else
-        //    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
+            _appStateService.SetupTitle(property?.GetValue(this)?.ToString() ?? "");
+        }
+        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+        }
+        catch (Exception ex)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+        }
+        finally
+        {
+            PropertyChanged += BaseDetailViewModel_PropertyChanged;
+        }
     }
 
     protected async override Task<bool> SaveNewObject()

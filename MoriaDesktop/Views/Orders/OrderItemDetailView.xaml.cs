@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaBaseServices;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktopServices.Interfaces;
@@ -30,14 +31,9 @@ public partial class OrderItemDetailView : Page, IViewModelContent
         await (DataContext as BaseDetailViewModel).Load();
     }
 
-    private static bool IsTextAllowed(string text)
-    {
-        return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
-    }
-
     private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        e.Handled = !IsTextAllowed(e.Text);
+        e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
     }
 
     private async void DesignerLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)

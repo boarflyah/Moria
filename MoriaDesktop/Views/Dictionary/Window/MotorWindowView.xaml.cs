@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaBaseServices;
 using MoriaDesktop.Services.Interfaces;
 using MoriaDesktop.ViewModels.Dictionary.DetailView;
 
@@ -20,12 +21,7 @@ public partial class MotorWindowView : System.Windows.Window, IDetailedWindow
 
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        e.Handled = !IsTextAllowed(e.Text);
-    }
-
-    private static bool IsTextAllowed(string text)
-    {
-        return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
+        e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
     }
 
     private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)

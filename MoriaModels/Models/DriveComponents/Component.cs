@@ -48,6 +48,7 @@ public class Component : BaseModel
     }
 
     [Searchable]
+    [NotMapped]
     public List<Drive> Drives
     {
         get;

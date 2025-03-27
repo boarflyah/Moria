@@ -159,6 +159,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 IsLocked = true;
                 HasObjectChanged = false;
                 isNew = false;
+
+                UnlockCommand?.NotifyCanExecuteChanged();
+                EditCommand?.NotifyCanExecuteChanged();
+
                 await Load();
             }
         }

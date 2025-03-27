@@ -1,6 +1,9 @@
-﻿using System.Xml.Linq;
+﻿using System.Reflection;
+using System.Xml.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
+using MoriaBaseServices;
+using MoriaDesktop.Attributes;
 using MoriaDesktop.Models;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
@@ -287,9 +290,36 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 
     protected async override Task LoadObject()
     {
-        Clear();
-        Setup(currentOrderItem);
     }
+
+    public async override Task Load()
+    {
+        PropertyChanged -= BaseDetailViewModel_PropertyChanged;
+        try
+        {
+            Clear();
+            Setup(currentOrderItem);
+
+            var property = GetType().GetProperties().FirstOrDefault(x => x.GetCustomAttribute<DefaultPropertyAttribute>() != null);
+            if (property == null)
+                property = GetType().GetProperties().FirstOrDefault();
+
+            _appStateService.SetupTitle(property?.GetValue(this)?.ToString() ?? "");
+        }
+        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+        }
+        catch (Exception ex)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+        }
+        finally
+        {
+            PropertyChanged += BaseDetailViewModel_PropertyChanged;
+        }
+    }
+
     protected async override Task<bool> SaveNewObject() => false;
     protected async override Task<bool> UpdateExistingObject() => false;
     protected async override Task Save()

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaBaseServices;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.ViewModels.Products;
@@ -26,7 +27,7 @@ public partial class DriveDetailView : Page, IViewModelContent
 
     private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        e.Handled = !IsTextAllowed(e.Text);
+        e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
     }
 
     private void QuantityTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -35,11 +36,6 @@ public partial class DriveDetailView : Page, IViewModelContent
         {
             e.Handled = true;
         }
-    }
-
-    private static bool IsTextAllowed(string text)
-    {
-        return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
     }
 
     private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)

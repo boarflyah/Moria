@@ -1,4 +1,5 @@
-﻿using MoriaBaseModels.Attributes;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using MoriaBaseModels.Attributes;
 using MoriaBaseModels.Models;
 using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
@@ -22,6 +23,8 @@ public class Drive: BaseModel
     {
         get; set;
     }
+
+    [NotMapped]
     public List<MotorGear> MotorGears
     {
         get;
@@ -31,6 +34,7 @@ public class Drive: BaseModel
         get;
     } = [];
 
+    [NotMapped]
     public List<Component> Components
     {
         get;

@@ -37,14 +37,14 @@ public partial class OrderDetailView : Page, IViewModelContent
 
     private async void OrderingLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var contact = await _lookupService.ShowLookup<ContactDo>();
+        var contact = await _lookupService.ShowLookup<ContactDo>(false);
         if (contact != null)
             (DataContext as OrderDetailViewModel).OrderingContact = contact;
     }
 
     private async void ReceivingLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var contact = await _lookupService.ShowLookup<ContactDo>();
+        var contact = await _lookupService.ShowLookup<ContactDo>(false);
         if (contact != null)
             (DataContext as OrderDetailViewModel).ReceivingContact = contact;
     }

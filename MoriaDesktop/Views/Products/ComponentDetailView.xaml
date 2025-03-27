@@ -126,7 +126,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="QuantityTextBox" 
-                                 Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"
                                  Grid.Row="1"/>
                     </Grid>

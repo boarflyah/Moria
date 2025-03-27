@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaBaseServices;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
 using MoriaDesktop.ViewModels.Products;
@@ -38,7 +39,7 @@ public partial class ComponentDetailView : Page, IViewModelContent
         {
             if (e.Row.DataContext is DriveToComponentDo related)
             {
-                var drive = await _lookupService.ShowLookup<DriveDo>();
+                var drive = await _lookupService.ShowLookup<DriveDo>(false);
                 if (drive != null)
                 {
                     related.Drive = drive;
@@ -53,15 +54,9 @@ public partial class ComponentDetailView : Page, IViewModelContent
             (DataContext as BaseDetailViewModel).HasObjectChanged = true;
     }
 
-
-    private static bool IsTextAllowed(string text)
-    {
-        return System.Text.RegularExpressions.Regex.IsMatch(text, @"^[0-9]*(?:[\.\,][0-9]*)?$");
-    }
-
     private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        e.Handled = !IsTextAllowed(e.Text);
+        e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
     }
 
     private async void ColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
@@ -73,7 +68,7 @@ public partial class ComponentDetailView : Page, IViewModelContent
 
     private async void ProductLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var product = await _lookupService.ShowLookup<ProductDo>();
+        var product = await _lookupService.ShowLookup<ProductDo>(false);
         if (product != null)
             (DataContext as ComponentDetailViewModel).ComponentProduct = product;
     }

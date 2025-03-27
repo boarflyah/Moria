@@ -12,7 +12,8 @@
         </Grid.ColumnDefinitions>
         <TextBox Name="SymbolTextBox"
                  IsReadOnly="True"
-                 PreviewMouseDown="SymbolTextBox_PreviewMouseDown"/>
+                 PreviewMouseDown="SymbolTextBox_PreviewMouseDown"
+                 PreviewKeyDown="SymbolTextBox_PreviewKeyDown"/>
         <Button x:Name="ClearButton" 
                 Grid.Column="1"
                 ClickMode="Release"

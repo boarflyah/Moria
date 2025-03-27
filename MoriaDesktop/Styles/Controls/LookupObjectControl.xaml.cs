@@ -2,9 +2,7 @@
 using System.Windows.Controls;
 
 namespace MoriaDesktop.Styles.Controls;
-/// <summary>
-/// Logika interakcji dla klasy LookupObjectControl.xaml
-/// </summary>
+
 public partial class LookupObjectControl : UserControl
 {
     public LookupObjectControl()
@@ -54,5 +52,11 @@ public partial class LookupObjectControl : UserControl
     private void SymbolTextBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         OnLookupInvoked?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void SymbolTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if(e.Key == System.Windows.Input.Key.Space || e.Key == System.Windows.Input.Key.Return)
+            OnLookupInvoked?.Invoke(this, EventArgs.Empty);
     }
 }

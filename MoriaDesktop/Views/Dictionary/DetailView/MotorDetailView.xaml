@@ -55,8 +55,11 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Moc (kV)" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="TextBox3" Text="{Binding Power, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"
-                     PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+            <TextBox Name="TextBox3" 
+                     Text="{Binding Power, UpdateSourceTrigger=LostFocus}"
+                     Grid.Row="1"
+                     PreviewTextInput="TextBox_PreviewTextInput" 
+                     PreviewKeyDown="TextBox_PreviewKeyDown"/>
         </Grid>
 
     </Grid>
