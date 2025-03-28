@@ -36,4 +36,13 @@ public class ApiOrderService : IApiOrderService
     {
         return await _apiService.Put<OrderDo>(username, WebAPIEndpointsProvider.PutOrderPath, null, order);
     }
+
+    public async Task<IEnumerable<OrderDo>> GetCalendarOrders(string username, int weekNumber)
+    {
+        var result = await _apiService.Get<IEnumerable<OrderDo>>(username, WebAPIEndpointsProvider.GetCalendarOrdersPath, null, null, weekNumber);
+        if (result == null)
+            return new List<OrderDo>();
+
+        return result;
+    }
 }

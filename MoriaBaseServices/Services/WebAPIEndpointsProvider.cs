@@ -431,6 +431,10 @@ public class WebAPIEndpointsProvider
     public const string DeleteOrderPath = $"{Order}";
     public const string GetImportOrdersPath = $"{Order}/import";
 
+    /// <summary>
+    /// Parameter from path: weekNumber
+    /// </summary>
+    public const string GetCalendarOrdersPath = $"{Order}/calendar"; 
     #endregion
 
 #if DEBUG

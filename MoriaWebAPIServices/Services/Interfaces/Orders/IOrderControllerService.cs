@@ -7,6 +7,8 @@ public interface IOrderControllerService
 
     Task<OrderDo> GetOrder(int id);
 
+    Task<IEnumerable<OrderDo>> GetCalendarOrders(int weekNumber);
+
     Task<OrderDo> CreateOrder(OrderDo category);
 
     Task<OrderDo> UpdateOrder(OrderDo category);

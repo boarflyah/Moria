@@ -10,6 +10,104 @@
       Title="CalendarView">
 
     <Grid>
-        
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Orders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Black" Padding="5" Margin="10" Background="LightGray">
+                            <StackPanel>
+                                <!-- Nagłówek zamówienia -->
+                                <TextBlock Text="{Binding OrderNumberSymbol}" FontSize="16" FontWeight="Bold" />
+                                <TextBlock Text="{Binding DueDate, StringFormat='dddd, dd.MM.yyyy'}"
+                                           FontSize="14" FontWeight="SemiBold" Foreground="DarkBlue"/>
+                                <WrapPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Rysunek:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding TechnicalDrawingCompleted}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Cięcie:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding CuttingCompleted}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Czyszczenie:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding MetalCliningCompleted}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Malowanie:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding PaintingCompleted}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Szafa:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding ElectricaCabinetCompleted}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Montaż:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding MachineAssembled}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Testy:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding MachineWiredAndTested}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Transport:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding TransportOrdered}" Margin="0,0,10,0"/>
+                                    </StackPanel>
+                                </WrapPanel>
+                                <!-- Lista pozycji w zamówieniu -->
+                                <ItemsControl ItemsSource="{Binding OrderItems}" Margin="10,5,5,5">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderThickness="1" BorderBrush="LightCyan" Padding="5" Margin="5">
+                                                <StackPanel>
+                                                    <!-- Nazwa pozycji -->
+                                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" />
+
+                                                    <!-- Lista etapów produkcji -->
+                                                    <WrapPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Rysunek:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding TechnicalDrawingCompleted}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Cięcie:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding CuttingCompleted}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Czyszczenie:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding MetalCliningCompleted}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Malowanie:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding PaintingCompleted}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Szafa:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding ElectricaCabinetCompleted}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Montaż:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding MachineAssembled}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Testy:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding MachineWiredAndTested}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Transport:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding TransportOrdered}" Margin="0,0,10,0"/>
+                                                        </StackPanel>
+                                                    </WrapPanel>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>

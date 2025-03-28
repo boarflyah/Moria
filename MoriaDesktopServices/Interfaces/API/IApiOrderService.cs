@@ -7,5 +7,6 @@ public interface IApiOrderService
     Task<bool> DeleteOrder(string username, int id);
     Task<OrderDo> GetOrder(string username, int id);
     Task<IEnumerable<OrderDo>> GetOrders(string username);
+    Task<IEnumerable<OrderDo>> GetCalendarOrders(string username, int weekNumber);
     Task<OrderDo> UpdateOrder(string username, OrderDo order);
 }

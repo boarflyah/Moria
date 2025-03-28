@@ -148,4 +148,25 @@ public class OrderController: ControllerBase
         }
     }
 
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetCalendarOrdersPath}/{{weekNumber}}")]
+    [Produces<IEnumerable<OrderDo>>]
+    public async Task<IActionResult> GetCalendarOrders(int weekNumber)
+    {
+        try
+        {
+            var category = await _controllerService.GetCalendarOrders(weekNumber);
+
+            return Ok(category);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetCalendarOrders)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
 }

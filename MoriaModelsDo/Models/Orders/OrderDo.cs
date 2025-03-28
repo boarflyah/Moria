@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Base;
+﻿using MoriaModelsDo.Attributes;
+using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaModelsDo.Models.Orders;
@@ -69,6 +70,128 @@ public class OrderDo: BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    private bool _TechnicalDrawingCompleted;
+    public bool TechnicalDrawingCompleted
+    {
+        get => _TechnicalDrawingCompleted;
+        set
+        {
+            _TechnicalDrawingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _CuttingCompleted;
+    public bool CuttingCompleted
+    {
+        get => _CuttingCompleted;
+        set
+        {
+            _CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MetalCliningCompleted;
+    public bool MetalCliningCompleted
+    {
+        get => _MetalCliningCompleted;
+        set
+        {
+            _MetalCliningCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _PaintingCompleted;
+    public bool PaintingCompleted
+    {
+        get => _PaintingCompleted;
+        set
+        {
+            _PaintingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _ElectricaCabinetCompleted;
+    public bool ElectricaCabinetCompleted
+    {
+        get => _ElectricaCabinetCompleted;
+        set
+        {
+            _ElectricaCabinetCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineAssembled;
+    public bool MachineAssembled
+    {
+        get => _MachineAssembled;
+        set
+        {
+            _MachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineWiredAndTested;
+    public bool MachineWiredAndTested
+    {
+        get => _MachineWiredAndTested;
+        set
+        {
+            _MachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineReleased;
+    public bool MachineReleased
+    {
+        get => _MachineReleased;
+        set
+        {
+            _MachineReleased = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _TransportOrdered;
+    public bool TransportOrdered
+    {
+        get => _TransportOrdered;
+        set
+        {
+            _TransportOrdered = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _ProductionOrderSymbol;
+    public bool ProductionOrderSymbol
+    {
+        get => _ProductionOrderSymbol;
+        set
+        {
+            _ProductionOrderSymbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime _DueDate;
+    public DateTime DueDate
+    {
+        get => _DueDate;
+        set
+        {
+            _DueDate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
 
     public IList<OrderItemDo> OrderItems
     {

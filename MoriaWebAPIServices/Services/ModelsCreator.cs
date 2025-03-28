@@ -670,7 +670,12 @@ public class ModelsCreator
             CatalogLink = order.CatalogLink,
             ClientSymbol = order.ClientSymbol,
             OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
-            ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact)
+            ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact),
+            DueDate = order.DueDate,
+            TechnicalDrawingCompleted = true,
+            CuttingCompleted = true,
+            MetalCliningCompleted = true
+
         };
 
         if (order.OrderItems != null)

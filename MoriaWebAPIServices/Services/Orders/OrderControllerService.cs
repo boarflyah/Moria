@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using MoriaBaseServices;
 using MoriaDTObjects.Models;
+using MoriaModels.Models.Orders;
 using MoriaModelsDo.Models.Orders;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces;
@@ -157,5 +159,24 @@ public class OrderControllerService : IOrderControllerService
         }
 
         return ids;
+    }
+
+    public async Task<IEnumerable<OrderDo>> GetCalendarOrders(int weekNumber)
+    {
+        List<OrderDo> result = new();
+        var searchOrders = _context.Orders
+          .Include(x => x.OrderingContact)
+          .Include(x => x.ReceivingContact)
+          .Include(x => x.OrderItems).AsEnumerable().Where(x => ISOWeek.GetWeekOfYear(x.DueDate) == weekNumber);
+
+        if (searchOrders == null)
+            return null;
+
+        foreach (var order in searchOrders)
+        {
+            result.Add(_creator.GetOrderDo(order));
+        }
+        return result;
+
     }
 }
