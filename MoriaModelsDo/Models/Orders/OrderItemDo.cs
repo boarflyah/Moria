@@ -19,6 +19,17 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private string _Symbol;
+    public string Symbol
+    {
+        get => _Symbol;
+        set
+        {
+            _Symbol = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private string _Description;
     public string Description
     {
@@ -41,6 +52,18 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private string _ElectricialDescription;
+    public string ElectricialDescription
+    {
+        get => _ElectricialDescription;
+        set
+        {
+            _ElectricialDescription = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
     private decimal _MachineWeight;
     public decimal MachineWeight
     {
@@ -48,6 +71,17 @@ public class OrderItemDo: BaseDo
         set
         {
             _MachineWeight = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private decimal _Power;
+    public decimal Power
+    {
+        get => _Power;
+        set
+        {
+            _Power = value;
             RaisePropertyChanged(value);
         }
     }
@@ -81,6 +115,29 @@ public class OrderItemDo: BaseDo
         set
         {
             _Product = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ColorDo _MainColor;
+    public ColorDo MainColor
+    {
+        get => _MainColor;
+        set
+        {
+            _MainColor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private ColorDo _DetailsColor;
+    public ColorDo DetailsColor
+    {
+        get => _DetailsColor;
+        set
+        {
+            _DetailsColor = value;
             RaisePropertyChanged(value);
         }
     }

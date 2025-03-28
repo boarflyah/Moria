@@ -724,9 +724,14 @@ public class ModelsCreator
         {
             result.OrderItems = new List<OrderItem>();
             var warehouse = await GetSubiektModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses);
+
+            var splitSymbol = model.Symbol?.Split(' ');
+            string moriaSymbol = null;
+            if (splitSymbol.Count() > 2)
+                moriaSymbol= splitSymbol[1] + splitSymbol[2];
             foreach (var soi in model.SalesOrderItems)
             {
-                var oi = await CreateOrderItem(soi);
+                var oi = await CreateOrderItem(soi, moriaSymbol);
                 oi.Warehouse = warehouse;
                 result.OrderItems.Add(oi);
             }
@@ -831,11 +836,12 @@ public class ModelsCreator
         return result;
     }
 
-    public async Task<OrderItem> CreateOrderItem(MoriaSalesOrderItem model)
+    public async Task<OrderItem> CreateOrderItem(MoriaSalesOrderItem model, string moriaSymbol)
     {
         return new()
         {
             SubiektId = model.Id,
+            Symbol = moriaSymbol + model.Index.ToString().PadLeft(2,'0'),
             Index = model.Index,
             Quantity = (double)model.Quantity,
             Description = model.Remarks,
@@ -892,7 +898,7 @@ public class ModelsCreator
         {
             Id = ctoi.Id,
             LastModified = ctoi.LastModified,
-            ElectricalDescription = ctoi.ElectricialDescription,
+            ElectricalDescription = ctoi.ElectricalDescription,
             Color = ctoi.Color == null ? null : GetColorDo(ctoi.Color),
             Component = ctoi.Component == null ? null : GetComponentDo(ctoi.Component),
         };
@@ -904,7 +910,7 @@ public class ModelsCreator
         {
             Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null,
             Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null,
-            ElectricialDescription = model.ElectricalDescription,
+            ElectricalDescription = model.ElectricalDescription,
             LastModified = model.LastModified,
         };
     }
@@ -913,7 +919,7 @@ public class ModelsCreator
     {
         ctoi.Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null;
         ctoi.Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null;
-        ctoi.ElectricialDescription = model.ElectricalDescription;
+        ctoi.ElectricalDescription = model.ElectricalDescription;
         ctoi.LastModified = model.LastModified;
     }
 

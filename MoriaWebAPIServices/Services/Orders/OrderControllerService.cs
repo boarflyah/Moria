@@ -167,7 +167,13 @@ public class OrderControllerService : IOrderControllerService
         var searchOrders = _context.Orders
           .Include(x => x.OrderingContact)
           .Include(x => x.ReceivingContact)
-          .Include(x => x.OrderItems).AsEnumerable().Where(x => ISOWeek.GetWeekOfYear(x.DueDate) == weekNumber);
+          .Include(x => x.OrderItems)
+          .ThenInclude(x => x.Product)
+          .Include(x => x.OrderItems)
+          .ThenInclude(x => x.Component)
+          .Include(x => x.OrderItems)
+          .ThenInclude(x => x.Drive)
+          .AsEnumerable().Where(x => ISOWeek.GetWeekOfYear(x.DueDate) == weekNumber);
 
         if (searchOrders == null)
             return null;

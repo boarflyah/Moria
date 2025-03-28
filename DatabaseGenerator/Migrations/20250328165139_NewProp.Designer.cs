@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250328165139_NewProp")]
+    partial class NewProp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -450,9 +453,6 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("text");
 
-                    b.Property<string>("SalesOfferLink")
-                        .HasColumnType("text");
-
                     b.Property<int>("SubiektId")
                         .HasColumnType("integer");
 
@@ -476,29 +476,14 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int?>("ComponentId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("CuttingCompleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
                     b.Property<int?>("DesignerId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DetailsColorId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("DriveId")
                         .HasColumnType("integer");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("ElectricaCabinetCompleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ElectricalDescription")
-                        .HasColumnType("text");
 
                     b.Property<int>("Index")
                         .HasColumnType("integer");
@@ -512,32 +497,14 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("LockedBy")
                         .HasColumnType("text");
 
-                    b.Property<bool>("MachineAssembled")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("MachineReleased")
-                        .HasColumnType("boolean");
-
                     b.Property<decimal>("MachineWeight")
                         .HasColumnType("numeric");
-
-                    b.Property<bool>("MachineWiredAndTested")
-                        .HasColumnType("boolean");
-
-                    b.Property<int?>("MainColorId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("integer");
-
-                    b.Property<bool>("PaintingCompleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal>("Power")
-                        .HasColumnType("numeric");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("integer");
@@ -548,17 +515,8 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int>("SubiektId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Symbol")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TechnicalDrawingCompleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("TechnicalDrawingLink")
                         .HasColumnType("text");
-
-                    b.Property<bool>("TransportOrdered")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("WarehouseId")
                         .HasColumnType("integer");
@@ -569,11 +527,7 @@ namespace DatabaseGenerator.Migrations
 
                     b.HasIndex("DesignerId");
 
-                    b.HasIndex("DetailsColorId");
-
                     b.HasIndex("DriveId");
-
-                    b.HasIndex("MainColorId");
 
                     b.HasIndex("OrderId");
 
@@ -598,7 +552,7 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ElectricalDescription")
+                    b.Property<string>("ElectricialDescription")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsLocked")
@@ -901,17 +855,9 @@ namespace DatabaseGenerator.Migrations
                         .WithMany()
                         .HasForeignKey("DesignerId");
 
-                    b.HasOne("MoriaModels.Models.Products.Color", "DetailsColor")
-                        .WithMany()
-                        .HasForeignKey("DetailsColorId");
-
                     b.HasOne("MoriaModels.Models.DriveComponents.Drive", "Drive")
                         .WithMany()
                         .HasForeignKey("DriveId");
-
-                    b.HasOne("MoriaModels.Models.Products.Color", "MainColor")
-                        .WithMany()
-                        .HasForeignKey("MainColorId");
 
                     b.HasOne("MoriaModels.Models.Orders.Order", null)
                         .WithMany("OrderItems")
@@ -929,11 +875,7 @@ namespace DatabaseGenerator.Migrations
 
                     b.Navigation("Designer");
 
-                    b.Navigation("DetailsColor");
-
                     b.Navigation("Drive");
-
-                    b.Navigation("MainColor");
 
                     b.Navigation("Product");
 

@@ -7,7 +7,7 @@ namespace MoriaModels.Models.Orders.Relations;
 public class ComponentToOrderItem : BaseModel
 {
     public Color Color { get; set; }
-    public string ElectricialDescription { get; set; }
+    public string ElectricalDescription { get; set; }
 
     public int ComponentId { get; set; }
     public Component Component { get; set; } = null!;

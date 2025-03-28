@@ -12,17 +12,18 @@ public class Order : BaseModel, ISubiektModel
     public string OrderNumberSymbol { get; set; }
     public string Remarks { get; set; }
     public string CatalogLink { get; set; }
+    public string SalesOfferLink { get; set; }
     public string ClientSymbol { get; set; }
 
-    public int OrderingContactId { get; set; }
+    public int? OrderingContactId { get; set; }
+
+    [Searchable]   
+    public Contact? OrderingContact { get; set; }
+
+    public int? ReceivingContactId { get; set; }
 
     [Searchable]
-    public Contact OrderingContact { get; set; }
-
-    public int ReceivingContactId { get; set; }
-
-    [Searchable]
-    public Contact ReceivingContact { get; set; }
+    public Contact? ReceivingContact { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime OrderDate

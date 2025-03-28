@@ -36,12 +36,6 @@
                      Grid.Row="1"/>
         </Grid>
 
-
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
             <controls:NestedListViewWrapper Grid.Row="1">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
@@ -57,6 +51,6 @@
                 </DataGrid.Columns>
             </DataGrid>
         </controls:NestedListViewWrapper>
-        </Grid>
+       
     </Grid>
 </Page>

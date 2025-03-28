@@ -11,7 +11,7 @@
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Orders}">
+            <ItemsControl ItemsSource="{Binding Orders}" MouseDoubleClick="ItemsControl_MouseDown">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="Black" Padding="5" Margin="10" Background="LightGray">
@@ -58,10 +58,10 @@
                                 <ItemsControl ItemsSource="{Binding OrderItems}" Margin="10,5,5,5">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border BorderThickness="1" BorderBrush="LightCyan" Padding="5" Margin="5">
+                                            <Border BorderThickness="1" CornerRadius="5" BorderBrush="LightCyan" Padding="5" Margin="5">
                                                 <StackPanel>
                                                     <!-- Nazwa pozycji -->
-                                                    <TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" />
+                                                    <TextBlock Text="{Binding Product.Name, Mode=OneWay}" FontSize="14" FontWeight="SemiBold" />
 
                                                     <!-- Lista etapów produkcji -->
                                                     <WrapPanel>

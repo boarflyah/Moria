@@ -143,9 +143,9 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         {
             Clear();
             Setup(onRenavigationReturned);
-            HasObjectChanged = true;
-            isNew = objectId <= 0 ? true : false;
+            HasObjectChanged = true;         
             objectId = onRenavigationReturned?.Id ?? -1;
+            isNew = objectId <= 0 ? true : false;
         }
     }
 
@@ -168,7 +168,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
             else
                 _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
         }
-
+        isRenavigated = false;
     }
 
     protected async override Task<bool> SaveNewObject()
