@@ -13,10 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Models.Orders;
 
 namespace MoriaDesktop.Views.Base;
 
-public partial class CalendarView : Page
+public partial class CalendarView : Page, IViewModelContent
 {
     public object GetViewModel() => DataContext;
 
@@ -30,5 +32,12 @@ public partial class CalendarView : Page
     private async void Page_Loaed(object sender, RoutedEventArgs e)
     {
         await(DataContext as BaseDetailViewModel)!.Load();
+    }
+
+    private void ItemsControl_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if(e.OriginalSource is FrameworkElement frameworkElement && frameworkElement.DataContext is OrderDo selectedOrder)
+            (this.DataContext as CalendarViewModel).RedirectToOrderDetails(selectedOrder);
+        
     }
 }

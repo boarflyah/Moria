@@ -9,6 +9,8 @@ using System.Windows.Media;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
+using MoriaDesktop.ViewModels.Orders;
+using MoriaDesktop.Views.Orders;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
@@ -104,6 +106,10 @@ public class CalendarViewModel : BaseDetailViewModel
         }           
     }
 
+    public void RedirectToOrderDetails(OrderDo order)
+    {
+        _navigationService.NavigateTo(typeof(OrderDetailViewModel), true, order.Id);
+    }
 
     public override void OnNavigatedTo(params object[] parameters)
     {

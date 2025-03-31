@@ -410,6 +410,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
                 mainNode.IsExpanded = true;
                 SelectedItem = navItem;
             }
+            else
+            {
+                foreach (var child in Navigation)
+                    RestartSelection(child);
+            }
         }
         SetupInfo();
         SetupLoading();

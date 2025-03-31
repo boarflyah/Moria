@@ -38,6 +38,17 @@ public class OrderDo: BaseDo
         }
     }
 
+    private string _SalesOfferLink;
+    public string SalesOfferLink
+    {
+        get => _SalesOfferLink;
+        set
+        {
+            _SalesOfferLink = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private string _ClientSymbol;
     public string ClientSymbol
     {
