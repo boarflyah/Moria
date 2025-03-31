@@ -37,7 +37,7 @@ public class Program
             Log.Logger = new LoggerConfiguration()
                 //.MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File(".\\Logs\\log-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\log-.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
             builder.Logging.ClearProviders();
             builder.Logging.AddSerilog(Log.Logger);
