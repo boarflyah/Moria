@@ -517,6 +517,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
             if (!order.OrderItems.Any(x => x == oi))
                 order.OrderItems.Add(oi);
 
+        HasObjectChanged = false;
         _navigationService.NavigateTo(typeof(OrderItemDetailViewModel), false, orderItem, order, IsLocked);
     }
 

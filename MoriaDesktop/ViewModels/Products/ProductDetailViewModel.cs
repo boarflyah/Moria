@@ -308,6 +308,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
             if (!product.Components.Any(x => x == cmp))
                 product.Components.Add(cmp);
 
+        HasObjectChanged = false;
         _navigationService.NavigateTo(typeof(ComponentDetailViewModel), false, component, product, IsLocked);
     }
 
