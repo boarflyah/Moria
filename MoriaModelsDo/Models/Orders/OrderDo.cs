@@ -192,16 +192,9 @@ public class OrderDo: BaseDo
         }
     }
 
-    private DateTime _DueDate;
-    public DateTime DueDate
-    {
-        get => _DueDate;
-        set
-        {
-            _DueDate = value;
-            RaisePropertyChanged(value);
-        }
-    }
+
+    public DateTime DueDate => OrderItems.Count != 0 ? OrderItems.Max(x => x.DueDate): DateTime.MinValue;
+
 
 
     public IList<OrderItemDo> OrderItems

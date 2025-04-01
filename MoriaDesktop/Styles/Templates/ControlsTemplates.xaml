@@ -92,7 +92,25 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    
+    <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </Style.Resources>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">
+                <Setter Property="IsReadOnly" Value="True" />
 
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
     <Style TargetType="PasswordBox">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">

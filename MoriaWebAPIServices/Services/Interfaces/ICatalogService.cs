@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 namespace MoriaWebAPIServices.Services.Interfaces;
 public interface ICatalogService
 {
-    Task<bool> CreateCatalogs(string orderSymbol);
+    Task<string> CreateCatalogs(string orderSymbol);
 }

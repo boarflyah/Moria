@@ -70,6 +70,7 @@
             <TextBox Name="CatalogLinkTextBox" 
                      Text="{Binding CatalogLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Row="1"
+                     Style="{StaticResource CustomTextBoxStyle}"
                      LostFocus="CatalogLinkTextBox_LostFocus"
                      MouseDoubleClick="CatalogLinkTextBox_MouseDoubleClick"/>
         </Grid>
@@ -119,6 +120,7 @@
             <TextBox Name="SalesOfferLinkTextBox" 
              Text="{Binding SalesOfferLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="1"
+             Style="{StaticResource CustomTextBoxStyle}"
              LostFocus="SalesOfferLinkTextBox_LostFocus"
              MouseDoubleClick="SalesOfferLinkTextBox_MouseDoubleClick"/>
         </Grid>

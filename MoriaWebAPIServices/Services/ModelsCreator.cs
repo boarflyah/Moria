@@ -672,7 +672,7 @@ public class ModelsCreator
             ClientSymbol = order.ClientSymbol,
             OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
             ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact),
-            DueDate = order.DueDate,
+            
             SalesOfferLink = order.SalesOfferLink,
 
         };
@@ -847,6 +847,7 @@ public class ModelsCreator
             MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null,
             DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null,
             Power = model.Power,
+            TechnicalDrawingLink = model.TechnicalDrawingLink,
             ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
             TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
             CuttingCompleted = model.CuttingCompleted,
@@ -900,6 +901,7 @@ public class ModelsCreator
         orderItem.MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null;
         orderItem.DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null;
         orderItem.Power = model.Power;
+        orderItem.TechnicalDrawingLink = model.TechnicalDrawingLink;
         orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
         orderItem.TechnicalDrawingCompleted = model.TechnicalDrawingCompleted;
         orderItem.CuttingCompleted = model.CuttingCompleted;

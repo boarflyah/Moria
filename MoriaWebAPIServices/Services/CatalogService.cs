@@ -29,9 +29,9 @@ public class CatalogService : ICatalogService
         folderPath = _configuration.GetValue<string>("MainCatalogPath");
     }
 
-    async Task<bool> ICatalogService.CreateCatalogs(string orderSymbol)
+    async Task<string> ICatalogService.CreateCatalogs(string orderSymbol)
     {
-        if (folderPath == null) return false;
+        if (folderPath == null) return null;
 
         var mainCatalog = folderPath + @"\" + orderSymbol;
         DirectoryInfo directory = new DirectoryInfo(mainCatalog);
@@ -114,6 +114,6 @@ public class CatalogService : ICatalogService
         //    ;
         //}
 
-        return true;
+        return mainCatalog;
     }
 }

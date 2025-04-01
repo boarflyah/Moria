@@ -25,12 +25,13 @@ public class OrderControllerService : IOrderControllerService
 
     public async Task<OrderDo> CreateOrder(OrderDo order)
     {
-        var entity = await _context.AddAsync(await _creator.CreateOrder(order));
+       //var entity = await _context.AddAsync(await _creator.CreateOrder(order));
 
         var result = await _catalogService.CreateCatalogs(order.OrderNumberSymbol);
-        if (!result)
+        if (string.IsNullOrEmpty(result))
             throw new MoriaApiException(MoriaApiExceptionReason.CreateCatalogError, MoriaApiException.ApiExceptionThrownStatusCode);
-
+        order.CatalogLink = result;
+        var entity = await _context.AddAsync(await _creator.CreateOrder(order));
         var created = await _context.SaveChangesAsync();
         return _creator.GetOrderDo(entity.Entity);
     }
@@ -163,22 +164,27 @@ public class OrderControllerService : IOrderControllerService
 
     public async Task<IEnumerable<OrderDo>> GetCalendarOrders(int weekNumber)
     {
-        List<OrderDo> result = new();
-        var searchOrders = _context.Orders
-          .Include(x => x.OrderingContact)
-          .Include(x => x.ReceivingContact)
-          .Include(x => x.OrderItems)
-          .ThenInclude(x => x.Product)
-          .Include(x => x.OrderItems)
-          .ThenInclude(x => x.Component)
-          .Include(x => x.OrderItems)
-          .ThenInclude(x => x.Drive)
-          .AsEnumerable().Where(x => ISOWeek.GetWeekOfYear(x.DueDate) == weekNumber);
+        DateTime startOfWeek = ISOWeek.ToDateTime(DateTime.Now.Year, weekNumber, DayOfWeek.Monday);
+        DateTime endOfWeek = startOfWeek.AddDays(6);
 
-        if (searchOrders == null)
+        List<OrderDo> result = new();
+        var filteredOrders = _context.Orders
+       .Include(x => x.OrderingContact)
+       .Include(x => x.ReceivingContact)
+       .Include(x => x.OrderItems)
+       .ThenInclude(x => x.Product)
+       .Include(x => x.OrderItems)
+       .ThenInclude(x => x.Component)
+       .Include(x => x.OrderItems)
+       .ThenInclude(x => x.Drive)
+       .Where(x => x.OrderItems.Any(oi => oi.DueDate >= startOfWeek && oi.DueDate <= endOfWeek))
+       .AsEnumerable()        
+       .ToList();
+
+        if (filteredOrders == null)
             return null;
 
-        foreach (var order in searchOrders)
+        foreach (var order in filteredOrders)
         {
             result.Add(_creator.GetOrderDo(order));
         }

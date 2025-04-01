@@ -266,6 +266,7 @@
                                Margin="0,0,0,5"/>
                         <TextBox Name="TechnicalDrawingLinkTextBox" 
                                  Text="{Binding TechnicalDrawingLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Style="{StaticResource CustomTextBoxStyle}"
                                  Grid.Row="1" LostFocus="TechnicalDrawingLinkTextBox_LostFocus" MouseDoubleClick="TechnicalDrawingLinkTextBox_MouseDoubleClick"/>
                     </Grid>
 
