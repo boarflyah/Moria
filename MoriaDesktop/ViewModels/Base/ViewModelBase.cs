@@ -179,21 +179,27 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         string modelName = this.GetType().Name
             .Replace("DetailViewModel", "")
             .Replace("ListViewModel", "");
-               
+
         var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
         foreach (var prop in properties)
         {
-            if (prop.PropertyType == typeof(PermissionDo))
+            try
             {
-                string permissionPropertyName = $"{modelName}_{prop.Name.Substring(11)}";
+                if (prop.PropertyType == typeof(PermissionDo))
+                {
+                    string permissionPropertyName = $"{modelName}_{prop.Name.Substring(11)}";
 
-                var permission = _appStateService.LoggedUser.Position?.Permissions
-                    .FirstOrDefault(x => x.PropertyName.Equals(permissionPropertyName));
+                    var permission = _appStateService.LoggedUser.Position?.Permissions
+                        .FirstOrDefault(x => x.PropertyName.Equals(permissionPropertyName));
 
-                if (permission != null)
-                    prop.SetValue(this, permission);
-                
+                    if (permission != null)
+                        prop.SetValue(this, permission);
+                }
+            }
+            catch (Exception ex)
+            {
+                ;
             }
         }
     }

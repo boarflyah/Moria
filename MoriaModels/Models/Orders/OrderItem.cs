@@ -53,12 +53,10 @@ public class OrderItem : BaseModel, ISubiektModel
     }
     public decimal Power { get; set; }
     public string ElectricalDescription { get; set; }
-
-
     #region
     public bool TechnicalDrawingCompleted { get; set; }
     public bool CuttingCompleted { get; set; }
-    private bool MetalCliningCompleted { get; set; }
+    public bool MetalCliningCompleted { get; set; }
     public bool PaintingCompleted { get; set; }
     public bool ElectricaCabinetCompleted { get; set; }
     public bool MachineAssembled { get; set; }

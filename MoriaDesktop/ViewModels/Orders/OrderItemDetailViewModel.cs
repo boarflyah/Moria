@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using System.Windows.Media.Animation;
 using System.Xml.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using MoriaBaseServices;
 using MoriaDesktop.Attributes;
 using MoriaDesktop.Models;
@@ -45,6 +47,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Index;
+    public PermissionDo Permission_Index
+    {
+        get => _Permission_Index;
+        set
+        {
+            _Permission_Index = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private string _Description;
     [ObjectChangedValidate]
     public string Description
@@ -53,6 +66,18 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Description = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_Description;
+    public PermissionDo Permission_Description
+    {
+        get => _Permission_Description;
+        set
+        {
+            _Permission_Description = value;
             RaisePropertyChanged(value);
         }
     }
@@ -69,6 +94,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Notes;
+    public PermissionDo Permission_Notes
+    {
+        get => _Permission_Notes;
+        set
+        {
+            _Permission_Notes = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private decimal _MachineWeight;
     [ObjectChangedValidate]
     public decimal MachineWeight
@@ -77,6 +113,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _MachineWeight = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineWeight;
+    public PermissionDo Permission_MachineWeight
+    {
+        get => _Permission_MachineWeight;
+        set
+        {
+            _Permission_MachineWeight = value;
             RaisePropertyChanged(value);
         }
     }
@@ -93,6 +140,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_TechnicalDrawingLink;
+    public PermissionDo Permission_TechnicalDrawingLink
+    {
+        get => _Permission_TechnicalDrawingLink;
+        set
+        {
+            _Permission_TechnicalDrawingLink = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private double _Quantity;
     [ObjectChangedValidate]
     public double Quantity
@@ -101,6 +159,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Quantity = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Quantity;
+    public PermissionDo Permission_Quantity
+    {
+        get => _Permission_Quantity;
+        set
+        {
+            _Permission_Quantity = value;
             RaisePropertyChanged(value);
         }
     }
@@ -122,6 +191,63 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Product;
+    public PermissionDo Permission_Product
+    {
+        get => _Permission_Product;
+        set
+        {
+            _Permission_Product = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ColorDo _MainColor;
+    [ObjectChangedValidate]
+    public ColorDo MainColor
+    {
+        get => _MainColor;
+        set
+        {
+            _MainColor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MainColor;
+    public PermissionDo Permission_MainColor
+    {
+        get => _Permission_MainColor;
+        set
+        {
+            _Permission_MainColor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ColorDo _SecondColor;
+    [ObjectChangedValidate]
+    public ColorDo SecondColor
+    {
+        get => _SecondColor;
+        set
+        {
+            _SecondColor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_SecondColor;
+    public PermissionDo Permission_SecondColor
+    {
+        get => _Permission_SecondColor;
+        set
+        {
+            _Permission_SecondColor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private ComponentDo _Component;
     [ObjectChangedValidate]
     public ComponentDo Component
@@ -135,6 +261,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
                 Product = null;
                 Drive = null;
             }
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Component;
+    public PermissionDo Permission_Component
+    {
+        get => _Permission_Component;
+        set
+        {
+            _Permission_Component = value;
             RaisePropertyChanged(value);
         }
     }
@@ -156,6 +293,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Drive;
+    public PermissionDo Permission_Drive
+    {
+        get => _Permission_Drive;
+        set
+        {
+            _Permission_Drive = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private WarehouseDo _Warehouse;
     [ObjectChangedValidate]
     public WarehouseDo Warehouse
@@ -168,6 +316,17 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private PermissionDo _Permission_Warehouse;
+    public PermissionDo Permission_Warehouse
+    {
+        get => _Permission_Warehouse;
+        set
+        {
+            _Permission_Warehouse = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private EmployeeDo _Designer;
     [ObjectChangedValidate]
     public EmployeeDo Designer
@@ -176,6 +335,274 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Designer = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Designer;
+    public PermissionDo Permission_Designer
+    {
+        get => _Permission_Designer;
+        set
+        {
+            _Permission_Designer = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    decimal _Power;
+    [ObjectChangedValidate]
+    public decimal Power
+    {
+        get => _Power;
+        set
+        {
+            _Power = value;
+            RaisePropertyChanged(value);
+        }
+    }
+    private PermissionDo _Permission_Power;
+    public PermissionDo Permission_Power
+    {
+        get => _Permission_Power;
+        set
+        {
+            _Permission_Power = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    // Rysunek techniczny
+    private bool _TechnicalDrawingCompleted;
+    [ObjectChangedValidate]
+    public bool TechnicalDrawingCompleted
+    {
+        get => _TechnicalDrawingCompleted;
+        set
+        {
+            _TechnicalDrawingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_TechnicalDrawingCompleted;
+    public PermissionDo Permission_TechnicalDrawingCompleted
+    {
+        get => _Permission_TechnicalDrawingCompleted;
+        set
+        {
+            _Permission_TechnicalDrawingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _CuttingCompleted;
+    [ObjectChangedValidate]
+    public bool CuttingCompleted
+    {
+        get => _CuttingCompleted;
+        set
+        {
+            _CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_CuttingCompleted;
+    public PermissionDo Permission_CuttingCompleted
+    {
+        get => _Permission_CuttingCompleted;
+        set
+        {
+            _Permission_CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MetalCliningCompleted;
+    [ObjectChangedValidate]
+    public bool MetalCliningCompleted
+    {
+        get => _MetalCliningCompleted;
+        set
+        {
+            _MetalCliningCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MetalCliningCompleted;
+    public PermissionDo Permission_MetalCliningCompleted
+    {
+        get => _Permission_MetalCliningCompleted;
+        set
+        {
+            _Permission_MetalCliningCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _PaintingCompleted;
+    [ObjectChangedValidate]
+    public bool PaintingCompleted
+    {
+        get => _PaintingCompleted;
+        set
+        {
+            _PaintingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PaintingCompleted;
+    public PermissionDo Permission_PaintingCompleted
+    {
+        get => _Permission_PaintingCompleted;
+        set
+        {
+            _Permission_PaintingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _ElectricaCabinetCompleted;
+    [ObjectChangedValidate]
+    public bool ElectricaCabinetCompleted
+    {
+        get => _ElectricaCabinetCompleted;
+        set
+        {
+            _ElectricaCabinetCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_ElectricaCabinetCompleted;
+    public PermissionDo Permission_ElectricaCabinetCompleted
+    {
+        get => _Permission_ElectricaCabinetCompleted;
+        set
+        {
+            _Permission_ElectricaCabinetCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineAssembled;
+    [ObjectChangedValidate]
+    public bool MachineAssembled
+    {
+        get => _MachineAssembled;
+        set
+        {
+            _MachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_MachineAssembled;
+    public PermissionDo Permission_MachineAssembled
+    {
+        get => _Permission_MachineAssembled;
+        set
+        {
+            _Permission_MachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineWiredAndTested;
+    [ObjectChangedValidate]
+    public bool MachineWiredAndTested
+    {
+        get => _MachineWiredAndTested;
+        set
+        {
+            _MachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineWiredAndTested;
+    public PermissionDo Permission_MachineWiredAndTested
+    {
+        get => _Permission_MachineWiredAndTested;
+        set
+        {
+            _Permission_MachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineReleased;
+    [ObjectChangedValidate]
+    public bool MachineReleased
+    {
+        get => _MachineReleased;
+        set
+        {
+            _MachineReleased = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineReleased;
+    public PermissionDo Permission_MachineReleased
+    {
+        get => _Permission_MachineReleased;
+        set
+        {
+            _Permission_MachineReleased = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _TransportOrdered;
+    [ObjectChangedValidate]
+    public bool TransportOrdered
+    {
+        get => _TransportOrdered;
+        set
+        {
+            _TransportOrdered = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_TransportOrdered;
+    public PermissionDo Permission_TransportOrdered
+    {
+        get => _Permission_TransportOrdered;
+        set
+        {
+            _Permission_TransportOrdered = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime _DueDate;
+    [ObjectChangedValidate]
+    public DateTime DueDate
+    {
+        get => _DueDate;
+        set
+        {
+            _DueDate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_DueDate;
+    public PermissionDo Permission_DueDate
+    {
+        get => _Permission_DueDate;
+        set
+        {
+            _Permission_DueDate = value;
             RaisePropertyChanged(value);
         }
     }
@@ -243,6 +670,20 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         Drive = null;
         Warehouse = null;
         Designer = null;
+        MainColor = default;
+        SecondColor = default;
+        Power = default;
+        TechnicalDrawingCompleted = default;
+        CuttingCompleted = default;
+        MetalCliningCompleted = default;
+        PaintingCompleted = default;
+        ElectricaCabinetCompleted = default;
+        MachineAssembled = default;
+        MachineWiredAndTested = default;
+        MachineReleased = default;
+        TransportOrdered = default;
+        DueDate = default;
+
     }
 
     void Setup(OrderItemDo oi)
@@ -258,6 +699,19 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         Drive = oi.Drive;
         Warehouse = oi.Warehouse;
         Designer = oi.Designer;
+        Power = oi.Power;
+        MainColor = oi.MainColor;
+        SecondColor = oi.DetailsColor;
+        TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted;
+        CuttingCompleted = oi.CuttingCompleted;
+        MetalCliningCompleted = oi.MetalCliningCompleted;
+        PaintingCompleted = oi.PaintingCompleted;
+        ElectricaCabinetCompleted = oi.ElectricaCabinetCompleted;
+        MachineAssembled = oi.MachineAssembled;
+        MachineWiredAndTested = oi.MachineWiredAndTested;
+        MachineReleased = oi.MachineReleased;
+        TransportOrdered = oi.TransportOrdered;
+        DueDate = oi.DueDate;
 
         if (oi.ComponentsToOrderItem != null)
             foreach (var ctoi in oi.ComponentsToOrderItem)
@@ -278,6 +732,19 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.Quantity = Quantity;
         currentOrderItem.Warehouse = Warehouse;
         currentOrderItem.Designer = Designer;
+        currentOrderItem.Power = Power;
+        currentOrderItem.MainColor = MainColor;
+        currentOrderItem.DetailsColor = SecondColor;
+        currentOrderItem.TechnicalDrawingCompleted = TechnicalDrawingCompleted;
+        currentOrderItem.CuttingCompleted = CuttingCompleted;
+        currentOrderItem.MetalCliningCompleted = MetalCliningCompleted;
+        currentOrderItem.PaintingCompleted = PaintingCompleted;
+        currentOrderItem.ElectricaCabinetCompleted = ElectricaCabinetCompleted;
+        currentOrderItem.MachineAssembled = MachineAssembled;
+        currentOrderItem.MachineWiredAndTested = MachineWiredAndTested;
+        currentOrderItem.MachineReleased = MachineReleased;
+        currentOrderItem.TransportOrdered = TransportOrdered;
+        currentOrderItem.DueDate = DueDate;
 
         if (currentOrderItem.ComponentsToOrderItem == null)
             currentOrderItem.ComponentsToOrderItem = new List<ComponentToOrderItemDo>();

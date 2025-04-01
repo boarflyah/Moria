@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MoriaDTObjects.Models;
 using MoriaDTObjects.Models.Interfaces;
 using MoriaModels.Models.Base;
@@ -657,7 +658,7 @@ public class ModelsCreator
 
     #endregion
 
-    #region order
+    #region Order
 
     public OrderDo GetOrderDo(Order order)
     {
@@ -672,9 +673,7 @@ public class ModelsCreator
             OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
             ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact),
             DueDate = order.DueDate,
-            TechnicalDrawingCompleted = true,
-            CuttingCompleted = true,
-            MetalCliningCompleted = true
+            SalesOfferLink = order.SalesOfferLink,
 
         };
 
@@ -696,6 +695,8 @@ public class ModelsCreator
             OrderingContact = model.OrderingContact != null ? await GetModelInContext(CreateContact, model.OrderingContact, _context.Contacts) : null,
             ReceivingContact = model.ReceivingContact != null ? await GetModelInContext(CreateContact, model.ReceivingContact, _context.Contacts) : null,
             OrderNumberSymbol = model.OrderNumberSymbol,
+            DueDate = model.DueDate,
+            SalesOfferLink = model.SalesOfferLink,
         };
 
         if (model.OrderItems != null)
@@ -717,7 +718,7 @@ public class ModelsCreator
             OrderingContact = await GetSubiektModelInContext(CreateContact, model.Client, _context.Contacts),
             ReceivingContact = await GetSubiektModelInContext(CreateContact, model.Recipient, _context.Contacts),
             OrderDate = model.DocumentDate,
-            DueDate = model.DueDate
+            DueDate = model.DueDate,
         };
 
         if (model.SalesOrderItems != null && model.SalesOrderItems.Any())
@@ -746,6 +747,9 @@ public class ModelsCreator
         order.Remarks = model.Remarks;
         order.OrderNumberSymbol = model.OrderNumberSymbol;
         order.LastModified = model.LastModified;
+        order.CatalogLink = model.CatalogLink;
+        order.SalesOfferLink = model.SalesOfferLink;
+        order.DueDate = model.DueDate;
 
         order.OrderingContact = await GetModelInContext(CreateContact, model.OrderingContact, _context.Contacts);
         order.ReceivingContact = await GetModelInContext(CreateContact, model.ReceivingContact, _context.Contacts);
@@ -782,7 +786,7 @@ public class ModelsCreator
 
     #endregion
 
-    #region orderitem
+    #region OrderItem
 
     public OrderItemDo GetOrdetItemDo(OrderItem oi)
     {
@@ -801,6 +805,21 @@ public class ModelsCreator
             Drive = oi.Drive != null ? GetDriveDo(oi.Drive, false) : null,
             Designer = oi.Designer != null ? GetEmployeeDo(oi.Designer) : null,
             Warehouse = oi.Warehouse != null ? GetWarehouse(oi.Warehouse) : null,
+            MainColor = oi.MainColor != null ? GetColorDo(oi.MainColor) : null,
+            DetailsColor = oi.DetailsColor != null ? GetColorDo(oi.DetailsColor) : null,
+            Power = oi.Power,
+            ElectricaCabinetCompleted = oi.ElectricaCabinetCompleted,
+            TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted,
+            CuttingCompleted = oi.CuttingCompleted,
+            MetalCliningCompleted = oi.MetalCliningCompleted,
+            PaintingCompleted = oi.PaintingCompleted,
+            ElectricialDescription = oi.ElectricalDescription,
+            MachineAssembled = oi.MachineAssembled,
+            MachineWiredAndTested = oi.MachineWiredAndTested,
+            MachineReleased = oi.MachineReleased,
+            TransportOrdered = oi.TransportOrdered,
+            DueDate = oi.DueDate,
+
         };
 
         if (oi.ComponentToOrderItems != null)
@@ -825,6 +844,20 @@ public class ModelsCreator
             Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null,
             Quantity = model.Quantity,
             Warehouse = model.Warehouse != null ? await GetModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses) : null,
+            MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null,
+            DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null,
+            Power = model.Power,
+            ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
+            TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
+            CuttingCompleted = model.CuttingCompleted,
+            MetalCliningCompleted = model.MetalCliningCompleted,
+            PaintingCompleted = model.PaintingCompleted,
+            ElectricalDescription = model.ElectricialDescription,
+            MachineAssembled = model.MachineAssembled,
+            MachineWiredAndTested = model.MachineWiredAndTested,
+            MachineReleased = model.MachineReleased,
+            TransportOrdered = model.TransportOrdered,
+            DueDate = model.DueDate,
         };
 
         if (model.ComponentsToOrderItem != null)
@@ -864,6 +897,21 @@ public class ModelsCreator
         orderItem.Drive = await GetModelInContext(CreateDrive, model.Drive, _context.Drives);
         orderItem.Warehouse = await GetModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses);
 
+        orderItem.MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null;
+        orderItem.DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null;
+        orderItem.Power = model.Power;
+        orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
+        orderItem.TechnicalDrawingCompleted = model.TechnicalDrawingCompleted;
+        orderItem.CuttingCompleted = model.CuttingCompleted;
+        orderItem.MetalCliningCompleted = model.MetalCliningCompleted;
+        orderItem.PaintingCompleted = model.PaintingCompleted;
+        orderItem.ElectricalDescription = model.ElectricialDescription;
+        orderItem.MachineAssembled = model.MachineAssembled;
+        orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
+        orderItem.MachineReleased = model.MachineReleased;
+        orderItem.TransportOrdered = model.TransportOrdered;
+        orderItem.DueDate = model.DueDate;
+
         foreach (var ctoi in model.ComponentsToOrderItem.Where(x => x.ChangeType != SystemChangeType.None))
         {
             //motorgear.Drive = model;
@@ -890,7 +938,7 @@ public class ModelsCreator
 
     #endregion
 
-    #region componenttoorderitem
+    #region ComponentToOrderItem
 
     public ComponentToOrderItemDo GetComponentToOrderItemDo(ComponentToOrderItem ctoi)
     {

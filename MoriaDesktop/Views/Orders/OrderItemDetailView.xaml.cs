@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using MoriaBaseServices;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Orders;
@@ -69,5 +72,65 @@ public partial class OrderItemDetailView : Page, IViewModelContent
         var product = await _lookupService.ShowLookup<ProductDo>(false);
         if (product != null)
             (DataContext as OrderItemDetailViewModel).Product = product;
+    }
+
+    private void TechnicalDrawingLinkTextBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        TextBox textBox = sender as TextBox;
+        if (textBox == null) return;
+
+        string path = textBox.Text;
+
+        if (File.Exists(path) && Path.GetExtension(path).ToLower() == ".pdf")
+        {
+            textBox.Foreground = Brushes.Green;
+        }
+        else
+        {
+            textBox.Foreground = Brushes.Black;
+        }
+    }
+
+    private void TechnicalDrawingLinkTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        TextBox textBox = sender as TextBox;
+        if (textBox == null) return;
+
+        string path = textBox.Text;
+
+        if (File.Exists(path) && Path.GetExtension(path).ToLower() == ".pdf")
+        {
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        }
+        else
+        {
+            MessageBox.Show("Podany plik PDF nie istnieje!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private async void ColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var color = await _lookupService.ShowLookup<ColorDo>(false);
+        if (color != null)
+            (DataContext as OrderItemDetailViewModel).MainColor = color;
+    }
+
+    private async void SecondColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var color = await _lookupService.ShowLookup<ColorDo>(false);
+        if (color != null)
+            (DataContext as OrderItemDetailViewModel).SecondColor = color;
+    }
+    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
+    }
+
+    private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Space)
+        {
+            e.Handled = true;
+        }
     }
 }

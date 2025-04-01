@@ -63,6 +63,8 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -264,8 +266,156 @@
                                Margin="0,0,0,5"/>
                         <TextBox Name="TechnicalDrawingLinkTextBox" 
                                  Text="{Binding TechnicalDrawingLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                 Grid.Row="1"/>
+                                 Grid.Row="1" LostFocus="TechnicalDrawingLinkTextBox_LostFocus" MouseDoubleClick="TechnicalDrawingLinkTextBox_MouseDoubleClick"/>
                     </Grid>
+
+                    <Grid Grid.Row="3"
+                            Grid.Column="0"
+                            Margin="10"
+                            IsEnabled="{Binding Permission_MainColor.CanWrite}"
+                            Visibility="{Binding Permission_MainColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Główny kolor" 
+                      Grid.Row="0"
+                      Margin="0,0,0,5"/>
+                        <controls:LookupObjectControl x:Name="ColorLookupObjectControl"
+                                             Grid.Row="1"
+                                             LookupObject="{Binding Color, Mode=TwoWay}"
+                                             NameText="{Binding Color.Name, Mode=OneWay}"
+                                             OnLookupInvoked="ColorLookupObjectControl_OnLookupInvoked"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="10"
+                        IsEnabled="{Binding Permission_SecondColor.CanWrite}"
+                        Visibility="{Binding Permission_SecondColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Detale kolor" 
+                         Grid.Row="0"
+                         Margin="0,0,0,5"/>
+                        <controls:LookupObjectControl x:Name="SecondColorLookupObjectControl"
+                          Grid.Row="1"
+                          LookupObject="{Binding Color, Mode=TwoWay}"
+                          NameText="{Binding Color.Name, Mode=OneWay}"
+                          OnLookupInvoked="SecondColorLookupObjectControl_OnLookupInvoked"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3"
+                          Grid.Column="2"
+                          Margin="10"
+                          IsEnabled="{Binding Permission_Power.CanWrite}"
+                          Visibility="{Binding Permission_Power.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Waga" 
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <TextBox Name="PowerTextBox" 
+                                 Text="{Binding Power, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Grid.Row="1"
+                                 PreviewTextInput="TextBox_PreviewTextInput" 
+                                 PreviewKeyDown="TextBox_PreviewKeyDown"/>
+                    </Grid>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Kolumna 1 -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
+              IsEnabled="{Binding Permission_TechnicalDrawingCompleted.CanWrite}"
+              Visibility="{Binding Permission_TechnicalDrawingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Rysunek techniczny" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding TechnicalDrawingCompleted }" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0"
+              IsEnabled="{Binding Permission_CuttingCompleted.CanWrite}"
+              Visibility="{Binding Permission_CuttingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Cięcie zakończone" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding CuttingCompleted, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
+              IsEnabled="{Binding Permission_MetalCliningCompleted.CanWrite}"
+              Visibility="{Binding Permission_MetalCliningCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Czyszczenie metalu" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding MetalCliningCompleted, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
+              IsEnabled="{Binding Permission_PaintingCompleted.CanWrite}"
+              Visibility="{Binding Permission_PaintingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding PaintingCompleted, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Kolumna 2 -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+              IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
+              Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding ElectricaCabinetCompleted, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+              IsEnabled="{Binding Permission_MachineAssembled.CanWrite}"
+              Visibility="{Binding Permission_MachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Maszyna zmontowana" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding MachineAssembled, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
+              IsEnabled="{Binding Permission_MachineWiredAndTested.CanWrite}"
+              Visibility="{Binding Permission_MachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding MachineWiredAndTested, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
+              IsEnabled="{Binding Permission_MachineReleased.CanWrite}"
+              Visibility="{Binding Permission_MachineReleased.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Maszyna wydana" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding MachineReleased, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Kolumna 3 -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
+              IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
+              Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
+                                <CheckBox IsChecked="{Binding TransportOrdered, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+              IsEnabled="{Binding Permission_DueDate.CanWrite}"
+              Visibility="{Binding Permission_DueDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Termin realizacji" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding DueDate, Mode=TwoWay}"/>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
 
                 </Grid>
 
