@@ -202,7 +202,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 
     public override void OnNavigatedTo(params object[] parameters)
     {
-        if (parameters.Length > 1)
+        if (parameters.Length > 2)
         {
             currentOrderItem = parameters.FirstOrDefault(x => x is OrderItemDo) as OrderItemDo;
             if (currentOrderItem?.Id > 0)
@@ -217,13 +217,20 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
                 //Setup(currentComponent);
             }
             order = parameters.FirstOrDefault(x => x is OrderDo) as OrderDo;
+
+            if (parameters.FirstOrDefault(x => x is bool) is bool b)
+                IsLocked = b;
+            else
+                IsLocked = true;
         }
     }
 
-    public async override Task OnNavigatingFrom()
+    public async override Task<bool> OnNavigatingFrom()
     {
         _appStateService.CurrentDetailViewObjectId = 0;
         _appStateService.CurrentDetailViewObjectType = null;
+
+        return true;
     }
 
     #endregion

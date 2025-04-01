@@ -1,4 +1,5 @@
-﻿using MoriaDesktop.Models.Enums;
+﻿using MoriaDesktop.Args;
+using MoriaDesktop.Models.Enums;
 using MoriaDesktop.ViewModels.Base;
 using MoriaModelsDo.Models.Contacts;
 
@@ -65,6 +66,12 @@ public class AppStateService
     public void SetMainViewModel(MainWindowViewModel mvm)
     {
         _mainViewModel = mvm;
+    }
+
+    public async Task<bool?> ConfirmAsync(string confirmationMessage)
+    {
+        var args = new ConfirmationEventArgs(confirmationMessage);
+        return await _mainViewModel.ConfirmationRequired(this, args);
     }
 
     #endregion

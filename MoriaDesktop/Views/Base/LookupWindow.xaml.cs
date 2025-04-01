@@ -17,7 +17,7 @@ public partial class LookupWindow : Window
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        //CreateColumns();
+        SearchBox.Focus();
     }
 
     private void LookupDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -63,12 +63,14 @@ public partial class LookupWindow : Window
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         (DataContext as LookupWindowViewModel).SetSelected(null, false);
+        SearchBox.Text = string.Empty;
         Hide();
     }
 
     private void NewButton_Click(object sender, RoutedEventArgs e)
     {
         (DataContext as LookupWindowViewModel).SetSelected(null, true);
+        SearchBox.Text = string.Empty;
         Hide();
     }
 
@@ -81,7 +83,7 @@ public partial class LookupWindow : Window
         CreateColumns();
 
         this.ShowDialog();
-
+        SearchBox.Text = string.Empty;
         return (DataContext as LookupWindowViewModel).OnClosed<T>();
     }
 

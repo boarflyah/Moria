@@ -1,13 +1,9 @@
-﻿using System.CodeDom;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktopServices.Interfaces;
-using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseListViewModel : ViewModelBase

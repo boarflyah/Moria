@@ -149,7 +149,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    public override Task OnNavigatingFrom()
+    public override Task<bool> OnNavigatingFrom()
     {
         WeakReferenceMessenger.Default.Unregister<NavigationMessage<ProductDo>>(this);
         return base.OnNavigatingFrom();
@@ -202,7 +202,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
             if (!order.OrderItems.Any(x => x == oi))
                 order.OrderItems.Add(oi);
 
-        _navigationService.NavigateTo(typeof(OrderItemDetailViewModel), false, orderItem, order);
+        _navigationService.NavigateTo(typeof(OrderItemDetailViewModel), false, orderItem, order, IsLocked);
     }
 
     public override void Clear()

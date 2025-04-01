@@ -18,6 +18,7 @@ public partial class MainWindow : Window
     public MainWindow(MainWindowViewModel viewModel) : this()
     {
         DataContext = viewModel;
+        (DataContext as MainWindowViewModel).OnConfirmationRequired += MainWindow_OnConfirmationRequired;
     }
 
     public MainWindow()
@@ -115,8 +116,25 @@ public partial class MainWindow : Window
 
     private void myCalendar_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-
         DateTime date = (sender as Calendar)?.SelectedDate ?? new DateTime();
         (DataContext as MainWindowViewModel)!.NavigateToCalendar(date);
+    }
+
+    private void MainWindow_OnConfirmationRequired(object sender, Args.ConfirmationEventArgs e)
+    {
+        var result = MessageBox.Show(e.Message, "Potwierdzenie", MessageBoxButton.YesNo);
+
+        switch (result)
+        {
+            case MessageBoxResult.Yes:
+                e.CompletionSource.SetResult(true);
+                break;
+            case MessageBoxResult.No:
+                e.CompletionSource.SetResult(false);
+                break;
+            default:
+                e.CompletionSource.SetResult(null);
+                break;
+        }
     }
 }

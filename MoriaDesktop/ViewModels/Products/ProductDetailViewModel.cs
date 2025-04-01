@@ -211,7 +211,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    public override Task OnNavigatingFrom()
+    public override Task<bool> OnNavigatingFrom()
     {
         WeakReferenceMessenger.Default.Unregister<NavigationMessage<ProductDo>>(this);
         return base.OnNavigatingFrom();
@@ -308,7 +308,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
             if (!product.Components.Any(x => x == cmp))
                 product.Components.Add(cmp);
 
-        _navigationService.NavigateTo(typeof(ComponentDetailViewModel), false, component, product);
+        _navigationService.NavigateTo(typeof(ComponentDetailViewModel), false, component, product, IsLocked);
     }
 
     void OnMessageReceived(object recipient, NavigationMessage<ProductDo> message)

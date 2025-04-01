@@ -16,6 +16,7 @@ using MoriaDesktop.ViewModels.Dictionary.DetailView;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Orders;
+using MoriaDesktop.Args;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -215,6 +216,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         }
     }
 
+    public event EventHandler<ConfirmationEventArgs> OnConfirmationRequired;
+
     #region infobar
 
     bool _IsInfoVisible;
@@ -383,6 +386,13 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     {
         IsLoadingVisible = isVisible;
         LoadingText = text;
+    }
+
+    public async Task<bool?> ConfirmationRequired(object sender, ConfirmationEventArgs args)
+    {
+        args.CompletionSource = new();
+        OnConfirmationRequired?.Invoke(sender, args);
+        return await args.CompletionSource.Task;
     }
 
     #endregion

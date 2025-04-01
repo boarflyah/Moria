@@ -13,7 +13,7 @@
     
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <Grid IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource boolinv}}">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -25,6 +25,7 @@
                 <Grid Grid.Row="0"
                       Height="30"
                       Margin="5 0 5 0"
+                      IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource boolinv}}"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>

@@ -90,7 +90,7 @@ public class NavigationService : INavigationService
         if (sender is Frame frame)
         {
             if ((frame.Content as Page)?.DataContext is INavigationAware navigationAware)
-                await navigationAware.OnNavigatingFrom();
+                e.Cancel = !await navigationAware.OnNavigatingFrom();
         }
     }
 

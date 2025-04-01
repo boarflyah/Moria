@@ -1,11 +1,12 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using MoriaModels.Attributes;
+﻿using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
-using MoriaWebAPIServices.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using MoriaBaseModels.Models;
+using MoriaModels.Attributes;
+using MoriaModels.Models.Base;
 using MoriaWebAPIServices.Contexts;
-using System.Collections;
+using MoriaWebAPIServices.Services.Interfaces;
 
 namespace MoriaWebAPIServices.Services;
 
@@ -37,10 +38,38 @@ public class ListViewService : IListViewControllerService
 
     }
 
+    public async Task<List<LookupModel>> GetLookupObjects(Type modelType, string searchText)
+    {
+        var method = typeof(ListViewService).GetMethod(nameof(GetEntities))
+            ?.MakeGenericMethod(modelType);
+
+        if (method == null)
+            throw new InvalidOperationException("Search method resolution failed");
+
+        var task = (Task)method.Invoke(this, new object[] { searchText });
+
+        await task.ConfigureAwait(false);
+        var resultProperty = task.GetType().GetProperty("Result");
+
+        if (resultProperty?.GetValue(task) is IEnumerable<BaseModel> list)
+        {
+            return list.Select(x => x.GetLookupObject()).ToList();
+        }
+        return new List<LookupModel>();
+    }
 
     public async Task<List<TDo>> SearchDynamicAsync<T, TDo>(string searchText)
        where T : class
        where TDo : class, new()
+    {
+        List<T> entities;
+        entities = await GetEntities<T>(searchText);
+
+        return entities.Select(entity => MapToDo<T, TDo>(entity)).ToList();
+    }
+
+    public async Task<List<T>> GetEntities<T>(string searchText)
+        where T : class
     {
         var parameter = Expression.Parameter(typeof(T), "x");
         var properties = GetSearchableProperties(typeof(T));
@@ -64,7 +93,8 @@ public class ListViewService : IListViewControllerService
             combinedExpression = combinedExpression == null ? searchExpression : Expression.OrElse(combinedExpression, searchExpression);
         }
 
-        if (combinedExpression == null) return new List<TDo>();
+        if (combinedExpression == null)
+            return new List<T>();
 
         var lambda = Expression.Lambda<Func<T, bool>>(combinedExpression, parameter);
         IQueryable<T> query = _context.Set<T>().Where(lambda);
@@ -74,8 +104,7 @@ public class ListViewService : IListViewControllerService
             query = query.Include(property.Name);
         }
 
-        var entities = await query.ToListAsync();
-        return entities.Select(entity => MapToDo<T, TDo>(entity)).ToList();
+        return await query.ToListAsync();
     }
 
     private List<(PropertyInfo, PropertyInfo?)> GetSearchableProperties(Type type)

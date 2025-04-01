@@ -49,7 +49,7 @@
         </Grid>
 
         <controls:NestedListViewWrapper Grid.Row="1" Grid.ColumnSpan="2"
-                                        Visibility="{Binding IsAdmin, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{Binding IsAdminViewing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
                       BeginningEdit="DataGrid_BeginningEdit"

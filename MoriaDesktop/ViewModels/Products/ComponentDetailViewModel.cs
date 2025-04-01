@@ -238,7 +238,7 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
 
     public override void OnNavigatedTo(params object[] parameters)
     {
-        if (parameters.Length > 1)
+        if (parameters.Length > 2)
         {
             currentComponent = parameters.FirstOrDefault(x => x is ComponentDo) as ComponentDo;
             if (currentComponent?.Id > 0)
@@ -253,13 +253,19 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
                 //Setup(currentComponent);
             }
             product = parameters.FirstOrDefault(x => x is ProductDo) as ProductDo;
+            if (parameters.FirstOrDefault(x => x is bool) is bool b)
+                IsLocked = b;
+            else
+                IsLocked = true;
         }
     }
 
-    public async override Task OnNavigatingFrom()
+    public async override Task<bool> OnNavigatingFrom()
     {
         _appStateService.CurrentDetailViewObjectId = 0;
         _appStateService.CurrentDetailViewObjectType = null;
+
+        return true;
     }
 
     #endregion

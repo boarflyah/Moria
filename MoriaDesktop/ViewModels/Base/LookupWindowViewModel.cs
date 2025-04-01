@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using MoriaBaseModels.Models;
 using MoriaDesktop.Services;
@@ -19,6 +20,7 @@ public class LookupWindowViewModel : ViewModelBase
         _apiService = apiService;
 
         Objects = new();
+        SearchCommand = new(Search);
     }
 
     #region properties
@@ -68,21 +70,71 @@ public class LookupWindowViewModel : ViewModelBase
         }
     }
 
+
+    private string _SearchText;
+    public string SearchText
+    {
+        get => _SearchText;
+        set
+        {
+            _SearchText = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    #endregion
+
+    #region
+
+    public AsyncRelayCommand SearchCommand
+    {
+        get;
+    }
+
     #endregion
 
     #region Methods
 
+
+
     public async Task LoadNext()
     {
-        Objects.Clear();
-        //TODO use ExecuteApiRequest and wrap with try catch
-        var pagedList = await _apiService.GetObjects(_appStateService.LoggedUser.Username, currentType, 0, pageSize);
+        try
+        {
+            Objects.Clear();
+            //TODO use ExecuteApiRequest and wrap with try catch
+            var pagedList = await ExecuteApiRequest(_apiService.GetObjects, _appStateService.LoggedUser.Username, currentType, 0, pageSize);
 
-        lastId = pagedList.LastId;
-        hasNext = pagedList.HasNext;
-        LookupMetadata = pagedList.LookupMetadata;
-        foreach (var element in pagedList)
-            Objects.Add(element);
+            lastId = pagedList.LastId;
+            hasNext = pagedList.HasNext;
+            LookupMetadata = pagedList.LookupMetadata;
+            foreach (var element in pagedList)
+                Objects.Add(element);
+        }
+        catch (Exception ex)
+        {
+            ;
+        }
+    }
+
+    public async Task Search()
+    {
+        try
+        {
+            Objects.Clear();
+            //TODO use ExecuteApiRequest and wrap with try catch
+            var pagedList = await ExecuteApiRequest(_apiService.GetFilteredObjects, _appStateService.LoggedUser.Username, currentType, SearchText);
+
+            lastId = pagedList.LastId;
+            hasNext = pagedList.HasNext;
+            LookupMetadata = pagedList.LookupMetadata;
+            foreach (var element in pagedList)
+                Objects.Add(element);
+        }
+        catch (Exception ex)
+        {
+            ;
+        }
     }
 
     public void SetSelected(LookupModel lookup, bool createNew)

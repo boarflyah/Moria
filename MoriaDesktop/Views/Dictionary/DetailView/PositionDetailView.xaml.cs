@@ -22,13 +22,18 @@ public partial class PositionDetailView : Page, IViewModelContent
 
     private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
     {
-        if (e.Column.SortMemberPath.Contains(nameof(PermissionDo.DisplayName)))
-            e.Cancel = true;
-        else
+        if (!(DataContext as BaseDetailViewModel).IsLocked)
         {
-            (e.Row.DataContext as BaseDo).ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Modified;
-            (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+            if (e.Column.SortMemberPath.Contains(nameof(PermissionDo.DisplayName)))
+                e.Cancel = true;
+            else
+            {
+                (e.Row.DataContext as BaseDo).ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Modified;
+                (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+            }
         }
+        else
+            e.Cancel = true;
     }
 }
 

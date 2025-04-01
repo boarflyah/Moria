@@ -83,6 +83,12 @@ public class WebAPIEndpointsProvider
     /// </summary>
     public const string GetLookupPath = $"{Lookup}";
 
+
+    /// <summary>
+    /// Body: object of type SearchRequest
+    /// </summary>
+    public const string PutLookupFilteredPath = $"{Lookup}/filtered";
+
     #endregion
 
     #region Employee

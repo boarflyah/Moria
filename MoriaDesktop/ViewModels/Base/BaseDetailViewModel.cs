@@ -195,7 +195,7 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
             {
                 _keepAliveWorker.RemoveLock(objectId);
                 await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
-
+                HasObjectChanged = false;
                 if (_navigationService.CanGoBack)
                     _navigationService.GoBack();
                 else
@@ -407,39 +407,52 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         EditCommand.NotifyCanExecuteChanged();
     }
 
-    public async virtual Task OnNavigatingFrom()
+    public async virtual Task<bool> OnNavigatingFrom()
     {
-        _appStateService.CurrentDetailViewObjectId = 0;
-        _appStateService.CurrentDetailViewObjectType = null;
-        if (!IsLocked && !isNew)
-            try
-            {
-                _appStateService.SetupLoading(true);
+        var @continue = true;
+        if (HasObjectChanged)
+        {
+            var confirmation = await _appStateService.ConfirmAsync("Czy chcesz opuścić widok bez zapisu zmian?");
+            if (confirmation != true)
+                @continue = false;
+        }
 
-                await ExecuteApiRequest(_apiLockService.Unlock, _appStateService.LoggedUser.Username, GetModelType(), objectId);
-                _keepAliveWorker.RemoveLock(objectId);
-            }
-            catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
-            }
-            catch (MoriaApiException apiException)
-            {
-                if (apiException.Reason == MoriaApiExceptionReason.ObjectIsLocked)
-                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiekt jest w edycji przez innego użytkownika: {apiException.AdditionalMessage}", true);
-                else if (apiException.Reason == MoriaApiExceptionReason.ObjectNotFound)
-                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiektu nie znaleziono", true);
-                else
-                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nieznany błąd", true);
-            }
-            catch (Exception ex)
-            {
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
-            }
-            finally
-            {
-                _appStateService.SetupLoading();
-            }
+        if (@continue)
+        {
+            _appStateService.CurrentDetailViewObjectId = 0;
+            _appStateService.CurrentDetailViewObjectType = null;
+            if (!IsLocked && !isNew)
+                try
+                {
+                    _appStateService.SetupLoading(true);
+
+                    await ExecuteApiRequest(_apiLockService.Unlock, _appStateService.LoggedUser.Username, GetModelType(), objectId);
+                    _keepAliveWorker.RemoveLock(objectId);
+                }
+                catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
+                {
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+                }
+                catch (MoriaApiException apiException)
+                {
+                    if (apiException.Reason == MoriaApiExceptionReason.ObjectIsLocked)
+                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiekt jest w edycji przez innego użytkownika: {apiException.AdditionalMessage}", true);
+                    else if (apiException.Reason == MoriaApiExceptionReason.ObjectNotFound)
+                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiektu nie znaleziono", true);
+                    else
+                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nieznany błąd", true);
+                }
+                catch (Exception ex)
+                {
+                    _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
+                }
+                finally
+                {
+                    _appStateService.SetupLoading();
+                }
+        }
+
+        return @continue;
     }
 
     #endregion

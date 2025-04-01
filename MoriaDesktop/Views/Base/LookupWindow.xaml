@@ -50,6 +50,14 @@
                                 ClickMode="Release">
                             <Image Source="/Images/create.png"/>
                         </Button>
+                        <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="5" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Return" Command="{Binding SearchCommand}" />
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        <Button x:Name="SearchButton" Width="30" Height="30" Margin="5" ToolTip="Szukaj" Command="{Binding SearchCommand}">
+                            <Image Source="/Images/search.png"/>
+                        </Button>
 
                     </StackPanel>
 
@@ -76,12 +84,16 @@
                     <Grid.Resources>
                         <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
                     </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="323*"/>
+                    </Grid.ColumnDefinitions>
                     <DataGrid x:Name="LookupDataGrid"
                   ItemsSource="{Binding Objects, Mode=OneWay}"
                   IsReadOnly="True"
                   SelectionUnit="FullRow"
                   MouseDoubleClick="LookupDataGrid_MouseDoubleClick"
-                  CellStyle="{StaticResource NoLockDataGridCellStyle}">
+                  CellStyle="{StaticResource NoLockDataGridCellStyle}" Grid.ColumnSpan="2" Margin="3,3,3,3">
                     </DataGrid>
                 </Grid>
 

@@ -35,23 +35,28 @@ public partial class ComponentDetailView : Page, IViewModelContent
 
     private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
     {
-        if (e.Column.SortMemberPath.Contains(nameof(DriveToComponentDo.Drive)))
+        if (!(DataContext as BaseDetailViewModel).IsLocked)
         {
-            if (e.Row.DataContext is DriveToComponentDo related)
+            if (e.Column.SortMemberPath.Contains(nameof(DriveToComponentDo.Drive)))
             {
-                var drive = await _lookupService.ShowLookup<DriveDo>(false);
-                if (drive != null)
+                if (e.Row.DataContext is DriveToComponentDo related)
                 {
-                    related.Drive = drive;
-                    if (related.ChangeType != SystemChangeType.Added)
-                        related.ChangeType = SystemChangeType.Modified;
-                    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                    var drive = await _lookupService.ShowLookup<DriveDo>(false);
+                    if (drive != null)
+                    {
+                        related.Drive = drive;
+                        if (related.ChangeType != SystemChangeType.Added)
+                            related.ChangeType = SystemChangeType.Modified;
+                        (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                    }
                 }
+                e.Cancel = true;
             }
-            e.Cancel = true;
+            else
+                (DataContext as BaseDetailViewModel).HasObjectChanged = true;
         }
         else
-            (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+            e.Cancel = true;
     }
 
     private void QuantityTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

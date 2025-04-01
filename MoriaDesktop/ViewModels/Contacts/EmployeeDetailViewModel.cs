@@ -296,6 +296,7 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
             if (succeeded)
             {
                 _keepAliveWorker.RemoveLock(objectId);
+                HasObjectChanged = false;
                 await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
                 if (_navigationService.CanGoBack)
                     _navigationService.GoBack();

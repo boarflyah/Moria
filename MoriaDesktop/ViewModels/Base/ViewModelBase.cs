@@ -171,6 +171,33 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
         }
     }
 
+    protected async Task<TResult> ExecuteApiRequest<TResult, T1, T2, T3, T4>(Func<T1, T2, T3, T4, Task<TResult>> request, T1 param1, T2 param2, T3 param3, T4 param4)
+    {
+        try
+        {
+            return await request(param1, param2, param3, param4);
+        }
+        catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.AuthorizationTokenNotAvailable)
+        {
+            //invoking event indicating that passing login and password is needed
+            //after entering credentials call api for new token
+            InvokeViewEventArgs args = new();
+            var invokeResult = await InvokeOnReAuthorizationNeeded(this, args);
+            //login succesful, new token assigned
+            if (invokeResult.HasValue && invokeResult.Value == true)
+            {
+                //trying to execute api request once again, after loging in
+                return await request(param1, param2, param3, param4);
+            }
+            //login failed, invoking event once again
+            else if (invokeResult.HasValue && invokeResult.Value == false)
+                return await ExecuteApiRequest(request, param1, param2, param3, param4);
+            //login cancelled
+            else
+                throw new MoriaAppException(MoriaAppExceptionReason.ReAuthorizationCancelled, mae.Message, mae.InnerException);
+        }
+    }
+
     #endregion
 
     #region Permission
