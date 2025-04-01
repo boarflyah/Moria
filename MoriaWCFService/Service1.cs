@@ -30,7 +30,7 @@ namespace MoriaWCFService
             {
                 Log.Logger = new LoggerConfiguration()
                     .WriteTo.EventLog("MoriaWCFService", manageEventSource: true)
-                    .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+                    .WriteTo.File("C:\\Apps\\Logs\\WCFService\\log-.txt", rollingInterval: RollingInterval.Day)
                     .CreateLogger();
                 Log.Information("Starting");
                 var container = ConfigureContainer();
