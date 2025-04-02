@@ -117,11 +117,11 @@ public class ProductListViewModel : BaseListViewModel
     public override void OnRowSelected(object row)
     {
         if (row is ProductDo pdo)
-            _navigationService.NavigateTo(typeof(ProductDetailViewModel), false, pdo.Id);
+            _navigationService.NavigateTo(typeof(ProductDetailViewModel), true, pdo.Id);
     }
 
     protected override void New() =>
-        _navigationService.NavigateTo(typeof(ProductDetailViewModel), false, null);
+        _navigationService.NavigateTo(typeof(ProductDetailViewModel), true, null);
 
     protected async override Task<bool> SendDeleteRequest() =>
         await ExecuteApiRequest(_productService.DeleteProduct, _appStateService.LoggedUser.Username, (Selected as ProductDo)?.Id ?? 0);

@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using MoriaDTObjects.Models.Interfaces;
 
 namespace MoriaDTObjects.Models
@@ -43,6 +44,12 @@ namespace MoriaDTObjects.Models
 
         [DataMember]
         public string Remarks
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public DateTime DueDate
         {
             get; set;
         }

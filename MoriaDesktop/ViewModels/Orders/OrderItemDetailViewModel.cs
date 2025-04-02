@@ -654,8 +654,10 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 
     public async override Task<bool> OnNavigatingFrom()
     {
-        _appStateService.CurrentDetailViewObjectId = 0;
-        _appStateService.CurrentDetailViewObjectType = null;
+        //_appStateService.CurrentDetailViewObjectId = 0;
+        //_appStateService.CurrentDetailViewObjectType = null;
+
+        var message = WeakReferenceMessenger.Default.Send(new NavigationMessage<(OrderDo order, bool isLocked)>(new(order, IsLocked)));
 
         return true;
     }
@@ -800,6 +802,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
     {
         GetDo();
         _navigationService.NavigateTo(typeof(OrderDetailViewModel), true, null);
-        var message = WeakReferenceMessenger.Default.Send(new NavigationMessage<OrderDo>(order));
     }
+
+    protected override Type GetOnCloseNavigationTarget() => typeof(OrderDetailViewModel);
 }

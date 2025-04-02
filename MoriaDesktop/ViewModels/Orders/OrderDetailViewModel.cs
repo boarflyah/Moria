@@ -29,7 +29,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
 
         Title = "Nowe zamówienie";
         
-        WeakReferenceMessenger.Default.Register<NavigationMessage<OrderDo>>(this, OnMessageReceived);
+        WeakReferenceMessenger.Default.Register<NavigationMessage<(OrderDo order, bool isLocked)>>(this, OnMessageReceived);
     }
 
     #region properties
@@ -458,15 +458,18 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         {
             Clear();
             Setup(onRenavigationReturned);
-            HasObjectChanged = true;         
+            HasObjectChanged = IsLocked ? false : true;
             objectId = onRenavigationReturned?.Id ?? -1;
             isNew = objectId <= 0 ? true : false;
+
+            UnlockCommand.NotifyCanExecuteChanged();
+            EditCommand.NotifyCanExecuteChanged();
         }
     }
 
     public override Task<bool> OnNavigatingFrom()
     {
-        WeakReferenceMessenger.Default.Unregister<NavigationMessage<ProductDo>>(this);
+        WeakReferenceMessenger.Default.Unregister<NavigationMessage<(OrderDo order, bool isLocked)>>(this);
         return base.OnNavigatingFrom();
     }
 
@@ -518,7 +521,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
                 order.OrderItems.Add(oi);
 
         HasObjectChanged = false;
-        _navigationService.NavigateTo(typeof(OrderItemDetailViewModel), false, orderItem, order, IsLocked);
+        _navigationService.NavigateTo(typeof(OrderItemDetailViewModel), true, orderItem, order, IsLocked);
     }
 
     public override void Clear()
@@ -594,12 +597,15 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         
     }
 
-    void OnMessageReceived(object recipient, NavigationMessage<OrderDo> message)
+    void OnMessageReceived(object recipient, NavigationMessage<(OrderDo order, bool isLocked)> message)
     {
-        if (message.Value != null)
+        if (message.Value.order != null)
             isRenavigated = true;
-        onRenavigationReturned = message.Value;
+        IsLocked = message.Value.isLocked;
+        onRenavigationReturned = message.Value.order;
     }
+
+    protected override Type GetOnCloseNavigationTarget() => typeof(OrderListViewModel);
 
     #endregion
 }

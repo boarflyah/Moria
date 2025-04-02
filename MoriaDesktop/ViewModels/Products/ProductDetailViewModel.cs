@@ -25,7 +25,7 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
 
         Title = "Nowy produkt";
 
-        WeakReferenceMessenger.Default.Register<NavigationMessage<ProductDo>>(this, OnMessageReceived);
+        WeakReferenceMessenger.Default.Register<NavigationMessage<(ProductDo product, bool isLocked)>>(this, OnMessageReceived);
     }
 
     #region properties
@@ -205,15 +205,18 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
         {
             Clear();
             Setup(onRenavigationReturned);
-            HasObjectChanged = true;
+            HasObjectChanged = IsLocked ? false : true;
             objectId = onRenavigationReturned?.Id ?? -1;
             isNew = objectId <= 0 ? true : false;
+
+            UnlockCommand.NotifyCanExecuteChanged();
+            EditCommand.NotifyCanExecuteChanged();
         }
     }
 
     public override Task<bool> OnNavigatingFrom()
     {
-        WeakReferenceMessenger.Default.Unregister<NavigationMessage<ProductDo>>(this);
+        WeakReferenceMessenger.Default.Unregister<NavigationMessage<(ProductDo product, bool isLocked)>>(this);
         return base.OnNavigatingFrom();
     }
 
@@ -309,15 +312,18 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
                 product.Components.Add(cmp);
 
         HasObjectChanged = false;
-        _navigationService.NavigateTo(typeof(ComponentDetailViewModel), false, component, product, IsLocked);
+        _navigationService.NavigateTo(typeof(ComponentDetailViewModel), true, component, product, IsLocked);
     }
 
-    void OnMessageReceived(object recipient, NavigationMessage<ProductDo> message)
+    void OnMessageReceived(object recipient, NavigationMessage<(ProductDo product, bool isLocked)> message)
     {
-        if (message.Value != null)
+        if (message.Value.product != null)
             isRenavigated = true;
-        onRenavigationReturned = message.Value;
+        IsLocked = message.Value.isLocked;
+        onRenavigationReturned = message.Value.product;
     }
+
+    protected override Type GetOnCloseNavigationTarget() => typeof(ProductListViewModel);
 
     #endregion
 }

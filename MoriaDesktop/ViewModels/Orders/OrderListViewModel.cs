@@ -50,11 +50,11 @@ public class OrderListViewModel: BaseListViewModel
     public override void OnRowSelected(object row)
     {
         if (row is OrderDo odo)
-            _navigationService.NavigateTo(typeof(OrderDetailViewModel), false, odo.Id);
+            _navigationService.NavigateTo(typeof(OrderDetailViewModel), true, odo.Id);
     }
 
     protected override void New() =>
-        _navigationService.NavigateTo(typeof(OrderDetailViewModel), false, null);
+        _navigationService.NavigateTo(typeof(OrderDetailViewModel), true, null);
 
     protected async override Task<bool> SendDeleteRequest() =>
         await ExecuteApiRequest(_orderService.DeleteOrder, _appStateService.LoggedUser.Username, (Selected as OrderDo)?.Id ?? 0);
