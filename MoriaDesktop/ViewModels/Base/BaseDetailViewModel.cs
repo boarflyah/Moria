@@ -196,7 +196,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 _keepAliveWorker.RemoveLock(objectId);
                 await ExecuteApiRequest(_apiLockService.RemoveObjectKeepAlive, _appStateService.LoggedUser.Username, objectId);
                 HasObjectChanged = false;
-                if (_navigationService.CanGoBack)
+                if (GetOnCloseNavigationTarget() != null)
+                    _navigationService.NavigateTo(GetOnCloseNavigationTarget(), true);
+                else if (_navigationService.CanGoBack)
                     _navigationService.GoBack();
                 else
                     _navigationService.NavigateTo(typeof(EmployeeListViewModel), true);
@@ -220,7 +222,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
 
     protected virtual void Close()
     {
-        if (_navigationService.CanGoBack)
+        if (GetOnCloseNavigationTarget() != null)
+            _navigationService.NavigateTo(GetOnCloseNavigationTarget(), true);
+        else if (_navigationService.CanGoBack)
             _navigationService.GoBack();
         else
             _navigationService.NavigateTo(typeof(EmployeeListViewModel), true);
@@ -387,6 +391,8 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
     /// </summary>
     public abstract void Clear();
 
+    protected virtual Type GetOnCloseNavigationTarget() => null;
+
     #region INavigationAware implementation
 
     public virtual void OnNavigatedTo(params object[] parameters)
@@ -395,13 +401,13 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         {
             IsLocked = true;
             objectId = id;
-            _appStateService.CurrentDetailViewObjectType = GetModelType();
             _appStateService.CurrentDetailViewObjectId = objectId;
         }
         else
             isNew = true;
 
         IsAdminViewing = _appStateService.LoggedUser?.Admin ?? false;
+        _appStateService.CurrentDetailViewObjectType = GetModelType();
 
         UnlockCommand.NotifyCanExecuteChanged();
         EditCommand.NotifyCanExecuteChanged();

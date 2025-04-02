@@ -39,7 +39,8 @@ namespace MoriaServices.Services
                 Index = item.LP,
                 NetAmount = item.Cena.NettoPoRabacie,
                 Product = CreateProduct(item.AsortymentAktualny),
-                Remarks = item.Opis
+                Remarks = item.Opis,
+                DueDate = item.Termin.GetValueOrDefault(),
             };
         }
 

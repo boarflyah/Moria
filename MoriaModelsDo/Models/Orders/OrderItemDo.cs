@@ -307,6 +307,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    public string ItemName => Product != null ? Product.Name : Component != null ? Component.Name : Drive?.Name;
+
     public IList<ComponentToOrderItemDo> ComponentsToOrderItem
     {
         get; set;

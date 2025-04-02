@@ -819,7 +819,7 @@ public class ModelsCreator
             MachineReleased = oi.MachineReleased,
             TransportOrdered = oi.TransportOrdered,
             DueDate = oi.DueDate,
-
+            Symbol = oi.Symbol,
         };
 
         if (oi.ComponentToOrderItems != null)
@@ -880,6 +880,7 @@ public class ModelsCreator
             Quantity = (double)model.Quantity,
             Description = model.Remarks,
             Product = await GetSubiektModelInContext(CreateProduct, model.Product, _context.Products),
+            DueDate = model.DueDate,
         };
     }
 

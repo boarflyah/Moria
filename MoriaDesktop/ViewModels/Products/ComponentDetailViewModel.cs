@@ -228,7 +228,6 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
     {
         GetDo();
         _navigationService.NavigateTo(typeof(ProductDetailViewModel), true, null);
-        var message = WeakReferenceMessenger.Default.Send(new NavigationMessage<ProductDo>(product));
     }
 
     protected async override Task<bool> UpdateExistingObject()
@@ -262,11 +261,15 @@ public class ComponentDetailViewModel : BaseDetailWithNestedListViewModel
 
     public async override Task<bool> OnNavigatingFrom()
     {
-        _appStateService.CurrentDetailViewObjectId = 0;
-        _appStateService.CurrentDetailViewObjectType = null;
+        //_appStateService.CurrentDetailViewObjectId = 0;
+        //_appStateService.CurrentDetailViewObjectType = null;
+
+        var message = WeakReferenceMessenger.Default.Send(new NavigationMessage<(ProductDo product, bool isLocked)>(new(product, IsLocked)));
 
         return true;
     }
+
+    protected override Type GetOnCloseNavigationTarget() => typeof(ProductDetailViewModel);
 
     #endregion
 }

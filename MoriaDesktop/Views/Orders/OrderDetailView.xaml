@@ -240,14 +240,20 @@
                       MouseDoubleClick="DataGrid_MouseDoubleClick"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Produkt" 
-                            Binding="{Binding Product.Name}"
+                    <DataGridTextColumn Header="Symbol" 
+                            Binding="{Binding Symbol}"
                             Width="*"/>
-                    <DataGridTextColumn Header="Komponent" 
-                            Binding="{Binding Component.Name}"
+                    <DataGridTextColumn Header="Wyrób" 
+                            Binding="{Binding ItemName}"
+                            Width="3*"/>
+                    <DataGridTextColumn Header="Projektant" 
+                            Binding="{Binding Designer.Username}"
                             Width="*"/>
-                    <DataGridTextColumn Header="Napęd" 
-                            Binding="{Binding Drive.Name}"
+                    <DataGridTextColumn Header="Termin realizacji" 
+                            Binding="{Binding DueDate}"
+                            Width="*"/>            
+                    <DataGridTextColumn Header="Magazyn" 
+                            Binding="{Binding Warehouse.Name}"
                             Width="*"/>
                     <DataGridTextColumn Header="Ilość" 
                             Binding="{Binding Quantity}"
