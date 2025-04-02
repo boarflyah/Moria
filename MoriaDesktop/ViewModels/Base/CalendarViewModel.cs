@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
@@ -44,7 +45,7 @@ public class CalendarViewModel : BaseDetailViewModel
             RaisePropertyChanged(value);
         }
     }
-     
+
     public override void Clear()
     {
         throw new NotImplementedException();
