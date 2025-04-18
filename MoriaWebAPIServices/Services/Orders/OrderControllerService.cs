@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.ServiceModel;
 using Microsoft.EntityFrameworkCore;
 using MoriaBaseServices;
 using MoriaDTObjects.Models;
@@ -117,7 +118,12 @@ public class OrderControllerService : IOrderControllerService
 
     public async Task ImportOrders()
     {
-        var client = new SalesOrderContractClient();
+
+        var binding = new BasicHttpBinding();
+        binding.SendTimeout = TimeSpan.FromMinutes(5);
+        var endpoint = new EndpointAddress("http://localhost:8080/MyService");
+
+        var client = new SalesOrderContractClient(binding, endpoint);
         try
         {
 

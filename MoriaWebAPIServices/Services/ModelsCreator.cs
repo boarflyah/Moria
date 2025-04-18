@@ -54,10 +54,11 @@ public class ModelsCreator
         if (subiektObject == null)
             return null;
 
-        var model = await set.FirstOrDefaultAsync(x => x.SubiektId == subiektObject.Id);
+        var model = set.Local.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
         if (model == null)
         {
             model = await creator(subiektObject);
+            set.Add(model);
             await _context.AddAsync(model);
         }
 
