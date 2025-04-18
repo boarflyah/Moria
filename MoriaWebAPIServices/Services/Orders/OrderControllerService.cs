@@ -173,28 +173,22 @@ public class OrderControllerService : IOrderControllerService
         DateTime startOfWeek = ISOWeek.ToDateTime(DateTime.Now.Year, weekNumber, DayOfWeek.Monday);
         DateTime endOfWeek = startOfWeek.AddDays(6);
 
-        List<OrderDo> result = new();
-        var filteredOrders = _context.Orders
-       .Include(x => x.OrderingContact)
-       .Include(x => x.ReceivingContact)
-       .Include(x => x.OrderItems)
-       .ThenInclude(x => x.Product)
-       .Include(x => x.OrderItems)
-       .ThenInclude(x => x.Component)
-       .Include(x => x.OrderItems)
-       .ThenInclude(x => x.Drive)
-       .Where(x => x.OrderItems.Any(oi => oi.DueDate >= startOfWeek && oi.DueDate <= endOfWeek))
-       .AsEnumerable()        
-       .ToList();
+        var filteredOrders = await _context.Orders
+             .Include(x => x.OrderingContact)
+             .Include(x => x.ReceivingContact)
+             .Include(x => x.OrderItems)
+                 .ThenInclude(x => x.Product)
+             .Include(x => x.OrderItems)
+                 .ThenInclude(x => x.Component)
+             .Include(x => x.OrderItems)
+                 .ThenInclude(x => x.Drive)
+             .Where(x => x.OrderItems.Any(oi => oi.DueDate >= startOfWeek && oi.DueDate <= endOfWeek))
+             .ToListAsync();
 
-        if (filteredOrders == null)
-            return null;
+        if (!filteredOrders.Any())
+            return Enumerable.Empty<OrderDo>();
 
-        foreach (var order in filteredOrders)
-        {
-            result.Add(_creator.GetOrderDo(order));
-        }
-        return result;
+        return filteredOrders.Select(order => _creator.GetOrderDo(order));
 
     }
 }
