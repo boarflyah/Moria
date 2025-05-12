@@ -23,5 +23,8 @@ namespace MoriaWCFContracts.Interfaces
         [OperationContract]
         MoriaSalesOrder GetSalesOrder(int id);
 
+        [OperationContract]
+        bool UpdateSalesOrder(MoriaSalesOrder so);
+
     }
 }

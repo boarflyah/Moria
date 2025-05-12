@@ -1,15 +1,17 @@
 ﻿using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
+using MoriaBaseModels.Models;
 using MoriaBaseServices;
 using MoriaDesktop.Services;
 using MoriaDesktopServices.Interfaces;
+using MoriaModelsDo.Models.Base;
 
 namespace MoriaDesktop.ViewModels.Base;
 public abstract class BaseListViewModel : ViewModelBase
 {
-    protected readonly IListViewService _listViewService;
-    protected BaseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IListViewService listViewService) : base(logger, appStateService, navigationService)
+    protected readonly IApiListViewService _listViewService;
+    protected BaseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiListViewService listViewService) : base(logger, appStateService, navigationService)
     {
         _listViewService = listViewService;
         NewCommand = new RelayCommand(New);
@@ -159,6 +161,32 @@ public abstract class BaseListViewModel : ViewModelBase
     /// </summary>
     /// <returns></returns>
     protected abstract Task<bool> SendDeleteRequest();
+
+    public async Task UpdateListViewSetup(IList<ListViewColumnProvider> columns)
+    {
+        try
+        {
+            await _listViewService.CreateUpdateListViewSetup(_appStateService.LoggedUser.Username, GetType().Name, columns);
+        }
+        catch (Exception e)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, e.Message, true);
+        }
+    }
+
+    public async Task<ListViewSetupDo> GetListViewSetup()
+    {
+        try
+        {
+            return await _listViewService.GetListViewSetup(_appStateService.LoggedUser.Username, GetType().Name);
+        }
+        catch (Exception e)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, e.Message, true);
+        }
+
+        return null;
+    }
 
     #endregion
 }

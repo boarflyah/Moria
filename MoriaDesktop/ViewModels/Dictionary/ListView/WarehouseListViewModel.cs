@@ -15,7 +15,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class WarehouseListViewModel : BaseListViewModel
 {
     readonly IApiWarehouseService _warehouseService;
-    public WarehouseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiWarehouseService apiWarehouseService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public WarehouseListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiWarehouseService apiWarehouseService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _warehouseService = apiWarehouseService;
 

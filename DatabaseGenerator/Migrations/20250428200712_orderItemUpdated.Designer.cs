@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250428200712_orderItemUpdated")]
+    partial class orderItemUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,39 +23,6 @@ namespace DatabaseGenerator.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseSerialColumns(modelBuilder);
-
-            modelBuilder.Entity("MoriaModels.Models.Base.ListViewSetup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Columns")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsLocked")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastModified")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ListViewId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LockedBy")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("ListViewsSetup");
-                });
 
             modelBuilder.Entity("MoriaModels.Models.Base.Permission", b =>
                 {
@@ -828,15 +798,6 @@ namespace DatabaseGenerator.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("MoriaModels.Models.Base.ListViewSetup", b =>
-                {
-                    b.HasOne("MoriaModels.Models.EntityPersonel.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("MoriaModels.Models.Base.Permission", b =>

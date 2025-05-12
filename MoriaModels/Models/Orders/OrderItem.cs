@@ -18,7 +18,7 @@ public class OrderItem : BaseModel, ISubiektModel
     public string Symbol { get; set; }
     public string Description { get; set; }
     public string Notes { get; set; }
-    public decimal MachineWeight { get; set; }
+    public int MachineWeight { get; set; }
     public string TechnicalDrawingLink { get; set; }
     public double Quantity { get; set; }
 
@@ -52,6 +52,14 @@ public class OrderItem : BaseModel, ISubiektModel
         get; set;
     }
     public decimal Power { get; set; }
+    public string SerialNumber
+    {
+        get; set;
+    }
+    public string ProductionYear
+    {
+        get; set;
+    }
     public string ElectricalDescription { get; set; }
     #region
     public bool TechnicalDrawingCompleted { get; set; }

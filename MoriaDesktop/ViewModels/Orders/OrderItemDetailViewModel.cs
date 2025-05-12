@@ -105,9 +105,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private decimal _MachineWeight;
+    private int _MachineWeight;
     [ObjectChangedValidate]
-    public decimal MachineWeight
+    public int MachineWeight
     {
         get => _MachineWeight;
         set
@@ -124,6 +124,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Permission_MachineWeight = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private string _ProductionYear;
+    [ObjectChangedValidate]
+    public string ProductionYear
+    {
+        get => _ProductionYear;
+        set
+        {
+            _ProductionYear = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_ProductionYear;
+    public PermissionDo Permission_ProductionYear
+    {
+        get => _Permission_ProductionYear;
+        set
+        {
+            _Permission_ProductionYear = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private string _SerialNumber;
+    [ObjectChangedValidate]
+    public string SerialNumber
+    {
+        get => _SerialNumber;
+        set
+        {
+            _SerialNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_SerialNumber;
+    public PermissionDo Permission_SerialNumber
+    {
+        get => _Permission_SerialNumber;
+        set
+        {
+            _Permission_SerialNumber = value;
             RaisePropertyChanged(value);
         }
     }
@@ -721,6 +767,8 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MachineReleased = oi.MachineReleased;
         TransportOrdered = oi.TransportOrdered;
         DueDate = oi.DueDate;
+        ProductionYear = oi.ProductionYear;
+        SerialNumber = oi.SerialNumber;
 
         if (oi.ComponentsToOrderItem != null)
             foreach (var ctoi in oi.ComponentsToOrderItem)
@@ -754,6 +802,8 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.MachineReleased = MachineReleased;
         currentOrderItem.TransportOrdered = TransportOrdered;
         currentOrderItem.DueDate = DueDate;
+        currentOrderItem.ProductionYear = ProductionYear;
+        currentOrderItem.SerialNumber = SerialNumber;
 
         if (currentOrderItem.ComponentsToOrderItem == null)
             currentOrderItem.ComponentsToOrderItem = new List<ComponentToOrderItemDo>();

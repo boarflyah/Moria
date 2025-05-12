@@ -5,7 +5,7 @@ using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.DriveComponents;
 
-[LookupHeaders(true, "Symbol", true, "Nazwa", true, "Moc (kV)")]
+[LookupHeaders(true, "Symbol", true, "Nazwa", true, "Moc (kW)")]
 public class Motor: BaseModel
 {
     //public int Id { get; set; }

@@ -28,6 +28,7 @@ public class WebAPIEndpointsProvider
     public const string Drive = "drive";
     public const string Component = "component";
     public const string Order = "order";
+    public const string ListView = "listview";
 
     #endregion
 
@@ -440,7 +441,26 @@ public class WebAPIEndpointsProvider
     /// <summary>
     /// Parameter from path: weekNumber
     /// </summary>
-    public const string GetCalendarOrdersPath = $"{Order}/calendar"; 
+    public const string GetCalendarOrdersPath = $"{Order}/calendar";
+    #endregion
+
+    #region listview
+
+    /// <summary>
+    /// Body: DOListViewSetup
+    /// </summary>
+    public const string PutListViewSetupPath = $"{ListView}/listviewsetup";
+
+    /// <summary>
+    /// path: listViewId
+    /// </summary>
+    public const string GetListViewSetupPath = $"{ListView}/listviewsetup";
+
+    /// <summary>
+    /// Body: type and searchtext string
+    /// </summary>
+    public const string GetSearchPath = $"{ListView}/SearchText";
+
     #endregion
 
 #if DEBUG
@@ -449,10 +469,6 @@ public class WebAPIEndpointsProvider
     public const string GetTestPath = $"{Test}";
 
 #endif
-    /// <summary>
-    /// Body: type and searchtext string
-    /// </summary>
-    public const string GetSearchPath = $"SearchText";
 
     #endregion
 }

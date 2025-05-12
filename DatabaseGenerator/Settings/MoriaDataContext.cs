@@ -113,6 +113,11 @@ public class MoriaDataContext : DbContext
         set;
     }
 
+    public DbSet<ListViewSetup> ListViewsSetup
+    {
+        get; set;
+    }
+
     public void CreatePPermissionsTrigger()
     {
         Database.ExecuteSqlRaw(CreateInsertPermissionsFunctionQuery());
@@ -202,6 +207,8 @@ public class MoriaDataContext : DbContext
                 (true, true, 'Pozycja zamówienia - Maszyna wydana', 'OrderItem_MachineReleased', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - Transport zamówiony', 'OrderItem_TransportOrdered', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - Termin realizacji', 'OrderItem_DueDate', PositionId, false, '', 'System'),
+                (true, true, 'Pozycja zamówienia - Rok produkcji', 'OrderItem_ProductionYear', PositionId, false, '', 'System'),
+                (true, true, 'Pozycja zamówienia - Nr seryjny', 'OrderItem_SerialNumber', PositionId, false, '', 'System'),
 	            (true, true, 'Pracownik - Imię', 'Employee_FirstName', PositionId, false, '', 'System'),
 	            (true, true, 'Pracownik - Nazwisko', 'Employee_LastName', PositionId, false, '', 'System'),
 	            (true, true, 'Pracownik - Nazwa użytkownika', 'Employee_Username', PositionId, false, '', 'System'),

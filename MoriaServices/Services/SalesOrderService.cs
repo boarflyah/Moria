@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using InsERT.Moria.Dokumenty.Logistyka;
 using InsERT.Moria.ModelDanych;
+using InsERT.Moria.Narzedzia.EPP.Typy;
 using InsERT.Moria.Sfera;
 using Microsoft.Extensions.Logging;
 using MoriaDTObjects.Models;
@@ -9,7 +12,7 @@ using MoriaServices.Interfaces;
 
 namespace MoriaServices.Services
 {
-    public class SalesOrderService: ISalesOrderService
+    public class SalesOrderService : ISalesOrderService
     {
         readonly IMoriaHandlerService _handlerService;
         readonly ISalesOrderQueriesService _queriesService;
@@ -144,6 +147,33 @@ namespace MoriaServices.Services
                 throw new ArgumentException("Nie udało się zalogować do Sfery");
         }
 
+        public bool UpdateSalesOrder(MoriaSalesOrder model)
+        {
+            var moriaHandler = _handlerService.GetHandler();
+            if (_handlerService?.Login(moriaHandler) == true)
+            {
+                var document = moriaHandler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == model.Id);
+                if (document != null)
+                {
+                    using (var documentToUpdate = moriaHandler.ZamowieniaOdKlientow().Znajdz(document))
+                    {
+                        foreach (var soi in model.SalesOrderItems)
+                        {
+                            var toUpdate = document.Pozycje.FirstOrDefault(x => x.Id == soi.Id);
+                            if (toUpdate != null)
+                            {
+                                UpdateSalesOrderItem(toUpdate, soi);
+                            }
+                        }
+                        documentToUpdate.Przelicz();
+                        documentToUpdate.Zapisz();
+                    }
+                }
+            }
+
+            return false;
+        }
+
         MoriaSalesOrder GetSalesOrder(Uchwyt handler, int id)
         {
             var document = handler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == id);
@@ -166,7 +196,7 @@ namespace MoriaServices.Services
                 Client = _dictionariesService.CreateEntity(document.PodmiotZamawiajacy()),
                 Recipient = _dictionariesService.CreateEntity(document.PodmiotOdbiorca())
             };
-            
+
             foreach (var item in document.Pozycje)
             {
                 var soi = _dictionariesService.CreateSalesOrderItem(item);
@@ -175,6 +205,14 @@ namespace MoriaServices.Services
             }
 
             return mso;
+        }
+
+        void UpdateSalesOrderItem(PozycjaDokumentu item, MoriaSalesOrderItem model)
+        {
+            item.PolaWlasneAdv2.S0 = model.SerialNumber;
+            item.PolaWlasneAdv2.S1 = model.ProductionYear;
+            item.PolaWlasneAdv2.D0 = model.Power;
+            item.PolaWlasneAdv2.I0 = model.Weight;
         }
     }
 }

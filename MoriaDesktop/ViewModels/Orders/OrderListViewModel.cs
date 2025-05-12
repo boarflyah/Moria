@@ -13,7 +13,7 @@ public class OrderListViewModel: BaseListViewModel
 {
     readonly IApiOrderService _orderService;
 
-    public OrderListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiOrderService orderService, IListViewService listViewService)
+    public OrderListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiOrderService orderService, IApiListViewService listViewService)
         : base(logger, appStateService, navigationService, listViewService)
     {
         _orderService = orderService;

@@ -53,5 +53,29 @@ namespace MoriaDTObjects.Models
         {
             get; set;
         }
+
+        [DataMember]
+        public string SerialNumber
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public int Weight
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public decimal Power
+        {
+            get; set;
+        }
+
+        [DataMember]
+        public string ProductionYear
+        {
+            get; set;
+        }
     }
 }

@@ -14,7 +14,7 @@ public sealed class EmployeeListViewModel : BaseListViewModel
 {
     readonly IApiEmployeeService _employeeService;
 
-    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public EmployeeListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, IApiEmployeeService employeeService, INavigationService navigationService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _employeeService = employeeService;
 

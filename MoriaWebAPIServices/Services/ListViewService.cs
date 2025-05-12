@@ -3,8 +3,10 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using MoriaBaseModels.Models;
+using MoriaBaseServices;
 using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
+using MoriaModelsDo.Models.Base;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces;
 
@@ -14,11 +16,13 @@ public class ListViewService : IListViewControllerService
 {
     readonly ApplicationDbContext _context;
     readonly ModelTypeConverter _typeConverter;
+    readonly ModelsCreator _creator;
 
-    public ListViewService(ApplicationDbContext context, ModelTypeConverter typeConverter)
+    public ListViewService(ApplicationDbContext context, ModelTypeConverter typeConverter, ModelsCreator creator)
     {
         _context = context;
         _typeConverter = typeConverter;
+        _creator = creator;
     }
 
     public async Task<IEnumerable<TDo>> SearchAsync<TDo>(string searchText)
@@ -56,6 +60,45 @@ public class ListViewService : IListViewControllerService
             return list.Select(x => x.GetLookupObject()).ToList();
         }
         return new List<LookupModel>();
+    }
+
+    public async Task<ListViewSetupDo> GetListViewSetupDo(int employeeId, string listViewName)
+    {
+        var employee = await _context.Employees.FindAsync(employeeId);
+
+        if (employee == null)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
+
+        var listViewSetup = await _context.ListViewsSetup.FirstOrDefaultAsync(x => x.ListViewId.Trim().ToLower() == listViewName.Trim().ToLower());
+
+        if (listViewSetup == null)
+            return null;
+
+        return _creator.GetListViewSetupDo(listViewSetup);
+    }
+
+    public async Task CreateUpdateListViewSetup(int employeeId, ListViewSetupDo setup)
+    {
+        var employee = await _context.Employees.FindAsync(employeeId);
+
+        if (employee == null)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
+
+        var listViewSetup = await _context.ListViewsSetup.FirstOrDefaultAsync(x => x.ListViewId.Trim().ToLower() == setup.ListViewId.Trim().ToLower());
+        if (listViewSetup == null)
+        {
+            listViewSetup = await _creator.CreateListViewSetup(setup, employee);
+
+            _context.ListViewsSetup.Add(listViewSetup);
+            
+            setup.Id = listViewSetup.Id;
+        }
+        else
+        {
+            await _creator.UpdateListViewSetup(listViewSetup, setup);
+        }
+
+        await _context.SaveChangesAsync();
     }
 
     public async Task<List<TDo>> SearchDynamicAsync<T, TDo>(string searchText)

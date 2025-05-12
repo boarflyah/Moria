@@ -65,6 +65,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -317,7 +318,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Waga" 
+                        <Label Content="Moc" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="PowerTextBox" 
@@ -327,7 +328,41 @@
                                  PreviewKeyDown="TextBox_PreviewKeyDown"/>
                     </Grid>
 
-                    <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Margin="10">
+                    <Grid Grid.Row="3"
+                          Grid.Column="3"
+                          Margin="10"
+                          IsEnabled="{Binding Permission_ProductionYear.CanWrite}"
+                          Visibility="{Binding Permission_ProductionYear.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Rok produkcji" 
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <TextBox Name="ProductionYearTextBox" 
+                                 Text="{Binding ProductionYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Grid.Row="1"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4"
+                          Grid.Column="0"
+                          Margin="10"
+                          IsEnabled="{Binding Permission_SerialNumber.CanWrite}"
+                          Visibility="{Binding Permission_SerialNumber.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Numer seryjny" 
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <TextBox Name="SerialNumberTextBox" 
+                                 Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Grid.Row="1"/>
+                    </Grid>
+
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Margin="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />

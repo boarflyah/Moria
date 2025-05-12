@@ -14,7 +14,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class SteelKindListViewModel : BaseListViewModel
 {
     readonly IApiSteelKindService _steelKindService;
-    public SteelKindListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiSteelKindService apiSteelKindService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public SteelKindListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiSteelKindService apiSteelKindService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _steelKindService = apiSteelKindService;
 

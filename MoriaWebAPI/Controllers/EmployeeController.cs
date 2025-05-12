@@ -1,11 +1,8 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using MoriaBaseServices;
 using MoriaBaseServices.Services;
 using MoriaModelsDo.Models.Contacts;
-using MoriaWebAPI.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 
 namespace MoriaWebAPI.Controllers;
