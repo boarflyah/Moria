@@ -170,6 +170,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         {
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
         }
+        catch (MoriaApiException apiEx)
+        {
+            _appStateService.HandleMoriaApiException(apiEx);
+        }
         catch (Exception ex)
         {
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
@@ -207,6 +211,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
         {
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+        }
+        catch (MoriaApiException apiEx)
+        {
+            _appStateService.HandleMoriaApiException(apiEx);
         }
         catch (Exception ex)
         {
@@ -254,12 +262,7 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         }
         catch (MoriaApiException apiException)
         {
-            if (apiException.Reason == MoriaApiExceptionReason.ObjectIsLocked)
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiekt jest w edycji przez innego użytkownika: {apiException.AdditionalMessage}", true);
-            else if (apiException.Reason == MoriaApiExceptionReason.ObjectNotFound)
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiektu nie znaleziono", true);
-            else
-                _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nieznany błąd", true);
+            _appStateService.HandleMoriaApiException(apiException);
         }
         catch (Exception ex)
         {
@@ -279,6 +282,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
         {
             _appStateService.SetupLoading(true);
             await _apiLockService.Unlock(_appStateService.LoggedUser.Username, _appStateService.CurrentDetailViewObjectType, _appStateService.CurrentDetailViewObjectId);
+        }
+        catch (MoriaApiException mae)
+        {
+            _appStateService.HandleMoriaApiException(mae);
         }
         catch (Exception ex)
         {
@@ -326,6 +333,10 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
             catch (MoriaAppException mae) when (mae.Reason == MoriaAppExceptionReason.ReAuthorizationCancelled)
             {
                 _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
+            }
+            catch (MoriaApiException mae)
+            {
+                _appStateService.HandleMoriaApiException(mae);
             }
             catch (Exception ex)
             {
@@ -439,14 +450,9 @@ public abstract class BaseDetailViewModel : ViewModelBase, INavigationAware
                 {
                     _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Anulowano ponowną autoryzację", true);
                 }
-                catch (MoriaApiException apiException)
+                catch (MoriaApiException mae)
                 {
-                    if (apiException.Reason == MoriaApiExceptionReason.ObjectIsLocked)
-                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiekt jest w edycji przez innego użytkownika: {apiException.AdditionalMessage}", true);
-                    else if (apiException.Reason == MoriaApiExceptionReason.ObjectNotFound)
-                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiektu nie znaleziono", true);
-                    else
-                        _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nieznany błąd", true);
+                    _appStateService.HandleMoriaApiException(mae);
                 }
                 catch (Exception ex)
                 {

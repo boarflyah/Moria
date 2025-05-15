@@ -118,6 +118,7 @@ public class WarehouseDetailViewModel : BaseDetailViewModel
     public override BaseDo GetDo()
         => new WarehouseDo()
         {
+            Id = objectId,
             Name = this.WarehouseName,
             Symbol = this.Symbol,
             LastModified = _appStateService.LoggedUser.Username

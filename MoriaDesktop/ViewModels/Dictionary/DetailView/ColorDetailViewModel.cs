@@ -120,6 +120,7 @@ public class ColorDetailViewModel : BaseDetailViewModel
     public override BaseDo GetDo()
         => new ColorDo()
         {
+            Id = objectId,
             Code = this.Code,
             Name = this.Name,
             LastModified = _appStateService.LoggedUser.Username,
