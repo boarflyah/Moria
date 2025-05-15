@@ -186,8 +186,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _TechnicalDrawingCompleted;
-    public bool TechnicalDrawingCompleted
+    private DateTime? _TechnicalDrawingCompleted;
+    public DateTime? TechnicalDrawingCompleted
     {
         get => _TechnicalDrawingCompleted;
         set
@@ -197,8 +197,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _CuttingCompleted;
-    public bool CuttingCompleted
+    private DateTime? _CuttingCompleted;
+    public DateTime? CuttingCompleted
     {
         get => _CuttingCompleted;
         set
@@ -208,8 +208,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _MetalCliningCompleted;
-    public bool MetalCliningCompleted
+    private DateTime? _MetalCliningCompleted;
+    public DateTime? MetalCliningCompleted
     {
         get => _MetalCliningCompleted;
         set
@@ -219,8 +219,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _PaintingCompleted;
-    public bool PaintingCompleted
+    private DateTime? _PaintingCompleted;
+    public DateTime? PaintingCompleted
     {
         get => _PaintingCompleted;
         set
@@ -230,8 +230,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _ElectricaCabinetCompleted;
-    public bool ElectricaCabinetCompleted
+    private DateTime? _ElectricaCabinetCompleted;
+    public DateTime? ElectricaCabinetCompleted
     {
         get => _ElectricaCabinetCompleted;
         set
@@ -241,8 +241,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _MachineAssembled;
-    public bool MachineAssembled
+    private DateTime? _MachineAssembled;
+    public DateTime? MachineAssembled
     {
         get => _MachineAssembled;
         set
@@ -252,8 +252,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _MachineWiredAndTested;
-    public bool MachineWiredAndTested
+    private DateTime? _MachineWiredAndTested;
+    public DateTime? MachineWiredAndTested
     {
         get => _MachineWiredAndTested;
         set
@@ -263,8 +263,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _MachineReleased;
-    public bool MachineReleased
+    private DateTime? _MachineReleased;
+    public DateTime? MachineReleased
     {
         get => _MachineReleased;
         set
@@ -274,8 +274,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _TransportOrdered;
-    public bool TransportOrdered
+    private DateTime? _TransportOrdered;
+    public DateTime? TransportOrdered
     {
         get => _TransportOrdered;
         set
@@ -285,8 +285,8 @@ public class OrderItemDo: BaseDo
         }
     }
 
-    private bool _ProductionOrderSymbol;
-    public bool ProductionOrderSymbol
+    private DateTime? _ProductionOrderSymbol;
+    public DateTime? ProductionOrderSymbol
     {
         get => _ProductionOrderSymbol;
         set

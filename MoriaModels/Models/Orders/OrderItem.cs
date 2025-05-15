@@ -54,15 +54,32 @@ public class OrderItem : BaseModel, ISubiektModel
     public decimal Power { get; set; }
     public string ElectricalDescription { get; set; }
     #region
-    public bool TechnicalDrawingCompleted { get; set; }
-    public bool CuttingCompleted { get; set; }
-    public bool MetalCliningCompleted { get; set; }
-    public bool PaintingCompleted { get; set; }
-    public bool ElectricaCabinetCompleted { get; set; }
-    public bool MachineAssembled { get; set; }
-    public bool MachineWiredAndTested { get; set; }
-    public bool MachineReleased { get; set; }
-    public bool TransportOrdered { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? TechnicalDrawingCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? CuttingCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MetalCliningCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PaintingCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricaCabinetCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineAssembled { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineWiredAndTested { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineReleased { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? TransportOrdered { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime DueDate { get; set; }

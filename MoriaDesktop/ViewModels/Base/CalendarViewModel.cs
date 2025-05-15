@@ -56,10 +56,7 @@ public class CalendarViewModel : BaseDetailViewModel
         throw new NotImplementedException();
     }
 
-    public override Type GetModelType()
-    {
-        throw new NotImplementedException();
-    }
+    public override Type GetModelType() => null;
 
     protected override Task LoadObject()
     {
