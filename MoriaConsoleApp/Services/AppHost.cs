@@ -60,52 +60,52 @@ namespace MoriaConsoleApp.Services
                         }
                         else if (pressed.Key == ConsoleKey.S)
                         {
-                            var mso = new MoriaSalesOrder()
-                            {
-                                Id = 100009,
-                            };
-
-                            var msoi1 = new MoriaSalesOrderItem()
-                            {
-                                Id = 100000,
-                                ProductionYear = "1",
-                                Weight = 1000,
-                                SerialNumber = "nowy numer seryjny",
-                                Power = 999,
-                            };
-
-                            mso.SalesOrderItems = new List<MoriaSalesOrderItem>();
-                            mso.SalesOrderItems.Add(msoi1);
-
-                            _salesOrderService.UpdateSalesOrder(mso);
-
-
-                            //var id = _consoleService.GetInt("Podaj identyfikator zamówienia: ");
-                            //if (id != int.MinValue)
+                            //var mso = new MoriaSalesOrder()
                             //{
-                            //    _logger.LogInformation($"Wybrano zamówienie dla: {id}");
-                            //    var doc = _salesOrderService.GetSalesOrder(id);
-                            //    if (doc != null)
-                            //    {
-                            //        _logger.LogInformation($"Znalezion zamówienie: {doc.Symbol}");
-                            //        _consoleService.WriteLine($"Id\tSymbol\t\tData złożenia\t\tZamawiajacy");
-                            //        _consoleService.WriteLine($"{doc.Id}\t{doc.Symbol}\t{doc.DocumentDate.ToShortDateString()}\t\t{doc.Client.ShortName}");
-                            //        _consoleService.WriteLine("\tLp\tProdukt\t\tIlość");
-                            //        foreach (var soi in doc.SalesOrderItems)
-                            //        {
-                            //            _consoleService.WriteLine($"\t{soi.Index}\t{soi.Product.Name}\t{soi.Quantity}");
-                            //            if (soi.Product?.Components?.Any() == true)
-                            //            {
-                            //                _consoleService.WriteLine("\t\tProdukt\t\tIlość");
-                            //                foreach (var comp in soi.Product.Components)
-                            //                    _consoleService.WriteLine($"\t\t{comp.Product.Name}\t{comp.Quantity}");
-                            //            }
-                            //        }
-                            //        _consoleService.WriteLine();
-                            //    }
-                            //    else
-                            //        _logger.LogInformation($"Nie znaleziono dokumentu: {id}");
-                            //}
+                            //    Id = 100009,
+                            //};
+
+                            //var msoi1 = new MoriaSalesOrderItem()
+                            //{
+                            //    Id = 100000,
+                            //    ProductionYear = "1",
+                            //    Weight = 1000,
+                            //    SerialNumber = "nowy numer seryjny",
+                            //    Power = 999,
+                            //};
+
+                            //mso.SalesOrderItems = new List<MoriaSalesOrderItem>();
+                            //mso.SalesOrderItems.Add(msoi1);
+
+                            //_salesOrderService.UpdateSalesOrder(mso);
+
+
+                            var id = _consoleService.GetInt("Podaj identyfikator zamówienia: ");
+                            if (id != int.MinValue)
+                            {
+                                _logger.LogInformation($"Wybrano zamówienie dla: {id}");
+                                var doc = _salesOrderService.GetSalesOrder(id);
+                                if (doc != null)
+                                {
+                                    _logger.LogInformation($"Znaleziono zamówienie: {doc.Symbol}");
+                                    _consoleService.WriteLine($"Id\tSymbol\t\tData złożenia\t\tZamawiajacy");
+                                    _consoleService.WriteLine($"{doc.Id}\t{doc.Symbol}\t{doc.DocumentDate.ToShortDateString()}\t\t{doc.Client.ShortName}");
+                                    _consoleService.WriteLine("\tLp\tProdukt\t\tIlość");
+                                    foreach (var soi in doc.SalesOrderItems)
+                                    {
+                                        _consoleService.WriteLine($"\t{soi.Index}\t{soi.Product.Name}\t{soi.Quantity}");
+                                        if (soi.Product?.Components?.Any() == true)
+                                        {
+                                            _consoleService.WriteLine("\t\tProdukt\t\tIlość");
+                                            foreach (var comp in soi.Product.Components)
+                                                _consoleService.WriteLine($"\t\t{comp.Product.Name}\t{comp.Quantity}");
+                                        }
+                                    }
+                                    _consoleService.WriteLine();
+                                }
+                                else
+                                    _logger.LogInformation($"Nie znaleziono dokumentu: {id}");
+                            }
                         }
 #if DEBUG
                         else if (pressed.Key == ConsoleKey.T)

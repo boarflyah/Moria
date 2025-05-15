@@ -155,23 +155,23 @@ namespace MoriaServices.Services
                 var document = moriaHandler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == model.Id);
                 if (document != null)
                 {
-                    using (var documentToUpdate = moriaHandler.ZamowieniaOdKlientow().Znajdz(document))
+                    //using (var documentToUpdate = moriaHandler.ZamowieniaOdKlientow().Znajdz(document))
+                    //{
+                    foreach (var soi in model.SalesOrderItems)
                     {
-                        foreach (var soi in model.SalesOrderItems)
+                        var toUpdate = document.Pozycje.FirstOrDefault(x => x.Id == soi.Id);
+                        if (toUpdate != null)
                         {
-                            var toUpdate = document.Pozycje.FirstOrDefault(x => x.Id == soi.Id);
-                            if (toUpdate != null)
-                            {
-                                UpdateSalesOrderItem(toUpdate, soi);
-                            }
+                            UpdateSalesOrderItem(toUpdate, soi, moriaHandler);
                         }
-                        documentToUpdate.Przelicz();
-                        documentToUpdate.Zapisz();
                     }
+                    //    documentToUpdate.Przelicz();
+                    //    documentToUpdate.Zapisz();
+                    //}
                 }
             }
 
-            return false;
+            return true;
         }
 
         MoriaSalesOrder GetSalesOrder(Uchwyt handler, int id)
@@ -207,12 +207,26 @@ namespace MoriaServices.Services
             return mso;
         }
 
-        void UpdateSalesOrderItem(PozycjaDokumentu item, MoriaSalesOrderItem model)
+        void UpdateSalesOrderItem(PozycjaDokumentu item, MoriaSalesOrderItem model, Uchwyt moriaHandler)
         {
-            item.PolaWlasneAdv2.S0 = model.SerialNumber;
-            item.PolaWlasneAdv2.S1 = model.ProductionYear;
-            item.PolaWlasneAdv2.D0 = model.Power;
-            item.PolaWlasneAdv2.I0 = model.Weight;
+            //item.PolaWlasneAdv2.S0 = model.SerialNumber;
+            //item.PolaWlasneAdv2.S1 = model.ProductionYear;
+            //item.PolaWlasneAdv2.D0 = model.Power;
+            //item.PolaWlasneAdv2.I0 = model.Weight;
+
+            using (var conn = moriaHandler.PodajPolaczenie())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "UPDATE ModelDanychContainer.PozycjeDokumentu_PolaWlasnePozycjaDokumentu_Adv2 SET S0 = @p1, S1 = @p2, D0 = @p3, I0 = @p4 WHERE Id = @p5";
+                cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter("@p1", model.SerialNumber));
+                cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter("@p2", model.ProductionYear));
+                cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter("@p3", model.Power));
+                cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter("@p4", model.Weight));
+                cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter("@p5", item.Id));
+
+                conn.Open();
+                var affected = cmd.ExecuteNonQuery();
+            }
         }
     }
 }

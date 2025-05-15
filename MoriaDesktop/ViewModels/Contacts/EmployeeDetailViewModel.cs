@@ -112,6 +112,18 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         }
     }
 
+
+    private bool _IsPasswordVisible;
+    public bool IsPasswordVisible
+    {
+        get => _IsPasswordVisible;
+        set
+        {
+            _IsPasswordVisible = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     PermissionDo _Permission_FirstName;
     public PermissionDo Permission_FirstName
     {
@@ -363,6 +375,11 @@ public sealed class EmployeeDetailViewModel : BaseDetailViewModel
         Position = employee.Position;
         Admin = employee.Admin;
         LastModified = employee.LastModified;
+
+        if (objectId == _appStateService.LoggedUser.Id || IsAdminViewing)
+            IsPasswordVisible = true;
+        else
+            IsPasswordVisible = false;
     }
 
     public override void Clear()

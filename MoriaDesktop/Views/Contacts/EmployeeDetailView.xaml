@@ -70,7 +70,8 @@
                      Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Margin="10">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+              Visibility="{Binding IsPasswordVisible, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

@@ -26,7 +26,7 @@ public class OrderControllerService : IOrderControllerService
 
     public async Task<OrderDo> CreateOrder(OrderDo order)
     {
-       //var entity = await _context.AddAsync(await _creator.CreateOrder(order));
+        //var entity = await _context.AddAsync(await _creator.CreateOrder(order));
 
         var result = await _catalogService.CreateCatalogs(order.OrderNumberSymbol);
         if (string.IsNullOrEmpty(result))
@@ -113,12 +113,49 @@ public class OrderControllerService : IOrderControllerService
         await _creator.UpdateOrder(searchOrder, order);
 
         var created = await _context.SaveChangesAsync();
+
+        if (searchOrder.SubiektId != 0 && searchOrder.OrderItems.Any(x => x.SubiektId != 0))
+        {
+            var binding = new BasicHttpBinding();
+            binding.SendTimeout = TimeSpan.FromMinutes(5);
+            var endpoint = new EndpointAddress("http://localhost:8080/MyService");
+
+            var client = new SalesOrderContractClient(binding, endpoint);
+            try
+            {
+                MoriaSalesOrder mso = new()
+                {
+                    Id = searchOrder.SubiektId,
+                    SalesOrderItems = new()
+                };
+                foreach (var oi in searchOrder.OrderItems.Where(x => x.SubiektId != 0))
+                {
+                    MoriaSalesOrderItem msoi = new()
+                    {
+                        Id = oi.SubiektId,
+                        ProductionYear = oi.ProductionYear,
+                        Weight = oi.MachineWeight,
+                        SerialNumber = oi.SerialNumber,
+                        Power = oi.Power,
+                    };
+                    mso.SalesOrderItems.Add(msoi);
+                }
+//update w subiekcie na razie zakomentowany w debugu
+#if DEBUG==false
+                client.UpdateSalesOrderAsync(mso);
+#endif
+            }
+            finally
+            {
+                await client.CloseAsync();
+            }
+        }
+
         return _creator.GetOrderDo(searchOrder);
     }
 
     public async Task ImportOrders()
     {
-
         var binding = new BasicHttpBinding();
         binding.SendTimeout = TimeSpan.FromMinutes(5);
         var endpoint = new EndpointAddress("http://localhost:8080/MyService");
