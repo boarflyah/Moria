@@ -91,6 +91,15 @@ public class OrderItem : BaseModel, ISubiektModel
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime DueDate { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PlannedTransport { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PlannedMachineWiredAndTested { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PlannedMachineAssembled { get; set; }
     #endregion
 
     [NotMapped]

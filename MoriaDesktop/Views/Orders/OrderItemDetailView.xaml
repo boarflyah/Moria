@@ -362,7 +362,7 @@
                                  Grid.Row="1"/>
                     </Grid>
 
-                    <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Margin="10">
+                    <StackPanel Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Margin="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -371,6 +371,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -435,15 +436,37 @@
                                 <DatePicker SelectedDate="{Binding MachineReleased, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <!-- Kolumna 3 -->
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1"
                                     IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
                                     Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding TransportOrdered, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
+                            
+                            <!-- Kolumna 3 -->                  
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
+                                    IsEnabled="{Binding Permission_PlannedMachineAssembled.CanWrite}"
+                                    Visibility="{Binding Permission_PlannedMachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Planowane zestawienie" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedMachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+                                    IsEnabled="{Binding Permission_PlannedMachineWiredAndTested.CanWrite}"
+                                    Visibility="{Binding Permission_PlannedMachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Planowane okablowanie" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedMachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
+                                    IsEnabled="{Binding Permission_PlannedTransport.CanWrite}"
+                                    Visibility="{Binding Permission_PlannedTransport.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Planowany transport" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedTransport, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2"
                                     IsEnabled="{Binding Permission_DueDate.CanWrite}"
                                     Visibility="{Binding Permission_DueDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Termin realizacji" Margin="0,0,10,0"/>

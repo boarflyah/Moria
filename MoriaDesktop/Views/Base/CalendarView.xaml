@@ -24,7 +24,16 @@
                         <Border BorderThickness="1" BorderBrush="Black" Padding="5" Margin="10" Background="LightGray">
                             <StackPanel>
                                 <!-- Nagłówek zamówienia -->
-                                <TextBlock Text="{Binding OrderNumberSymbol}" FontSize="16" FontWeight="Bold" />
+                                <TextBlock FontSize="16" FontWeight="Bold">
+                                   <TextBlock.Inlines>
+                                        <Run Text="{Binding OrderNumberSymbol}" />
+                                        <Run Text=" | " />
+                                        <!-- separator -->
+                                        <Run Text="{Binding OrderingContact.ShortName}" />
+                                        <Run Text=" | " />
+                                        <Run Text="{Binding ReceivingContact.ShortName}" />
+                                    </TextBlock.Inlines>
+                                </TextBlock>
                                 <TextBlock Text="{Binding DueDate, StringFormat='dddd, dd.MM.yyyy'}"
                                            FontSize="14" FontWeight="SemiBold" Foreground="DarkBlue"/>
                                 <WrapPanel>
@@ -115,6 +124,19 @@
                                                             <TextBlock Text="Transport:" Margin="0,0,5,0"/>
                                                             <CheckBox IsChecked="{Binding TransportOrdered, Converter={StaticResource DateToBoolConverter}}" Margin="0,3,10,0"/>
                                                         </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Plan. zestawienie:" Margin="50,0,5,0"/>
+                                                            <TextBlock Text="{Binding PlannedMachineAssembled, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="14" FontWeight="SemiBold" Grid.Column="1" Margin="5,1,0,0" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Plan. okablowanie:" Margin="10,0,5,0"/>
+                                                            <TextBlock Text="{Binding PlannedMachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="14" FontWeight="SemiBold" Grid.Column="1" Margin="5,1,0,0" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Plan. transport:" Margin="10,0,5,0"/>
+                                                            <TextBlock Text="{Binding PlannedTransport, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="14" FontWeight="SemiBold" Grid.Column="1" Margin="5,1,0,0" />
+                                                        </StackPanel>
+
                                                     </WrapPanel>
                                                 </StackPanel>
                                             </Border>

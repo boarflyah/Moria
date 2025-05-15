@@ -629,6 +629,75 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _PlannedMachineAssembled;
+    [ObjectChangedValidate]
+    public DateTime? PlannedMachineAssembled
+    {
+        get => _PlannedMachineAssembled;
+        set
+        {
+            _PlannedMachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PlannedMachineAssembled;
+    public PermissionDo Permission_PlannedMachineAssembled
+    {
+        get => _Permission_PlannedMachineAssembled;
+        set
+        {
+            _Permission_PlannedMachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedMachineWiredAndTested;
+    [ObjectChangedValidate]
+    public DateTime? PlannedMachineWiredAndTested
+    {
+        get => _PlannedMachineWiredAndTested;
+        set
+        {
+            _PlannedMachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PlannedMachineWiredAndTested;
+    public PermissionDo Permission_PlannedMachineWiredAndTested
+    {
+        get => _Permission_PlannedMachineWiredAndTested;
+        set
+        {
+            _Permission_PlannedMachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedTransport;
+    [ObjectChangedValidate]
+    public DateTime? PlannedTransport
+    {
+        get => _PlannedTransport;
+        set
+        {
+            _PlannedTransport = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PlannedTransport;
+    public PermissionDo Permission_PlannedTransport
+    {
+        get => _Permission_PlannedTransport;
+        set
+        {
+            _Permission_PlannedTransport = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime _DueDate;
     [ObjectChangedValidate]
     public DateTime DueDate
@@ -737,6 +806,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MachineWiredAndTested = default;
         MachineReleased = default;
         TransportOrdered = default;
+        PlannedMachineAssembled = default;
+        PlannedMachineWiredAndTested = default;
+        PlannedTransport = default;
         DueDate = default;
 
     }
@@ -766,8 +838,11 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MachineWiredAndTested = oi.MachineWiredAndTested;
         MachineReleased = oi.MachineReleased;
         TransportOrdered = oi.TransportOrdered;
-        DueDate = oi.DueDate;
-        ProductionYear = oi.ProductionYear;
+        PlannedMachineAssembled = oi.PlannedMachineAssembled;
+        PlannedMachineWiredAndTested = oi.PlannedMachineWiredAndTested;
+        PlannedTransport = oi.PlannedTransport;
+        DueDate = oi.DueDate == DateTime.MinValue ? DateTime.Now : oi.DueDate;
+        ProductionYear = oi.ProductionYear == null? DateTime.Now.Year.ToString() : oi.ProductionYear;
         SerialNumber = oi.SerialNumber;
 
         if (oi.ComponentsToOrderItem != null)
@@ -801,6 +876,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.MachineWiredAndTested = MachineWiredAndTested;
         currentOrderItem.MachineReleased = MachineReleased;
         currentOrderItem.TransportOrdered = TransportOrdered;
+        currentOrderItem.PlannedTransport = PlannedTransport;
+        currentOrderItem.PlannedMachineAssembled = PlannedMachineAssembled;
+        currentOrderItem.PlannedMachineWiredAndTested = PlannedMachineWiredAndTested;
         currentOrderItem.DueDate = DueDate;
         currentOrderItem.ProductionYear = ProductionYear;
         currentOrderItem.SerialNumber = SerialNumber;
