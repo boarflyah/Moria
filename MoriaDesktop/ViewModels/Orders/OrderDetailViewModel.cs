@@ -583,15 +583,15 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
             foreach (var orderItem in order.OrderItems)
                 Objects.Add(orderItem);
 
-            TechnicalDrawingCompleted = order.OrderItems.Any(x => !x.TechnicalDrawingCompleted);
-            CuttingCompleted = order.OrderItems.Any(y => !y.CuttingCompleted);
-            MetalCliningCompleted = order.OrderItems.Any(x => !x.MetalCliningCompleted);
-            PaintingCompleted = order.OrderItems.Any(y => !y.PaintingCompleted);
-            ElectricaCabinetCompleted = order.OrderItems.Any( x => !x.ElectricaCabinetCompleted);
-            MachineAssembled = order.OrderItems.Any(y => !y.MachineAssembled);
-            MachineWiredAndTested = order.OrderItems.Any(x => !x.MachineWiredAndTested);
-            MachineReleased = order.OrderItems.Any( x => !x.MachineReleased );
-            TransportOrdered = order.OrderItems.Any( y => !y.TransportOrdered );
+            TechnicalDrawingCompleted = order.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
+            CuttingCompleted = order.OrderItems.Any(y => y.CuttingCompleted == null);
+            MetalCliningCompleted = order.OrderItems.Any(x => x.MetalCliningCompleted == null);
+            PaintingCompleted = order.OrderItems.Any(y => y.PaintingCompleted == null);
+            ElectricaCabinetCompleted = order.OrderItems.Any( x => x.ElectricaCabinetCompleted == null);
+            MachineAssembled = order.OrderItems.Any(y => y.MachineAssembled == null);
+            MachineWiredAndTested = order.OrderItems.Any(x => x.MachineWiredAndTested == null);
+            MachineReleased = order.OrderItems.Any( x => x.MachineReleased == null );
+            TransportOrdered = order.OrderItems.Any( y => y.TransportOrdered == null );
             DueDate = order.OrderItems.Max( x=> x.DueDate );
         }
         

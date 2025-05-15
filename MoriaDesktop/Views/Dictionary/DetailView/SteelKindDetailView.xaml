@@ -44,7 +44,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Symbol" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="TextBox2" Text="{Binding Symbol.Symbol, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Permission_Symbol.CanWrite}" 
+            <TextBox Name="TextBox2" Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Permission_Symbol.CanWrite}" 
                      Grid.Row="1"/>
         </Grid>
 

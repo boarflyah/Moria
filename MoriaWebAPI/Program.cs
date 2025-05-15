@@ -10,6 +10,7 @@ using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services;
 using MoriaWebAPIServices.Services.Dictionaries;
 using MoriaWebAPIServices.Services.DriveComponents;
+using MoriaWebAPIServices.Services.HostedService;
 using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Dictionaries;
 using MoriaWebAPIServices.Services.Interfaces.DriveComponents;
@@ -64,6 +65,8 @@ public class Program
             builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();
             builder.Services.AddScoped<IOrderControllerService, OrderControllerService>();
             builder.Services.AddScoped<IListViewControllerService, ListViewService>();
+
+            builder.Services.AddHostedService<BackupDatabaseService>();
 
             builder.Services.AddScoped<ICatalogService, CatalogService>();
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();

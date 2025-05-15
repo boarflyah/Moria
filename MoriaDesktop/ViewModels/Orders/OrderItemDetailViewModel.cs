@@ -419,9 +419,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
     }
 
     // Rysunek techniczny
-    private bool _TechnicalDrawingCompleted;
+    private DateTime? _TechnicalDrawingCompleted;
     [ObjectChangedValidate]
-    public bool TechnicalDrawingCompleted
+    public DateTime? TechnicalDrawingCompleted
     {
         get => _TechnicalDrawingCompleted;
         set
@@ -442,9 +442,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _CuttingCompleted;
+    private DateTime? _CuttingCompleted;
     [ObjectChangedValidate]
-    public bool CuttingCompleted
+    public DateTime? CuttingCompleted
     {
         get => _CuttingCompleted;
         set
@@ -465,9 +465,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _MetalCliningCompleted;
+    private DateTime? _MetalCliningCompleted;
     [ObjectChangedValidate]
-    public bool MetalCliningCompleted
+    public DateTime? MetalCliningCompleted
     {
         get => _MetalCliningCompleted;
         set
@@ -488,9 +488,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _PaintingCompleted;
+    private DateTime? _PaintingCompleted;
     [ObjectChangedValidate]
-    public bool PaintingCompleted
+    public DateTime? PaintingCompleted
     {
         get => _PaintingCompleted;
         set
@@ -511,9 +511,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _ElectricaCabinetCompleted;
+    private DateTime? _ElectricaCabinetCompleted;
     [ObjectChangedValidate]
-    public bool ElectricaCabinetCompleted
+    public DateTime? ElectricaCabinetCompleted
     {
         get => _ElectricaCabinetCompleted;
         set
@@ -535,9 +535,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _MachineAssembled;
+    private DateTime? _MachineAssembled;
     [ObjectChangedValidate]
-    public bool MachineAssembled
+    public DateTime? MachineAssembled
     {
         get => _MachineAssembled;
         set
@@ -559,9 +559,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _MachineWiredAndTested;
+    private DateTime? _MachineWiredAndTested;
     [ObjectChangedValidate]
-    public bool MachineWiredAndTested
+    public DateTime? MachineWiredAndTested
     {
         get => _MachineWiredAndTested;
         set
@@ -582,9 +582,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _MachineReleased;
+    private DateTime? _MachineReleased;
     [ObjectChangedValidate]
-    public bool MachineReleased
+    public DateTime? MachineReleased
     {
         get => _MachineReleased;
         set
@@ -605,9 +605,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
-    private bool _TransportOrdered;
+    private DateTime? _TransportOrdered;
     [ObjectChangedValidate]
-    public bool TransportOrdered
+    public DateTime? TransportOrdered
     {
         get => _TransportOrdered;
         set

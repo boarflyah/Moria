@@ -123,7 +123,7 @@ public class SteelKindDetailViewModel : BaseDetailViewModel
     public override BaseDo GetDo()
         => new SteelKindDo()
         {
-            Id = objectId,
+            Id = this.objectId,
             Name = this.Name,
             Symbol = this.Symbol,
             LastModified = _appStateService.LoggedUser.Username

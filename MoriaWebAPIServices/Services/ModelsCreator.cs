@@ -685,6 +685,17 @@ public class ModelsCreator
             foreach (var oi in order.OrderItems)
                 result.OrderItems.Add(GetOrdetItemDo(oi));
 
+        result.ElectricaCabinetCompleted = !result.OrderItems.Any(x => x.ElectricaCabinetCompleted == null);
+        result.TechnicalDrawingCompleted = !result.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
+        result.CuttingCompleted = !result.OrderItems.Any(x => x.CuttingCompleted == null); 
+        result.MetalCliningCompleted = !result.OrderItems.Any(x => x.MetalCliningCompleted == null); 
+        result.PaintingCompleted = !result.OrderItems.Any(x => x.PaintingCompleted == null);
+        result.MachineAssembled = !result.OrderItems.Any(x => x.MachineAssembled == null); 
+        result.MachineWiredAndTested = !result.OrderItems.Any(x => x.MachineWiredAndTested == null); 
+        result.MachineReleased = !result.OrderItems.Any(x => x.MachineReleased == null); 
+        result.TransportOrdered = !result.OrderItems.Any(x => x.TransportOrdered == null); 
+
+
         return result;
     }
 
