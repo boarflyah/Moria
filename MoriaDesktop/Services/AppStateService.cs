@@ -1,4 +1,6 @@
-﻿using MoriaDesktop.Args;
+﻿using System.Windows.Xps;
+using MoriaBaseServices;
+using MoriaDesktop.Args;
 using MoriaDesktop.Models.Enums;
 using MoriaDesktop.ViewModels.Base;
 using MoriaModelsDo.Models.Contacts;
@@ -72,6 +74,25 @@ public class AppStateService
     {
         var args = new ConfirmationEventArgs(confirmationMessage);
         return await _mainViewModel.ConfirmationRequired(this, args);
+    }
+
+    public void HandleMoriaApiException(MoriaApiException mae)
+    {
+        switch (mae.Reason)
+        {
+            case MoriaApiExceptionReason.ObjectNotFound:
+                SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Nie znaleziono obiektu", true);
+                break;
+            case MoriaApiExceptionReason.ObjectIsLocked:
+                SetupInfo(Models.Enums.SystemInfoStatus.Warning, $"Obiekt jest w edycji przez innego użytkownika: {mae.AdditionalMessage}", true);
+                break;
+            case MoriaApiExceptionReason.ValueIsNotUnique:
+                SetupInfo(Models.Enums.SystemInfoStatus.Warning, "Wartość musi być unikalna", true);
+                break;
+            default:
+                SetupInfo(Models.Enums.SystemInfoStatus.Warning, mae.Reason.ToString(), true);
+                break;
+        }
     }
 
     #endregion

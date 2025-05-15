@@ -290,7 +290,8 @@ public sealed class ProductDetailViewModel : BaseDetailWithNestedListViewModel
             SerialNumber = this.SerialNumber,
             SteelKind = this.SteelKind,
             Symbol = this.Symbol,
-            Id = objectId
+            Id = objectId,
+            LastModified = _appStateService.LoggedUser?.Username
         };
 
         foreach (var component in Objects.Where(x => x.ChangeType != MoriaModelsDo.Base.Enums.SystemChangeType.None).OfType<ComponentDo>())
