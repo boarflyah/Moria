@@ -19,7 +19,6 @@ public class Component : BaseModel
         get; set;
     }
 
-    [Searchable]
     public Product Product
     {
         get; set;

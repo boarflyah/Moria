@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using MoriaBaseModels.Models;
 using MoriaDTObjects.Models;
 using MoriaDTObjects.Models.Interfaces;
 using MoriaModels.Models.Base;
@@ -13,6 +15,7 @@ using MoriaModels.Models.Products;
 using MoriaModels.Models.Warehouses;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Base.Enums;
+using MoriaModelsDo.Models.Base;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
@@ -832,6 +835,8 @@ public class ModelsCreator
             TransportOrdered = oi.TransportOrdered,
             DueDate = oi.DueDate,
             Symbol = oi.Symbol,
+            ProductionYear = oi.ProductionYear,
+            SerialNumber = oi.SerialNumber,
         };
 
         if (oi.ComponentToOrderItems != null)
@@ -871,6 +876,8 @@ public class ModelsCreator
             MachineReleased = model.MachineReleased,
             TransportOrdered = model.TransportOrdered,
             DueDate = model.DueDate,
+            ProductionYear = model.ProductionYear,
+            SerialNumber = model.SerialNumber,
         };
 
         if (model.ComponentsToOrderItem != null)
@@ -893,6 +900,10 @@ public class ModelsCreator
             Description = model.Remarks,
             Product = await GetSubiektModelInContext(CreateProduct, model.Product, _context.Products),
             DueDate = model.DueDate,
+            MachineWeight = model.Weight,
+            Power = model.Power,
+            ProductionYear = model.ProductionYear,
+            SerialNumber = model.SerialNumber,
         };
     }
 
@@ -914,6 +925,8 @@ public class ModelsCreator
         orderItem.MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null;
         orderItem.DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null;
         orderItem.Power = model.Power;
+        orderItem.ProductionYear = model.ProductionYear;
+        orderItem.SerialNumber = model.SerialNumber;
         orderItem.TechnicalDrawingLink = model.TechnicalDrawingLink;
         orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
         orderItem.TechnicalDrawingCompleted = model.TechnicalDrawingCompleted;
@@ -1067,6 +1080,34 @@ public class ModelsCreator
         dtc.Quantity = model.Quantity;
         dtc.LastModified = model.LastModified;
         dtc.Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null;
+    }
+
+    #endregion
+
+    #region ListViewSetup
+
+    public ListViewSetupDo GetListViewSetupDo(ListViewSetup setup)
+    => new()
+    {
+        Id = setup.Id,
+        LastModified = setup.LastModified,
+        ListViewId = setup.ListViewId,
+        Columns = System.Text.Json.JsonSerializer.Deserialize<IList<ListViewColumnProvider>>(setup.Columns)
+    };
+
+    public async Task<ListViewSetup> CreateListViewSetup(ListViewSetupDo setup, Employee employee)
+    {
+        return new()
+        {
+            ListViewId = setup.ListViewId,
+            Employee = employee,
+            Columns = System.Text.Json.JsonSerializer.Serialize(setup.Columns)
+        };
+    }
+
+    public async Task UpdateListViewSetup(ListViewSetup setup, ListViewSetupDo setupModel)
+    {
+        setup.Columns = System.Text.Json.JsonSerializer.Serialize(setupModel.Columns);
     }
 
     #endregion

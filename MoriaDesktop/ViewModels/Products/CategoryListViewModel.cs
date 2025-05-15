@@ -12,7 +12,7 @@ namespace MoriaDesktop.ViewModels.Products;
 public class CategoryListViewModel : BaseListViewModel
 {
     readonly IApiCategoryService _apiService;
-    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCategoryService apiService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public CategoryListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiCategoryService apiService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _apiService = apiService;
 

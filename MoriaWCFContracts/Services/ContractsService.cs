@@ -45,6 +45,11 @@ namespace MoriaWCFContracts.Services
             return _salesOrderService.GetDetailedSalesOrders(ids);
         }
 
+        public bool UpdateSalesOrder(MoriaSalesOrder so)
+        {
+            return _salesOrderService.UpdateSalesOrder(so);
+        }
+
         #endregion
     }
 }

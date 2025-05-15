@@ -10,6 +10,6 @@ public static class Extensions
         if (fullText.Count(c => c == '.' || c == ',') > 1)
             return false;
 
-        return Regex.IsMatch(fullText, @"^[0-9]*(?:[\.][0-9]*)?$");
+        return Regex.IsMatch(fullText, @"^[0-9]*(?:[\,][0-9]*)?$");
     }
 }

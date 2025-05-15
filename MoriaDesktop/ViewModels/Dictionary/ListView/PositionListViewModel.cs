@@ -13,7 +13,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class PositionListViewModel : BaseListViewModel
 {
     readonly IApiPositionService _positionService;
-    public PositionListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiPositionService apiPositionService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public PositionListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiPositionService apiPositionService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _positionService = apiPositionService;
 

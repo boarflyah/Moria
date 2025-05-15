@@ -104,4 +104,8 @@ public class ApplicationDbContext : DbContext
         get;
         set;
     }
+    public DbSet<ListViewSetup> ListViewsSetup
+    {
+        get; set;
+    }
 }

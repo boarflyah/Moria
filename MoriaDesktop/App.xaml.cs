@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -147,7 +149,7 @@ public partial class App : Application
                          services.AddScoped<IApiCategoryService, ApiCategoryService>();
                          services.AddScoped<IApiDriveService, ApiDriveService>();
                          services.AddScoped<IApiComponentService, ApiComponentService>();
-                         services.AddScoped<IListViewService, ListViewService>();
+                         services.AddScoped<IApiListViewService, ApiListViewService>();
                          services.AddScoped<IApiOrderService, ApiOrderService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
@@ -200,6 +202,18 @@ public partial class App : Application
         wnd.Resources.MergedDictionaries.Add(Application.Current.Resources);
         wnd.Show();
         base.OnStartup(e);
+
+        var culture = new CultureInfo("pl-PL");
+
+        // Set thread cultures
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+        // Set WPF element language
+        FrameworkElement.LanguageProperty.OverrideMetadata(
+            typeof(FrameworkElement),
+            new FrameworkPropertyMetadata(
+                XmlLanguage.GetLanguage(culture.IetfLanguageTag)));
     }
 
     private async void Wnd_Closing(object sender, System.ComponentModel.CancelEventArgs e)

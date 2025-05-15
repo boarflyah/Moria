@@ -13,7 +13,7 @@ public class ProductListViewModel : BaseListViewModel
 {
     readonly IApiProductService _productService;
 
-    public ProductListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiProductService productService, IListViewService listViewService)
+    public ProductListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiProductService productService, IApiListViewService listViewService)
         : base(logger, appStateService, navigationService, listViewService)
     {
         _productService = productService;

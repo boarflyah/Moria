@@ -142,6 +142,7 @@ public class ContactDetailViewModel : BaseDetailViewModel
     public override BaseDo GetDo()
         => new ContactDo()
         {
+            Id = objectId,
             LongName = this.LongName,
             ShortName = this.ShortName,
             Symbol = this.Symbol,

@@ -11,6 +11,6 @@ namespace MoriaServices.Interfaces
         List<MoriaSalesOrder> GetSalesOrdersSimplified(DateTime dateFrom);
         IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids);
         MoriaSalesOrder GetSalesOrder(int id);
-
+        bool UpdateSalesOrder(MoriaSalesOrder model);
     }
 }

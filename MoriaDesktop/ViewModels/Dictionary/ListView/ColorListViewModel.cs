@@ -15,7 +15,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class ColorListViewModel : BaseListViewModel
 {
     readonly IApiColorService _colorService;
-    public ColorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiColorService apiColorService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public ColorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiColorService apiColorService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _colorService = apiColorService;
 

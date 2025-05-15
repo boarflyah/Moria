@@ -64,8 +64,8 @@ public class OrderItemDo: BaseDo
     }
 
 
-    private decimal _MachineWeight;
-    public decimal MachineWeight
+    private int _MachineWeight;
+    public int MachineWeight
     {
         get => _MachineWeight;
         set
@@ -82,6 +82,29 @@ public class OrderItemDo: BaseDo
         set
         {
             _Power = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private string _SerialNumber;
+    public string SerialNumber
+    {
+        get => _SerialNumber;
+        set
+        {
+            _SerialNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private string _ProductionYear;
+    public string ProductionYear
+    {
+        get => _ProductionYear;
+        set
+        {
+            _ProductionYear = value;
             RaisePropertyChanged(value);
         }
     }

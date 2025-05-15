@@ -14,7 +14,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class MotorListViewModel : BaseListViewModel
 {
     readonly IApiMotorService _motorService;
-    public MotorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorService apiMotorService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public MotorListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiMotorService apiMotorService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _motorService = apiMotorService;
 

@@ -16,7 +16,7 @@ namespace MoriaDesktop.ViewModels.Dictionary.ListView;
 public sealed class ContactListViewModel : BaseListViewModel
 {
     readonly IApiContactService _contactService;
-    public ContactListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiContactService apiContactService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public ContactListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiContactService apiContactService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _contactService = apiContactService;
 

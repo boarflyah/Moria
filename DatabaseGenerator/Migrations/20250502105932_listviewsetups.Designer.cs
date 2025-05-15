@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250502105932_listviewsetups")]
+    partial class listviewsetups
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -509,8 +512,8 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int?>("ComponentId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("CuttingCompleted")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("CuttingCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -527,8 +530,8 @@ namespace DatabaseGenerator.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("ElectricaCabinetCompleted")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("ElectricaCabinetCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ElectricalDescription")
                         .HasColumnType("text");
@@ -545,23 +548,23 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("LockedBy")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("MachineAssembled")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("MachineAssembled")
+                        .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("MachineReleased")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("MachineReleased")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("MachineWeight")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("MachineWiredAndTested")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("MachineWiredAndTested")
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("MainColorId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("MetalCliningCompleted")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("MetalCliningCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Notes")
                         .HasColumnType("text");
@@ -569,8 +572,8 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("PaintingCompleted")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("PaintingCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<decimal>("Power")
                         .HasColumnType("numeric");
@@ -593,14 +596,14 @@ namespace DatabaseGenerator.Migrations
                     b.Property<string>("Symbol")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("TechnicalDrawingCompleted")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("TechnicalDrawingCompleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("TechnicalDrawingLink")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("TransportOrdered")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<bool>("TransportOrdered")
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("WarehouseId")
                         .HasColumnType("integer");

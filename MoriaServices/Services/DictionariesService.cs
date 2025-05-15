@@ -41,6 +41,10 @@ namespace MoriaServices.Services
                 Product = CreateProduct(item.AsortymentAktualny),
                 Remarks = item.Opis,
                 DueDate = item.Termin.GetValueOrDefault(),
+                SerialNumber = item.PolaWlasneAdv2.S0,
+                ProductionYear = item.PolaWlasneAdv2.S1,
+                Power = item.PolaWlasneAdv2.D0.GetValueOrDefault(0),
+                Weight =item.PolaWlasneAdv2.I0.GetValueOrDefault(0)
             };
         }
 

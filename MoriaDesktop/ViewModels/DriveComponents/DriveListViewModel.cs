@@ -14,7 +14,7 @@ public sealed class DriveListViewModel : BaseListViewModel
 {
     readonly IApiDriveService _apiService;
 
-    public DriveListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiDriveService apiService, IListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
+    public DriveListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiDriveService apiService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _apiService = apiService;
 

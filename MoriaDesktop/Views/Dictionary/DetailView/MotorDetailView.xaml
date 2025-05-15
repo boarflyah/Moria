@@ -54,7 +54,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Moc (kV)" Grid.Row="0" Margin="0,0,0,5"/>
+            <Label Content="Moc (kW)" Grid.Row="0" Margin="0,0,0,5"/>
             <TextBox Name="TextBox3" 
                      Text="{Binding Power, UpdateSourceTrigger=LostFocus}"
                      Grid.Row="1"
