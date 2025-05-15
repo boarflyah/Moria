@@ -682,7 +682,7 @@ public class ModelsCreator
         };
 
         if (order.OrderItems != null)
-            foreach (var oi in order.OrderItems)
+            foreach (var oi in order.OrderItems.OrderBy(x => x.DueDate))
                 result.OrderItems.Add(GetOrdetItemDo(oi));
 
         result.ElectricaCabinetCompleted = !result.OrderItems.Any(x => x.ElectricaCabinetCompleted == null);
@@ -833,6 +833,9 @@ public class ModelsCreator
             MachineWiredAndTested = oi.MachineWiredAndTested,
             MachineReleased = oi.MachineReleased,
             TransportOrdered = oi.TransportOrdered,
+            PlannedMachineAssembled = oi.PlannedMachineAssembled,
+            PlannedMachineWiredAndTested = oi.PlannedMachineWiredAndTested,
+            PlannedTransport = oi.PlannedTransport,
             DueDate = oi.DueDate,
             Symbol = oi.Symbol,
             ProductionYear = oi.ProductionYear,
@@ -875,6 +878,9 @@ public class ModelsCreator
             MachineWiredAndTested = model.MachineWiredAndTested,
             MachineReleased = model.MachineReleased,
             TransportOrdered = model.TransportOrdered,
+            PlannedMachineAssembled = model.PlannedMachineAssembled,
+            PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested,
+            PlannedTransport = model.PlannedTransport,
             DueDate = model.DueDate,
             ProductionYear = model.ProductionYear,
             SerialNumber = model.SerialNumber,
@@ -938,6 +944,9 @@ public class ModelsCreator
         orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
         orderItem.MachineReleased = model.MachineReleased;
         orderItem.TransportOrdered = model.TransportOrdered;
+        orderItem.PlannedMachineAssembled = model.PlannedMachineAssembled;
+        orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
+        orderItem.PlannedTransport = model.PlannedTransport;
         orderItem.DueDate = model.DueDate;
 
         foreach (var ctoi in model.ComponentsToOrderItem.Where(x => x.ChangeType != SystemChangeType.None))

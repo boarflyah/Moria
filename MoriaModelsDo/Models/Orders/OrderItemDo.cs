@@ -319,6 +319,39 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _PlannedTransport;
+    public DateTime? PlannedTransport
+    {
+        get => _PlannedTransport;
+        set
+        {
+            _PlannedTransport = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedMachineWiredAndTested;
+    public DateTime? PlannedMachineWiredAndTested
+    {
+        get => _PlannedMachineWiredAndTested;
+        set
+        {
+            _PlannedMachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedMachineAssembled;
+    public DateTime? PlannedMachineAssembled
+    {
+        get => _PlannedMachineAssembled;
+        set
+        {
+            _PlannedMachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime _DueDate;
     public DateTime DueDate
     {

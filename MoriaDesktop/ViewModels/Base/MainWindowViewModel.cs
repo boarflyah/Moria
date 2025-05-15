@@ -73,17 +73,17 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Zamówienia",
             ViewModelType = typeof(OrderListViewModel)
         };
-        NavigationItem node3 = new()
-        {
-            Title = "Testy",
-            Items = new()
-        };
+        //NavigationItem node3 = new()
+        //{
+        //    Title = "Testy",
+        //    Items = new()
+        //};
 
         Navigation.Add(node1);
         Navigation.Add(node2);
         Navigation.Add(node4);
         Navigation.Add(node5);
-        Navigation.Add(node3);
+        //Navigation.Add(node3);
 
         node1.Items.Add(new()
         {
@@ -127,11 +127,11 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             ViewModelType = typeof(SteelKindListViewModel),
         });
 
-        node3.Items.Add(new()
-        {
-            Title = "Test",
-            ViewModelType = typeof(ColorDetailViewModel),
-        });
+        //node3.Items.Add(new()
+        //{
+        //    Title = "Test",
+        //    ViewModelType = typeof(ColorDetailViewModel),
+        //});
 
         node4.Items.Add(new()
         {
