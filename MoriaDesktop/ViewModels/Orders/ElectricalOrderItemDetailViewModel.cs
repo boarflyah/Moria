@@ -228,6 +228,8 @@ namespace MoriaDesktop.ViewModels.Orders
 
         public override BaseDo GetDo()
         {
+            if (currentOrderItem == null)
+                currentOrderItem = new();
             currentOrderItem.LastModified = _appStateService.LoggedUser.Username;
             currentOrderItem.ElectricalCabinet = ElectricalCabinet;
             currentOrderItem.ElectricaCabinetCompleted = ElectricaCabinetCompleted;
@@ -235,6 +237,7 @@ namespace MoriaDesktop.ViewModels.Orders
             currentOrderItem.ControlCabinetWorkStartDate = ControlCabinetWorkStartDate;
             currentOrderItem.Electrician = Electrician;
             currentOrderItem.MachineWiredAndTested = MachineWiredAndTested;
+            currentOrderItem.Id = objectId;
             return currentOrderItem;
         }
 
@@ -257,6 +260,8 @@ namespace MoriaDesktop.ViewModels.Orders
         {
             ElectricalCabinet = orderItem.ElectricalCabinet;
             Electrician = orderItem.Electrician;
+            Product = orderItem.Product;
+            Symbol = orderItem.Symbol;
             ElectricalDiagramCompleted = orderItem.ElectricalDiagramCompleted;
             ControlCabinetWorkStartDate = orderItem.ControlCabinetWorkStartDate;
             ElectricaCabinetCompleted = orderItem.ElectricaCabinetCompleted;

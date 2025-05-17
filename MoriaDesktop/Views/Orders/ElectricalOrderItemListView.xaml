@@ -33,19 +33,19 @@
                                  Binding="{Binding ElectricalCabinet.Symbol}" 
                                  Width="*"/>
                 <DataGridTextColumn Header="Schemat" 
-                                 Binding="{Binding ElectricalDiagramCompleted}" 
+                                 Binding="{Binding ElectricalDiagramCompleted,StringFormat='{}{0:dd.MM.yyyy}'}" 
                                  Width="*"/>
                 <DataGridTextColumn Header="Monter" 
                                  Binding="{Binding Electrician.LastName}" 
                                  Width="*"/>
                 <DataGridTextColumn Header="Rozpoczęto" 
-                                Binding="{Binding ControlCabinetWorkStartDate}" 
+                                Binding="{Binding ControlCabinetWorkStartDate,StringFormat='{}{0:dd.MM.yyyy}'}" 
                                 Width="*"/>
                 <DataGridTextColumn Header="Wykonana" 
-                                Binding="{Binding ElectricaCabinetCompleted}" 
+                                Binding="{Binding ElectricaCabinetCompleted,StringFormat='{}{0:dd.MM.yyyy}'}" 
                                 Width="*"/>
                 <DataGridTextColumn Header="Zamontowano" 
-                                Binding="{Binding PlannedMachineWiredAndTested}" 
+                                Binding="{Binding MachineWiredAndTested ,StringFormat='{}{0:dd.MM.yyyy}'}" 
                                 Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
