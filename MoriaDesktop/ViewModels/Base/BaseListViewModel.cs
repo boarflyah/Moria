@@ -166,7 +166,8 @@ public abstract class BaseListViewModel : ViewModelBase
     {
         try
         {
-            await _listViewService.CreateUpdateListViewSetup(_appStateService.LoggedUser.Username, GetType().Name, columns);
+            if ( _appStateService.LoggedUser != null)
+                await _listViewService.CreateUpdateListViewSetup(_appStateService.LoggedUser.Username, GetType().Name, columns);
         }
         catch (Exception e)
         {
