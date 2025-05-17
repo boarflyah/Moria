@@ -12,4 +12,18 @@ public static class Extensions
 
         return Regex.IsMatch(fullText, @"^[0-9]*(?:[\,][0-9]*)?$");
     }
+
+    public static string GetFolderName(this string text)
+    {
+        return text
+            .Replace('<', '_')
+            .Replace('>', '_')
+            .Replace(':', '_')
+            .Replace('"', '_')
+            .Replace('\\', '_')
+            .Replace('/', '_')
+            .Replace('|', '_')
+            .Replace('?', '_')
+            .Replace('*', '_');
+    }
 }

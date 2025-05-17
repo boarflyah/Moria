@@ -11,7 +11,7 @@
       "*, SubiektSalesOrders"
     ],
     "references": [
-      "C:\\Users\\boarf\\Desktop\\Visual Studio Workspace\\Repos new\\Moria\\MoriaWebAPIServices\\bin\\Release\\net8.0\\MoriaDTObjects.dll"
+      "C:\\Users\\boarf\\Desktop\\Visual Studio Workspace\\Repos new\\Moria\\MoriaWebAPIServices\\bin\\Debug\\net8.0\\MoriaDTObjects.dll"
     ],
     "sync": true,
     "targetFramework": "net8.0",

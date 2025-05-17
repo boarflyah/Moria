@@ -45,6 +45,12 @@ namespace SubiektSalesOrders
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/GetSalesOrder", ReplyAction="http://tempuri.org/ISalesOrderContract/GetSalesOrderResponse")]
         System.Threading.Tasks.Task<MoriaDTObjects.Models.MoriaSalesOrder> GetSalesOrderAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/UpdateSalesOrder", ReplyAction="http://tempuri.org/ISalesOrderContract/UpdateSalesOrderResponse")]
+        bool UpdateSalesOrder(MoriaDTObjects.Models.MoriaSalesOrder so);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/UpdateSalesOrder", ReplyAction="http://tempuri.org/ISalesOrderContract/UpdateSalesOrderResponse")]
+        System.Threading.Tasks.Task<bool> UpdateSalesOrderAsync(MoriaDTObjects.Models.MoriaSalesOrder so);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.2.0-preview1.23462.5")]
@@ -145,6 +151,16 @@ namespace SubiektSalesOrders
         public System.Threading.Tasks.Task<MoriaDTObjects.Models.MoriaSalesOrder> GetSalesOrderAsync(int id)
         {
             return base.Channel.GetSalesOrderAsync(id);
+        }
+        
+        public bool UpdateSalesOrder(MoriaDTObjects.Models.MoriaSalesOrder so)
+        {
+            return base.Channel.UpdateSalesOrder(so);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateSalesOrderAsync(MoriaDTObjects.Models.MoriaSalesOrder so)
+        {
+            return base.Channel.UpdateSalesOrderAsync(so);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

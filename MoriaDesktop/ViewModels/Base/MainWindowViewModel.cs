@@ -17,6 +17,7 @@ using MoriaDesktop.ViewModels.Products;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktop.Args;
+using CommunityToolkit.Mvvm.Input;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -27,16 +28,20 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     readonly INavigationService _navigationService;
     readonly IApiTokenService _tokenService;
     readonly AppStateService _appStateService;
+    readonly IApiOrderService _orderService;
     readonly ILogger<MainWindowViewModel> _logger;
 
     #endregion
 
-    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService, AppStateService appStateService) : base()
+    public MainWindowViewModel(ILogger<MainWindowViewModel> logger, INavigationService navigationService, IApiTokenService tokenService, AppStateService appStateService,
+        IApiOrderService orderService) : base()
     {
         _navigationService = navigationService;
         _tokenService = tokenService;
         _appStateService = appStateService;
         _logger = logger;
+        _orderService = orderService;
+
 
         _navigationService.OnNavigated += _navigationService_OnNavigated;
 
@@ -46,6 +51,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         CloseAppCommand = new(CloseApp, CanCloseApp);
         CloseInfoCommand = new(CloseInfo);
         LogoutCommand = new(Logout);
+        ImportOrdersCommand = new(ImportOrders, CanImportOrders);
 
         IsFullScreen = true;
 
@@ -234,6 +240,29 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         }
     }
 
+    private bool _IsAdminViewing;
+    public bool IsAdminViewing
+    {
+        get => _IsAdminViewing;
+        set
+        {
+            _IsAdminViewing = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private bool _IsImportInProgress;
+    public bool IsImportInProgress
+    {
+        get => _IsImportInProgress;
+        set
+        {
+            _IsImportInProgress = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     public event EventHandler<ConfirmationEventArgs> OnConfirmationRequired;
 
     #region infobar
@@ -309,6 +338,10 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
     public BaseCommand CloseAppCommand { get; init; }
     public BaseCommand CloseInfoCommand { get; init; }
     public BaseCommand LogoutCommand { get; init; }
+    public AsyncRelayCommand ImportOrdersCommand
+    {
+        get; init;
+    }
 
     #endregion
 
@@ -328,6 +361,28 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         _navigationService.NavigateTo(typeof(LoginViewModel), true);
         SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
     }
+
+    async Task ImportOrders()
+    {
+        if (_appStateService?.LoggedUser != null)
+        {
+            try
+            {
+                IsImportInProgress = true;
+                ImportOrdersCommand?.NotifyCanExecuteChanged();
+                var confirmation = await _appStateService.ConfirmAsync("Czy chcesz zaimportować zamówienia z Subiekta?");
+                if (confirmation == true)
+                    await _orderService.ImportOrders(_appStateService.LoggedUser.Username);
+                IsImportInProgress = false;
+                ImportOrdersCommand?.NotifyCanExecuteChanged();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+    }
+
+    bool CanImportOrders() => _appStateService?.LoggedUser?.Admin == true && !IsImportInProgress;
 
     void SetFullScreen()
     {
@@ -447,6 +502,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         SetupInfo();
         SetupLoading();
         GoBackCommand?.RaiseCanExecuteChanged();
+        IsAdminViewing = _appStateService.LoggedUser?.Admin == true;
+        ImportOrdersCommand?.NotifyCanExecuteChanged();
     }
 
     private async void OnReAuthorizationNeeded(object? sender, Args.InvokeViewEventArgs e)

@@ -1,15 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
-using MoriaDesktop.ViewModels.Dictionary.ListView;
-using MoriaDesktop.Views.Base;
-using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Contacts;
-public partial class EmployeeListView : Page, IViewModelContent
+public partial class EmployeeListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
+    public DataGrid DataGrid => EmployeeDataGrid;
 
     public EmployeeListView(EmployeeListViewModel viewModel): this()
     {
@@ -52,5 +51,13 @@ public partial class EmployeeListView : Page, IViewModelContent
         {
             EmployeeDataGrid.Columns[3].Visibility = Visibility.Collapsed;
         }
+
+        await (this as IListViewModelContent).SetColumnsOrder();
+    }
+
+    private async void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        await(this as IListViewModelContent).SaveColumnsOrder();
+
     }
 }

@@ -157,7 +157,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="IndexTextBox" 
-                                 Text="{Binding Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding Index, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
                     </Grid>
@@ -176,7 +176,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="DescriptionTextBox" 
-                                 Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"/>
                     </Grid>
 
@@ -193,7 +193,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="NotesTextBox" 
-                                 Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"/>
                     </Grid>
 
@@ -210,7 +210,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="MachineWeightTextBox" 
-                                 Text="{Binding MachineWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding MachineWeight, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
                     </Grid>
@@ -322,7 +322,7 @@
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
                         <TextBox Name="PowerTextBox" 
-                                 Text="{Binding Power, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                 Text="{Binding Power, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="TextBox_PreviewTextInput" 
                                  PreviewKeyDown="TextBox_PreviewKeyDown"/>

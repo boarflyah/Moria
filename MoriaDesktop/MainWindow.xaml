@@ -211,11 +211,11 @@
                         Margin="0 0 5 5"
                         Width="35"
                         Height="35"
-                        
-                        Command="{Binding LogoutCommand}"
+                        Command="{Binding ImportOrdersCommand}"
+                        Visibility="{Binding IsAdminViewing, Mode=OneWay, Converter={StaticResource bool2vis}}"
                         Background="{StaticResource MainWindowAccentBrush}">
                     <Button.Content>
-                        <Image Source="Images/setting.png" 
+                        <Image Source="Images/import.png" 
                                Stretch="Uniform"
                                Width="20"/>
                     </Button.Content>

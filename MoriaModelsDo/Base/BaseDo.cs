@@ -49,10 +49,20 @@ public abstract class BaseDo: BaseNotifyPropertyChanged
         }
     }
 
+
+    private SystemChangeType _ChangeType;
     public SystemChangeType ChangeType
     {
-        get; set;
+        get => _ChangeType;
+        set
+        {
+            _ChangeType = value;
+            RaisePropertyChanged(value);
+            RaisePropertyChanged(IsDeleted, nameof(IsDeleted));
+        }
     }
+
+    public bool IsDeleted => ChangeType == SystemChangeType.Deleted;
 
     public virtual void SetObject(LookupModel lookup)
     {
