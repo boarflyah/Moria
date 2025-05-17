@@ -232,7 +232,7 @@ public class OrderControllerService : IOrderControllerService
     public async Task<IEnumerable<OrderItemDo>> GetOrderItems()
     {
         List<OrderItemDo> result = new();
-        foreach (var orderItem in _context.OrderItems)
+        foreach (var orderItem in _context.OrderItems.Include(x=> x.Product).Include(x => x.ElectricalCabinet).Include(x => x.Electrician))
             result.Add(_creator.GetOrderItemDo(orderItem));
 
         return result;

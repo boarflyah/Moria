@@ -34,7 +34,7 @@ public class ElectricalOrderItemListViewModel : BaseListViewModel
 
     public override void OnRowSelected(object row)
     {
-        if (row is OrderDo odo)
+        if (row is OrderItemDo odo)
             _navigationService.NavigateTo(typeof(ElectricalOrderItemDetailViewModel), true, odo.Id);
     }
 
