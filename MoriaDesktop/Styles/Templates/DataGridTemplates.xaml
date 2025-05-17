@@ -39,6 +39,13 @@
     <Style TargetType="DataGridRow">
         <Setter Property="FontSize" Value="{StaticResource DefaultDataGridCellFontSize}"/>
         <Setter Property="Foreground" Value="{StaticResource DefaultForeground}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsDeleted}" Value="True">
+                <Setter Property="TextBlock.TextDecorations" Value="Strikethrough"/>
+                <Setter Property="Background" Value="Blue"/>
+                <Setter Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="DataGridCell">

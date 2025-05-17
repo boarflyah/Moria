@@ -128,7 +128,6 @@ public class OrderController: ControllerBase
     }
 
     [HttpGet(WebAPIEndpointsProvider.GetImportOrdersPath)]
-    [AllowAnonymous]
     public async Task<IActionResult> ImportOrders()
     {
         try

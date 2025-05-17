@@ -177,7 +177,7 @@ public class OrderControllerService : IOrderControllerService
                     {
                         var newOrder = await _creator.CreateOrder(order);
                         await _context.AddAsync(newOrder);
-                        await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
+                        newOrder.CatalogLink = await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
                     }
                 }
                 if (settings != null)

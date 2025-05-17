@@ -9,4 +9,5 @@ public interface IApiOrderService
     Task<IEnumerable<OrderDo>> GetOrders(string username);
     Task<IEnumerable<OrderDo>> GetCalendarOrders(string username, int weekNumber);
     Task<OrderDo> UpdateOrder(string username, OrderDo order);
+    Task ImportOrders(string username);
 }

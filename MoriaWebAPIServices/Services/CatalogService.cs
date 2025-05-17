@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.AccessControl;
 using Microsoft.Extensions.Configuration;
+using MoriaBaseServices;
 using MoriaWebAPIServices.Services.Interfaces;
 
 namespace MoriaWebAPIServices.Services;
@@ -33,7 +34,7 @@ public class CatalogService : ICatalogService
     {
         if (folderPath == null) return null;
 
-        var mainCatalog = folderPath + @"\" + orderSymbol;
+        var mainCatalog = folderPath + @"\" + orderSymbol.GetFolderName();
         DirectoryInfo directory = new DirectoryInfo(mainCatalog);
 
         if (!directory.Exists)

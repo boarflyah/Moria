@@ -86,7 +86,7 @@
             </Grid.RowDefinitions>
             <Label Content="Liczba sztuk" Grid.Row="0" Margin="0,0,0,5"/>
             <TextBox Name="QuantityTextBox" 
-                     Text="{Binding Quantity, Mode=TwoWay}"
+                     Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                      Grid.Row="1"
                      PreviewTextInput="QuantityTextBox_PreviewTextInput"
                      PreviewKeyDown="QuantityTextBox_PreviewKeyDown"/>

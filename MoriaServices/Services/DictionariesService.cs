@@ -32,7 +32,7 @@ namespace MoriaServices.Services
         {
             if (item == null) return null;
 
-            return new MoriaSalesOrderItem()
+            var msoi = new MoriaSalesOrderItem()
             {
                 Id = item.Id,
                 Quantity = item.Ilosc,
@@ -41,11 +41,15 @@ namespace MoriaServices.Services
                 Product = CreateProduct(item.AsortymentAktualny),
                 Remarks = item.Opis,
                 DueDate = item.Termin.GetValueOrDefault(),
-                SerialNumber = item.PolaWlasneAdv2.S0,
-                ProductionYear = item.PolaWlasneAdv2.S1,
-                Power = item.PolaWlasneAdv2.D0.GetValueOrDefault(0),
-                Weight =item.PolaWlasneAdv2.I0.GetValueOrDefault(0)
             };
+            if (item.PolaWlasneAdv2 != null)
+            {
+                msoi.SerialNumber = item.PolaWlasneAdv2?.S0 ?? string.Empty;
+                msoi.ProductionYear = item.PolaWlasneAdv2?.S1 ?? string.Empty;
+                msoi.Power = item.PolaWlasneAdv2?.D0.GetValueOrDefault(0) ?? 0;
+                msoi.Weight = item.PolaWlasneAdv2?.I0.GetValueOrDefault(0) ?? 0;
+            }
+            return msoi;
         }
 
         public MoriaProduct CreateProduct(Asortyment product)
