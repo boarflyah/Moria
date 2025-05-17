@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
@@ -6,9 +7,10 @@ using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Dictionary.ListView;
 
-public partial class ColorListView : Page, IViewModelContent
+public partial class ColorListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
+    public DataGrid DataGrid => ColorDataGrid;
 
     public ColorListView(ColorListViewModel viewModel )
     {
@@ -38,6 +40,13 @@ public partial class ColorListView : Page, IViewModelContent
         {
             ColorDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        await (this as IListViewModelContent).SetColumnsOrder();
+    }
+
+    private async void Page_Unloaded(object sender, System.Windows.RoutedEventArgs e)
+    {
+        await(this as IListViewModelContent).SaveColumnsOrder();
 
     }
 }
