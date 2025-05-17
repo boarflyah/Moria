@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Products;
@@ -8,9 +9,10 @@ using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Products;
 
-public partial class CategoryListView : Page, IViewModelContent
+public partial class CategoryListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
+    public DataGrid DataGrid => CategoryDataGrid;
 
     public CategoryListView(CategoryListViewModel vm)
     {
@@ -35,5 +37,11 @@ public partial class CategoryListView : Page, IViewModelContent
         {
             CategoryDataGrid.Columns[0].Visibility = Visibility.Collapsed;
         }
+        await (this as IListViewModelContent).SetColumnsOrder();
+    }
+
+    private async void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        await(this as IListViewModelContent).SaveColumnsOrder();
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktop.ViewModels.Products;
-using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.Orders;
 
-public partial class OrderListView : Page, IViewModelContent
+public partial class OrderListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
+    public DataGrid DataGrid => OrderDataGrid;
 
     public OrderListView(OrderListViewModel vm)
     {
@@ -42,7 +43,7 @@ public partial class OrderListView : Page, IViewModelContent
         {
             OrderDataGrid .Columns[1].Visibility = System.Windows.Visibility.Collapsed;
         }
-
+        await (this as IListViewModelContent).SetColumnsOrder();
     }
 
     private void OrderDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -51,5 +52,10 @@ public partial class OrderListView : Page, IViewModelContent
         {
             (DataContext as BaseListViewModel).OnRowSelected(dg.CurrentItem);
         }
+    }
+
+    private async void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        await(this as IListViewModelContent).SaveColumnsOrder();
     }
 }

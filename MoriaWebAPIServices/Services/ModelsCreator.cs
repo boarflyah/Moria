@@ -58,7 +58,9 @@ public class ModelsCreator
         if (subiektObject == null)
             return null;
 
-        var model = set.Local.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
+        var model = set.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
+        if(model == null)
+            model = set.Local.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
         if (model == null)
         {
             model = await creator(subiektObject);

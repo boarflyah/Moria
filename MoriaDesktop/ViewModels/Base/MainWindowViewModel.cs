@@ -373,11 +373,14 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
                 var confirmation = await _appStateService.ConfirmAsync("Czy chcesz zaimportować zamówienia z Subiekta?");
                 if (confirmation == true)
                     await _orderService.ImportOrders(_appStateService.LoggedUser.Username);
-                IsImportInProgress = false;
-                ImportOrdersCommand?.NotifyCanExecuteChanged();
             }
             catch (Exception ex)
             {
+            }
+            finally
+            {
+                IsImportInProgress = false;
+                ImportOrdersCommand?.NotifyCanExecuteChanged();
             }
         }
     }

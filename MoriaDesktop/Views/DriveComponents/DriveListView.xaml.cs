@@ -1,16 +1,16 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
-using MoriaDesktop.ViewModels.Products;
-using MoriaDesktopServices.Interfaces.ViewModels;
 
 namespace MoriaDesktop.Views.DriveComponents;
 
-public partial class DriveListView : Page, IViewModelContent
+public partial class DriveListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
+    public DataGrid DataGrid => DriveDatagrid;
 
     public DriveListView(DriveListViewModel vm)
     {
@@ -55,5 +55,11 @@ public partial class DriveListView : Page, IViewModelContent
         {
             DriveDatagrid.Columns[4].Visibility = System.Windows.Visibility.Collapsed;
         }
+        await (this as IListViewModelContent).SetColumnsOrder();
+    }
+
+    private async void Page_Unloaded(object sender, RoutedEventArgs e)
+    {
+        await(this as IListViewModelContent).SaveColumnsOrder();
     }
 }
