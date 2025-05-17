@@ -60,6 +60,7 @@ public class Program
             builder.Services.AddScoped<IPositionControllerService, PositionControllerService>();
             builder.Services.AddScoped<ISteelKindControllerService, SteelKindControllerService>();
             builder.Services.AddScoped<IProductControllerService, ProductControllerService>();
+            builder.Services.AddScoped<IElectricalCabinetControllerService, ElectricalCabinetControllerService>();
             builder.Services.AddScoped<ICategoryControllerService, CategoryControllerService>();
             builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
             builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();

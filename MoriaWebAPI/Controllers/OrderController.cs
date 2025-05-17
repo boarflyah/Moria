@@ -169,4 +169,68 @@ public class OrderController: ControllerBase
             return StatusCode(501, ex.Message);
         }
     }
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetOrderItemsPath}")]
+    [Produces<IEnumerable<OrderItemDo>>]
+    public async Task<IActionResult> GetOrderItems()
+    {
+        try
+        {
+            var category = await _controllerService.GetOrderItems();
+
+            return Ok(category);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetOrderItems)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpPut($"{WebAPIEndpointsProvider.PutOrderItemPath}")]
+    [Produces<OrderItemDo>]
+    public async Task<IActionResult> PutOrderItem(OrderItemDo orderItem)
+    {
+        try
+        {
+            var updatedCategory = await _controllerService.UpdateElectricOrderItem(orderItem);
+
+            return Ok(updatedCategory);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(PutOrderItem)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetOrderItemPath}/{{id}}")]
+    [Produces<OrderItemDo>]
+    public async Task<IActionResult> GetOrderItem(int id)
+    {
+        try
+        {
+            var category = await _controllerService.GetOrderItem(id);
+
+            return Ok(category);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetOrderItem)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
 }

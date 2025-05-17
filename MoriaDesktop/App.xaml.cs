@@ -111,6 +111,14 @@ public partial class App : Application
                          services.AddScoped<OrderDetailViewModel>();
                          services.AddScoped<OrderItemDetailView>();
                          services.AddScoped<OrderItemDetailViewModel>();
+                         services.AddScoped<ElectricalCabinetListView>();
+                         services.AddScoped<ElectricalCabinetListViewModel>();
+                         services.AddScoped<ElectricalCabinetDetailView>();
+                         services.AddScoped<ElectricalCabinetDetailViewModel>();
+                         services.AddScoped<ElectricalOrderItemListView>();
+                         services.AddScoped<ElectricalOrderItemListViewModel>();
+                         services.AddScoped<ElectricalOrderItemDetailView>();
+                         services.AddScoped<ElectricalOrderItemDetailViewModel>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -151,6 +159,7 @@ public partial class App : Application
                          services.AddScoped<IApiComponentService, ApiComponentService>();
                          services.AddScoped<IApiListViewService, ApiListViewService>();
                          services.AddScoped<IApiOrderService, ApiOrderService>();
+                         services.AddScoped<IApiElectricalCabinetService, ApiElectricalCabinetService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

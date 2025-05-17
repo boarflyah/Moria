@@ -1,5 +1,6 @@
 ﻿using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
+using MoriaModels.Models.Electrical;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Products;
@@ -35,6 +36,7 @@ public class ModelTypeConverter
         Register<OrderDo, Order>();
         Register<OrderItemDo, OrderItem>();
         Register<ComponentDo, Component>();
+        Register<ElectricalCabinetDo, ElectricalCabinet>();
     }
 
     protected void Register<T1, T2>() 

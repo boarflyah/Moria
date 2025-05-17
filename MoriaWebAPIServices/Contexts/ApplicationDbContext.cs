@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
+using MoriaModels.Models.Electrical;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Orders.Relations;
@@ -86,6 +87,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Component> Components { get; set; }
+    public DbSet<ElectricalCabinet> ElectricalCabinets { get; set; }
     public DbSet<MotorGearToDrive> MotorGearToDrives
     {
         get; set;

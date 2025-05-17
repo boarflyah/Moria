@@ -21,6 +21,7 @@ public class WebAPIEndpointsProvider
     public const string Motor = "motor";
     public const string Contact = "contact";
     public const string Color = "color";
+    public const string ElectricalCabinet = "electricalCabinet";
     public const string Lock = "lock";
     public const string Lookup = "lookup";
     public const string Product = "product";
@@ -314,6 +315,32 @@ public class WebAPIEndpointsProvider
     public const string DeleteColorPath = $"{Color}";
     #endregion
 
+    #region ElectricalCabinet
+
+    public const string GetElectricalCabinetsPath = $"{ElectricalCabinet}";
+    /// <summary>
+    /// Parameter from path: cabinet.id
+    /// </summary>
+    public const string GetElectricalCabinetPath = $"{ElectricalCabinet}";
+    /// <summary>
+    /// Body: ElectricalCabinetDo
+    /// <para>Return ElectricalCabinetDo</para>
+    /// </summary>
+    public const string PostElectricalCabinetPath = $"{ElectricalCabinet}";
+
+    /// <summary>
+    /// Body: ElectricalCabinetDo
+    /// <para>Return ElectricalCabinetDo</para>
+    /// </summary>
+    public const string PutElectricalCabinetPath = $"{ElectricalCabinet}";
+
+    /// <summary>
+    /// Parameter from path: cabinet.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteElectricalCabinetPath = $"{ElectricalCabinet}";
+    #endregion
+
     #region Product
 
     public const string GetProductsPath = $"{Product}";
@@ -442,6 +469,16 @@ public class WebAPIEndpointsProvider
     /// Parameter from path: weekNumber
     /// </summary>
     public const string GetCalendarOrdersPath = $"{Order}/calendar";
+    public const string GetOrderItemsPath = $"{Order}/GetItems";
+    /// <summary>
+    /// Body: OrderItemDo
+    /// <para>Return OrderItemDo</para>
+    /// </summary>
+    public const string PutOrderItemPath = $"{Order}/UpdateOrderItem";
+    /// <summary>
+    /// Parameter from path: orderitem.id
+    /// </summary>
+    public const string GetOrderItemPath = $"{Order}/OrderItem";
     #endregion
 
     #region listview

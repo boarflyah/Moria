@@ -38,6 +38,7 @@ public class DesktopPageService: PageService
         Register(typeof(OrderDetailViewModel), typeof(OrderDetailView));
         Register(typeof(OrderItemDetailViewModel), typeof(OrderItemDetailView));
         Register(typeof(CalendarViewModel), typeof(CalendarView));
+        Register(typeof(ElectricalCabinetDetailViewModel), typeof (ElectricalCabinetDetailView));
 
         //ListView
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
@@ -52,5 +53,6 @@ public class DesktopPageService: PageService
         Register(typeof(CategoryListViewModel), typeof(CategoryListView));
         Register(typeof(DriveListViewModel), typeof(DriveListView));
         Register(typeof(OrderListViewModel), typeof(OrderListView));
+        Register(typeof(ElectricalCabinetListViewModel), typeof(ElectricalCabinetListView));
     }
 }

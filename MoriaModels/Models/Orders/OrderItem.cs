@@ -3,6 +3,7 @@ using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
+using MoriaModels.Models.Electrical;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Interfaces;
 using MoriaModels.Models.Orders.Relations;
@@ -100,6 +101,18 @@ public class OrderItem : BaseModel, ISubiektModel
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? PlannedMachineAssembled { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricalDiagramCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ControlCabinetWorkStartDate { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ControlCabinetWorkEndDate { get; set; }
+    public ElectricalCabinet ElectricalCabinet { get; set; }
+    [Searchable]
+    public Employee? Electrician { get; set; }
     #endregion
 
     [NotMapped]

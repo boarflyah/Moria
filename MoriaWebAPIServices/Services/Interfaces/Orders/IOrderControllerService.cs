@@ -15,4 +15,8 @@ public interface IOrderControllerService
 
     Task<bool> DeleteOrder(int id);
     Task ImportOrders();
+
+    Task<IEnumerable<OrderItemDo>> GetOrderItems();
+    Task<OrderItemDo> GetOrderItem(int id);
+    Task<OrderItemDo> UpdateElectricOrderItem(OrderItemDo item);
 }

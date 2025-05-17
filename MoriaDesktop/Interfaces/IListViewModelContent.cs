@@ -30,7 +30,7 @@ public interface IListViewModelContent: IViewModelContent
                 foreach (var column in lvs.Columns)
                 {
 
-                    var dgColumn = DataGrid.Columns.FirstOrDefault(x => x.SortMemberPath == column.ColumnName);
+                    var dgColumn = DataGrid.Columns.FirstOrDefault(x => x.SortMemberPath == column.ColumnName && x.Visibility == System.Windows.Visibility.Visible);
                     if (dgColumn != null)
                     {
                         dgColumn.Width = new DataGridLength(column.ColumnWidth);

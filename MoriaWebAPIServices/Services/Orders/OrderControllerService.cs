@@ -191,4 +191,44 @@ public class OrderControllerService : IOrderControllerService
         return filteredOrders.Select(order => _creator.GetOrderDo(order));
 
     }
+
+    public async Task<IEnumerable<OrderItemDo>> GetOrderItems()
+    {
+        List<OrderItemDo> result = new();
+        foreach (var orderItem in _context.OrderItems)
+            result.Add(_creator.GetOrderItemDo(orderItem));
+
+        return result;
+    }
+
+    public async Task<OrderItemDo> UpdateElectricOrderItem(OrderItemDo item)
+    {
+        var searchOrderItem = await _context.OrderItems
+            .Include(x => x.Electrician)
+            .Include(x => x.ElectricalCabinet)
+            .Include(x => x.Product)            
+            .FirstOrDefaultAsync(x => x.Id == item.Id);
+
+        if (searchOrderItem == null)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
+
+        await _creator.UpdateElectricOrderItem(searchOrderItem, item);
+
+        var created = await _context.SaveChangesAsync();
+        return _creator.GetOrderItemDo(searchOrderItem);
+    }
+
+    public async Task<OrderItemDo> GetOrderItem(int id)
+    {
+
+        var orderItem = await _context.OrderItems
+            .Include(x => x.Electrician)
+            .Include(x => x.ElectricalCabinet)
+            .Include(x => x.Product)            
+            .FirstOrDefaultAsync(x => x.Id == id);
+        if (orderItem == null)
+            return null;
+
+        return _creator.GetOrderItemDo(orderItem);
+    }
 }

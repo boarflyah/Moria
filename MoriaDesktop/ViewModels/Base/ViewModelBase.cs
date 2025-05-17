@@ -202,10 +202,11 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
 
     #region Permission
     protected void InitializePermissions()
-    {        
+    {
         string modelName = this.GetType().Name
             .Replace("DetailViewModel", "")
-            .Replace("ListViewModel", "");
+            .Replace("ListViewModel", "")
+            .Replace("Electrical", "");
 
         var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 

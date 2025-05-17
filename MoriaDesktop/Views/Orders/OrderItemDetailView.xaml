@@ -412,7 +412,7 @@
                                     IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
-                                <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
@@ -426,7 +426,7 @@
                                     IsEnabled="{Binding Permission_MachineWiredAndTested.CanWrite}"
                                     Visibility="{Binding Permission_MachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
-                                <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"

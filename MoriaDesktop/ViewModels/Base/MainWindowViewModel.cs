@@ -71,7 +71,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         NavigationItem node5 = new()
         {
             Title = "Zamówienia",
-            ViewModelType = typeof(OrderListViewModel)
+            Items = new()
+           
         };
         //NavigationItem node3 = new()
         //{
@@ -84,6 +85,17 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         Navigation.Add(node4);
         Navigation.Add(node5);
         //Navigation.Add(node3);
+
+        node5.Items.Add(new()
+        {
+            Title = "Zamówienia",
+            ViewModelType = typeof(OrderListViewModel)
+        });
+        node5.Items.Add(new()
+        {
+            Title = "Elektrycy zam.",
+            ViewModelType = typeof(ElectricalOrderItemListViewModel)
+        });
 
         node1.Items.Add(new()
         {
@@ -125,7 +137,13 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         {
             Title = "Rodzaj stali",
             ViewModelType = typeof(SteelKindListViewModel),
+        }); 
+        node2.Items.Add(new()
+        {
+            Title = "Szafy elektryczne",
+            ViewModelType = typeof(ElectricalCabinetListViewModel),
         });
+
 
         //node3.Items.Add(new()
         //{

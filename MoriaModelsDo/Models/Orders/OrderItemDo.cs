@@ -352,6 +352,61 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _ElectricalDiagramCompleted;
+    public DateTime? ElectricalDiagramCompleted
+    {
+        get => _ElectricalDiagramCompleted;
+        set
+        {
+            _ElectricalDiagramCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ControlCabinetWorkStartDate;
+    public DateTime? ControlCabinetWorkStartDate
+    {
+        get => _ControlCabinetWorkStartDate;
+        set
+        {
+            _ControlCabinetWorkStartDate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    //private DateTime? _ControlCabinetWorkEndDate;
+    //public DateTime? ControlCabinetWorkEndDate
+    //{
+    //    get => _ControlCabinetWorkEndDate;
+    //    set
+    //    {
+    //        _ControlCabinetWorkEndDate = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    private EmployeeDo _Electrician;
+    public EmployeeDo Electrician
+    {
+        get => _Electrician;
+        set
+        {
+            _Electrician = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ElectricalCabinetDo _ElectricalCabinet;
+    public ElectricalCabinetDo ElectricalCabinet
+    {
+        get => _ElectricalCabinet;
+        set
+        {
+            _ElectricalCabinet = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime _DueDate;
     public DateTime DueDate
     {

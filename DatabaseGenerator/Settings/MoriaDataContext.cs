@@ -2,6 +2,7 @@
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
+using MoriaModels.Models.Electrical;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Orders;
 using MoriaModels.Models.Orders.Relations;
@@ -107,6 +108,11 @@ public class MoriaDataContext : DbContext
         get; set;
     }
 
+    public DbSet<ElectricalCabinet> ElectricalCabinets
+    {
+        get; set;
+    }
+
     public DbSet<Settings> Settings
     {
         get;
@@ -136,6 +142,7 @@ public class MoriaDataContext : DbContext
                 (true, true, 'Rodzaj stali - Nazwa', 'SteelKind_Name', PositionId, false, '', 'System'),
                 (true, true, 'Kolor - Kod', 'Color_Code', PositionId, false, '', 'System'),
                 (true, true, 'Kolor - Nazwa', 'Color_Name', PositionId, false, '', 'System'),
+                (true, true, 'Szafa elektryczna - Symbol', 'ElectricalCabinet_Symbol', PositionId, false, '', 'System'),
                 (true, true, 'Podmiot - Symbol', 'Contact_Symbol', PositionId, false, '', 'System'),
                 (true, true, 'Podmiot - Nazwa krótka', 'Contact_ShortName', PositionId, false, '', 'System'),
                 (true, true, 'Podmiot - Nazwa długa', 'Contact_LongName', PositionId, false, '', 'System'),

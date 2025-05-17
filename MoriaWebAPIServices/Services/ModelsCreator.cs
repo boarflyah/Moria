@@ -7,6 +7,7 @@ using MoriaDTObjects.Models.Interfaces;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.DriveComponents;
 using MoriaModels.Models.DriveComponents.Relations;
+using MoriaModels.Models.Electrical;
 using MoriaModels.Models.EntityPersonel;
 using MoriaModels.Models.Interfaces;
 using MoriaModels.Models.Orders;
@@ -683,7 +684,7 @@ public class ModelsCreator
 
         if (order.OrderItems != null)
             foreach (var oi in order.OrderItems.OrderBy(x => x.DueDate))
-                result.OrderItems.Add(GetOrdetItemDo(oi));
+                result.OrderItems.Add(GetOrderItemDo(oi));
 
         result.ElectricaCabinetCompleted = !result.OrderItems.Any(x => x.ElectricaCabinetCompleted == null);
         result.TechnicalDrawingCompleted = !result.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
@@ -803,7 +804,7 @@ public class ModelsCreator
 
     #region OrderItem
 
-    public OrderItemDo GetOrdetItemDo(OrderItem oi)
+    public OrderItemDo GetOrderItemDo(OrderItem oi)
     {
         var result = new OrderItemDo()
         {
@@ -838,6 +839,10 @@ public class ModelsCreator
             PlannedTransport = oi.PlannedTransport,
             DueDate = oi.DueDate,
             Symbol = oi.Symbol,
+            ElectricalCabinet = oi.ElectricalCabinet != null ? GetElectricalCabinet(oi.ElectricalCabinet) : null,
+            Electrician = oi.Electrician != null ? GetEmployeeDo(oi.Electrician) : null,
+            ControlCabinetWorkStartDate = oi.ControlCabinetWorkStartDate,
+            ElectricalDiagramCompleted = oi.ElectricalDiagramCompleted,
             ProductionYear = oi.ProductionYear,
             SerialNumber = oi.SerialNumber,
         };
@@ -884,6 +889,10 @@ public class ModelsCreator
             DueDate = model.DueDate,
             ProductionYear = model.ProductionYear,
             SerialNumber = model.SerialNumber,
+            ElectricalCabinet = model.ElectricalCabinet != null ? await GetModelInContext(CreateElectricalCabinet, model.ElectricalCabinet, _context.ElectricalCabinets) : null,
+            Electrician = model.Electrician != null ? await GetModelInContext(CreateEmployee, model.Electrician, _context.Employees) : null,
+            ControlCabinetWorkStartDate = model.ControlCabinetWorkStartDate,
+            ElectricalDiagramCompleted = model.ElectricalDiagramCompleted,
         };
 
         if (model.ComponentsToOrderItem != null)
@@ -913,6 +922,16 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdateElectricOrderItem(OrderItem orderItem, OrderItemDo model)
+    {
+        orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
+        orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
+        orderItem.Electrician = model.Electrician != null ? await GetModelInContext(CreateEmployee, model.Electrician, _context.Employees) : null;
+        orderItem.ElectricalCabinet = model.ElectricalCabinet != null ? await GetModelInContext(CreateElectricalCabinet, model.ElectricalCabinet, _context.ElectricalCabinets) : null;
+        orderItem.ControlCabinetWorkStartDate = model.ControlCabinetWorkStartDate;
+        orderItem.ElectricalDiagramCompleted = model.ElectricalDiagramCompleted;
+    }
+
     public async Task UpdateOrderItem(OrderItem orderItem, OrderItemDo model)
     {
         orderItem.Description = model.Description;
@@ -934,18 +953,18 @@ public class ModelsCreator
         orderItem.ProductionYear = model.ProductionYear;
         orderItem.SerialNumber = model.SerialNumber;
         orderItem.TechnicalDrawingLink = model.TechnicalDrawingLink;
-        orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
+        //orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
         orderItem.TechnicalDrawingCompleted = model.TechnicalDrawingCompleted;
         orderItem.CuttingCompleted = model.CuttingCompleted;
         orderItem.MetalCliningCompleted = model.MetalCliningCompleted;
         orderItem.PaintingCompleted = model.PaintingCompleted;
         orderItem.ElectricalDescription = model.ElectricialDescription;
         orderItem.MachineAssembled = model.MachineAssembled;
-        orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
+        //orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
         orderItem.MachineReleased = model.MachineReleased;
         orderItem.TransportOrdered = model.TransportOrdered;
         orderItem.PlannedMachineAssembled = model.PlannedMachineAssembled;
-        orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
+        //orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
         orderItem.PlannedTransport = model.PlannedTransport;
         orderItem.DueDate = model.DueDate;
 
@@ -1092,6 +1111,33 @@ public class ModelsCreator
     }
 
     #endregion
+
+    public ElectricalCabinetDo GetElectricalCabinet(ElectricalCabinet cabinet)
+    {
+        return new ElectricalCabinetDo()
+        {
+            Id = cabinet.Id,         
+            Symbol = cabinet.Symbol,
+            LastModified = cabinet.LastModified
+        };
+    }
+    public async Task<ElectricalCabinet> CreateElectricalCabinet(ElectricalCabinetDo cabinet)
+    {
+        return new()
+        {
+            Symbol = cabinet.Symbol,
+            LastModified = cabinet.LastModified
+        };
+    }
+
+    public async Task UpdateElectricalCabinet(ElectricalCabinet cabinet, ElectricalCabinetDo cabinetModel)
+    {
+        cabinet.Symbol = cabinetModel.Symbol;
+        cabinet.LastModified = cabinetModel.LastModified;
+    }
+
+
+
 
     #region ListViewSetup
 
