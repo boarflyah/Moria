@@ -20,7 +20,7 @@ using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.ViewModels.Orders
 {
-    public class ElectricalOrderItemDetailViewModel : BaseDetailWithNestedListViewModel
+    public class ElectricalOrderItemDetailViewModel : BaseDetailViewModel
     {
         readonly IApiOrderService _orderService;
         OrderDo order;
@@ -126,6 +126,7 @@ namespace MoriaDesktop.ViewModels.Orders
         }
 
         private DateTime? _ElectricalDiagramCompleted;
+        [ObjectChangedValidate]
         public DateTime? ElectricalDiagramCompleted
         {
             get => _ElectricalDiagramCompleted;
@@ -148,6 +149,7 @@ namespace MoriaDesktop.ViewModels.Orders
         }
 
         private DateTime? _ControlCabinetWorkStartDate;
+        [ObjectChangedValidate]
         public DateTime? ControlCabinetWorkStartDate
         {
             get => _ControlCabinetWorkStartDate;
@@ -170,6 +172,7 @@ namespace MoriaDesktop.ViewModels.Orders
         }
 
         private EmployeeDo _Electrician;
+        [ObjectChangedValidate]
         public EmployeeDo Electrician
         {
             get => _Electrician;
@@ -192,6 +195,7 @@ namespace MoriaDesktop.ViewModels.Orders
         }
 
         private DateTime? _MachineWiredAndTested;
+        [ObjectChangedValidate]
         public DateTime? MachineWiredAndTested
         {
             get => _MachineWiredAndTested;
@@ -215,7 +219,7 @@ namespace MoriaDesktop.ViewModels.Orders
 
         public override void Clear()
         {
-            Objects?.Clear();
+            //Objects?.Clear();
             Symbol = default;
             Product = default;
             ElectricalCabinet = default;
@@ -243,7 +247,7 @@ namespace MoriaDesktop.ViewModels.Orders
 
         public override Type GetModelType() => typeof(OrderItemDo);
 
-        protected override string GetObjectsListViewTitle() => "Personalizacja";
+        //protected override string GetObjectsListViewTitle() => "Personalizacja";
 
         protected async override Task LoadObject()
         {
@@ -277,5 +281,7 @@ namespace MoriaDesktop.ViewModels.Orders
             var updated = await _orderService.UpdateElectricOrderItem(_appStateService.LoggedUser.Username, orderItem);
             return updated != null;
         }
+
+        protected override Type GetOnCloseNavigationTarget() => typeof(ElectricalOrderItemListViewModel);
     }
 }

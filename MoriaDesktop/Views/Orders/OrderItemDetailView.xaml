@@ -66,6 +66,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -345,6 +346,42 @@
                                  Grid.Row="1"/>
                     </Grid>
 
+
+                    <Grid Grid.Row="4"
+                          Grid.Column="1"
+                          Margin="10"
+                          IsEnabled="{Binding Permission_ElectricalCabinet.CanWrite}"
+                          Visibility="{Binding Permission_ElectricalCabinet.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Szafa elektryczna" 
+                               Grid.Row="0"
+                               Margin="0,0,0,5"/>
+                        <TextBox Name="ElectricalCabinetTextBox" 
+                                 Text="{Binding ElectricalCabinet.Symbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                                 Grid.Row="1"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4"
+                           Grid.Column="2"
+                           Margin="10"
+                           IsEnabled="{Binding Permission_Electrician.CanWrite}"
+                           Visibility="{Binding Permission_Electrician.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">   
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Elektryk" 
+                Grid.Row="0"
+                Margin="0,0,0,5"/>
+                        <TextBox Name="ElectricianTextBox" 
+                  Text="{Binding Electrician.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                  Grid.Row="1"/>
+                    </Grid>
+
+
                     <Grid Grid.Row="4"
                           Grid.Column="0"
                           Margin="10"
@@ -371,6 +408,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -405,6 +444,20 @@
                                     Visibility="{Binding Permission_PaintingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding PaintingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0"
+                                    IsEnabled="{Binding Permission_ElectricalDiagramCompleted.CanWrite}"
+                                    Visibility="{Binding Permission_ElectricalDiagramCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Label Content="Schemat elektryczny" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0"
+                                    IsEnabled="{Binding Permission_ControlCabinetWorkStartDate.CanWrite}"
+                                    Visibility="{Binding Permission_ControlCabinetWorkStartDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">     
+                                <Label Content="Rozpoczęcie szafy elektrycznej" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding ControlCabinetWorkStartDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                             </StackPanel>
 
                             <!-- Kolumna 2 -->

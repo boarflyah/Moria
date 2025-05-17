@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
+using MoriaDesktop.ViewModels.Orders;
+using MoriaDesktop.Views.Dictionary.ListView;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
 using MoriaModelsDo.Attributes;
@@ -98,4 +100,6 @@ public class ElectricalCabinetDetailViewModel : BaseDetailViewModel
         Symbol = cabinet.Symbol;
         LastModified = cabinet.LastModified;
     }
+
+    protected override Type GetOnCloseNavigationTarget() => typeof(ElectricalCabinetListView);
 }

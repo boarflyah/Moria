@@ -722,6 +722,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private EmployeeDo _Electrician;
+    public EmployeeDo Electrician
+    {
+        get => _Electrician;
+        set
+        {
+            _Electrician = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private DateTime? _ControlCabinetWorkStartDate;
+    public DateTime? ControlCabinetWorkStartDate
+    {
+        get => _ControlCabinetWorkStartDate;
+        set
+        {
+            _ControlCabinetWorkStartDate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricalDiagramCompleted;
+    public DateTime? ElectricalDiagramCompleted
+    {
+        get => _ElectricalDiagramCompleted;
+        set
+        {
+            _ElectricalDiagramCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ElectricalCabinetDo _ElectricalCabinet;
+    [ObjectChangedValidate]
+    public ElectricalCabinetDo ElectricalCabinet
+    {
+        get => _ElectricalCabinet;
+        set
+        {
+            _ElectricalCabinet = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     #region nestedlistview
@@ -810,6 +856,10 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         PlannedMachineWiredAndTested = default;
         PlannedTransport = default;
         DueDate = default;
+        Electrician = default;
+        ElectricalDiagramCompleted = default;
+        ElectricalCabinet = default;
+        ControlCabinetWorkStartDate = default;
 
     }
 
@@ -841,6 +891,10 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         PlannedMachineAssembled = oi.PlannedMachineAssembled;
         PlannedMachineWiredAndTested = oi.PlannedMachineWiredAndTested;
         PlannedTransport = oi.PlannedTransport;
+        ElectricalCabinet = oi.ElectricalCabinet;
+        Electrician = oi.Electrician;
+        ElectricalDiagramCompleted = oi.ElectricalDiagramCompleted;
+        ControlCabinetWorkStartDate = oi.ControlCabinetWorkStartDate;
         DueDate = oi.DueDate == DateTime.MinValue ? DateTime.Now : oi.DueDate;
         ProductionYear = oi.ProductionYear == null? DateTime.Now.Year.ToString() : oi.ProductionYear;
         SerialNumber = oi.SerialNumber;
