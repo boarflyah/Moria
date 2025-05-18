@@ -160,8 +160,21 @@ public class OrderControllerService : IOrderControllerService
 
     public async Task ImportOrders()
     {
-        var binding = new BasicHttpBinding();
-        binding.SendTimeout = TimeSpan.FromMinutes(5);
+        var binding = new BasicHttpBinding()
+        {
+            MaxReceivedMessageSize = int.MaxValue,
+            MaxBufferSize = int.MaxValue,
+            SendTimeout = TimeSpan.FromMinutes(5),
+            ReaderQuotas = new System.Xml.XmlDictionaryReaderQuotas
+            {
+                MaxDepth = 64,
+                MaxStringContentLength = int.MaxValue,
+                MaxArrayLength = int.MaxValue,
+                MaxBytesPerRead = 4096,
+                MaxNameTableCharCount = int.MaxValue
+            }
+        };
+
         var endpoint = new EndpointAddress("http://localhost:8080/MyService");
 
         var client = new SalesOrderContractClient(binding, endpoint);
