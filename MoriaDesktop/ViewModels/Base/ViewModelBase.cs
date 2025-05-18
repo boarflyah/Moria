@@ -205,8 +205,14 @@ public abstract class ViewModelBase: BaseNotifyPropertyChanged
     {
         string modelName = this.GetType().Name
             .Replace("DetailViewModel", "")
-            .Replace("ListViewModel", "")
-            .Replace("Electrical", "");
+            .Replace("ListViewModel", "");
+
+            //.Replace("Electrical", "");
+        if (modelName.StartsWith("Electrical") &&
+        (modelName.Contains("Order") || modelName.Contains("OrderItem")))
+        {
+            modelName = modelName.Replace("Electrical", "");
+        }
 
         var properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 

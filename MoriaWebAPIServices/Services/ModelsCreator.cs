@@ -932,6 +932,8 @@ public class ModelsCreator
         orderItem.ElectricalCabinet = model.ElectricalCabinet != null ? await GetModelInContext(CreateElectricalCabinet, model.ElectricalCabinet, _context.ElectricalCabinets) : null;
         orderItem.ControlCabinetWorkStartDate = model.ControlCabinetWorkStartDate;
         orderItem.ElectricalDiagramCompleted = model.ElectricalDiagramCompleted;
+        orderItem.IsLocked = false;
+        orderItem.LockedBy = default;
     }
 
     public async Task UpdateOrderItem(OrderItem orderItem, OrderItemDo model)
