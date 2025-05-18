@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using MoriaBaseModels.Models;
@@ -25,6 +27,7 @@ using MoriaModelsDo.Models.Orders;
 using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
+using Component = MoriaModels.Models.DriveComponents.Component;
 
 namespace MoriaWebAPIServices.Services;
 public class ModelsCreator
@@ -209,13 +212,15 @@ public class ModelsCreator
         steelKind.Name = steelKindModel.Name;
         steelKind.Symbol = steelKindModel.Symbol;
         steelKind.LastModified = steelKindModel.LastModified;
+        steelKind.IsLocked = false;
+        steelKind.LockedBy = string.Empty;
     }
 
     #endregion
 
     #region Color
 
-    public ColorDo GetColorDo(Color color)
+    public ColorDo GetColorDo(MoriaModels.Models.Products.Color color)
     {
         return new ColorDo()
         {
@@ -226,7 +231,7 @@ public class ModelsCreator
         };
     }
 
-    public async Task<Color> CreateColor(ColorDo colorDo)
+    public async Task<MoriaModels.Models.Products.Color> CreateColor(ColorDo colorDo)
     {
         return new()
         {
@@ -236,11 +241,13 @@ public class ModelsCreator
         };
     }
 
-    public async Task UpdateColor(Color color, ColorDo colorModel)
+    public async Task UpdateColor(MoriaModels.Models.Products.Color color, ColorDo colorModel)
     {
         color.Name = colorModel.Name;
         color.Code = colorModel.Code;
         color.LastModified = colorModel.LastModified;
+        color.IsLocked = false;
+        color.LockedBy = string.Empty;
     }
 
     #endregion
@@ -287,6 +294,8 @@ public class ModelsCreator
         contact.LongName = contactModel.LongName;
         contact.ShortName = contactModel.ShortName;
         contact.LastModified = contactModel.LastModified;
+        contact.IsLocked = false;
+        contact.LockedBy = string.Empty;
     }
 
     #endregion
@@ -322,6 +331,8 @@ public class ModelsCreator
         motor.Power = motorModel.Power;
         motor.Name = motorModel.Name;
         motor.LastModified = motorModel.LastModified;
+        motor.IsLocked = false;
+        motor.LockedBy = string.Empty;
     }
     #endregion
 
@@ -356,6 +367,8 @@ public class ModelsCreator
         motorGear.Ratio = motorGearModel.Ratio;
         motorGear.Name = motorGearModel.Name;
         motorGear.LastModified = motorGearModel.LastModified;
+        motorGear.IsLocked = false;
+        motorGear.LockedBy = string.Empty;
     }
 
     #endregion
@@ -397,6 +410,8 @@ public class ModelsCreator
         warehouse.Symbol = warehouseModel.Symbol;
         warehouse.Name = warehouseModel.Name;
         warehouse.LastModified = warehouseModel.LastModified;
+        warehouse.IsLocked = false;
+        warehouse.LockedBy = string.Empty;
     }
     #endregion
 
@@ -424,6 +439,8 @@ public class ModelsCreator
     {
         category.Name = categoryModel.Name;
         category.LastModified = categoryModel.LastModified;
+        category.IsLocked = false;
+        category.LockedBy = string.Empty;
     }
 
     #endregion
@@ -470,6 +487,8 @@ public class ModelsCreator
         component.LastModified = componentModel.LastModified;
         component.Name = componentModel.Name;
         component.Quantity = componentModel.Quantity;
+        component.IsLocked = false;
+        component.LockedBy = string.Empty;
 
         if (componentModel?.Drives?.Any() == true)
             foreach (var dtc in componentModel.Drives.Where(x => x.ChangeType != SystemChangeType.None))
@@ -563,6 +582,8 @@ public class ModelsCreator
         product.SerialNumber = productModel.SerialNumber;
         product.Symbol = productModel.Symbol;
         product.LastModified = productModel.LastModified;
+        product.IsLocked = false;
+        product.LockedBy = string.Empty;
 
         product.SteelKind = await GetModelInContext(CreateSteelKind, productModel.SteelKind, _context.SteelKinds);
         product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
@@ -635,6 +656,8 @@ public class ModelsCreator
         drive.Quantity = driveModel.Quantity;
         drive.Name = driveModel.Name;
         drive.LastModified = driveModel.LastModified;
+        drive.IsLocked = false;
+        drive.LockedBy = string.Empty;
 
         drive.Motor = await GetModelInContext(CreateMotor, driveModel.Motor, _context.Motors);
         //product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
@@ -768,6 +791,8 @@ public class ModelsCreator
         order.CatalogLink = model.CatalogLink;
         order.SalesOfferLink = model.SalesOfferLink;
         order.DueDate = model.DueDate;
+        order.IsLocked = false;
+        order.LockedBy = string.Empty;
 
         order.OrderingContact = await GetModelInContext(CreateContact, model.OrderingContact, _context.Contacts);
         order.ReceivingContact = await GetModelInContext(CreateContact, model.ReceivingContact, _context.Contacts);
@@ -975,6 +1000,8 @@ public class ModelsCreator
         //orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
         orderItem.PlannedTransport = model.PlannedTransport;
         orderItem.DueDate = model.DueDate;
+        orderItem.IsLocked = false;
+        orderItem.LockedBy = default;
 
         foreach (var ctoi in model.ComponentsToOrderItem.Where(x => x.ChangeType != SystemChangeType.None))
         {
@@ -1142,6 +1169,8 @@ public class ModelsCreator
     {
         cabinet.Symbol = cabinetModel.Symbol;
         cabinet.LastModified = cabinetModel.LastModified;
+        cabinet.IsLocked = false;
+        cabinet.LockedBy = default;
     }
 
 
