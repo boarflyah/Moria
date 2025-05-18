@@ -24,10 +24,13 @@
                MouseDoubleClick="OrderDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nr zamówienia"
+                                 Binding="{Binding Order.OrderNumberSymbol}"
+                                 Width="*"/>
+                <DataGridTextColumn Header="Symbol"
                                  Binding="{Binding Symbol}"
                                  Width="*"/>
                 <DataGridTextColumn Header="Model" 
-                                 Binding="{Binding Product.Symbol}"
+                                 Binding="{Binding ItemName}"
                                  Width="*"/>
                 <DataGridTextColumn Header="Szafa" 
                                  Binding="{Binding ElectricalCabinet.Symbol}" 

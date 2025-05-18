@@ -847,6 +847,10 @@ public class ModelsCreator
             ElectricalDiagramCompleted = oi.ElectricalDiagramCompleted,
             ProductionYear = oi.ProductionYear,
             SerialNumber = oi.SerialNumber,
+            Order = oi.Order == null ? null : new OrderDo()
+            {
+                OrderNumberSymbol = oi.Order.OrderNumberSymbol
+            }
         };
 
         if (oi.ComponentToOrderItems != null)

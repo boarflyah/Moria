@@ -115,6 +115,17 @@ public class OrderItem : BaseModel, ISubiektModel
     public Employee? Electrician { get; set; }
     #endregion
 
+    public int? OrderId
+    {
+        get; set;
+    }
+
+    [Searchable]
+    public Order? Order
+    {
+        get; set;
+    }
+
     [NotMapped]
     public List<Component> Components
     {
