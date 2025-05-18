@@ -181,6 +181,8 @@ public class ListViewService : IListViewControllerService
             && !p.PropertyType.IsEnum 
             && p.PropertyType != typeof(string) 
             && p.PropertyType != typeof(decimal)
+            && p.PropertyType != typeof(DateTime?)
+            && p.PropertyType != typeof(DateTime)
             && !(p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) &&
                 Nullable.GetUnderlyingType(p.PropertyType).IsPrimitive))
             .ToList();
