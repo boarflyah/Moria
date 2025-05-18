@@ -418,6 +418,18 @@ public class OrderItemDo: BaseDo
         }
     }
 
+
+    private OrderDo _Order;
+    public OrderDo Order
+    {
+        get => _Order;
+        set
+        {
+            _Order = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     public string ItemName => Product != null ? Product.Name : Component != null ? Component.Name : Drive?.Name;
 
     public IList<ComponentToOrderItemDo> ComponentsToOrderItem
