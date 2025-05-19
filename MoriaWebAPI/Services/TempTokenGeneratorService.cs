@@ -22,7 +22,7 @@ public class TempTokenGeneratorService : ITokenGeneratorService
     public string GenerateJwtToken(int userId)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("SuperSecretKey123456789101112131415");
+        var key = Encoding.UTF8.GetBytes("SuperSecretKey123456789101112131415");
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("id", userId.ToString()) }),

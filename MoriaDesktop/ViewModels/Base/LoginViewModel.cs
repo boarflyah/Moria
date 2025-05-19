@@ -48,6 +48,7 @@ public class LoginViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
+            _logger.LogCritical(ex, "Logowanie do aplikacji");
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
         }
         finally
