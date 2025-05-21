@@ -231,7 +231,7 @@
                         <controls:LookupObjectControl x:Name="WarehouseLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Warehouse, Mode=TwoWay}"
-                                                      NameText="{Binding Warehouse.Name, Mode=OneWay}"
+                                                      NameText="{Binding Warehouse.Symbol, Mode=OneWay}"
                                                       OnLookupInvoked="WarehouseLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 

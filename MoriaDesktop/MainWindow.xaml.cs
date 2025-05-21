@@ -34,6 +34,7 @@ public partial class MainWindow : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        MaximizeWithoutCoveringTaskbar();
         (DataContext as MainWindowViewModel)!.NavigateToFirstView();
     }
 
@@ -83,14 +84,47 @@ public partial class MainWindow : Window
         WindowState = WindowState.Minimized;
     }
 
+    private Rect previousBounds;
+    private bool isRestored = false;
+
     private void MinimizeButton_Click(object sender, RoutedEventArgs e)
     {
-        WindowState = WindowState.Normal;
+        if (!isRestored)
+        {
+            // Restore to smaller size
+            previousBounds = new Rect(Left, Top, Width, Height);
+            Width = 1000; // or your preferred small size
+            Height = 700;
+            Left = (SystemParameters.WorkArea.Width - Width) / 2;
+            Top = (SystemParameters.WorkArea.Height - Height) / 2;
+            isRestored = true;
+        }
+        else
+        {
+            MaximizeWithoutCoveringTaskbar();
+        }
     }
 
     private void MaximizeButton_Click(object sender, RoutedEventArgs e)
     {
-        WindowState = WindowState.Maximized;
+        //WindowState = WindowState.Maximized;
+        MaximizeWithoutCoveringTaskbar();
+    }
+
+    private void MaximizeWithoutCoveringTaskbar()
+    {
+        if (!isRestored)
+        {
+            previousBounds = new Rect(Left, Top, Width, Height);
+        }
+
+        WindowState = WindowState.Normal;
+        var workArea = SystemParameters.WorkArea;
+        Left = workArea.Left;
+        Top = workArea.Top;
+        Width = workArea.Width;
+        Height = workArea.Height;
+        isRestored = false;
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)

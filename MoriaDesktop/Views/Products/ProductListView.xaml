@@ -29,9 +29,9 @@
                 <DataGridTextColumn Header="Nazwa" 
                                     Binding="{Binding Name}"
                                     Width="3*"/>
-                <DataGridTextColumn Header="Numer seryjny" 
+               <!-- <DataGridTextColumn Header="Numer seryjny" 
                                     Binding="{Binding SerialNumber}" 
-                                    Width="3*"/>
+                                    Width="3*"/>-->
                 <DataGridTextColumn Header="Kategoria" 
                                     Binding="{Binding Category.Name}" 
                                     Width="*"/>
