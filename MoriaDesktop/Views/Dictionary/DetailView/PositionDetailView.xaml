@@ -53,6 +53,7 @@
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
                       BeginningEdit="DataGrid_BeginningEdit"
+                      Style="{StaticResource NestedEditableGrid}"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nazwa" 

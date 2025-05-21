@@ -15,7 +15,7 @@ public class MotorGearToDrive: BaseModel
     {
         get; set;
     } = null!;
-    public MotorGear MotorGear
+    public MotorGear? MotorGear
     {
         get; set;
     } = null!;

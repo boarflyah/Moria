@@ -97,13 +97,14 @@
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
                       BeginningEdit="DataGrid_BeginningEdit"
+                      Style="{StaticResource NestedEditableGrid}"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Przekładnia" 
                             Binding="{Binding MotorGear.Name}"
                             Width="*"/>
                     <DataGridTextColumn Header="Ilość" 
-                            Binding="{Binding Quantity}"
+                            Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
                             Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

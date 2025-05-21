@@ -42,10 +42,12 @@ public partial class DriveDetailView : Page, IViewModelContent
     {
         if (!(DataContext as BaseDetailViewModel).IsLocked)
         {
-            if (e.Column.SortMemberPath.Contains(nameof(MotorGearToDriveDo.MotorGear)))
+            if (e.Row.DataContext is MotorGearToDriveDo related)
             {
-                if (e.Row.DataContext is MotorGearToDriveDo related)
+
+                if (e.Column.SortMemberPath.Contains(nameof(MotorGearToDriveDo.MotorGear)))
                 {
+
                     var motorGear = await _lookupService.ShowLookup<MotorGearDo>();
                     if (motorGear != null)
                     {
@@ -54,8 +56,15 @@ public partial class DriveDetailView : Page, IViewModelContent
                             related.ChangeType = SystemChangeType.Modified;
                         (DataContext as BaseDetailViewModel).HasObjectChanged = true;
                     }
+
+                    e.Cancel = true;
                 }
-                e.Cancel = true;
+                else
+                {
+                    if (related.ChangeType != SystemChangeType.Added)
+                        related.ChangeType = SystemChangeType.Modified;
+                    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                }
             }
         }
         else
