@@ -18,6 +18,8 @@ public abstract class BaseListViewModel : ViewModelBase
         DeleteCommand = new AsyncRelayCommand(Delete, CanDelete);
         RefreshCommand = new AsyncRelayCommand(Refresh);
         SearchCommand = new AsyncRelayCommand(Search);
+        InvokeFocusCommand = new(OnInvokeFocus);
+        OpenCommand = new(Open);
     }
 
     #region properties
@@ -31,7 +33,8 @@ public abstract class BaseListViewModel : ViewModelBase
         {
             _Selected = value;
             RaisePropertyChanged(value);
-            DeleteCommand.NotifyCanExecuteChanged();
+            DeleteCommand?.NotifyCanExecuteChanged();
+            //OpenCommand?.NotifyCanExecuteChanged();
         }
     }
 
@@ -43,6 +46,18 @@ public abstract class BaseListViewModel : ViewModelBase
         {
             _searchText = value;
             OnPropertyChanged(nameof(SearchText));
+        }
+    }
+
+
+    private bool _InvokeFocus;
+    public bool InvokeFocus
+    {
+        get => _InvokeFocus;
+        set
+        {
+            _InvokeFocus = value;
+            RaisePropertyChanged(value);
         }
     }
 
@@ -64,6 +79,16 @@ public abstract class BaseListViewModel : ViewModelBase
     }
 
     public AsyncRelayCommand SearchCommand
+    {
+        get;
+    }
+
+    public RelayCommand InvokeFocusCommand
+    {
+        get;
+    }
+
+    public RelayCommand OpenCommand
     {
         get;
     }
@@ -118,6 +143,19 @@ public abstract class BaseListViewModel : ViewModelBase
         await OnLoaded();
     }
 
+    protected virtual void OnInvokeFocus()
+    {
+        InvokeFocus = true;
+        InvokeFocus = false;
+    }
+
+    void Open()
+    {
+        OnRowSelected(Selected);
+    }
+
+    bool CanOpen() => Selected != null;
+
     #endregion
 
     #region methods
@@ -166,7 +204,7 @@ public abstract class BaseListViewModel : ViewModelBase
     {
         try
         {
-            if ( _appStateService.LoggedUser != null)
+            if (_appStateService.LoggedUser != null)
                 await _listViewService.CreateUpdateListViewSetup(_appStateService.LoggedUser.Username, GetType().Name, columns);
         }
         catch (Exception e)

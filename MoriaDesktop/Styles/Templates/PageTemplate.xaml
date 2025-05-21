@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:extensions="clr-namespace:MoriaDesktop.Extensions">
     
     <Style x:Key="GlobalPageStyle" TargetType="Page">
         <Setter Property="Background" Value="White"/>
@@ -31,7 +32,7 @@
 
                                 <!-- Ikony narzędzi -->
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz"  Command="{Binding SaveCommand}">
+                                    <Button x:Name="SaveButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz"  Command="{Binding SaveCommand}" >
                                         <Image Source="/Images/save.png" Width="20" Height="20"/>
                                     </Button>
                                     <Button x:Name="SaveAndCloseButton" Width="30" Height="30" Margin="5" ToolTip="Zapisz i zamknij" Command="{Binding SaveAndCloseCommand}">
@@ -117,7 +118,8 @@
                                     <Button x:Name="RefreshButton" Width="30" Height="30" Margin="5" ToolTip="Odśwież" Command="{Binding RefreshCommand}">
                                         <Image Source="/Images/refresh.png" Width="20" Height="20"/>
                                     </Button>
-                                    <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="5" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="5" Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             extensions:FocusExtension.IsFocused="{Binding InvokeFocus, Mode=OneWay}" >
                                         <TextBox.InputBindings>
                                             <KeyBinding Key="Return" Command="{Binding SearchCommand}" />
                                         </TextBox.InputBindings>                                        

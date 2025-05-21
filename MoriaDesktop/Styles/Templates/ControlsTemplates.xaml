@@ -106,7 +106,6 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsLocked, Mode=OneWay}" Value="True">
                 <Setter Property="IsReadOnly" Value="True" />
-
             </DataTrigger>
         </Style.Triggers>
     </Style>

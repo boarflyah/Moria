@@ -19,9 +19,9 @@
         <DataGrid x:Name="EmployeeDataGrid"
                   Grid.Row="1"
                   ItemsSource="{Binding Employees, Mode=OneWay}"
-                  SelectedItem="{Binding Selected, Mode=TwoWay}"
                   IsReadOnly="True"
                   MouseDoubleClick="EmployeeDataGrid_MouseDoubleClick">
+                  <!--SelectedItem="{Binding Selected, Mode=TwoWay}"-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa użytkownika"
                                     Binding="{Binding Username}"

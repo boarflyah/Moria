@@ -23,7 +23,18 @@
         <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
         <converters:BoolToVisibilityInvertedConverter x:Key="bool2visinv"/>
         <converters:InvertBoolConverter x:Key="invbool"/>
+        <converters:DebugConverter x:Key="debugconv"/>
     </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding Content.DataContext.SaveCommand, ElementName=NavigationFrame}"/>
+        <KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding Content.DataContext.SaveAndCloseCommand, ElementName=NavigationFrame}"/>
+        <KeyBinding Key="Esc" Command="{Binding Content.DataContext.CloseCommand, ElementName=NavigationFrame}"/>
+        <KeyBinding Key="F4" Command="{Binding Content.DataContext.EditCommand, ElementName=NavigationFrame}"/>
+        <KeyBinding Key="F8" Command="{Binding Content.DataContext.InvokeFocusCommand, ElementName=NavigationFrame}"/>
+        <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding Content.DataContext.OpenCommand, ElementName=NavigationFrame}"/>
+    </Window.InputBindings>
+
     <Grid Background="{StaticResource WindowDefaultBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
