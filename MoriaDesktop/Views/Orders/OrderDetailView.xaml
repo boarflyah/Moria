@@ -12,6 +12,7 @@
       Loaded="Page_Loaded">
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <conv:RowBackgroundConverter x:Key="RowBackgroundConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -238,6 +239,20 @@
                       IsReadOnly="true"
                       MouseDoubleClick="DataGrid_MouseDoubleClick"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
+                
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource RowBackgroundConverter}">
+                                    <Binding Path="MachineReleased"/>
+                                    <Binding Path="MachineWiredAndTested"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Symbol" 
                             Binding="{Binding Symbol}"
