@@ -26,7 +26,7 @@
                 <DataGridTextColumn Header="Nr zamówienia"
                                  Binding="{Binding Order.OrderNumberSymbol}"
                                  Width="*"/>
-                <DataGridTextColumn Header="Symbol"
+                <DataGridTextColumn Header="Nr zlecenia"
                                  Binding="{Binding Symbol}"
                                  Width="*"/>
                 <DataGridTextColumn Header="Model" 

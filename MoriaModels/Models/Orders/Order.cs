@@ -11,6 +11,7 @@ public class Order : BaseModel, ISubiektModel
     [Searchable]
     public string OrderNumberSymbol { get; set; }
     public string Remarks { get; set; }
+    public string OfferNumber { get; set; }
     public string CatalogLink { get; set; }
     public string SalesOfferLink { get; set; }
     public string ClientSymbol { get; set; }

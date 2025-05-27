@@ -27,6 +27,17 @@ public class OrderDo: BaseDo
         }
     }
 
+    private string _OfferNumber;
+    public string OfferNumber
+    {
+        get => _OfferNumber;
+        set
+        {
+            _OfferNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private string _CatalogLink;
     public string CatalogLink
     {

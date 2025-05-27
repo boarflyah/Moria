@@ -108,6 +108,28 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private string _OfferNumber;
+    public string OfferNumber
+    {
+        get => _OfferNumber;
+        set
+        {
+            _OfferNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_OfferNumber;
+    public PermissionDo Permission_OfferNumber
+    {
+        get => _Permission_OfferNumber;
+        set
+        {
+            _Permission_OfferNumber = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private string _CatalogLink;
     [ObjectChangedValidate]
     public string CatalogLink
@@ -532,6 +554,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         ReceivingContact = default;
         SalesOfferLink = default;
         Remarks = default;
+        OfferNumber = default;
         OrderNumberSymbol = default;
         TechnicalDrawingCompleted = default;
         CuttingCompleted = default;
@@ -574,6 +597,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         OrderingContact = order.OrderingContact;
         ReceivingContact = order.ReceivingContact;
         Remarks = order.Remarks;
+        OfferNumber = order.OfferNumber;
         OrderNumberSymbol = order.OrderNumberSymbol;
         SalesOfferLink = order.SalesOfferLink;
         LastModified = order.LastModified;
