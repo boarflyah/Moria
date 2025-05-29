@@ -110,14 +110,14 @@ public partial class OrderItemDetailView : Page, IViewModelContent
 
     private async void ColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var color = await _lookupService.ShowLookup<ColorDo>(false);
+        var color = await _lookupService.ShowLookup<ColorDo>();
         if (color != null)
             (DataContext as OrderItemDetailViewModel).MainColor = color;
     }
 
     private async void SecondColorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
     {
-        var color = await _lookupService.ShowLookup<ColorDo>(false);
+        var color = await _lookupService.ShowLookup<ColorDo>();
         if (color != null)
             (DataContext as OrderItemDetailViewModel).SecondColor = color;
     }

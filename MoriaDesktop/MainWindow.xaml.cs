@@ -127,9 +127,10 @@ public partial class MainWindow : Window
         isRestored = false;
     }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    private async void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        Close();
+        if(await (DataContext as MainWindowViewModel).ConfirmClosing())
+            Close();
     }
 
     private void Border_MouseDown(object sender, MouseButtonEventArgs e)

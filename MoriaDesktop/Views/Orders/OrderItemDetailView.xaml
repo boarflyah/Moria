@@ -286,8 +286,8 @@
                       Margin="0,0,0,5"/>
                         <controls:LookupObjectControl x:Name="ColorLookupObjectControl"
                                              Grid.Row="1"
-                                             LookupObject="{Binding Color, Mode=TwoWay}"
-                                             NameText="{Binding Color.Name, Mode=OneWay}"
+                                             LookupObject="{Binding MainColor, Mode=TwoWay}"
+                                             NameText="{Binding MainColor.Name, Mode=OneWay}"
                                              OnLookupInvoked="ColorLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 
@@ -305,8 +305,8 @@
                          Margin="0,0,0,5"/>
                         <controls:LookupObjectControl x:Name="SecondColorLookupObjectControl"
                           Grid.Row="1"
-                          LookupObject="{Binding Color, Mode=TwoWay}"
-                          NameText="{Binding Color.Name, Mode=OneWay}"
+                          LookupObject="{Binding SecondColor, Mode=TwoWay}"
+                          NameText="{Binding SecondColor.Name, Mode=OneWay}"
                           OnLookupInvoked="SecondColorLookupObjectControl_OnLookupInvoked"/>
                     </Grid>
 

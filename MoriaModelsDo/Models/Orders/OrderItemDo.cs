@@ -432,6 +432,8 @@ public class OrderItemDo: BaseDo
 
     public string ItemName => Product != null ? Product.Name : Component != null ? Component.Name : Drive?.Name;
 
+    public string ItemSymbol => Product != null ? Product.Symbol : Drive != null ? Drive.Motor.Symbol : string.Empty;
+
     public IList<ComponentToOrderItemDo> ComponentsToOrderItem
     {
         get; set;

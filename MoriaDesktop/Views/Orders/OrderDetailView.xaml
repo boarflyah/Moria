@@ -279,6 +279,9 @@
                     <DataGridTextColumn Header="Nr zlecenia" 
                             Binding="{Binding Symbol}"
                             Width="*"/>
+                    <DataGridTextColumn Header="Symbol wyrobu" 
+                            Binding="{Binding ItemSymbol}"
+                            Width="2*"/>     
                     <DataGridTextColumn Header="Wyrób" 
                             Binding="{Binding ItemName}"
                             Width="3*"/>

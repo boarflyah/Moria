@@ -354,12 +354,23 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     bool CanGoBack() => _navigationService.CanGoBack;
 
-    void Logout()
+    async void Logout()
     {
-        //TODO ask for confirmation in dialog
-        _appStateService.OnLoggingOut();
-        _navigationService.NavigateTo(typeof(LoginViewModel), true);
-        SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
+        var confirmation = await _appStateService.ConfirmAsync("Czy na pewno chcesz się wylogować?");
+        if (confirmation == true)
+        {
+            _appStateService.OnLoggingOut();
+            _navigationService.NavigateTo(typeof(LoginViewModel), true);
+            SetupInfo(SystemInfoStatus.Info, "Wylogowano", true);
+        }
+    }
+
+    public async Task<bool> ConfirmClosing()
+    {
+        var confirmation = await _appStateService.ConfirmAsync("Czy na pewno chcesz zamknąć program?");
+        if (confirmation == true)
+            return true;
+        return false;
     }
 
     async Task ImportOrders()
@@ -406,7 +417,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
 
     void CloseApp()
     {
-    
+        
     }
 
     bool CanCloseApp() => true;
