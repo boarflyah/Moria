@@ -246,6 +246,28 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private bool _WeldingCompleted;
+    public bool Weldingompleted
+    {
+        get => _WeldingCompleted;
+        set
+        {
+            _WeldingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_WeldingCompleted;
+    public PermissionDo Permission_WeldingCompleted
+    {
+        get => _Permission_WeldingCompleted;
+        set
+        {
+            _Permission_WeldingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private bool _MetalCliningCompleted;
     public bool MetalCliningCompleted
     {
@@ -467,6 +489,8 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    public List<PermissionDo> GetUserPersssion() => _appStateService.LoggedUser.Position.Permissions.ToList();
+
     public override Task<bool> OnNavigatingFrom()
     {
         WeakReferenceMessenger.Default.Unregister<NavigationMessage<(OrderDo order, bool isLocked)>>(this);
@@ -535,6 +559,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         OrderNumberSymbol = default;
         TechnicalDrawingCompleted = default;
         CuttingCompleted = default;
+        Weldingompleted = default;
         MetalCliningCompleted = default;
         PaintingCompleted = default;
         ElectricaCabinetCompleted = default;
@@ -584,6 +609,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
                 Objects.Add(orderItem);
 
             TechnicalDrawingCompleted = !order.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
+            Weldingompleted = !order.OrderItems.Any(x => x.WeldingCompleted == null);
             CuttingCompleted = !order.OrderItems.Any(y => y.CuttingCompleted == null);
             MetalCliningCompleted = !order.OrderItems.Any(x => x.MetalCliningCompleted == null);
             PaintingCompleted = !order.OrderItems.Any(y => y.PaintingCompleted == null);
