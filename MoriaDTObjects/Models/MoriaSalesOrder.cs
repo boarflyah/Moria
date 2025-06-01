@@ -94,5 +94,11 @@ namespace MoriaDTObjects.Models
             get;
             set;
         }
+
+        [DataMember]
+        public string OfferNumber
+        {
+            get; set;
+        }
     }
 }

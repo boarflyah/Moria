@@ -35,7 +35,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Nazwa" Grid.Row="0" Margin="0,0,0,5"/>
+            <Label Content="Nr zlecenia" Grid.Row="0" Margin="0,0,0,5"/>
             <TextBox Name="TextBox1" Text="{Binding Symbol, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsReadOnly="True" Grid.Row="1"/>
         </Grid>
 

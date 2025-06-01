@@ -174,6 +174,7 @@ public class MoriaDataContext : DbContext
                 (true, true, 'Komponent - Kolor', 'Component_ComponentColor', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Symbol', 'Order_OrderNumberSymbol', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Uwagi', 'Order_Remarks', PositionId, false, '', 'System'),
+                (true, true, 'Zamówienie - Nr oferty', 'Order_OfferNumber', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Katalog', 'Order_CatalogLink', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Oferta sprzedaży', 'Order_SalesOfferLink', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Nr klienta', 'Order_ClientSymbol', PositionId, false, '', 'System'),

@@ -14,6 +14,7 @@ namespace MoriaConsoleApp.Services
                         $"dok.KwotaDoZaplaty as {ColumnAliasesProvider.GrossValue}, sd.Nazwa as {ColumnAliasesProvider.StateName} " +
                         $"FROM ModelDanychContainer.Dokumenty dok " +
                         $"LEFT JOIN ModelDanychContainer.StatusyDokumentow sd ON sd.Id = dok.StatusDokumentuId " +
-                        $"WHERE dok.DataWprowadzenia >= @p1 AND dok.Symbol LIKE @p2;";
+                        $"LEFT JOIN ModelDanychContainer.Dokumenty_PolaWlasneDokumentZK_Adv2 pw ON pw.Id = dok.Id " +
+                        $"WHERE dok.DataWprowadzenia >= @p1 AND dok.Symbol LIKE @p2 AND pw.B0 = 1;";
     }
 }

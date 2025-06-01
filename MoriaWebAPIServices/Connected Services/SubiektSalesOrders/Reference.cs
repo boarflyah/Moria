@@ -40,6 +40,12 @@ namespace SubiektSalesOrders
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/GetDetailedSalesOrders", ReplyAction="http://tempuri.org/ISalesOrderContract/GetDetailedSalesOrdersResponse")]
         System.Threading.Tasks.Task<MoriaDTObjects.Models.MoriaSalesOrder[]> GetDetailedSalesOrdersAsync(int[] ids);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/UpdateOrdersToUpdateValue", ReplyAction="http://tempuri.org/ISalesOrderContract/UpdateOrdersToUpdateValueResponse")]
+        bool UpdateOrdersToUpdateValue(int[] ids);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/UpdateOrdersToUpdateValue", ReplyAction="http://tempuri.org/ISalesOrderContract/UpdateOrdersToUpdateValueResponse")]
+        System.Threading.Tasks.Task<bool> UpdateOrdersToUpdateValueAsync(int[] ids);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISalesOrderContract/GetSalesOrder", ReplyAction="http://tempuri.org/ISalesOrderContract/GetSalesOrderResponse")]
         MoriaDTObjects.Models.MoriaSalesOrder GetSalesOrder(int id);
         
@@ -141,6 +147,16 @@ namespace SubiektSalesOrders
         public System.Threading.Tasks.Task<MoriaDTObjects.Models.MoriaSalesOrder[]> GetDetailedSalesOrdersAsync(int[] ids)
         {
             return base.Channel.GetDetailedSalesOrdersAsync(ids);
+        }
+        
+        public bool UpdateOrdersToUpdateValue(int[] ids)
+        {
+            return base.Channel.UpdateOrdersToUpdateValue(ids);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateOrdersToUpdateValueAsync(int[] ids)
+        {
+            return base.Channel.UpdateOrdersToUpdateValueAsync(ids);
         }
         
         public MoriaDTObjects.Models.MoriaSalesOrder GetSalesOrder(int id)

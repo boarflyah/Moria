@@ -71,6 +71,10 @@ public class OrderControllerService : IOrderControllerService
             .Include(x => x.OrderItems)
                 .ThenInclude(x => x.Warehouse)
             .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MainColor)
+            .Include(x => x.OrderItems)
+                .ThenInclude(x => x.DetailsColor)
+            .Include(x => x.OrderItems)
                 .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Color)
             .Include(x => x.OrderItems)
                 .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Component).ThenInclude(x => x.Product)
@@ -105,6 +109,10 @@ public class OrderControllerService : IOrderControllerService
                 .ThenInclude(x => x.Product)
             .Include(x => x.OrderItems)
                 .ThenInclude(x => x.Warehouse)
+            .Include(x => x.OrderItems)
+                .ThenInclude(x => x.MainColor)
+            .Include(x => x.OrderItems)
+                .ThenInclude(x => x.DetailsColor)
             .Include(x => x.OrderItems)
                 .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Color)
             .Include(x => x.OrderItems)
@@ -182,7 +190,7 @@ public class OrderControllerService : IOrderControllerService
         {
 
             var settings = await _context.Settings.FirstOrDefaultAsync();
-            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
+            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport.AddMonths(-6) ?? new DateTime(2025, 1, 1));
 
             if (orders.Any())
             {
@@ -190,12 +198,32 @@ public class OrderControllerService : IOrderControllerService
                 if (ids.Any())
                 {
                     var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
+                    bool updateB0 = false;
                     foreach (var order in ordersToImport)
                     {
-                        var newOrder = await _creator.CreateOrder(order);
-                        await _context.AddAsync(newOrder);
-                        newOrder.CatalogLink = await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
+                        updateB0 = true;
+                        var toUpdate = await _context.Orders
+                            .Include(x => x.OrderingContact)
+                            .Include(x => x.ReceivingContact)
+                            .Include(x => x.OrderItems)
+                            .ThenInclude(x => x.Warehouse)
+                            .Include(x => x.OrderItems)
+                            .ThenInclude(x => x.Product)
+                            .FirstOrDefaultAsync(x => x.SubiektId == order.Id);
+                        if (toUpdate == null)
+                        {
+                            var newOrder = await _creator.CreateOrder(order);
+                            await _context.AddAsync(newOrder);
+                            newOrder.CatalogLink = await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
+                        }
+                        else
+                        {
+                            await _creator.UpdateOrder(order, toUpdate);
+                        }
                     }
+
+                    if (updateB0)
+                        await client.UpdateOrdersToUpdateValueAsync(ids.ToArray());
                 }
                 if (settings != null)
                     settings.LastSubiektImport = DateTime.Now;
@@ -209,13 +237,15 @@ public class OrderControllerService : IOrderControllerService
         }
     }
 
-    async Task<IEnumerable<int>> GetOrderIds(IEnumerable<MoriaSalesOrder> orders)
+    async Task<IEnumerable<int>> GetOrderIds(IEnumerable<MoriaSalesOrder> orders, bool getAll = true)
     {
         var ids = new List<int>();
 
         foreach (var order in orders)
         {
-            if (!await _context.Orders.AnyAsync(x => x.SubiektId == order.Id))
+            if (getAll)
+                ids.Add(order.Id);
+            else if (!await _context.Orders.AnyAsync(x => x.SubiektId == order.Id))
                 ids.Add(order.Id);
         }
 

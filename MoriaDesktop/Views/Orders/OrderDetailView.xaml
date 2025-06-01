@@ -127,7 +127,13 @@
              MouseDoubleClick="SalesOfferLinkTextBox_MouseDoubleClick"/>
         </Grid>
 
-        <Grid Grid.Column="2" Grid.Row="2" Margin="10"
+        <Grid Grid.Column="2" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+        <Grid Margin="5"
              IsEnabled="{Binding Permission_Remarks.CanWrite}"
              Visibility="{Binding Permission_Remarks.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -143,7 +149,23 @@
               Grid.Row="1"/>
             <Button Content="Dodaj daty" Width="108" Grid.Row="2" Margin="0,0,10,0" Click="AddDate_Click" Background="LightCyan"  Visibility="{Binding ViewModel.IsLocked, Mode=OneWay, Converter={StaticResource bool2vis}}" FontWeight="Bold" Height="50"/>
         </Grid>
-        
+            
+            <Grid Grid.Row="1" Margin="5"
+                  IsEnabled="False"
+                  Visibility="{Binding Permission_OfferNumber.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Nr oferty" 
+                       Grid.Row="0" 
+                       Margin="0,0,0,5"/>
+                <TextBox Name="OfferNumberTextBox" IsReadOnly="True"
+                         Text="{Binding OfferNumber, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Row="1"/>
+            </Grid>
+        </Grid>
+
         <!-- Booliny -->
         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Margin="10">
             <Grid>
@@ -266,9 +288,12 @@
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Symbol" 
+                    <DataGridTextColumn Header="Nr zlecenia" 
                             Binding="{Binding Symbol}"
                             Width="*"/>
+                    <DataGridTextColumn Header="Symbol wyrobu" 
+                            Binding="{Binding ItemSymbol}"
+                            Width="2*"/>     
                     <DataGridTextColumn Header="Wyrób" 
                             Binding="{Binding ItemName}"
                             Width="3*"/>
