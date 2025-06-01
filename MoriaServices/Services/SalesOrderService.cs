@@ -136,6 +136,36 @@ namespace MoriaServices.Services
                 throw new ArgumentException("Nie udało się zalogować do Sfery");
         }
 
+        public bool UpdateOrdersToUpdateValue(IEnumerable<int> ids)
+        {
+            var moriaHandler = _handlerService.GetHandler();
+            if (_handlerService?.Login(moriaHandler) == true)
+            {
+                if (ids.Any())
+                    using (var conn = moriaHandler.PodajPolaczenie())
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = GetUpdateQuery(ids);
+                        conn.Open();
+                        var updated = cmd.ExecuteNonQuery();
+
+                        return updated == ids.Count();
+                    }
+
+                return true;
+            }
+            else
+                throw new ArgumentException("Nie udało się zalogować do Sfery");
+        }
+
+        string GetUpdateQuery(IEnumerable<int> ids)
+        {
+            string query = $"UPDATE ModelDanychContainer.Dokumenty_PolaWlasneDokumentZK_Adv2 SET B0 = 0 " +
+                $"WHERE Id IN ({string.Join(",", ids)});";
+
+            return query;
+        }
+
         public MoriaSalesOrder GetSalesOrder(int id)
         {
             var moriaHandler = _handlerService.GetHandler();

@@ -56,19 +56,23 @@ public class ModelsCreator
         return model;
     }
 
-    public async Task<T1> GetSubiektModelInContext<T1, T2>(Func<T2, Task<T1>> creator, T2 subiektObject, DbSet<T1> set) where T1 : BaseModel, ISubiektModel, new() where T2: ISubiektBaseObject
+    public async Task<T1> GetSubiektModelInContext<T1, T2>(Func<T2, Task<T1>> creator, Func<T2, T1, Task> updater, T2 subiektObject, DbSet<T1> set) where T1 : BaseModel, ISubiektModel, new() where T2 : ISubiektBaseObject
     {
         if (subiektObject == null)
             return null;
 
         var model = set.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
-        if(model == null)
+        if (model == null)
             model = set.Local.FirstOrDefault(x => x.SubiektId == subiektObject.Id);
         if (model == null)
         {
             model = await creator(subiektObject);
             set.Add(model);
             await _context.AddAsync(model);
+        }
+        else
+        {
+            await updater(subiektObject, model);
         }
 
         return model;
@@ -79,7 +83,7 @@ public class ModelsCreator
     #region Employee
 
     public EmployeeDo GetEmployeeDo(Employee employee)
-    {        
+    {
         return new EmployeeDo()
         {
             Id = employee.Id,
@@ -96,7 +100,7 @@ public class ModelsCreator
     }
 
     public async Task<Employee> CreateEmployee(EmployeeDo employee)
-    {     
+    {
         var result = new Employee()
         {
             FirstName = employee.FirstName,
@@ -288,6 +292,13 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdateContact(MoriaEntity model, Contact entity)
+    {
+        entity.Symbol = model.Symbol;
+        entity.LongName = model.LongName;
+        entity.ShortName = model.ShortName;
+    }
+
     public async Task UpdateContact(Contact contact, ContactDo contactModel)
     {
         contact.Symbol = contactModel.Symbol;
@@ -403,6 +414,12 @@ public class ModelsCreator
             Name = model.Name,
             Symbol = model.Symbol
         };
+    }
+
+    public async Task UpdateWarehouse(MoriaWarehouse model, Warehouse entity)
+    {
+        entity.Name = model.Name;
+        entity.Symbol = model.Symbol;
     }
 
     public async Task UpdateWarehouse(Warehouse warehouse, WarehouseDo warehouseModel)
@@ -575,6 +592,13 @@ public class ModelsCreator
         };
     }
 
+    public async Task UpdateProduct(MoriaProduct model, Product entity)
+    {
+        entity.Name = model.Name;
+        entity.SerialNumber = model.SerialNumber;
+        entity.Symbol = model.Symbol;
+    }
+
     public async Task UpdateProduct(Product product, ProductDo productModel)
     {
         product.IsMainMachine = productModel.IsMainMachine;
@@ -703,7 +727,7 @@ public class ModelsCreator
             ClientSymbol = order.ClientSymbol,
             OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
             ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact),
-            
+
             SalesOfferLink = order.SalesOfferLink,
 
         };
@@ -714,13 +738,13 @@ public class ModelsCreator
 
         result.ElectricaCabinetCompleted = !result.OrderItems.Any(x => x.ElectricaCabinetCompleted == null);
         result.TechnicalDrawingCompleted = !result.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
-        result.CuttingCompleted = !result.OrderItems.Any(x => x.CuttingCompleted == null); 
-        result.MetalCliningCompleted = !result.OrderItems.Any(x => x.MetalCliningCompleted == null); 
+        result.CuttingCompleted = !result.OrderItems.Any(x => x.CuttingCompleted == null);
+        result.MetalCliningCompleted = !result.OrderItems.Any(x => x.MetalCliningCompleted == null);
         result.PaintingCompleted = !result.OrderItems.Any(x => x.PaintingCompleted == null);
-        result.MachineAssembled = !result.OrderItems.Any(x => x.MachineAssembled == null); 
-        result.MachineWiredAndTested = !result.OrderItems.Any(x => x.MachineWiredAndTested == null); 
-        result.MachineReleased = !result.OrderItems.Any(x => x.MachineReleased == null); 
-        result.TransportOrdered = !result.OrderItems.Any(x => x.TransportOrdered == null); 
+        result.MachineAssembled = !result.OrderItems.Any(x => x.MachineAssembled == null);
+        result.MachineWiredAndTested = !result.OrderItems.Any(x => x.MachineWiredAndTested == null);
+        result.MachineReleased = !result.OrderItems.Any(x => x.MachineReleased == null);
+        result.TransportOrdered = !result.OrderItems.Any(x => x.TransportOrdered == null);
 
 
         return result;
@@ -758,8 +782,8 @@ public class ModelsCreator
             OrderNumberSymbol = model.Symbol,
             Remarks = model.Remarks,
             OfferNumber = model.OfferNumber,
-            OrderingContact = await GetSubiektModelInContext(CreateContact, model.Client, _context.Contacts),
-            ReceivingContact = await GetSubiektModelInContext(CreateContact, model.Recipient, _context.Contacts),
+            OrderingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Client, _context.Contacts),
+            ReceivingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Recipient, _context.Contacts),
             OrderDate = model.DocumentDate,
             DueDate = model.DueDate,
         };
@@ -767,12 +791,12 @@ public class ModelsCreator
         if (model.SalesOrderItems != null && model.SalesOrderItems.Any())
         {
             result.OrderItems = new List<OrderItem>();
-            var warehouse = await GetSubiektModelInContext(CreateWarehouse, model.Warehouse, _context.Warehouses);
+            var warehouse = await GetSubiektModelInContext(CreateWarehouse, UpdateWarehouse, model.Warehouse, _context.Warehouses);
 
             var splitSymbol = model.Symbol?.Split(' ');
             string moriaSymbol = null;
             if (splitSymbol.Count() > 2)
-                moriaSymbol= splitSymbol[1] + splitSymbol[2];
+                moriaSymbol = splitSymbol[1] + splitSymbol[2];
             foreach (var soi in model.SalesOrderItems)
             {
                 var oi = await CreateOrderItem(soi, moriaSymbol);
@@ -783,6 +807,51 @@ public class ModelsCreator
 
         return result;
     }
+
+    public async Task UpdateOrder(MoriaSalesOrder model, Order toUpdate)
+    {
+        toUpdate.SubiektId = model.Id;
+        toUpdate.OrderNumberSymbol = model.Symbol;
+        toUpdate.Remarks = model.Remarks;
+        toUpdate.OfferNumber = model.OfferNumber;
+        toUpdate.OrderingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Client, _context.Contacts);
+        toUpdate.ReceivingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Recipient, _context.Contacts);
+        toUpdate.OrderDate = model.DocumentDate;
+        toUpdate.DueDate = model.DueDate;
+
+        if (model.SalesOrderItems != null && model.SalesOrderItems.Any())
+        {
+            foreach (var msoi in model.SalesOrderItems)
+            {
+                toUpdate.OrderItems ??= new List<OrderItem>();
+
+                var warehouse = await GetSubiektModelInContext(CreateWarehouse, UpdateWarehouse, model.Warehouse, _context.Warehouses);
+                var splitSymbol = model.Symbol?.Split(' ');
+                string moriaSymbol = null;
+                if (splitSymbol.Count() > 2)
+                    moriaSymbol = splitSymbol[1] + splitSymbol[2];
+
+                var oi = toUpdate.OrderItems.FirstOrDefault(x => x.SubiektId == msoi.Id);
+                if (oi == null)
+                {
+                    oi = await CreateOrderItem(msoi, moriaSymbol);
+                    oi.Warehouse = warehouse;
+                    toUpdate.OrderItems.Add(oi);
+                }
+                else
+                {
+                    await UpdateOrderItem(msoi, moriaSymbol, oi);
+                }
+            }
+
+            foreach (var oi in toUpdate.OrderItems)
+            {
+                if (!model.SalesOrderItems.Any(x => x.Id == oi.SubiektId))
+                    _context.OrderItems.Remove(oi);
+            }
+        }
+    }
+
 
     public async Task UpdateOrder(Order order, OrderDo model)
     {
@@ -942,17 +1011,31 @@ public class ModelsCreator
         return new()
         {
             SubiektId = model.Id,
-            Symbol = moriaSymbol + model.Index.ToString().PadLeft(2,'0'),
+            Symbol = moriaSymbol + model.Index.ToString().PadLeft(2, '0'),
             Index = model.Index,
             Quantity = (double)model.Quantity,
             Description = model.Remarks,
-            Product = await GetSubiektModelInContext(CreateProduct, model.Product, _context.Products),
+            Product = await GetSubiektModelInContext(CreateProduct, UpdateProduct, model.Product, _context.Products),
             DueDate = model.DueDate,
             MachineWeight = model.Weight,
             Power = model.Power,
             ProductionYear = model.ProductionYear,
             SerialNumber = model.SerialNumber,
         };
+    }
+
+    public async Task UpdateOrderItem(MoriaSalesOrderItem model, string moriaSymbol, OrderItem entity)
+    {
+        entity.Symbol = moriaSymbol + model.Index.ToString().PadLeft(2, '0');
+        entity.Index = model.Index;
+        entity.Quantity = (double)model.Quantity;
+        entity.Description = model.Remarks;
+        entity.Product = await GetSubiektModelInContext(CreateProduct, UpdateProduct, model.Product, _context.Products);
+        entity.DueDate = model.DueDate;
+        entity.MachineWeight = model.Weight;
+        entity.Power = model.Power;
+        entity.ProductionYear = model.ProductionYear;
+        entity.SerialNumber = model.SerialNumber;
     }
 
     public async Task UpdateElectricOrderItem(OrderItem orderItem, OrderItemDo model)
@@ -1015,7 +1098,7 @@ public class ModelsCreator
                     break;
                 case SystemChangeType.Modified:
                     var contextComponentToOrderItem = await _context.ComponentToOrderItems.Include(x => x.Component).FirstOrDefaultAsync(x => x.Id == ctoi.Id);
-                    if (contextComponentToOrderItem  != null)
+                    if (contextComponentToOrderItem != null)
                         await UpdateComponentToOrderItem(contextComponentToOrderItem, ctoi);
                     break;
                 case SystemChangeType.Deleted:
@@ -1153,7 +1236,7 @@ public class ModelsCreator
     {
         return new ElectricalCabinetDo()
         {
-            Id = cabinet.Id,         
+            Id = cabinet.Id,
             Symbol = cabinet.Symbol,
             LastModified = cabinet.LastModified
         };

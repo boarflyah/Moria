@@ -45,6 +45,12 @@ namespace MoriaWCFContracts.Services
             return _salesOrderService.GetDetailedSalesOrders(ids);
         }
 
+        public bool UpdateOrdersToUpdateValue(IEnumerable<int> ids)
+        {
+            return _salesOrderService.UpdateOrdersToUpdateValue(ids);
+        }
+
+
         public bool UpdateSalesOrder(MoriaSalesOrder so)
         {
             return _salesOrderService.UpdateSalesOrder(so);

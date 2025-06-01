@@ -21,6 +21,9 @@ namespace MoriaWCFContracts.Interfaces
         IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids);
 
         [OperationContract]
+        bool UpdateOrdersToUpdateValue(IEnumerable<int> ids);
+
+        [OperationContract]
         MoriaSalesOrder GetSalesOrder(int id);
 
         [OperationContract]
