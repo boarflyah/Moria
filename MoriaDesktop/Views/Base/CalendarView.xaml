@@ -46,6 +46,10 @@
                                         <CheckBox IsChecked="{Binding CuttingCompleted}" Margin="0,3,10,0"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Spawanie:" Margin="0,0,5,0"/>
+                                        <CheckBox IsChecked="{Binding WeldingCompleted}" Margin="0,3,10,0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Czyszczenie:" Margin="0,0,5,0"/>
                                         <CheckBox IsChecked="{Binding MetalCliningCompleted}" Margin="0,3,10,0"/>
                                     </StackPanel>
@@ -99,6 +103,10 @@
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Cięcie:" Margin="0,0,5,0"/>
                                                             <CheckBox IsChecked="{Binding CuttingCompleted, Converter={StaticResource DateToBoolConverter}}" Margin="0,3,10,0"/>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Spawanie:" Margin="0,0,5,0"/>
+                                                            <CheckBox IsChecked="{Binding WeldingCompleted, Converter={StaticResource DateToBoolConverter}}" Margin="0,3,10,0"/>
                                                         </StackPanel>
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Czyszczenie:" Margin="0,0,5,0"/>

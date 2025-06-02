@@ -433,27 +433,34 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
+                                  IsEnabled="{Binding Permission_WeldingCompleted.CanWrite}"
+                                  Visibility="{Binding Permission_WeldingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">     
+                                <Label Content="Spawanie zakończone" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding WeldingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
                                     IsEnabled="{Binding Permission_MetalCliningCompleted.CanWrite}"
                                     Visibility="{Binding Permission_MetalCliningCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Czyszczenie metalu" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding MetalCliningCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0"
                                     IsEnabled="{Binding Permission_PaintingCompleted.CanWrite}"
                                     Visibility="{Binding Permission_PaintingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding PaintingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0"
                                     IsEnabled="{Binding Permission_ElectricalDiagramCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricalDiagramCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Schemat elektryczny" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
                                     IsEnabled="{Binding Permission_ControlCabinetWorkStartDate.CanWrite}"
                                     Visibility="{Binding Permission_ControlCabinetWorkStartDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">     
                                 <Label Content="Rozpoczęcie szafy elektrycznej" Margin="0,0,10,0"/>
@@ -461,35 +468,35 @@
                             </StackPanel>
 
                             <!-- Kolumna 2 -->
-                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
                                     IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineAssembled.CanWrite}"
                                     Visibility="{Binding Permission_MachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Maszyna zmontowana" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding MachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineWiredAndTested.CanWrite}"
                                     Visibility="{Binding Permission_MachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineReleased.CanWrite}"
                                     Visibility="{Binding Permission_MachineReleased.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Maszyna wydana" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding MachineReleased, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1"
                                     IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
                                     Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Transport zamówiony" Margin="0,0,10,0"/>

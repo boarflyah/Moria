@@ -925,6 +925,7 @@ public class ModelsCreator
             ElectricaCabinetCompleted = oi.ElectricaCabinetCompleted,
             TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted,
             CuttingCompleted = oi.CuttingCompleted,
+            WeldingCompleted = oi.WeldingCompleted,
             MetalCliningCompleted = oi.MetalCliningCompleted,
             PaintingCompleted = oi.PaintingCompleted,
             ElectricialDescription = oi.ElectricalDescription,
@@ -977,6 +978,7 @@ public class ModelsCreator
             TechnicalDrawingLink = model.TechnicalDrawingLink,
             ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
             TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
+            WeldingCompleted = model.CuttingCompleted,
             CuttingCompleted = model.CuttingCompleted,
             MetalCliningCompleted = model.MetalCliningCompleted,
             PaintingCompleted = model.PaintingCompleted,
@@ -1078,6 +1080,7 @@ public class ModelsCreator
         orderItem.PaintingCompleted = model.PaintingCompleted;
         orderItem.ElectricalDescription = model.ElectricialDescription;
         orderItem.MachineAssembled = model.MachineAssembled;
+        orderItem.WeldingCompleted = model.WeldingCompleted;
         //orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
         orderItem.MachineReleased = model.MachineReleased;
         orderItem.TransportOrdered = model.TransportOrdered;

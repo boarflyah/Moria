@@ -70,6 +70,9 @@ public class OrderItem : BaseModel, ISubiektModel
     public DateTime? CuttingCompleted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
+    public DateTime? WeldingCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
     public DateTime? MetalCliningCompleted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]

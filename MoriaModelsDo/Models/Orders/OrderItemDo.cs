@@ -231,6 +231,17 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _WeldingCompleted;
+    public DateTime? WeldingCompleted
+    {
+        get => _WeldingCompleted;
+        set
+        {
+            _WeldingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MetalCliningCompleted;
     public DateTime? MetalCliningCompleted
     {

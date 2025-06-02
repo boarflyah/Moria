@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Orders;
+using MoriaDesktop.Views.Orders.Window;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
 using MoriaModelsDo.Models.Contacts;
@@ -17,7 +18,7 @@ public partial class OrderDetailView : Page, IViewModelContent
 {
     readonly ILookupService _lookupService;
 
-    public object GetViewModel() => DataContext; 
+    public object GetViewModel() => DataContext;
 
     public OrderDetailView(OrderDetailViewModel vm, ILookupService lookupService)
     {
@@ -61,11 +62,11 @@ public partial class OrderDetailView : Page, IViewModelContent
 
         if (Directory.Exists(path))
         {
-            textBox.Foreground = Brushes.Blue; 
+            textBox.Foreground = Brushes.Blue;
         }
         else
         {
-            textBox.Foreground = Brushes.Black; 
+            textBox.Foreground = Brushes.Black;
         }
     }
 
@@ -95,7 +96,7 @@ public partial class OrderDetailView : Page, IViewModelContent
 
         if (File.Exists(path) && Path.GetExtension(path).ToLower() == ".pdf")
         {
-            textBox.Foreground = Brushes.Green; 
+            textBox.Foreground = Brushes.Green;
         }
         else
         {
@@ -117,6 +118,124 @@ public partial class OrderDetailView : Page, IViewModelContent
         else
         {
             MessageBox.Show("Podany plik PDF nie istnieje!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+
+    private void AddDate_Click(object sender, RoutedEventArgs e)
+    {
+        var selectedOrderItems = (OrderItems.Content as DataGrid)?.SelectedItems
+                         .Cast<OrderItemDo>()
+                         .ToList();
+
+        if (selectedOrderItems == null || selectedOrderItems.Count == 0)
+            return;
+
+        var userPermissions = (DataContext as OrderDetailViewModel).GetUserPersssion();
+
+        var window = new SetProductionDateWindowView(userPermissions);
+        bool? result = window.ShowDialog();
+        if (result == true)
+        {
+            foreach (var item in selectedOrderItems)
+            {
+                bool modified = false;
+
+                if (window.TechnicalDrawingCompleted.HasValue &&
+                    item.TechnicalDrawingCompleted != window.TechnicalDrawingCompleted)
+                {
+                    item.TechnicalDrawingCompleted = window.TechnicalDrawingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.CuttingCompleted.HasValue &&
+                    item.CuttingCompleted != window.CuttingCompleted)
+                {
+                    item.CuttingCompleted = window.CuttingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.WeldingCompleted.HasValue &&
+                 item.WeldingCompleted != window.WeldingCompleted)
+                {
+                    item.WeldingCompleted = window.WeldingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.MetalCliningCompleted.HasValue &&
+                    item.MetalCliningCompleted != window.MetalCliningCompleted)
+                {
+                    item.MetalCliningCompleted = window.MetalCliningCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.PaintingCompleted.HasValue &&
+                    item.PaintingCompleted != window.PaintingCompleted)
+                {
+                    item.PaintingCompleted = window.PaintingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.MachineAssembled.HasValue &&
+                    item.MachineAssembled != window.MachineAssembled)
+                {
+                    item.MachineAssembled = window.MachineAssembled.Value;
+                    modified = true;
+                }
+
+                if (window.MachineWiredAndTested.HasValue &&
+                    item.MachineWiredAndTested != window.MachineWiredAndTested)
+                {
+                    item.MachineWiredAndTested = window.MachineWiredAndTested.Value;
+                    modified = true;
+                }
+
+                if (window.MachineReleased.HasValue &&
+                    item.MachineReleased != window.MachineReleased)
+                {
+                    item.MachineReleased = window.MachineReleased.Value;
+                    modified = true;
+                }
+
+                if (window.TransportOrdered.HasValue &&
+                    item.TransportOrdered != window.TransportOrdered)
+                {
+                    item.TransportOrdered = window.TransportOrdered.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedMachineAssembled.HasValue &&
+                    item.PlannedMachineAssembled != window.PlannedMachineAssembled)
+                {
+                    item.PlannedMachineAssembled = window.PlannedMachineAssembled.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedMachineWiredAndTested.HasValue &&
+                    item.PlannedMachineWiredAndTested != window.PlannedMachineWiredAndTested)
+                {
+                    item.PlannedMachineWiredAndTested = window.PlannedMachineWiredAndTested.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedTransport.HasValue &&
+                    item.PlannedTransport != window.PlannedTransport)
+                {
+                    item.PlannedTransport = window.PlannedTransport.Value;
+                    modified = true;
+                }
+
+                if (window.DueDate.HasValue &&
+                    item.DueDate != window.DueDate)
+                {
+                    item.DueDate = window.DueDate.Value;
+                    modified = true;
+                }
+
+                if (modified)
+                {
+                    item.ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Modified;
+                }
+            }
         }
     }
 }

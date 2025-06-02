@@ -13,6 +13,7 @@
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <conv:RowBackgroundConverter x:Key="RowBackgroundConverter"/>
+        <conv:BoolToVisibilityConverter x:Key="bool2vis"/>
     </Page.Resources>
 
     <Grid>
@@ -138,6 +139,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Uwagi" 
             Grid.Row="0" 
@@ -145,6 +147,7 @@
             <TextBox Name="RemarksTextBox" 
               Text="{Binding Remarks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
               Grid.Row="1"/>
+            <Button Content="Dodaj daty" Width="108" Grid.Row="2" Margin="0,0,10,0" Click="AddDate_Click" Background="LightCyan"  Visibility="{Binding ViewModel.IsLocked, Mode=OneWay, Converter={StaticResource bool2vis}}" FontWeight="Bold" Height="50"/>
         </Grid>
             
             <Grid Grid.Row="1" Margin="5"
@@ -195,13 +198,20 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
+                        IsEnabled="{Binding Permission_WeldingCompleted.CanWrite}"
+                        Visibility="{Binding Permission_WeldingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Label Content="Spawanie zakończone" Margin="0,0,10,0"/>
+                    <CheckBox IsChecked="{Binding WeldingCompleted, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
                         IsEnabled="{Binding Permission_MetalCliningCompleted.CanWrite}"
                         Visibility="{Binding Permission_MetalCliningCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Czyszczenie metalu" Margin="0,0,10,0"/>
                     <CheckBox IsChecked="{Binding MetalCliningCompleted, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
                         IsEnabled="{Binding Permission_PaintingCompleted.CanWrite}"
                         Visibility="{Binding Permission_PaintingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
@@ -209,28 +219,28 @@
                 </StackPanel>
 
                 <!-- Kolumna 2 -->
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
                         IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
                         Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
                     <CheckBox IsChecked="{Binding ElectricaCabinetCompleted, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
                         IsEnabled="{Binding Permission_MachineAssembled.CanWrite}"
                         Visibility="{Binding Permission_MachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Maszyna zmontowana" Margin="0,0,10,0"/>
                     <CheckBox IsChecked="{Binding MachineAssembled, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
+                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
                         IsEnabled="{Binding Permission_MachineWiredAndTested.CanWrite}"
                         Visibility="{Binding Permission_MachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
                     <CheckBox IsChecked="{Binding MachineWiredAndTested, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
                         IsEnabled="{Binding Permission_MachineReleased.CanWrite}"
                         Visibility="{Binding Permission_MachineReleased.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Maszyna wydana" Margin="0,0,10,0"/>
@@ -238,14 +248,14 @@
                 </StackPanel>
 
                 <!-- Kolumna 3 -->
-                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                         IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
                         Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
                     <CheckBox IsChecked="{Binding TransportOrdered, Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
                         IsEnabled="{Binding Permission_DueDate.CanWrite}"
                         Visibility="{Binding Permission_DueDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Label Content="Termin realizacji" Margin="0,0,10,0"/>
@@ -255,11 +265,13 @@
         </StackPanel>
         
         <controls:NestedListViewWrapper Grid.Row="4"
-                                        Grid.ColumnSpan="3">
+                                        Grid.ColumnSpan="3"
+                                        x:Name="OrderItems">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"
                       IsReadOnly="true"
                       MouseDoubleClick="DataGrid_MouseDoubleClick"
+                      SelectionMode="Extended"
                       ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}">
                 
                 <DataGrid.RowStyle>

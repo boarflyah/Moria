@@ -465,6 +465,29 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _WeldingCompleted;
+    [ObjectChangedValidate]
+    public DateTime? WeldingCompleted
+    {
+        get => _WeldingCompleted;
+        set
+        {
+            _WeldingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_WeldingCompleted;
+    public PermissionDo Permission_WeldingCompleted
+    {
+        get => _Permission_WeldingCompleted;
+        set
+        {
+            _Permission_WeldingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MetalCliningCompleted;
     [ObjectChangedValidate]
     public DateTime? MetalCliningCompleted
@@ -845,6 +868,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         Power = default;
         TechnicalDrawingCompleted = default;
         CuttingCompleted = default;
+        WeldingCompleted = default;
         MetalCliningCompleted = default;
         PaintingCompleted = default;
         ElectricaCabinetCompleted = default;
@@ -880,6 +904,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MainColor = oi.MainColor;
         SecondColor = oi.DetailsColor;
         TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted;
+        WeldingCompleted = oi.WeldingCompleted;
         CuttingCompleted = oi.CuttingCompleted;
         MetalCliningCompleted = oi.MetalCliningCompleted;
         PaintingCompleted = oi.PaintingCompleted;
@@ -922,6 +947,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.MainColor = MainColor;
         currentOrderItem.DetailsColor = SecondColor;
         currentOrderItem.TechnicalDrawingCompleted = TechnicalDrawingCompleted;
+        currentOrderItem.WeldingCompleted = WeldingCompleted;
         currentOrderItem.CuttingCompleted = CuttingCompleted;
         currentOrderItem.MetalCliningCompleted = MetalCliningCompleted;
         currentOrderItem.PaintingCompleted = PaintingCompleted;
