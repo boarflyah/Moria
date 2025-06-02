@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using InsERT.Moria.ModelDanych;
 using MoriaDTObjects.Models;
 using MoriaServices.Interfaces;
@@ -11,10 +12,12 @@ namespace MoriaServices.Services
         {
             if (entity == null) return null;
 
+            var current = entity.Historia.FirstOrDefault(x => x.PodmiotDlaKtoregoNajnowsza == entity);
             var me = new MoriaEntity()
             {
                 Id = entity.Id,
                 ShortName = entity.NazwaSkrocona,
+                LongName = current.Nazwa,
                 NIP = entity.NIP
             };
 
