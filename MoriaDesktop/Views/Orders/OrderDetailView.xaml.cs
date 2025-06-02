@@ -123,7 +123,7 @@ public partial class OrderDetailView : Page, IViewModelContent
 
     private void AddDate_Click(object sender, RoutedEventArgs e)
     {
-        var selectedOrderItems = (OrderItems.Content as DataGrid)?.SelectedItems
+        var selectedOrderItems = (OrderItemsDataGrid)?.SelectedItems
                          .Cast<OrderItemDo>()
                          .ToList();
 

@@ -12,8 +12,9 @@
       Loaded="Page_Loaded">
     <Page.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <conv:BoolToVisibilityInvertedConverter x:Key="BoolToVisibilityInvertedConverter" />
         <conv:RowBackgroundConverter x:Key="RowBackgroundConverter"/>
-        <conv:BoolToVisibilityConverter x:Key="bool2vis"/>
+        <conv:InvertBoolConverter x:Key="boolinv"/>
     </Page.Resources>
 
     <Grid>
@@ -147,7 +148,6 @@
             <TextBox Name="RemarksTextBox" 
               Text="{Binding Remarks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
               Grid.Row="1"/>
-            <Button Content="Dodaj daty" Width="108" Grid.Row="2" Margin="0,0,10,0" Click="AddDate_Click" Background="LightCyan"  Visibility="{Binding ViewModel.IsLocked, Mode=OneWay, Converter={StaticResource bool2vis}}" FontWeight="Bold" Height="50"/>
         </Grid>
             
             <Grid Grid.Row="1" Margin="5"
@@ -263,8 +263,112 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        
-        <controls:NestedListViewWrapper Grid.Row="4"
+
+
+        <Grid Grid.Row="4"
+              Grid.ColumnSpan="3"
+              x:Name="OrderItems">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="#F3F3F3" 
+                        Margin="8 0 8 -3"
+                        CornerRadius="5 5 0 0"/>
+            <Grid Grid.Row="0"
+                      Height="30"
+                      Margin="5 0 5 0"
+                      IsEnabled="{Binding IsLocked, Mode=OneWay, Converter={StaticResource boolinv}}"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding LabelTitle, Mode=OneWay}"
+                               Margin="5 0 0 0"/>
+                <StackPanel Grid.Column="1"
+                                Margin="0 0 5 0"
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Right">
+                    <Button Content="Dodaj daty" 
+                            Width="108" Height="25" 
+                            Margin="0,0,10,0"
+                            Click="AddDate_Click" 
+                            Background="LightCyan"
+                            Visibility="{Binding IsLocked, Mode=OneWay, Converter={StaticResource BoolToVisibilityInvertedConverter}}"
+                            FontWeight="Bold"/>
+                    <Button x:Name="NewButton"
+                                Width="25" Height="25"
+                                Margin="5 2 0 0" 
+                                ToolTip="Utwórz" 
+                                Command="{Binding NestedNewCommand}"
+                                Visibility="{Binding ElementName=NewButton, Path=IsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Image Source="/Images/create.png"/>
+                    </Button>
+                    <Button x:Name="DeleteButton" 
+                                Width="25" Height="25" 
+                                Margin="5 2 5 0" 
+                                ToolTip="Usuń" 
+                                Command="{Binding NestedDeleteCommand}"
+                                Visibility="{Binding ElementName=DeleteButton, Path=IsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Image Source="/Images/delete.png"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}"
+                      IsReadOnly="true" Grid.Row="1"
+                      MouseDoubleClick="DataGrid_MouseDoubleClick"
+                      SelectionMode="Extended"
+                      ColumnHeaderStyle="{StaticResource NestedListviewHeaderStyle}"
+                      x:Name="OrderItemsDataGrid">
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource RowBackgroundConverter}">
+                                    <Binding Path="MachineReleased"/>
+                                    <Binding Path="MachineWiredAndTested"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nr zlecenia" 
+                            Binding="{Binding Symbol}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Symbol wyrobu" 
+                            Binding="{Binding ItemSymbol}"
+                            Width="2*"/>
+                    <DataGridTextColumn Header="Wyrób" 
+                            Binding="{Binding ItemName}"
+                            Width="3*"/>
+                    <DataGridTextColumn Header="Projektant" 
+                            Binding="{Binding Designer.Username}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Termin realizacji" 
+                            Binding="{Binding DueDate}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Magazyn" 
+                            Binding="{Binding Warehouse.Name}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Ilość" 
+                            Binding="{Binding Quantity}"
+                            Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+
+
+        <!--<controls:NestedListViewWrapper Grid.Row="4"
                                         Grid.ColumnSpan="3"
                                         x:Name="OrderItems">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
@@ -311,6 +415,6 @@
                             Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
-        </controls:NestedListViewWrapper>
+        </controls:NestedListViewWrapper>-->
     </Grid>
 </Page>
