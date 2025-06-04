@@ -727,7 +727,7 @@ public class ModelsCreator
             ClientSymbol = order.ClientSymbol,
             OrderingContact = order.OrderingContact == null ? null : GetContact(order.OrderingContact),
             ReceivingContact = order.ReceivingContact == null ? null : GetContact(order.ReceivingContact),
-
+            OrderState = order.OrderState,
             SalesOfferLink = order.SalesOfferLink,
 
         };
@@ -738,6 +738,7 @@ public class ModelsCreator
 
         result.ElectricaCabinetCompleted = !result.OrderItems.Any(x => x.ElectricaCabinetCompleted == null);
         result.TechnicalDrawingCompleted = !result.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
+        result.WeldingCompleted = !result.OrderItems.Any(x => x.WeldingCompleted == null);
         result.CuttingCompleted = !result.OrderItems.Any(x => x.CuttingCompleted == null);
         result.MetalCliningCompleted = !result.OrderItems.Any(x => x.MetalCliningCompleted == null);
         result.PaintingCompleted = !result.OrderItems.Any(x => x.PaintingCompleted == null);
@@ -896,6 +897,19 @@ public class ModelsCreator
                     break;
             }
         }
+        var change = false;
+        if (!order.OrderItems.Any(x => x.MachineWiredAndTested == null))
+        {
+            order.OrderState = SystemOrderState.MachineWiredAndTested;
+            change = true;
+        }
+        if (!order.OrderItems.Any(x => x.MachineReleased == null))
+        {
+            order.OrderState = SystemOrderState.MachineReleased;
+            change = true;
+        }
+        if (!change)
+            order.OrderState = SystemOrderState.None;
     }
 
     #endregion
@@ -978,7 +992,7 @@ public class ModelsCreator
             TechnicalDrawingLink = model.TechnicalDrawingLink,
             ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
             TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
-            WeldingCompleted = model.CuttingCompleted,
+            WeldingCompleted = model.WeldingCompleted,
             CuttingCompleted = model.CuttingCompleted,
             MetalCliningCompleted = model.MetalCliningCompleted,
             PaintingCompleted = model.PaintingCompleted,
@@ -1085,7 +1099,7 @@ public class ModelsCreator
         orderItem.MachineReleased = model.MachineReleased;
         orderItem.TransportOrdered = model.TransportOrdered;
         orderItem.PlannedMachineAssembled = model.PlannedMachineAssembled;
-        //orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
+        orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
         orderItem.PlannedTransport = model.PlannedTransport;
         orderItem.DueDate = model.DueDate;
         orderItem.IsLocked = false;
