@@ -782,6 +782,7 @@ public class ModelsCreator
             OrderNumberSymbol = model.Symbol,
             Remarks = model.Remarks,
             OfferNumber = model.OfferNumber,
+            ClientSymbol = model.ClientNumber,
             OrderingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Client, _context.Contacts),
             ReceivingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Recipient, _context.Contacts),
             OrderDate = model.DocumentDate,
@@ -814,6 +815,7 @@ public class ModelsCreator
         toUpdate.OrderNumberSymbol = model.Symbol;
         toUpdate.Remarks = model.Remarks;
         toUpdate.OfferNumber = model.OfferNumber;
+        toUpdate.ClientSymbol = model.ClientNumber;
         toUpdate.OrderingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Client, _context.Contacts);
         toUpdate.ReceivingContact = await GetSubiektModelInContext(CreateContact, UpdateContact, model.Recipient, _context.Contacts);
         toUpdate.OrderDate = model.DocumentDate;
@@ -1125,7 +1127,6 @@ public class ModelsCreator
         {
             Id = ctoi.Id,
             LastModified = ctoi.LastModified,
-            ElectricalDescription = ctoi.ElectricalDescription,
             Color = ctoi.Color == null ? null : GetColorDo(ctoi.Color),
             Component = ctoi.Component == null ? null : GetComponentDo(ctoi.Component),
         };
@@ -1137,7 +1138,6 @@ public class ModelsCreator
         {
             Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null,
             Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null,
-            ElectricalDescription = model.ElectricalDescription,
             LastModified = model.LastModified,
         };
     }
@@ -1146,7 +1146,6 @@ public class ModelsCreator
     {
         ctoi.Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null;
         ctoi.Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null;
-        ctoi.ElectricalDescription = model.ElectricalDescription;
         ctoi.LastModified = model.LastModified;
     }
 

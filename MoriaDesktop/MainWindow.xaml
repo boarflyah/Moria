@@ -364,9 +364,31 @@
             <!--<Border.Effect>
                 <DropShadowEffect BlurRadius="10" Direction="225" Color="LightGray" Opacity="0.7" ShadowDepth="10"/>
             </Border.Effect>-->
-            <Frame x:Name="NavigationFrame"
+
+                <TabControl x:Name="TabControl" 
+                            SelectionChanged="TabControl_SelectionChanged">
+                    <TabItem>
+                        <Frame x:Name="NavigationFrame"
                    IsEnabled="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource invbool}}"
                    NavigationUIVisibility="Hidden"/>
+                    </TabItem>
+                    <TabItem Header="Pusta strona"
+                             Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}">
+                        <Frame x:Name="NavigationFrame2"
+                   IsEnabled="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource invbool}}"
+                   NavigationUIVisibility="Hidden"/>
+                    </TabItem>
+                    <TabItem Header="Pusta strona"
+                             Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}">
+                        <Frame x:Name="NavigationFrame3"
+                   IsEnabled="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource invbool}}"
+                   NavigationUIVisibility="Hidden"/>
+                    </TabItem>
+                </TabControl>
+                
+            <!--<Frame x:Name="NavigationFrame"
+                   IsEnabled="{Binding IsLoadingVisible, Mode=OneWay, Converter={StaticResource invbool}}"
+                   NavigationUIVisibility="Hidden"/>-->
                 <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center" 
                             VerticalAlignment="Center"

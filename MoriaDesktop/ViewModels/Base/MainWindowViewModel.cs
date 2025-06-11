@@ -43,7 +43,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         _orderService = orderService;
 
 
-        _navigationService.OnNavigated += _navigationService_OnNavigated;
+        _navigationService.OnNavigated += OnNavigated;
 
         GoBackCommand = new(GoBack, CanGoBack);
         SetFullScreenCommand = new(SetFullScreen, CanSetFullScreen);
@@ -485,11 +485,16 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         return await args.CompletionSource.Task;
     }
 
+    public void SetupTitle(string title)
+    {
+        _navigationService.SetTabTitle(title);
+    }
+
     #endregion
 
     #region events
 
-    private void _navigationService_OnNavigated(object? sender, MoriaBaseServices.Args.OnNavigatedEventArgs e)
+    public void OnNavigated(object? sender, MoriaBaseServices.Args.OnNavigatedEventArgs e)
     {
         if (_navigationService.IsOnGoBackNavigated)
         {
@@ -500,6 +505,7 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
         if (e.Content is IViewModelContent content && content.GetViewModel() is ViewModelBase vmb)
         {
             PageTitle = vmb.Title;
+            _appStateService.SetupTitle(vmb.Title);
             vmb.OnReAuthorizationNeeded -= OnReAuthorizationNeeded;
             vmb.OnReAuthorizationNeeded += OnReAuthorizationNeeded;
 
@@ -516,6 +522,8 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
                     RestartSelection(child);
             }
         }
+        else
+            _appStateService.SetupTitle("Pusta strona");
         SetupInfo();
         SetupLoading();
         GoBackCommand?.RaiseCanExecuteChanged();

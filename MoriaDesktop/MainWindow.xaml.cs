@@ -1,24 +1,29 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
+using MoriaDesktopServices.Interfaces;
 
 namespace MoriaDesktop;
 
 public partial class MainWindow : Window
 {
+    readonly INavigationService _navigationService;
+
     bool isMenuExpanded = true;
     readonly double menuExpandedWidth = 200;
     readonly double menuHiddenWidth = 56;
     readonly int menuAnimationDuration = 300;
 
-    public MainWindow(MainWindowViewModel viewModel) : this()
+    public MainWindow(MainWindowViewModel viewModel, INavigationService navigationService) : this()
     {
         DataContext = viewModel;
         (DataContext as MainWindowViewModel).OnConfirmationRequired += MainWindow_OnConfirmationRequired;
+        _navigationService = navigationService;
     }
 
     public MainWindow()
@@ -35,7 +40,7 @@ public partial class MainWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         MaximizeWithoutCoveringTaskbar();
-        (DataContext as MainWindowViewModel)!.NavigateToFirstView();
+        (DataContext as MainWindowViewModel)!.NavigateToFirstView(); 
     }
 
     private void ExpandButton_Click(object sender, RoutedEventArgs e)
@@ -170,6 +175,16 @@ public partial class MainWindow : Window
             default:
                 e.CompletionSource.SetResult(null);
                 break;
+        }
+    }
+
+    private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        //if (sender is TabControl tc && tc.SelectedContent is Frame frame)
+        if (sender is TabControl tc && tc.SelectedItem != null && tc.SelectedContent is Frame frame)
+        {
+            _navigationService.SetFrame(frame, tc.SelectedItem);
+            (DataContext as MainWindowViewModel)?.OnNavigated(this, new MoriaBaseServices.Args.OnNavigatedEventArgs(frame.Content, null));
         }
     }
 }

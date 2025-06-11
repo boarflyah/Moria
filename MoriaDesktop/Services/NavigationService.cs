@@ -13,6 +13,7 @@ public class NavigationService : INavigationService
     readonly IPageService _pageService;
     readonly IServiceScopeFactory _scopeFactory;
     Frame _frame;
+    TabItem _currentTabItem;
     object[] _previousParameters;
 
     public NavigationService(IPageService pageService, IServiceScopeFactory scopeFactory)
@@ -21,7 +22,7 @@ public class NavigationService : INavigationService
         _scopeFactory = scopeFactory;
     }
 
-    public bool CanGoBack => _frame.CanGoBack;
+    public bool CanGoBack => _frame?.CanGoBack ?? false;
     public bool IsOnGoBackNavigated
     {
         get; set;
@@ -31,11 +32,32 @@ public class NavigationService : INavigationService
 
     public void SetFrame(object frame)
     {
+        if (_frame != null)
+        {
+            _frame.Navigated -= _frame_Navigated;
+            _frame.Navigating -= _frame_Navigating;
+        }
+
         _frame = (Frame)frame;
         _frame.Navigated += _frame_Navigated;
         _frame.Navigating += _frame_Navigating;
     }
 
+    public void SetFrame(object frame, object tabItem)
+    {
+        if (_frame != null)
+        {
+            _frame.Navigated -= _frame_Navigated;
+            _frame.Navigating -= _frame_Navigating;
+        }
+
+        _frame = (Frame)frame;
+        _frame.Navigated += _frame_Navigated;
+        _frame.Navigating += _frame_Navigating;
+
+        _currentTabItem = (TabItem)tabItem;
+        _currentTabItem.Header = "";
+    }
 
     public bool GoBack()
     {
@@ -47,6 +69,13 @@ public class NavigationService : INavigationService
         }
         return false;
     }
+
+    public void SetTabTitle(string text)
+    {
+        if(_currentTabItem != null)
+            _currentTabItem.Header = text;
+    }
+
     public void NavigateTo(Type viewModelType, bool clearNavigation, params object[] parameters)
     {
         Type viewType = _pageService.GetViewType(viewModelType);

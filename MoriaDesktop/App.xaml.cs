@@ -198,8 +198,8 @@ public partial class App : Application
 
         var wnd = AppHost.Services.GetRequiredService<MainWindow>();
         wnd.Closing += Wnd_Closing;
-        var navigationService = AppHost.Services.GetRequiredService<INavigationService>();
-        navigationService.SetFrame(wnd.NavigationFrame);
+        //var navigationService = AppHost.Services.GetRequiredService<INavigationService>();
+        //navigationService.SetFrame(wnd.NavigationFrame);
 
         var keepAliveWorker = AppHost.Services.GetRequiredService<IKeepAliveWorker>();
         keepAliveWorker.Start();

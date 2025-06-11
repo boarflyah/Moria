@@ -190,7 +190,7 @@ public class OrderControllerService : IOrderControllerService
         {
 
             var settings = await _context.Settings.FirstOrDefaultAsync();
-            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport.AddMonths(-6) ?? new DateTime(2025, 1, 1));
+            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
 
             if (orders.Any())
             {

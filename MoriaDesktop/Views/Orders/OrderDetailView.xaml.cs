@@ -238,4 +238,9 @@ public partial class OrderDetailView : Page, IViewModelContent
             }
         }
     }
+
+    private void OrderItemsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
 }

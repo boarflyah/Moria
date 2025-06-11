@@ -48,7 +48,8 @@ public class AppStateService
 
     public void SetupTitle(string title)
     {
-        _mainViewModel.PageTitle = title;
+        //_mainViewModel.PageTitle = title;
+        _mainViewModel.SetupTitle(title);
     }
 
     public void OnLoggedIn(EmployeeDo employee)

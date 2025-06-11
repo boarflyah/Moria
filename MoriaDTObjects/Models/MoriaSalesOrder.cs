@@ -100,5 +100,11 @@ namespace MoriaDTObjects.Models
         {
             get; set;
         }
+
+        [DataMember]
+        public string ClientNumber
+        {
+            get; set;
+        }
     }
 }

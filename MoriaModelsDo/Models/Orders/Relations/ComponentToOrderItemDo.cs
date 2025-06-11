@@ -38,13 +38,24 @@ public class ComponentToOrderItemDo: BaseDo
         }
     }
 
-    private string _ElectricalDescription;
-    public string ElectricalDescription
+    private DriveDo _Drive;
+    public DriveDo Drive
     {
-        get => _ElectricalDescription;
+        get => _Drive;
         set
         {
-            _ElectricalDescription = value;
+            _Drive = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private int _Quantity;
+    public int Quantity
+    {
+        get => _Quantity;
+        set
+        {
+            _Quantity = value;
             RaisePropertyChanged(value);
         }
     }

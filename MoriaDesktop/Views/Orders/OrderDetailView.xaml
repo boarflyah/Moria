@@ -52,7 +52,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Nr klienta" 
+            <Label Content="Oryginał" 
                    Grid.Row="0" 
                    Margin="0,0,0,5"/>
             <TextBox Name="ClientSymbolTextBox"
@@ -348,7 +348,7 @@
                             Width="2*"/>
                     <DataGridTextColumn Header="Wyrób" 
                             Binding="{Binding ItemName}"
-                            Width="3*"/>
+                            Width="2*"/>
                     <DataGridTextColumn Header="Projektant" 
                             Binding="{Binding Designer.Username}"
                             Width="*"/>
@@ -360,6 +360,9 @@
                             Width="*"/>
                     <DataGridTextColumn Header="Ilość" 
                             Binding="{Binding Quantity}"
+                            Width="*"/>
+                    <DataGridTextColumn Header="Uwagi" 
+                            Binding="{Binding Description}"
                             Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>

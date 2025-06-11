@@ -795,7 +795,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 
     #region nestedlistview
 
-    protected override string GetObjectsListViewTitle() => "Personalizacja";
+    protected override string GetObjectsListViewTitle() => "Napędy";
 
     protected async override Task NestedNew()
     {

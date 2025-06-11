@@ -223,6 +223,7 @@ namespace MoriaServices.Services
                 StateName = document.StatusDokumentu.Nazwa,
                 Remarks = document.Uwagi,
                 OfferNumber = document.Podtytul,
+                ClientNumber = document.NumerZewnetrzny,
                 Warehouse = _dictionariesService.CreateWarehouse(document.Magazyn),
                 Client = _dictionariesService.CreateEntity(document.PodmiotZamawiajacy()),
                 Recipient = _dictionariesService.CreateEntity(document.PodmiotOdbiorca())
