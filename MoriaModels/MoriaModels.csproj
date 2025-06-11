@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoriaBaseModels\MoriaBaseModels.csproj" />
+    <ProjectReference Include="..\MoriaModelsDo\MoriaModelsDo.csproj" />
   </ItemGroup>
 
 </Project>

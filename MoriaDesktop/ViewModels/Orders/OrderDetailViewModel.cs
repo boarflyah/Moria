@@ -269,7 +269,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
     }
 
     private bool _WeldingCompleted;
-    public bool Weldingompleted
+    public bool WeldingCompleted
     {
         get => _WeldingCompleted;
         set
@@ -582,7 +582,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         OrderNumberSymbol = default;
         TechnicalDrawingCompleted = default;
         CuttingCompleted = default;
-        Weldingompleted = default;
+        WeldingCompleted = default;
         MetalCliningCompleted = default;
         PaintingCompleted = default;
         ElectricaCabinetCompleted = default;
@@ -633,7 +633,7 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
                 Objects.Add(orderItem);
 
             TechnicalDrawingCompleted = !order.OrderItems.Any(x => x.TechnicalDrawingCompleted == null);
-            Weldingompleted = !order.OrderItems.Any(x => x.WeldingCompleted == null);
+            WeldingCompleted = !order.OrderItems.Any(x => x.WeldingCompleted == null);
             CuttingCompleted = !order.OrderItems.Any(y => y.CuttingCompleted == null);
             MetalCliningCompleted = !order.OrderItems.Any(x => x.MetalCliningCompleted == null);
             PaintingCompleted = !order.OrderItems.Any(y => y.PaintingCompleted == null);

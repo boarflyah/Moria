@@ -1,5 +1,6 @@
 ﻿using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
+using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Contacts;
 
 namespace MoriaModelsDo.Models.Orders;
@@ -82,6 +83,17 @@ public class OrderDo: BaseDo
         }
     }
 
+    private SystemOrderState _OrderState;
+    public SystemOrderState OrderState
+    {
+        get => _OrderState;
+        set
+        {
+            _OrderState = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private ContactDo _ReceivingContact;
     public ContactDo ReceivingContact
     {
@@ -111,6 +123,18 @@ public class OrderDo: BaseDo
         set
         {
             _CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+    
+
+    private bool _WeldingCompleted;
+    public bool WeldingCompleted
+    {
+        get => _WeldingCompleted;
+        set
+        {
+            _WeldingCompleted = value;
             RaisePropertyChanged(value);
         }
     }

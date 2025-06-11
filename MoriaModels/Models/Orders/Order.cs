@@ -2,6 +2,7 @@
 using MoriaModels.Attributes;
 using MoriaModels.Models.Base;
 using MoriaModels.Models.Interfaces;
+using MoriaModelsDo.Base.Enums;
 
 namespace MoriaModels.Models.Orders;
 
@@ -43,6 +44,6 @@ public class Order : BaseModel, ISubiektModel
         get;
         set;
     }
-
+    public SystemOrderState OrderState { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

@@ -233,6 +233,7 @@ public partial class OrderDetailView : Page, IViewModelContent
 
                 if (modified)
                 {
+                    (DataContext as OrderDetailViewModel).HasObjectChanged = true;
                     item.ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Modified;
                 }
             }
