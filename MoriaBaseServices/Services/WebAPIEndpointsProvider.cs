@@ -1,4 +1,7 @@
-﻿namespace MoriaBaseServices.Services;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace MoriaBaseServices.Services;
 
 public class WebAPIEndpointsProvider
 {
@@ -21,6 +24,12 @@ public class WebAPIEndpointsProvider
     public const string Motor = "motor";
     public const string Contact = "contact";
     public const string Color = "color";
+    public const string Brake = "brake";
+    public const string ExternalCooling = "externalCooling";
+    public const string Inverter = "inverter";
+    public const string Pump = "pump";
+    public const string Supplement = "supplement";
+    public const string Variator = "variator";
     public const string ElectricalCabinet = "electricalCabinet";
     public const string Lock = "lock";
     public const string Lookup = "lookup";
@@ -480,6 +489,164 @@ public class WebAPIEndpointsProvider
     /// </summary>
     public const string GetOrderItemPath = $"{Order}/OrderItem";
     #endregion
+
+    #region Brake
+
+    public const string GetBrakesPath = $"{Brake}";
+    /// <summary>
+    /// Parameter from path: brake.id
+    /// </summary>
+    public const string GetBrakePath = $"{Brake}";
+    /// <summary>
+    /// Body: BrakeDo
+    /// <para>Return BrakeDo</para>
+    /// </summary>
+    public const string PostBrakePath = $"{Brake}";
+
+    /// <summary>
+    /// Body: BrakeDo
+    /// <para>Return BrakeDo</para>
+    /// </summary>
+    public const string PutBrakePath = $"{Brake}";
+
+    /// <summary>
+    /// Parameter from path: Brake.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteBrakePath = $"{Brake}";
+    #endregion
+
+    #region ExternalCooling
+
+    public const string GetExternalCoolingsPath = $"{ExternalCooling}";
+    /// <summary>
+    /// Parameter from path: ExternalCooling.id
+    /// </summary>
+    public const string GetExternalCoolingPath = $"{ExternalCooling}";
+    /// <summary>
+    /// Body: ExternalCoolingDo
+    /// <para>Return ExternalCoolingDo</para>
+    /// </summary>
+    public const string PostExternalCoolingPath = $"{ExternalCooling}";
+
+    /// <summary>
+    /// Body: ExternalCoolingDo
+    /// <para>Return ExternalCoolingDo</para>
+    /// </summary>
+    public const string PutExternalCoolingPath = $"{ExternalCooling}";
+
+    /// <summary>
+    /// Parameter from path: ExternalCooling.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteExternalCoolingPath = $"{ExternalCooling}";
+    #endregion
+
+    #region Inverter
+
+    public const string GetInvertersPath = $"{Inverter}";
+    /// <summary>
+    /// Parameter from path: Inverter.id
+    /// </summary>
+    public const string GetInverterPath = $"{Inverter}";
+    /// <summary>
+    /// Body: InverterDo
+    /// <para>Return InverterDo</para>
+    /// </summary>
+    public const string PostInverterPath = $"{Inverter}";
+
+    /// <summary>
+    /// Body: InvertergDo
+    /// <para>Return InverterDo</para>
+    /// </summary>
+    public const string PutInverterPath = $"{Inverter}";
+
+    /// <summary>
+    /// Parameter from path: Inverter.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteInverterPath = $"{Inverter}";
+    #endregion
+
+    #region Pump
+
+    public const string GetPumpsPath = $"{Pump}";
+    /// <summary>
+    /// Parameter from path: Pump.id
+    /// </summary>
+    public const string GetPumpPath = $"{Pump}";
+    /// <summary>
+    /// Body: PumpDo
+    /// <para>Return PumpDo</para>
+    /// </summary>
+    public const string PostPumpPath = $"{Pump}";
+
+    /// <summary>
+    /// Body: PumpDo
+    /// <para>Return PumpDo</para>
+    /// </summary>
+    public const string PutPumpPath = $"{Pump}";
+
+    /// <summary>
+    /// Parameter from path: Pump.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeletePumpPath = $"{Pump}";
+    #endregion
+
+    #region Supplement
+
+    public const string GetSupplementsPath = $"{Supplement}";
+    /// <summary>
+    /// Parameter from path: Supplement.id
+    /// </summary>
+    public const string GetSupplementPath = $"{Supplement}";
+    /// <summary>
+    /// Body: SupplementDo
+    /// <para>Return SupplementDo</para>
+    /// </summary>
+    public const string PostSupplementPath = $"{Supplement}";
+
+    /// <summary>
+    /// Body: SupplementDo
+    /// <para>Return SupplementDo</para>
+    /// </summary>
+    public const string PutSupplementPath = $"{Supplement}";
+
+    /// <summary>
+    /// Parameter from path: Supplement.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteSupplementPath = $"{Supplement}";
+    #endregion
+
+
+    #region Variator
+
+    public const string GetVariatorsPath = $"{Variator}";
+    /// <summary>
+    /// Parameter from path: Variator.id
+    /// </summary>
+    public const string GetVariatorPath = $"{Variator}";
+    /// <summary>
+    /// Body: VariatorDo
+    /// <para>Return VariatorDo</para>
+    /// </summary>
+    public const string PostVariatorPath = $"{Variator}";
+
+    /// <summary>
+    /// Body: VariatorDo
+    /// <para>Return VariatorDo</para>
+    /// </summary>
+    public const string PutVariatorPath = $"{Variator}";
+
+    /// <summary>
+    /// Parameter from path: Variator.id
+    /// <para>Return bool</para>
+    /// </summary>
+    public const string DeleteVariatorPath = $"{Variator}";
+    #endregion
+
 
     #region listview
 

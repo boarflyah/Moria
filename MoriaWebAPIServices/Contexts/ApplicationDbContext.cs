@@ -79,6 +79,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Color> Colors { get; set; }
+    public DbSet<Brake> Brakes { get; set; }
+    public DbSet<ExternalCooling> ExternalCoolings { get; set; }
+    public DbSet<Inverter> Inverters { get; set; }
+    public DbSet<Pump> Pumps { get; set; }
+    public DbSet<Supplement> Supplements { get; set; }
+    public DbSet<Variator> Variators { get; set; }
     public DbSet<Position> Positions { get; set; }
     public DbSet<MotorGear> MotorGears { get; set; }
     public DbSet<Motor> Motors { get; set; }

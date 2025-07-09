@@ -123,6 +123,41 @@ public class MoriaDataContext : DbContext
     {
         get; set;
     }
+    public DbSet<Brake> Brakes
+    {
+        get;
+        set;
+    }
+
+    public DbSet<ExternalCooling> ExternalCoolings
+    {
+        get;
+        set;
+    }
+
+    public DbSet<Inverter> Inverters
+    {
+        get;
+        set;
+    }
+
+    public DbSet<Pump> Pumps
+    {
+        get;
+        set;
+    }
+
+    public DbSet<Supplement> Supplements
+    {
+        get;
+        set;
+    }
+
+    public DbSet<Variator> Variators
+    {
+        get;
+        set;
+    }
 
     public void CreatePPermissionsTrigger()
     {
@@ -156,6 +191,18 @@ public class MoriaDataContext : DbContext
                 (true, true, 'Stanowisko - Nazwa', 'Position_Name', PositionId, false, '', 'System'),
                 (true, true, 'Magazyn - Symbol', 'Warehouse_Symbol', PositionId, false, '', 'System'),
                 (true, true, 'Magazyn - Nazwa', 'Warehouse_WarehouseName', PositionId, false, '', 'System'),
+                (true, true, 'Hamulce - Rodzaj', 'Brake_Kind', PositionId, false, '', 'System'),
+                (true, true, 'Chłodzenie zewnętrzne - Typ', 'ExternalCooling_Type', PositionId, false, '', 'System'),
+                (true, true, 'Chłodzenie zewnętrzne - Moc', 'ExternalCooling_Power', PositionId, false, '', 'System'),
+                (true, true, 'Falownik - Typ', 'Inverter_Type', PositionId, false, '', 'System'),
+                (true, true, 'Falownik - Moc', 'Inverter_Power', PositionId, false, '', 'System'),
+                (true, true, 'Pompa - Typ', 'Pump_Type', PositionId, false, '', 'System'),
+                (true, true, 'Pompa - Rozmiar', 'Pump_Size', PositionId, false, '', 'System'),
+                (true, true, 'Pompa - i', 'Pump_IProperty', PositionId, false, '', 'System'),
+                (true, true, 'Wyposażenie dodatkowe - Typ', 'Supplement_Type', PositionId, false, '', 'System'),
+                (true, true, 'Wyposażenie dodatkowe - Rozmiar', 'Supplement_Size', PositionId, false, '', 'System'),
+                (true, true, 'Wyposażenie dodatkowe - i', 'Supplement_IProperty', PositionId, false, '', 'System'),
+                (true, true, 'Wariator - Typ', 'Variator_Type', PositionId, false, '', 'System'),
                 (true, true, 'Napęd - Silnik', 'Drive_Motor', PositionId, false, '', 'System'),
                 (true, true, 'Napęd - Nazwa', 'Drive_Name', PositionId, false, '', 'System'),
                 (true, true, 'Napęd - Wariator', 'Drive_Variator', PositionId, false, '', 'System'),

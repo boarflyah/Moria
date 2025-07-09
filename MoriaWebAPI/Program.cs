@@ -66,6 +66,13 @@ public class Program
             builder.Services.AddScoped<IComponentControllerService, ComponentControllerService>();
             builder.Services.AddScoped<IOrderControllerService, OrderControllerService>();
             builder.Services.AddScoped<IListViewControllerService, ListViewService>();
+            builder.Services.AddScoped<IBrakeControllerService, BrakeControllerService>();
+            builder.Services.AddScoped<IDriveControllerService, DriveControllerService>();
+            builder.Services.AddScoped<IExternalCoolingControllerService, ExternalCoolingControllerService>();
+            builder.Services.AddScoped<IInverterControllerService, InverterControllerService>();
+            builder.Services.AddScoped<IPumpControllerService, PumpControllerService>();
+            builder.Services.AddScoped<ISupplementControllerService, SupplementControllerService>();
+            builder.Services.AddScoped<IVariatorControllerService, VariatorControllerService>();
 
             builder.Services.AddHostedService<BackupDatabaseService>();
 

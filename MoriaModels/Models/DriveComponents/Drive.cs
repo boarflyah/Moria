@@ -11,8 +11,8 @@ namespace MoriaModels.Models.DriveComponents;
 public class Drive: BaseModel
 {
     //public int Id { get; set; }
-    public bool Variator { get; set; }
-    public bool Inverter { get; set; }
+    public Variator Variator { get; set; }
+    public Inverter Inverter { get; set; }
     public byte Quantity { get; set; }
 
     [Searchable]
@@ -45,5 +45,5 @@ public class Drive: BaseModel
     } = [];
 
     public override LookupModel GetLookupObject()
-        => new(Id, Name, Quantity.ToString(), Inverter ? "TAK" : "NIE", Variator ? "TAK" : "NIE");
+        => new(Id, Name, Quantity.ToString(), Inverter.Type, Variator.Type );
 }

@@ -119,6 +119,30 @@ public partial class App : Application
                          services.AddScoped<ElectricalOrderItemListViewModel>();
                          services.AddScoped<ElectricalOrderItemDetailView>();
                          services.AddScoped<ElectricalOrderItemDetailViewModel>();
+                         services.AddScoped<BrakeDetailViewModel>();
+                         services.AddScoped<BrakeListViewModel>();
+                         services.AddScoped<ExternalCoolingDetailViewModel>();
+                         services.AddScoped<ExternalCoolingListViewModel>();
+                         services.AddScoped<InverterDetailViewModel>();
+                         services.AddScoped<InverterListViewModel>();
+                         services.AddScoped<PumpDetailViewModel>();
+                         services.AddScoped<PumpListViewModel>();
+                         services.AddScoped<VariatorDetailViewModel>();
+                         services.AddScoped<VariatorListViewModel>();
+                         services.AddScoped<SupplementDetailViewModel>();
+                         services.AddScoped<SupplementListViewModel>();
+                         services.AddScoped<BrakeDetailView>();
+                         services.AddScoped<BrakeListView>();
+                         services.AddScoped<ExternalCoolingDetailView>();
+                         services.AddScoped<ExternalCoolingListView>();
+                         services.AddScoped<InverterDetailView>();
+                         services.AddScoped<InverterListView>();
+                         services.AddScoped<PumpDetailView>();
+                         services.AddScoped<PumpListView>();
+                         services.AddScoped<VariatorDetailView>();
+                         services.AddScoped<VariatorListView>();
+                         services.AddScoped<SupplementDetailView>();
+                         services.AddScoped<SupplementListView>();
 
                          services.AddScoped<LookupWindow>();
                          services.AddScoped<LookupWindowViewModel>();
@@ -160,6 +184,12 @@ public partial class App : Application
                          services.AddScoped<IApiListViewService, ApiListViewService>();
                          services.AddScoped<IApiOrderService, ApiOrderService>();
                          services.AddScoped<IApiElectricalCabinetService, ApiElectricalCabinetService>();
+                         services.AddScoped<IApiBrakeService, ApiBrakeService>();
+                         services.AddScoped<IApiExternalCoolingService, ApiExternalCoolingService>();
+                         services.AddScoped<IApiInverterService, ApiInverterService>();
+                         services.AddScoped<IApiPumpService, ApiPumpService>();
+                         services.AddScoped<IApiVariatorService, ApiVariatorService>();
+                         services.AddScoped<IApiSupplementService, ApiSupplementService>();
 
                          services.AddScoped<IApiLookupService, ApiLookupService>();
                          services.AddScoped<IApiLockService, ApiLockService>();

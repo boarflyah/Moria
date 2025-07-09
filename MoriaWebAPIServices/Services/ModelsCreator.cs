@@ -644,8 +644,8 @@ public class ModelsCreator
         return new()
         {
             Id = drive.Id,
-            Inverter = drive.Inverter,
-            Variator = drive.Variator,
+            //Inverter = drive.Inverter,
+            //Variator = drive.Variator, #TODO
             Quantity = drive.Quantity,
             Name = drive.Name,
             Motor = drive.Motor != null ? GetMotor(drive.Motor) : null,
@@ -658,9 +658,9 @@ public class ModelsCreator
     {
         var result = new Drive()
         {
-            Inverter = drive.Inverter,
+            //Inverter = drive.Inverter,
             Quantity = drive.Quantity,
-            Variator = drive.Variator,
+            //Variator = drive.Variator, #TODO
             Name = drive.Name,
             LastModified = drive.LastModified,
         };
@@ -675,8 +675,8 @@ public class ModelsCreator
 
     public async Task UpdateDrive(Drive drive, DriveDo driveModel)
     {
-        drive.Inverter = driveModel.Inverter;
-        drive.Variator = driveModel.Variator;
+    //    drive.Inverter = driveModel.Inverter;
+    //    drive.Variator = driveModel.Variator;
         drive.Quantity = driveModel.Quantity;
         drive.Name = driveModel.Name;
         drive.LastModified = driveModel.LastModified;
@@ -1244,6 +1244,219 @@ public class ModelsCreator
         dtc.Quantity = model.Quantity;
         dtc.LastModified = model.LastModified;
         dtc.Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null;
+    }
+
+    #endregion
+
+    #region Brake
+
+    public BrakeDo GetBrakeDo(Brake brake)
+    {
+        return new BrakeDo()
+        {
+            Id = brake.Id,
+            Kind = brake.Kind,
+            LastModified = brake.LastModified,
+        };
+    }
+
+    public async Task<Brake> CreateBrake(BrakeDo brakeDo)
+    {
+        return new()
+        {
+            Id = brakeDo.Id,
+            Kind = brakeDo.Kind,
+            LastModified = brakeDo.LastModified,
+        };
+    }
+
+    public async Task UpdateBrake(Brake brake, BrakeDo brakeDo)
+    {
+        brake.Id = brakeDo.Id;
+        brake.Kind = brakeDo.Kind;
+        brake.LastModified = brakeDo.LastModified;
+        brake.IsLocked = false;
+        brake.LockedBy = string.Empty;
+    }
+    #endregion
+
+    #region ExternalCooling
+
+    public ExternalCoolingDo GetExternalCoolingDo(ExternalCooling externalCooling)
+    {
+        return new ExternalCoolingDo()
+        {
+            Id = externalCooling.Id,
+            Type = externalCooling.Type,
+            Power = externalCooling.Power,
+            LastModified = externalCooling.LastModified,
+        };
+    }
+
+    public async Task<ExternalCooling> CreateExternalCooling(ExternalCoolingDo externalCoolingDo)
+    {
+        return new()
+        {
+            Id = externalCoolingDo.Id,
+            Type = externalCoolingDo.Type,
+            Power = externalCoolingDo.Power,
+            LastModified = externalCoolingDo.LastModified,
+        };
+    }
+
+    public async Task UpdateExternalCooling(ExternalCooling externalCooling, ExternalCoolingDo externalCoolingDo)
+    {
+        externalCooling.Id = externalCoolingDo.Id;
+        externalCooling.Type = externalCoolingDo.Type;
+        externalCooling.Power = externalCoolingDo.Power;
+        externalCooling.LastModified = externalCoolingDo.LastModified;
+        externalCooling.IsLocked = false;
+        externalCooling.LockedBy = string.Empty;
+    }
+    #endregion
+
+    #region Inverter
+
+    public InverterDo GetInverterDo(Inverter inverterDo)
+    {
+        return new InverterDo()
+        {
+            Id = inverterDo.Id,
+            Type = inverterDo.Type,
+            Power = inverterDo.Power,
+            LastModified = inverterDo.LastModified,
+        };
+    }
+
+    public async Task<Inverter> CreateInverter(InverterDo inverterDo)
+    {
+        return new()
+        {
+            Id = inverterDo.Id,
+            Type = inverterDo.Type,
+            Power = inverterDo.Power,
+            LastModified = inverterDo.LastModified,
+        };
+    }
+
+    public async Task UpdateInverter(Inverter inverter, InverterDo inverterDo)
+    {
+        inverter.Id = inverterDo.Id;
+        inverter.Type = inverterDo.Type;
+        inverter.Power = inverterDo.Power;
+        inverter.LastModified = inverterDo.LastModified;
+        inverter.IsLocked = false;
+        inverter.LockedBy = string.Empty;
+    }
+    #endregion
+
+    #region Pump
+
+    public PumpDo GetPumpDo(Pump pump)
+    {
+        return new PumpDo()
+        {
+            Id = pump.Id,
+            Type = pump.Type,
+            Size = pump.Size,
+            IProperty = pump.IProperty,
+            LastModified = pump.LastModified,
+        };
+    }
+
+    public async Task<Pump> CreatePump(PumpDo pumpDo)
+    {
+        return new()
+        {
+            Id = pumpDo.Id,
+            Type = pumpDo.Type,
+            Size = pumpDo.Size,
+            IProperty = pumpDo.IProperty,
+            LastModified = pumpDo.LastModified,
+        };
+    }
+
+    public async Task UpdatePump(Pump pump, PumpDo pumpDo)
+    {
+        pump.Id = pumpDo.Id;
+        pump.Type = pumpDo.Type;
+        pump.Size = pumpDo.Size;
+        pump.IProperty = pumpDo.IProperty;
+        pump.LastModified = pumpDo.LastModified;
+        pump.IsLocked = false;
+        pump.LockedBy = string.Empty;
+    }
+
+    #endregion
+
+    #region Supplement
+
+    public SupplementDo GetSupplementDo(Supplement supplement)
+    {
+        return new SupplementDo()
+        {
+            Id = supplement.Id,
+            Type = supplement.Type,
+            Size = supplement.Size,
+            IProperty = supplement.IProperty,
+            LastModified = supplement.LastModified,
+        };
+    }
+
+    public async Task<Supplement> CreateSuplement(SupplementDo supplementDo)
+    {
+        return new()
+        {
+            Id = supplementDo.Id,
+            Type = supplementDo.Type,
+            Size = supplementDo.Size,
+            IProperty = supplementDo.IProperty,
+            LastModified = supplementDo.LastModified,
+        };
+    }
+
+    public async Task UpdateSupplement(Supplement supplement, SupplementDo supplementDo)
+    {
+        supplement.Id = supplementDo.Id;
+        supplement.Type = supplementDo.Type;
+        supplement.Size = supplementDo.Size;
+        supplement.IProperty = supplementDo.IProperty;
+        supplement.LastModified = supplementDo.LastModified;
+        supplement.IsLocked = false;
+        supplement.LockedBy = string.Empty;
+    }
+
+    #endregion
+
+    #region Variator
+
+    public VariatorDo GetVariatortDo(Variator variator)
+    {
+        return new VariatorDo()
+        {
+            Id = variator.Id,
+            Type = variator.Type,
+            LastModified = variator.LastModified,
+        };
+    }
+
+    public async Task<Variator> CreateVariator(VariatorDo variator)
+    {
+        return new()
+        {
+            Id = variator.Id,
+            Type = variator.Type,
+            LastModified = variator.LastModified,
+        };
+    }
+
+    public async Task UpdateVariator(Variator variator, VariatorDo variatorDo)
+    {
+        variator.Id = variatorDo.Id;
+        variator.Type = variatorDo.Type;
+        variator.LastModified = variatorDo.LastModified;
+        variator.IsLocked = false;
+        variator.LockedBy = string.Empty;
     }
 
     #endregion

@@ -40,7 +40,13 @@ public class DesktopPageService: PageService
         Register(typeof(CalendarViewModel), typeof(CalendarView));
         Register(typeof(ElectricalCabinetDetailViewModel), typeof (ElectricalCabinetDetailView));
         Register(typeof(ElectricalOrderItemDetailViewModel), typeof(ElectricalOrderItemDetailView));
-        Register (typeof(ElectricalOrderItemListViewModel), typeof(ElectricalOrderItemListView));
+        Register(typeof(ElectricalOrderItemListViewModel), typeof(ElectricalOrderItemListView));
+        Register(typeof(BrakeDetailViewModel), typeof(BrakeDetailView));
+        Register(typeof(ExternalCoolingDetailViewModel), typeof(ExternalCoolingDetailView));
+        Register(typeof(InverterDetailViewModel), typeof(InverterDetailView));
+        Register(typeof(PumpDetailViewModel), typeof(PumpDetailView));
+        Register(typeof(SupplementDetailViewModel), typeof(SupplementDetailView));
+        Register(typeof(VariatorDetailViewModel), typeof(VariatorDetailView));
 
         //ListView
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));
@@ -56,5 +62,11 @@ public class DesktopPageService: PageService
         Register(typeof(DriveListViewModel), typeof(DriveListView));
         Register(typeof(OrderListViewModel), typeof(OrderListView));
         Register(typeof(ElectricalCabinetListViewModel), typeof(ElectricalCabinetListView));
+        Register(typeof(BrakeListViewModel), typeof(BrakeListView));
+        Register(typeof(ExternalCoolingListViewModel), typeof(ExternalCoolingListView));
+        Register(typeof(InverterListViewModel), typeof(InverterListView));
+        Register(typeof(PumpListViewModel), typeof(PumpListView));
+        Register(typeof(SupplementListViewModel), typeof(SupplementListView));
+        Register(typeof(VariatorListViewModel), typeof(VariatorListView));
     }
 }

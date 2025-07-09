@@ -5,7 +5,7 @@ using MoriaModels.Models.Base;
 
 namespace MoriaModels.Models.DriveComponents;
 
-[LookupHeaders(true, "Symbol", true, "Nazwa", true, "Moc (kW)")]
+[LookupHeaders(true, "Symbol", true, "Nazwa", true, "Moc (kW)", true, "Obroty")]
 public class Motor: BaseModel
 {
     //public int Id { get; set; }
@@ -15,7 +15,8 @@ public class Motor: BaseModel
     [Searchable]
     public string Symbol { get; set; }
     public decimal Power { get; set; }
+    public int RPM { get; set; }
 
     public override LookupModel GetLookupObject()
-        => new(Id, Symbol, Name, Power.ToString("n2"));
+        => new(Id, Symbol, Name, Power.ToString("n2"), RPM.ToString("n2"));
 }
