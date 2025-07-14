@@ -149,6 +149,36 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
             Title = "Szafy elektryczne",
             ViewModelType = typeof(ElectricalCabinetListViewModel),
         });
+        node2.Items.Add(new()
+        {
+            Title = "Hamulce",
+            ViewModelType = typeof(BrakeListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Chłodzenie zewnętrzne",
+            ViewModelType = typeof(ExternalCoolingListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Falowniki",
+            ViewModelType = typeof(InverterListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Pompy",
+            ViewModelType = typeof(PumpListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Wyposażenie dodatkowe",
+            ViewModelType = typeof(SupplementListViewModel),
+        });
+        node2.Items.Add(new()
+        {
+            Title = "Wariator",
+            ViewModelType = typeof(VariatorListViewModel),
+        });
 
 
         //node3.Items.Add(new()
