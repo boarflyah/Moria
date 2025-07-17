@@ -60,10 +60,10 @@ public class BrakeDetailViewModel : BaseDetailViewModel
     }
 
     public override BaseDo GetDo() 
-        => new ColorDo()
+        => new BrakeDo()
     {
         Id = objectId,
-        Code = this.Kind,
+        Kind = this.Kind,
         LastModified = _appStateService.LoggedUser.Username,
     };
 

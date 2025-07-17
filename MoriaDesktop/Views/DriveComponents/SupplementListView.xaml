@@ -19,7 +19,7 @@
 
         <DataGrid x:Name="ColorDataGrid"
 Grid.Row="1"
-ItemsSource="{Binding ExternalCoolings, Mode=OneWay}"
+ItemsSource="{Binding Supplements, Mode=OneWay}"
 MouseDoubleClick="ColorDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Typ"

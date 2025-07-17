@@ -60,7 +60,7 @@ public class VariatorDetailViewModel : BaseDetailViewModel
     }
 
     public override BaseDo GetDo() 
-        => new PumpDo()
+        => new VariatorDo()
     {
         Id = objectId,
         Type = this.Type,

@@ -22,7 +22,7 @@ public partial class ExternalCoolingListView : Page, IListViewModelContent
 {
     public object GetViewModel() => DataContext;
     public DataGrid DataGrid => ColorDataGrid;
-    public ExternalCoolingListView(ExternalCoolingListView externalCoolingListView)
+    public ExternalCoolingListView(ExternalCoolingListViewModel externalCoolingListView)
     {
         InitializeComponent();
         DataContext = externalCoolingListView;
