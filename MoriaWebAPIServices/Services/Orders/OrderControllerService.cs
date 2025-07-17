@@ -78,6 +78,9 @@ public class OrderControllerService : IOrderControllerService
                 .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Color)
             .Include(x => x.OrderItems)
                 .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Component).ThenInclude(x => x.Product)
+            .Include(x => x.OrderItems)
+                .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Drive)
+
             .FirstOrDefaultAsync(x => x.Id == id);
         if (order == null)
             return null;

@@ -45,5 +45,5 @@ public class Drive: BaseModel
     } = [];
 
     public override LookupModel GetLookupObject()
-        => new(Id, Name, Quantity.ToString(), Inverter.Type, Variator.Type );
+        => new(Id, Name, Quantity.ToString(), Inverter?.Type ?? string.Empty, Variator?.Type ?? string.Empty );
 }

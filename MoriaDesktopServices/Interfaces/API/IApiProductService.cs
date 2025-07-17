@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Models.Products;
+﻿using MoriaModelsDo.Models.Orders.Relations;
+using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktopServices.Interfaces.API;
 public interface IApiProductService
@@ -8,4 +9,5 @@ public interface IApiProductService
     Task<ProductDo> CreateProduct(string username, ProductDo employee);
     Task<ProductDo> UpdateProduct(string username, ProductDo employee);
     Task<bool> DeleteProduct(string username, int id);
+    Task<IEnumerable<ComponentToOrderItemDo>> GetProductDrives(string username, int id);
 }

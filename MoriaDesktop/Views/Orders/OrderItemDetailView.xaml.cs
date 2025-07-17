@@ -9,9 +9,12 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.ViewModels;
+using MoriaModelsDo.Base.Enums;
 using MoriaModelsDo.Models.Contacts;
 using MoriaModelsDo.Models.Dictionaries;
 using MoriaModelsDo.Models.DriveComponents;
+using MoriaModelsDo.Models.DriveComponents.Relations;
+using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktop.Views.Orders;
@@ -132,5 +135,53 @@ public partial class OrderItemDetailView : Page, IViewModelContent
         {
             e.Handled = true;
         }
+    }
+
+    private async void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+    {
+        if (!(DataContext as BaseDetailViewModel).IsLocked)
+        {
+            if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Drive)))
+            {
+                if (e.Row.DataContext is ComponentToOrderItemDo related)
+                {
+                    var drive = await _lookupService.ShowLookup<DriveDo>(false);
+                    if (drive != null)
+                    {
+                        related.Drive = drive;
+                        if (related.ChangeType != SystemChangeType.Added)
+                            related.ChangeType = SystemChangeType.Modified;
+                        (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                    }
+                }
+                e.Cancel = true;
+            }
+            else if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Component)))
+            {
+                if (e.Row.DataContext is ComponentToOrderItemDo related)
+                {
+                    var component = await _lookupService.ShowLookup<ComponentDo>(false);
+                    if (component != null)
+                    {
+                        related.Component = component;
+                        if (related.ChangeType != SystemChangeType.Added)
+                            related.ChangeType = SystemChangeType.Modified;
+                        (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                    }
+                }
+                e.Cancel = true;
+            }
+
+            else
+                (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+        }
+        else
+            e.Cancel = true;
+
+    }
+
+    private void UpdateDrives_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

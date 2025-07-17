@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoriaBaseServices;
+using MoriaModelsDo.Models.DriveComponents;
+using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces.Products;
@@ -77,4 +79,38 @@ public class ProductControllerService : IProductControllerService
 
         return await _context.SaveChangesAsync() == 1;
     }
+
+    public async Task<IEnumerable<ComponentToOrderItemDo>> GetProductDrives(int id)
+    {
+        var searchProduct = await _context.Products
+            .Include(x => x.Components)
+            .ThenInclude(x => x.ComponentProduct)
+            .Include(x => x.Components)
+            .ThenInclude(x => x.DriveToComponents)
+            .ThenInclude(x => x.Drive)
+            .FirstOrDefaultAsync(x => x.Id == id);
+        if (searchProduct == null)
+            throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
+
+        var result = new List<ComponentToOrderItemDo>();
+
+        foreach (var component in searchProduct.Components)
+        {
+            foreach (var dtc in component.DriveToComponents)
+            {
+                var ctoi = new ComponentToOrderItemDo()
+                {
+                    ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Added,
+                    Component = new ComponentDo() { Id = component.Id, Name = component.Name },
+                    Quantity = dtc.Quantity,
+                    Drive = new DriveDo() { Id = dtc.Drive?.Id ?? -1, Name = dtc.Drive?.Name ?? string.Empty }
+                };
+
+                result.Add(ctoi);
+            }
+        }
+
+        return result;
+    }
+
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MoriaBaseServices;
 using MoriaBaseServices.Services;
+using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 using MoriaWebAPIServices.Services.Interfaces.Products;
 
@@ -122,6 +123,27 @@ public class ProductController: ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Method: {nameof(Delete)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
+    [HttpGet($"{WebAPIEndpointsProvider.GetProductDrives}/{{id}}")]
+    [Produces<IEnumerable<ComponentToOrderItemDo>>]
+    public async Task<IActionResult> GetProductDrives(int id)
+    {
+        try
+        {
+            var deleted = await _controllerService.GetProductDrives(id);
+
+            return Ok(deleted);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetProductDrives)}");
             return StatusCode(501, ex.Message);
         }
     }
