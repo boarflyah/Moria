@@ -80,7 +80,8 @@ public partial class OrderItemDetailView : Page, IViewModelContent
     private void TechnicalDrawingLinkTextBox_LostFocus(object sender, RoutedEventArgs e)
     {
         TextBox textBox = sender as TextBox;
-        if (textBox == null) return;
+        if (textBox == null)
+            return;
 
         string path = textBox.Text;
 
@@ -97,7 +98,8 @@ public partial class OrderItemDetailView : Page, IViewModelContent
     private void TechnicalDrawingLinkTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         TextBox textBox = sender as TextBox;
-        if (textBox == null) return;
+        if (textBox == null)
+            return;
 
         string path = textBox.Text;
 
@@ -141,9 +143,9 @@ public partial class OrderItemDetailView : Page, IViewModelContent
     {
         if (!(DataContext as BaseDetailViewModel).IsLocked)
         {
-            if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Drive)))
+            if (e.Row.DataContext is ComponentToOrderItemDo related)
             {
-                if (e.Row.DataContext is ComponentToOrderItemDo related)
+                if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Drive)))
                 {
                     var drive = await _lookupService.ShowLookup<DriveDo>(false);
                     if (drive != null)
@@ -153,12 +155,9 @@ public partial class OrderItemDetailView : Page, IViewModelContent
                             related.ChangeType = SystemChangeType.Modified;
                         (DataContext as BaseDetailViewModel).HasObjectChanged = true;
                     }
+                    e.Cancel = true;
                 }
-                e.Cancel = true;
-            }
-            else if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Component)))
-            {
-                if (e.Row.DataContext is ComponentToOrderItemDo related)
+                else if (e.Column.SortMemberPath.Contains(nameof(ComponentToOrderItemDo.Component)))
                 {
                     var component = await _lookupService.ShowLookup<ComponentDo>(false);
                     if (component != null)
@@ -168,12 +167,15 @@ public partial class OrderItemDetailView : Page, IViewModelContent
                             related.ChangeType = SystemChangeType.Modified;
                         (DataContext as BaseDetailViewModel).HasObjectChanged = true;
                     }
+                    e.Cancel = true;
                 }
-                e.Cancel = true;
+                else
+                {
+                    (DataContext as BaseDetailViewModel).HasObjectChanged = true;
+                    if (related.ChangeType != SystemChangeType.Added)
+                        related.ChangeType = SystemChangeType.Modified;
+                }
             }
-
-            else
-                (DataContext as BaseDetailViewModel).HasObjectChanged = true;
         }
         else
             e.Cancel = true;

@@ -1028,7 +1028,7 @@ public class ModelsCreator
 
     public async Task<OrderItem> CreateOrderItem(MoriaSalesOrderItem model, string moriaSymbol)
     {
-        return new()
+        var oi = new OrderItem()
         {
             SubiektId = model.Id,
             Symbol = moriaSymbol + model.Index.ToString().PadLeft(2, '0'),
@@ -1042,6 +1042,29 @@ public class ModelsCreator
             ProductionYear = model.ProductionYear,
             SerialNumber = model.SerialNumber,
         };
+
+        if (oi.Product.Components?.Any() == true)
+        {
+            foreach (var component in oi.Product.Components)
+            {
+                foreach (var dtc in component.DriveToComponents)
+                {
+                    var ctoi = new ComponentToOrderItem()
+                    {
+                        Component = component,
+                        Quantity = dtc.Quantity,
+                        Drive = dtc.Drive
+                    };
+
+                    if (oi.ComponentToOrderItems == null)
+                        oi.ComponentToOrderItems.Add(ctoi);
+
+                    await _context.ComponentToOrderItems.AddAsync(ctoi);
+                }
+            }
+        }
+
+        return oi;
     }
 
     public async Task UpdateOrderItem(MoriaSalesOrderItem model, string moriaSymbol, OrderItem entity)
