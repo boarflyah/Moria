@@ -72,4 +72,8 @@ public class ApiOrderService : IApiOrderService
         return await _apiService.Get<OrderItemDo>(username, WebAPIEndpointsProvider.GetOrderItemPath, null, null, id);
     }
 
+    public async Task<OrderDo> GetSearchOrder(string username, string symbol)
+    {
+        return await _apiService.Get<OrderDo>(username, WebAPIEndpointsProvider.GetOrderBySymbolPath, null, null, symbol);
+    }
 }

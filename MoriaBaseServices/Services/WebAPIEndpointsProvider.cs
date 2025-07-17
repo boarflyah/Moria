@@ -478,6 +478,10 @@ public class WebAPIEndpointsProvider
     /// Parameter from path: weekNumber
     /// </summary>
     public const string GetCalendarOrdersPath = $"{Order}/calendar";
+    /// <summary>
+    /// Parameter from path: symbolOrder
+    /// </summary>
+    public const string GetOrderBySymbolPath = $"{Order}/searchOrder";
     public const string GetOrderItemsPath = $"{Order}/GetItems";
     /// <summary>
     /// Body: OrderItemDo

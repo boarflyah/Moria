@@ -14,4 +14,6 @@ public interface IApiOrderService
     Task<IEnumerable<OrderItemDo>> GetOrderItems(string username);
     Task<OrderItemDo> GetOrderItem(string username, int id);
     Task<OrderItemDo> UpdateElectricOrderItem(string username, OrderItemDo orderItem);
+
+    Task<OrderDo> GetSearchOrder(string username, string symbol);
 }

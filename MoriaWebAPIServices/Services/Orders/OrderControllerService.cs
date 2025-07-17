@@ -315,4 +315,38 @@ public class OrderControllerService : IOrderControllerService
 
         return _creator.GetOrderItemDo(orderItem);
     }
+
+    public async Task<OrderDo> GetOrderBySymbol(string symbolOrder)
+    {
+        var order = await _context.Orders
+           .Include(x => x.OrderingContact)
+           .Include(x => x.ReceivingContact)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Component)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Designer)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Drive)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Electrician)
+            .Include(x => x.OrderItems)
+               .ThenInclude(x => x.ElectricalCabinet)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Product)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.Warehouse)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.MainColor)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.DetailsColor)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Color)
+           .Include(x => x.OrderItems)
+               .ThenInclude(x => x.ComponentToOrderItems).ThenInclude(x => x.Component).ThenInclude(x => x.Product)
+           .FirstOrDefaultAsync(x => x.OrderNumberSymbol == symbolOrder);
+        if (order == null)
+            return null;
+
+        return _creator.GetOrderDo(order);
+    }
 }

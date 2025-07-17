@@ -196,7 +196,8 @@
 
             <Viewbox Grid.Row="2" Stretch="Uniform" StretchDirection="DownOnly" Margin="10">
 
-                <Calendar x:Name="myCalendar"
+
+               <!-- <Calendar x:Name="myCalendar"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Stretch"
                           Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}"
@@ -204,7 +205,37 @@
                     <Calendar.Resources>
                         <Style TargetType="Button" BasedOn="{StaticResource CalendarHeaderButtonStyle}"/>
                     </Calendar.Resources>
-                </Calendar>
+                </Calendar>  -->
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                    <!-- Pasek wyszukiwania -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBox x:Name="SearchBox"
+                     Width="200"
+                     Height="25"
+                     VerticalAlignment="Center"
+                                 KeyDown="SearchBox_KeyDown"
+                     Margin="0,0,10,0" />
+                        <Button Width="30" Height="30" Click="SearchButton_Click">
+                            <Viewbox Width="16" Height="16">
+                                <Path Data="M15.5,14.1 L11.9,10.5 C12.5,9.6 12.9,8.5 12.9,7.3 C12.9,3.3 9.6,0 5.6,0 C1.6,0 -1.7,3.3 -1.7,7.3 C-1.7,11.3 1.6,14.6 5.6,14.6 C6.8,14.6 7.9,14.2 8.8,13.6 L12.4,17.2 C12.8,17.6 13.5,17.6 13.9,17.2 C14.3,16.8 14.3,16.1 13.9,15.7 L15.5,14.1 Z M2,7.3 C2,4.4 4.4,2 7.3,2 C10.2,2 12.6,4.4 12.6,7.3 C12.6,10.2 10.2,12.6 7.3,12.6 C4.4,12.6 2,10.2 2,7.3 Z"
+                          Fill="Black"/>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Kalendarz -->
+                    <Calendar x:Name="myCalendar"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Stretch"
+                  Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}"
+                  SelectedDatesChanged="myCalendar_SelectedDatesChanged">
+                        <Calendar.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource CalendarHeaderButtonStyle}"/>
+                        </Calendar.Resources>
+                    </Calendar>
+                </StackPanel>
             </Viewbox>
 
 

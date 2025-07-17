@@ -47,6 +47,7 @@ public class DesktopPageService: PageService
         Register(typeof(PumpDetailViewModel), typeof(PumpDetailView));
         Register(typeof(SupplementDetailViewModel), typeof(SupplementDetailView));
         Register(typeof(VariatorDetailViewModel), typeof(VariatorDetailView));
+        Register(typeof(SearchViewModel), typeof(SearchView));
 
         //ListView
         Register(typeof(EmployeeListViewModel), typeof(EmployeeListView));

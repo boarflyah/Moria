@@ -169,6 +169,27 @@ public class OrderController: ControllerBase
         }
     }
 
+    [HttpGet($"{WebAPIEndpointsProvider.GetOrderBySymbolPath}/{{symbolOrder}}")]
+    [Produces<IEnumerable<OrderDo>>]
+    public async Task<IActionResult> GetOrderBySymbol(string symbolOrder)
+    {
+        try
+        {
+            var category = await _controllerService.GetOrderBySymbol(symbolOrder);
+
+            return Ok(category);
+        }
+        catch (MoriaApiException mae)
+        {
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(mae.Reason, mae.Status, mae.AdditionalMessage));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Method: {nameof(GetOrderBySymbol)}");
+            return StatusCode(501, ex.Message);
+        }
+    }
+
     [HttpGet($"{WebAPIEndpointsProvider.GetOrderItemsPath}")]
     [Produces<IEnumerable<OrderItemDo>>]
     public async Task<IActionResult> GetOrderItems()

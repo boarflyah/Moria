@@ -148,6 +148,29 @@ namespace MoriaDesktop.ViewModels.Orders
             }
         }
 
+        private string _CatalogLink;
+        [ObjectChangedValidate]
+        public string CatalogLink
+        {
+            get => _CatalogLink;
+            set
+            {
+                _CatalogLink = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
+        PermissionDo _Permission_CatalogLink;
+        public PermissionDo Permission_CatalogLink
+        {
+            get => _Permission_CatalogLink;
+            set
+            {
+                _Permission_CatalogLink = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
         private DateTime? _ControlCabinetWorkStartDate;
         [ObjectChangedValidate]
         public DateTime? ControlCabinetWorkStartDate
@@ -221,6 +244,7 @@ namespace MoriaDesktop.ViewModels.Orders
         {
             //Objects?.Clear();
             Symbol = default;
+            CatalogLink = default;
             Product = default;
             ElectricalCabinet = default;
             ElectricaCabinetCompleted = default;
@@ -271,6 +295,7 @@ namespace MoriaDesktop.ViewModels.Orders
             ElectricaCabinetCompleted = orderItem.ElectricaCabinetCompleted;
             MachineWiredAndTested = orderItem.MachineWiredAndTested;
             LastModified = orderItem.LastModified;
+            CatalogLink = orderItem.Order?.CatalogLink ?? null;
         }
 
         protected override async Task<bool> SaveNewObject() => false;

@@ -19,4 +19,5 @@ public interface IOrderControllerService
     Task<IEnumerable<OrderItemDo>> GetOrderItems();
     Task<OrderItemDo> GetOrderItem(int id);
     Task<OrderItemDo> UpdateElectricOrderItem(OrderItemDo item);
+    Task<OrderDo> GetOrderBySymbol(string symbolOrder);
 }

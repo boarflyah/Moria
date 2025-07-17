@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,5 +53,39 @@ public partial class ElectricalOrderItemDetailView : Page, IViewModelContent
         var electricalCabinet = await _lookupService.ShowLookup<ElectricalCabinetDo>(false);
         if (electricalCabinet != null)
             (DataContext as ElectricalOrderItemDetailViewModel).ElectricalCabinet = electricalCabinet;
+    }
+
+    private void CatalogLinkTextBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        TextBox textBox = sender as TextBox;
+        if (textBox == null) return;
+
+        string path = textBox.Text;
+
+        if (Directory.Exists(path))
+        {
+            textBox.Foreground = Brushes.Blue;
+        }
+        else
+        {
+            textBox.Foreground = Brushes.Black;
+        }
+    }
+
+    private void CatalogLinkTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        TextBox textBox = sender as TextBox;
+        if (textBox == null) return;
+
+        string path = textBox.Text;
+
+        if (Directory.Exists(path))
+        {
+            Process.Start("explorer.exe", path);
+        }
+        else
+        {
+            MessageBox.Show("Podany katalog nie istnieje!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 }

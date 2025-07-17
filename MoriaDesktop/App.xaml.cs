@@ -149,6 +149,8 @@ public partial class App : Application
 
                          services.AddScoped<CalendarView>();
                          services.AddScoped<CalendarViewModel>();
+                         services.AddScoped<SearchViewModel>();
+                         services.AddScoped<SearchView>();
                          services.AddScoped<INewObjectService, NewObjectService>();
 
                          services.AddScoped<IDetailedWindow, PositionWindowView>();

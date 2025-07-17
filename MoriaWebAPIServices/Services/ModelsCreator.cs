@@ -962,7 +962,9 @@ public class ModelsCreator
             SerialNumber = oi.SerialNumber,
             Order = oi.Order == null ? null : new OrderDo()
             {
-                OrderNumberSymbol = oi.Order.OrderNumberSymbol
+                OrderNumberSymbol = oi.Order.OrderNumberSymbol,
+                CatalogLink = oi.Order.CatalogLink
+                
             }
         };
 

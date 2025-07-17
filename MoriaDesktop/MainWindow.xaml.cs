@@ -7,6 +7,7 @@ using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
 using MoriaDesktopServices.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoriaDesktop;
 
@@ -185,6 +186,19 @@ public partial class MainWindow : Window
         {
             _navigationService.SetFrame(frame, tc.SelectedItem);
             (DataContext as MainWindowViewModel)?.OnNavigated(this, new MoriaBaseServices.Args.OnNavigatedEventArgs(frame.Content, null));
+        }
+    }
+
+    private void SearchButton_Click(object sender, RoutedEventArgs e)
+    {
+        (DataContext as MainWindowViewModel)!.NavigateToSearch(SearchBox.Text);
+    }
+
+    private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            (DataContext as MainWindowViewModel)!.NavigateToSearch(SearchBox.Text);
         }
     }
 }
