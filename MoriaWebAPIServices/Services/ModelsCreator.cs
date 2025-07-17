@@ -886,6 +886,8 @@ public class ModelsCreator
                             .ThenInclude(x => x.Component)
                         .Include(x => x.ComponentToOrderItems)
                             .ThenInclude(x => x.Color)
+                        .Include(x => x.ComponentToOrderItems)
+                            .ThenInclude(x => x.Drive)
                         .FirstOrDefaultAsync(x => x.Id == oi.Id);
                     if (contextOrderItem != null)
                         await UpdateOrderItem(contextOrderItem, oi);
@@ -1028,7 +1030,7 @@ public class ModelsCreator
 
     public async Task<OrderItem> CreateOrderItem(MoriaSalesOrderItem model, string moriaSymbol)
     {
-        return new()
+        var oi = new OrderItem()
         {
             SubiektId = model.Id,
             Symbol = moriaSymbol + model.Index.ToString().PadLeft(2, '0'),
@@ -1042,6 +1044,29 @@ public class ModelsCreator
             ProductionYear = model.ProductionYear,
             SerialNumber = model.SerialNumber,
         };
+
+        if (oi.Product.Components?.Any() == true)
+        {
+            foreach (var component in oi.Product.Components)
+            {
+                foreach (var dtc in component.DriveToComponents)
+                {
+                    var ctoi = new ComponentToOrderItem()
+                    {
+                        Component = component,
+                        Quantity = dtc.Quantity,
+                        Drive = dtc.Drive
+                    };
+
+                    if (oi.ComponentToOrderItems == null)
+                        oi.ComponentToOrderItems.Add(ctoi);
+
+                    await _context.ComponentToOrderItems.AddAsync(ctoi);
+                }
+            }
+        }
+
+        return oi;
     }
 
     public async Task UpdateOrderItem(MoriaSalesOrderItem model, string moriaSymbol, OrderItem entity)
@@ -1145,6 +1170,8 @@ public class ModelsCreator
             LastModified = ctoi.LastModified,
             Color = ctoi.Color == null ? null : GetColorDo(ctoi.Color),
             Component = ctoi.Component == null ? null : GetComponentDo(ctoi.Component),
+            Quantity = ctoi.Quantity,
+            Drive = ctoi.Drive == null ? null : GetDriveDo(ctoi.Drive),
         };
     }
 
@@ -1154,6 +1181,8 @@ public class ModelsCreator
         {
             Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null,
             Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null,
+            Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null,
+            Quantity = model.Quantity,
             LastModified = model.LastModified,
         };
     }
@@ -1162,6 +1191,8 @@ public class ModelsCreator
     {
         ctoi.Color = model.Color != null ? await GetModelInContext(CreateColor, model.Color, _context.Colors) : null;
         ctoi.Component = model.Component != null ? await GetModelInContext(CreateComponent, model.Component, _context.Components) : null;
+        ctoi.Drive = model.Drive != null ? await GetModelInContext(CreateDrive, model.Drive, _context.Drives) : null;
+        ctoi.Quantity = model.Quantity;
         ctoi.LastModified = model.LastModified;
     }
 

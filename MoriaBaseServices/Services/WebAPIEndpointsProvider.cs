@@ -377,6 +377,12 @@ public class WebAPIEndpointsProvider
     /// </summary>
     public const string DeleteProductPath = $"{Product}";
 
+    /// <summary>
+    /// Parameter from path: product.id
+    /// <para>Return collection[ComponentToOrderItemDo]</para>
+    /// </summary>
+    public const string GetProductDrives = $"{Product}/getdrives";
+
     #endregion
 
     #region Category

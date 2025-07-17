@@ -1,5 +1,6 @@
 ﻿using MoriaBaseServices.Services;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModelsDo.Models.Orders.Relations;
 using MoriaModelsDo.Models.Products;
 
 namespace MoriaDesktopServices.Services.API;
@@ -40,4 +41,10 @@ public class ApiProductService: IApiProductService
     {
         return await _apiService.Delete<bool>(username, WebAPIEndpointsProvider.DeleteProductPath, null, id);
     }
+
+    public async Task<IEnumerable<ComponentToOrderItemDo>> GetProductDrives(string username, int id)
+    {
+        return await _apiService.Get<IEnumerable<ComponentToOrderItemDo>>(username, WebAPIEndpointsProvider.GetProductDrives, null, null, id);
+    }
+
 }

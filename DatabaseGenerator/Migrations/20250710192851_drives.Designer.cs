@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseGenerator.Migrations
 {
     [DbContext(typeof(MoriaDataContext))]
-    partial class MoriaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250710192851_drives")]
+    partial class drives
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -877,9 +880,6 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DriveId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ElectricalDescription")
                         .HasColumnType("text");
 
@@ -895,16 +895,11 @@ namespace DatabaseGenerator.Migrations
                     b.Property<int>("OrderItemId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ColorId");
 
                     b.HasIndex("ComponentId");
-
-                    b.HasIndex("DriveId");
 
                     b.HasIndex("OrderItemId");
 
@@ -1274,12 +1269,6 @@ namespace DatabaseGenerator.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoriaModels.Models.DriveComponents.Drive", "Drive")
-                        .WithMany()
-                        .HasForeignKey("DriveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MoriaModels.Models.Orders.OrderItem", "OrderItem")
                         .WithMany("ComponentToOrderItems")
                         .HasForeignKey("OrderItemId")
@@ -1289,8 +1278,6 @@ namespace DatabaseGenerator.Migrations
                     b.Navigation("Color");
 
                     b.Navigation("Component");
-
-                    b.Navigation("Drive");
 
                     b.Navigation("OrderItem");
                 });

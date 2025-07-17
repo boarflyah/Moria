@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
@@ -25,9 +26,15 @@ using MoriaModelsDo.Models.Products;
 namespace MoriaDesktop.ViewModels.Orders;
 public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 {
-    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, INavigationService navigationService, IKeepAliveWorker worker)
+    readonly IApiProductService _productService;
+
+    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, 
+        INavigationService navigationService, IKeepAliveWorker worker, IApiProductService productService)
         : base(logger, appStateService, apiLockService, navigationService, worker)
     {
+        _productService = productService;
+
+        UpdateDrivesCommand = new(UpdateDrives, CanUpdateDrives);
     }
 
     #region properties
@@ -228,6 +235,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Product = value;
+            UpdateDrivesCommand.NotifyCanExecuteChanged();
             if (value != null)
             {
                 Component = null;
@@ -793,6 +801,46 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 
     #endregion
 
+    #region commands
+
+    public AsyncRelayCommand UpdateDrivesCommand
+    {
+        get;
+        init;
+    }
+
+    #endregion
+
+    #region commands methods
+
+    async Task UpdateDrives()
+    {
+        if (await _appStateService.ConfirmAsync("Zdefiniowane napędy zostaną zastąpione nowymi, wygenerowanymi na podstawie wybranego produktu.\r\n" +
+            "Czy chcesz kontynuować?") == true)
+        {
+            if (Objects != null)
+                foreach (var drive in Objects.OfType<ComponentToOrderItemDo>())
+                {
+                    drive.ChangeType = MoriaModelsDo.Base.Enums.SystemChangeType.Deleted;
+                    HasObjectChanged = true;
+                }
+
+            var ctois = await _productService.GetProductDrives(_appStateService.LoggedUser.Username, Product.Id);
+
+            foreach (var ctoi in ctois)
+            {
+                Objects.Add(ctoi);
+                HasObjectChanged = true;
+            }
+
+            //TODO pobrac z bazy gotowe obiekty ComponentToOrderItemDo - utworzone na podstawie produktu wskazanego w pozycji zamowienia i przypisac do kolekcji objects z changetype = added
+        }
+    }
+
+    bool CanUpdateDrives() => Product != null && !IsLocked;
+
+    #endregion
+
     #region nestedlistview
 
     protected override string GetObjectsListViewTitle() => "Napędy";
@@ -921,7 +969,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         ElectricalDiagramCompleted = oi.ElectricalDiagramCompleted;
         ControlCabinetWorkStartDate = oi.ControlCabinetWorkStartDate;
         DueDate = oi.DueDate == DateTime.MinValue ? DateTime.Now : oi.DueDate;
-        ProductionYear = oi.ProductionYear == null? DateTime.Now.Year.ToString() : oi.ProductionYear;
+        ProductionYear = oi.ProductionYear == null ? DateTime.Now.Year.ToString() : oi.ProductionYear;
         SerialNumber = oi.SerialNumber;
 
         if (oi.ComponentsToOrderItem != null)

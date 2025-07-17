@@ -1,4 +1,5 @@
-﻿using MoriaModelsDo.Models.Products;
+﻿using MoriaModelsDo.Models.Orders.Relations;
+using MoriaModelsDo.Models.Products;
 
 namespace MoriaWebAPIServices.Services.Interfaces.Products;
 public interface IProductControllerService
@@ -12,4 +13,5 @@ public interface IProductControllerService
     Task<ProductDo> UpdateProduct(ProductDo product);
 
     Task<bool> DeleteProduct(int id);
+    Task<IEnumerable<ComponentToOrderItemDo>> GetProductDrives(int id);
 }

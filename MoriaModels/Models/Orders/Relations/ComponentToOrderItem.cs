@@ -15,4 +15,15 @@ public class ComponentToOrderItem : BaseModel
     public int OrderItemId { get; set; }
     public OrderItem OrderItem { get; set; } = null!;
 
+    public int DriveId
+    {
+        get; set;
+    }
+    public Drive Drive { get; set; } = null!;
+
+    public int Quantity
+    {
+        get; set;
+    }
+
 }
