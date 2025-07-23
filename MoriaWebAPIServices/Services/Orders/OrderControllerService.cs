@@ -225,8 +225,9 @@ public class OrderControllerService : IOrderControllerService
                         }
                     }
 
-                    if (updateB0)
-                        await client.UpdateOrdersToUpdateValueAsync(ids.ToArray());
+                    //dzialamy na podstawie daty modyfikacji zamowienia w subiekcie, nie musimy updateowac wartosci boolean w bazie subiekta
+                    //if (updateB0)
+                    //    await client.UpdateOrdersToUpdateValueAsync(ids.ToArray());
                 }
                 if (settings != null)
                     settings.LastSubiektImport = DateTime.Now;

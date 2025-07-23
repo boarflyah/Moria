@@ -16,6 +16,8 @@
     <Compile Remove="Migrations\20250323092105_202503251021.Designer.cs" />
     <Compile Remove="Migrations\20250323182014_DateTimeUpdated.cs" />
     <Compile Remove="Migrations\20250323182014_DateTimeUpdated.Designer.cs" />
+    <Compile Remove="Migrations\20250714173052_NazwaMigracji.cs" />
+    <Compile Remove="Migrations\20250714173052_NazwaMigracji.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

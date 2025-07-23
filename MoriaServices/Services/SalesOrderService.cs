@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using InsERT.Moria.Dokumenty.Logistyka;
 using InsERT.Moria.ModelDanych;
@@ -35,9 +36,12 @@ namespace MoriaServices.Services
             {
                 try
                 {
+                    var currentOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+                    var dt = new DateTimeOffset(dateFrom.Ticks, currentOffset);
+
                     return GetSalesOrders(moriaHandler, _queriesService.GetClosedSalesOrdersSimplifiedQuery(), new Dictionary<string, object>
                     {
-                        { "@p1", dateFrom },
+                        { "@p1", dt },
                         { "@p2", "ZK" }
                     });
                 }
@@ -61,9 +65,12 @@ namespace MoriaServices.Services
             {
                 try
                 {
+                    var currentOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+                    var dt = new DateTimeOffset(dateFrom.Ticks, currentOffset);
+
                     return GetSalesOrders(moriaHandler, _queriesService.GetSalesOrdersSimplifiedQuery(), new Dictionary<string, object>
                     {
-                        { "@p1", dateFrom },
+                        { "@p1", dt },
                         { "@p2", "ZK" }
                     });
                 }
@@ -88,7 +95,10 @@ namespace MoriaServices.Services
             {
                 cmd.CommandText = query;
                 foreach (var parameter in queryParameters)
-                    cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter(parameter.Key, parameter.Value));
+                    if (parameter.Value is DateTimeOffset)
+                        cmd.Parameters.Add(parameter.Key, SqlDbType.DateTimeOffset).Value = parameter.Value;
+                    else
+                        cmd.Parameters.Add(new System.Data.SqlClient.SqlParameter(parameter.Key, parameter.Value));
 
                 conn.Open();
                 using (var reader = cmd.ExecuteReader())

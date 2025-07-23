@@ -1045,27 +1045,41 @@ public class ModelsCreator
             SerialNumber = model.SerialNumber,
         };
 
-        if (oi.Product.Components?.Any() == true)
+        if (oi?.Product != null)
         {
-            foreach (var component in oi.Product.Components)
+            await _context.Entry(oi.Product)
+            .Collection(o => o.Components)
+            .LoadAsync();
+
+            if (oi.Product.Components?.Any() == true)
             {
-                foreach (var dtc in component.DriveToComponents)
+                foreach (var component in oi.Product.Components)
                 {
-                    var ctoi = new ComponentToOrderItem()
+                    await _context.Entry(component)
+                        .Collection(o => o.DriveToComponents)
+                        .LoadAsync();
+
+                    foreach (var dtc in component.DriveToComponents)
                     {
-                        Component = component,
-                        Quantity = dtc.Quantity,
-                        Drive = dtc.Drive
-                    };
+                        await _context.Entry(dtc)
+                            .Reference(x => x.Drive)
+                            .LoadAsync();
 
-                    if (oi.ComponentToOrderItems == null)
-                        oi.ComponentToOrderItems.Add(ctoi);
+                        var ctoi = new ComponentToOrderItem()
+                        {
+                            Component = component,
+                            Quantity = dtc.Quantity,
+                            Drive = dtc.Drive
+                        };
 
-                    await _context.ComponentToOrderItems.AddAsync(ctoi);
+                        if (oi.ComponentToOrderItems != null)
+                            oi.ComponentToOrderItems.Add(ctoi);
+
+                        await _context.ComponentToOrderItems.AddAsync(ctoi);
+                    }
                 }
             }
         }
-
         return oi;
     }
 
@@ -1075,12 +1089,66 @@ public class ModelsCreator
         entity.Index = model.Index;
         entity.Quantity = (double)model.Quantity;
         entity.Description = model.Remarks;
+
+        //TODO ustalic czy produkt bedzie zmieniany
+        bool hasProductChanged = entity.Product?.SubiektId != model.Product.Id;
+
         entity.Product = await GetSubiektModelInContext(CreateProduct, UpdateProduct, model.Product, _context.Products);
+
+        if (hasProductChanged)
+        {
+            if (entity.ComponentToOrderItems?.Count > 0)
+            {
+                foreach(var ctoi in entity.ComponentToOrderItems)
+                    _context.ComponentToOrderItems.Remove(ctoi);
+
+                //TODO usunac wszystkie obiekty z bazy z kolekcji
+            }
+
+            if (entity?.Product != null)
+            {
+                await _context.Entry(entity.Product)
+                    .Collection(o => o.Components)
+                    .LoadAsync();
+
+                if (entity.Product.Components?.Any() == true)
+                {
+                    foreach (var component in entity.Product.Components)
+                    {
+                        await _context.Entry(component)
+                            .Collection(o => o.DriveToComponents)
+                            .LoadAsync();
+
+                        foreach (var dtc in component.DriveToComponents)
+                        {
+                            await _context.Entry(dtc)
+                                .Reference(o => o.Drive)
+                                .LoadAsync();
+
+                            var ctoi = new ComponentToOrderItem()
+                            {
+                                Component = component,
+                                Quantity = dtc.Quantity,
+                                Drive = dtc.Drive
+                            };
+
+                            if (entity.ComponentToOrderItems != null)
+                                entity.ComponentToOrderItems.Add(ctoi);
+
+                            await _context.ComponentToOrderItems.AddAsync(ctoi);
+                        }
+                    }
+                }
+            }
+        }
+
         entity.DueDate = model.DueDate;
         entity.MachineWeight = model.Weight;
         entity.Power = model.Power;
         entity.ProductionYear = model.ProductionYear;
         entity.SerialNumber = model.SerialNumber;
+
+
     }
 
     public async Task UpdateElectricOrderItem(OrderItem orderItem, OrderItemDo model)

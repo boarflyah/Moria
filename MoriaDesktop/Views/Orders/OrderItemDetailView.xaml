@@ -56,484 +56,501 @@
                 <ScrollViewer Grid.Row="1">
 
                     <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0"
+                        <Grid Grid.Row="0"
                           Grid.Column="0"
                           Margin="10"
                           IsEnabled="{Binding Permission_Product.CanWrite}"
                           Visibility="{Binding Permission_Product.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Produkt" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Produkt" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="ProductLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="ProductLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Product, Mode=TwoWay}"
                                                       NameText="{Binding Product.Name, Mode=OneWay}"
                                                       OnLookupInvoked="ProductLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="0"
+                        <Grid Grid.Row="0"
                           Grid.Column="1"
                           Margin="10"
                           IsEnabled="{Binding Permission_Component.CanWrite}"
                           Visibility="{Binding Permission_Component.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Komponent" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Komponent" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="ComponentLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="ComponentLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Component, Mode=TwoWay}"
                                                       NameText="{Binding Component.Name, Mode=OneWay}"
                                                       OnLookupInvoked="ComponentLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="0"
+                        <Grid Grid.Row="0"
                           Grid.Column="2"
                           Margin="10"
                           IsEnabled="{Binding Permission_Drive.CanWrite}"
                           Visibility="{Binding Permission_Drive.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Napęd" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Napęd" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="DriveLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="DriveLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Drive, Mode=TwoWay}"
                                                       NameText="{Binding Drive.Name, Mode=OneWay}"
                                                       OnLookupInvoked="DriveLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="0"
+                        <Grid Grid.Row="0"
                           Grid.Column="3"
                           Margin="10"
                           IsEnabled="{Binding Permission_Quantity.CanWrite}"
                           Visibility="{Binding Permission_Quantity.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Ilość" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Ilość" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="QuantityTextBox" 
+                            <TextBox Name="QuantityTextBox" 
                                  Text="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="1"
+                        <Grid Grid.Row="1"
                           Grid.Column="0"
                           Margin="10"
                           IsEnabled="{Binding Permission_Index.CanWrite}"
                           Visibility="{Binding Permission_Index.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Indeks" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Indeks" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="IndexTextBox" 
+                            <TextBox Name="IndexTextBox" 
                                  Text="{Binding Index, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="1"
+                        <Grid Grid.Row="1"
                           Grid.Column="1"
                           Grid.ColumnSpan="2"
                           Margin="10"
                           IsEnabled="{Binding Permission_Description.CanWrite}"
                           Visibility="{Binding Permission_Description.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Opis" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Opis" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="DescriptionTextBox" 
+                            <TextBox Name="DescriptionTextBox" 
                                  Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="1"
+                        <Grid Grid.Row="1"
                           Grid.Column="3"
                           Margin="10"
                           IsEnabled="{Binding Permission_Notes.CanWrite}"
                           Visibility="{Binding Permission_Notes.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Komentarz" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Komentarz" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="NotesTextBox" 
+                            <TextBox Name="NotesTextBox" 
                                  Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="2"
+                        <Grid Grid.Row="2"
                           Grid.Column="0"
                           Margin="10"
                           IsEnabled="{Binding Permission_MachineWeight.CanWrite}"
                           Visibility="{Binding Permission_MachineWeight.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Waga" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Waga" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="MachineWeightTextBox" 
+                            <TextBox Name="MachineWeightTextBox" 
                                  Text="{Binding MachineWeight, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="QuantityTextBox_PreviewTextInput"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="2"
+                        <Grid Grid.Row="2"
                           Grid.Column="1"
                           Margin="10"
                           IsEnabled="{Binding Permission_Warehouse.CanWrite}"
                           Visibility="{Binding Permission_Warehouse.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Magazyn" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Magazyn" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="WarehouseLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="WarehouseLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Warehouse, Mode=TwoWay}"
                                                       NameText="{Binding Warehouse.Symbol, Mode=OneWay}"
                                                       OnLookupInvoked="WarehouseLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="2"
+                        <Grid Grid.Row="2"
                           Grid.Column="2"
                           Margin="10"
                           IsEnabled="{Binding Permission_Designer.CanWrite}"
                           Visibility="{Binding Permission_Designer.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Projektant" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Projektant" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="DesignerLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="DesignerLookupObjectControl"
                                                       Grid.Row="1"
                                                       LookupObject="{Binding Designer, Mode=TwoWay}"
                                                       NameText="{Binding Designer.Username, Mode=OneWay}"
                                                       OnLookupInvoked="DesignerLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="2"
+                        <Grid Grid.Row="2"
                           Grid.Column="3"                          
                           Margin="10"
                           IsEnabled="{Binding Permission_TechnicalDrawingLink.CanWrite}"
                           Visibility="{Binding Permission_TechnicalDrawingLink.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Rysunek techniczny" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Rysunek techniczny" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="TechnicalDrawingLinkTextBox" 
+                            <TextBox Name="TechnicalDrawingLinkTextBox" 
                                  Text="{Binding TechnicalDrawingLink, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Style="{StaticResource CustomTextBoxStyle}"
                                  Grid.Row="1" LostFocus="TechnicalDrawingLinkTextBox_LostFocus" MouseDoubleClick="TechnicalDrawingLinkTextBox_MouseDoubleClick"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="3"
+                        <Grid Grid.Row="3"
                             Grid.Column="0"
                             Margin="10"
                             IsEnabled="{Binding Permission_MainColor.CanWrite}"
                             Visibility="{Binding Permission_MainColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Główny kolor" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Główny kolor" 
                       Grid.Row="0"
                       Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="ColorLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="ColorLookupObjectControl"
                                              Grid.Row="1"
                                              LookupObject="{Binding MainColor, Mode=TwoWay}"
                                              NameText="{Binding MainColor.Name, Mode=OneWay}"
                                              OnLookupInvoked="ColorLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="3"
+                        <Grid Grid.Row="3"
                         Grid.Column="1"
                         Margin="10"
                         IsEnabled="{Binding Permission_SecondColor.CanWrite}"
                         Visibility="{Binding Permission_SecondColor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Detale kolor" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Detale kolor" 
                          Grid.Row="0"
                          Margin="0,0,0,5"/>
-                        <controls:LookupObjectControl x:Name="SecondColorLookupObjectControl"
+                            <controls:LookupObjectControl x:Name="SecondColorLookupObjectControl"
                           Grid.Row="1"
                           LookupObject="{Binding SecondColor, Mode=TwoWay}"
                           NameText="{Binding SecondColor.Name, Mode=OneWay}"
                           OnLookupInvoked="SecondColorLookupObjectControl_OnLookupInvoked"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="3"
+                        <Grid Grid.Row="3"
                           Grid.Column="2"
                           Margin="10"
                           IsEnabled="{Binding Permission_Power.CanWrite}"
                           Visibility="{Binding Permission_Power.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Moc" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Moc" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="PowerTextBox" 
+                            <TextBox Name="PowerTextBox" 
                                  Text="{Binding Power, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                  Grid.Row="1"
                                  PreviewTextInput="TextBox_PreviewTextInput" 
                                  PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="3"
+                        <Grid Grid.Row="3"
                           Grid.Column="3"
                           Margin="10"
                           IsEnabled="{Binding Permission_ProductionYear.CanWrite}"
                           Visibility="{Binding Permission_ProductionYear.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Rok produkcji" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Rok produkcji" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="ProductionYearTextBox" 
+                            <TextBox Name="ProductionYearTextBox" 
                                  Text="{Binding ProductionYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
 
 
-                    <Grid Grid.Row="4"
+                        <Grid Grid.Row="4"
                           Grid.Column="1"
                           Margin="10"
                           IsEnabled="{Binding Permission_ElectricalCabinet.CanWrite}"
                           Visibility="{Binding Permission_ElectricalCabinet.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Szafa elektryczna" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Szafa elektryczna" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="ElectricalCabinetTextBox" 
+                            <TextBox Name="ElectricalCabinetTextBox" 
                                  Text="{Binding ElectricalCabinet.Symbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                                  Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Row="4"
+                        <Grid Grid.Row="4"
                            Grid.Column="2"
                            Margin="10"
                            IsEnabled="{Binding Permission_Electrician.CanWrite}"
                            Visibility="{Binding Permission_Electrician.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Elektryk" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Elektryk" 
                 Grid.Row="0"
                 Margin="0,0,0,5"/>
-                        <TextBox Name="ElectricianTextBox" 
+                            <TextBox Name="ElectricianTextBox" 
                   Text="{Binding Electrician.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
                   Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="4"
+                           Grid.Column="3"
+                           Margin="10"
+                           IsEnabled="{Binding Permission_Electrician.CanWrite}"
+                           Visibility="{Binding Permission_Electrician.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Nr zlecenia" 
+                Grid.Row="0"
+                Margin="0,0,0,5"/>
+                            <TextBox Name="SymbolTextBox" 
+                  Text="{Binding Symbol, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"
+                  Grid.Row="1"/>
+                        </Grid>
 
 
-                    <Grid Grid.Row="4"
+                        <Grid Grid.Row="4"
                           Grid.Column="0"
                           Margin="10"
                           IsEnabled="{Binding Permission_SerialNumber.CanWrite}"
                           Visibility="{Binding Permission_SerialNumber.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Numer seryjny" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Numer seryjny" 
                                Grid.Row="0"
                                Margin="0,0,0,5"/>
-                        <TextBox Name="SerialNumberTextBox" 
+                            <TextBox Name="SerialNumberTextBox" 
                                  Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                  Grid.Row="1"/>
-                    </Grid>
+                        </Grid>
 
-                    <Grid Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <!-- Kolumna 1 -->
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
+                            <!-- Kolumna 1 -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"
                                     IsEnabled="{Binding Permission_TechnicalDrawingCompleted.CanWrite}"
                                     Visibility="{Binding Permission_TechnicalDrawingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Rysunek techniczny" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding TechnicalDrawingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Rysunek techniczny" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding TechnicalDrawingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0"
                                     IsEnabled="{Binding Permission_CuttingCompleted.CanWrite}"
                                     Visibility="{Binding Permission_CuttingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Cięcie zakończone" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding CuttingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Cięcie zakończone" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding CuttingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0"
                                   IsEnabled="{Binding Permission_WeldingCompleted.CanWrite}"
                                   Visibility="{Binding Permission_WeldingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Spawanie zakończone" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding WeldingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Spawanie zakończone" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding WeldingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0"
                                     IsEnabled="{Binding Permission_MetalCliningCompleted.CanWrite}"
                                     Visibility="{Binding Permission_MetalCliningCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Czyszczenie metalu" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding MetalCliningCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Czyszczenie metalu" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding MetalCliningCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0"
                                     IsEnabled="{Binding Permission_PaintingCompleted.CanWrite}"
                                     Visibility="{Binding Permission_PaintingCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding PaintingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Malowanie zakończone" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PaintingCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0"
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0"
                                     IsEnabled="{Binding Permission_ElectricalDiagramCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricalDiagramCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Schemat elektryczny" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
-                        </StackPanel>
+                                <Label Content="Schemat elektryczny" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1"
                                     IsEnabled="{Binding Permission_ControlCabinetWorkStartDate.CanWrite}"
                                     Visibility="{Binding Permission_ControlCabinetWorkStartDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Rozpoczęcie szafy elektrycznej" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding ControlCabinetWorkStartDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
-                        </StackPanel>
+                                <Label Content="Rozpoczęcie szafy elektrycznej" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding ControlCabinetWorkStartDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                            </StackPanel>
 
-                        <!-- Kolumna 2 -->
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
+                            <!-- Kolumna 2 -->
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"
                                     IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineAssembled.CanWrite}"
                                     Visibility="{Binding Permission_MachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Maszyna zmontowana" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding MachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Maszyna zmontowana" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding MachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineWiredAndTested.CanWrite}"
                                     Visibility="{Binding Permission_MachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Maszyna okablowana i przetestowana" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1"
                                     IsEnabled="{Binding Permission_MachineReleased.CanWrite}"
                                     Visibility="{Binding Permission_MachineReleased.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Maszyna wydana" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding MachineReleased, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Maszyna wydana" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding MachineReleased, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1"
+                            <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1"
                                     IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
                                     Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding TransportOrdered, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding TransportOrdered, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <!-- Kolumna 3 -->
+                            <!-- Kolumna 3 -->
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2"
                                     IsEnabled="{Binding Permission_PlannedMachineAssembled.CanWrite}"
                                     Visibility="{Binding Permission_PlannedMachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Planowane zestawienie" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding PlannedMachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Planowane zestawienie" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedMachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                                     IsEnabled="{Binding Permission_PlannedMachineWiredAndTested.CanWrite}"
                                     Visibility="{Binding Permission_PlannedMachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Planowane okablowanie" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding PlannedMachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Planowane okablowanie" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedMachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2"
                                     IsEnabled="{Binding Permission_PlannedTransport.CanWrite}"
                                     Visibility="{Binding Permission_PlannedTransport.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Planowany transport" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding PlannedTransport, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
+                                <Label Content="Planowany transport" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding PlannedTransport, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2"
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2"
                                     IsEnabled="{Binding Permission_DueDate.CanWrite}"
                                     Visibility="{Binding Permission_DueDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Label Content="Termin realizacji" Margin="0,0,10,0"/>
-                            <DatePicker SelectedDate="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}"/>
-                        </StackPanel>
-                    </Grid>
+                                <Label Content="Termin realizacji" Margin="0,0,10,0"/>
+                                <DatePicker SelectedDate="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}"/>
+                            </StackPanel>
+                        </Grid>
 
                         <Grid Grid.Row="6"
               Grid.ColumnSpan="4"
@@ -636,7 +653,7 @@
 
                         </controls:NestedListViewWrapper>
                     </Grid>-->
-                </Grid>
+                    </Grid>
 
                 </ScrollViewer>
 

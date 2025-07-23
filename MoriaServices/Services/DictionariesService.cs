@@ -12,7 +12,7 @@ namespace MoriaServices.Services
         {
             if (entity == null) return null;
 
-            var current = entity.Historia.FirstOrDefault(x => x.PodmiotDlaKtoregoNajnowsza == entity);
+            var current = entity.Historia.FirstOrDefault(x => x.PodmiotDlaKtoregoNajnowsza?.Id == entity.Id);
             var me = new MoriaEntity()
             {
                 Id = entity.Id,
