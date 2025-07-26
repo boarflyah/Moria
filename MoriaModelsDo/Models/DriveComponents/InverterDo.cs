@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Text.Json.Serialization;
 using MoriaBaseModels.Models;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
-using MoriaModelsDo.Models.Dictionaries;
-using MoriaModelsDo.Models.DriveComponents.Relations;
-using MoriaModelsDo.Models.Products;
 
 namespace MoriaModelsDo.Models.DriveComponents;
 
@@ -38,6 +30,9 @@ public class InverterDo : BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    [JsonIgnore]
+    public string FullName => $"{Type} {Power.ToString()}";
 
     public override void SetObject(LookupModel lookup)
     {

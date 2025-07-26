@@ -31,6 +31,9 @@
                 <DataGridTextColumn Header="Moc (kW)" 
                             Binding="{Binding Power}"
                             Width="*"/>
+                <DataGridTextColumn Header="Obroty" 
+                            Binding="{Binding RPM}"
+                            Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -62,5 +62,20 @@
                      PreviewKeyDown="TextBox_PreviewKeyDown"/>
         </Grid>
 
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_RPM.CanWrite}"
+           Visibility="{Binding Permission_RPM.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Obroty" Grid.Row="0" Margin="0,0,0,5"/>
+            <TextBox Name="RPMTextBox" 
+                     Text="{Binding RPM, UpdateSourceTrigger=LostFocus}"
+                     Grid.Row="1"
+                     PreviewTextInput="TextBox_PreviewTextInput" 
+                     PreviewKeyDown="TextBox_PreviewKeyDown"/>
+        </Grid>
+
     </Grid>
 </Page>

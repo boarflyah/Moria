@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using MoriaBaseModels.Models;
 using MoriaModelsDo.Base;
 
@@ -42,6 +38,9 @@ public class PumpDo : BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    [JsonIgnore]
+    public string FullName => $"{Type} {Size} {IProperty}";
 
     public override void SetObject(LookupModel lookup)
     {

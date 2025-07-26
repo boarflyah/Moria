@@ -57,6 +57,29 @@ public class MotorDetailViewModel : BaseDetailViewModel
         }
     }
 
+    private int _RPM;
+    [ObjectChangedValidate]
+    public int RPM
+    {
+        get => _RPM;
+        set
+        {
+            _RPM = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_RPM;
+    public PermissionDo Permission_RPM
+    {
+        get => _Permission_RPM;
+        set
+        {
+            _Permission_RPM = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     PermissionDo _Permission_Symbol;
     public PermissionDo Permission_Symbol
     {
@@ -130,6 +153,7 @@ public class MotorDetailViewModel : BaseDetailViewModel
         Symbol = string.Empty;
         Name = string.Empty;
         Power = 0;
+        RPM = default;
         LastModified = string.Empty;
     }
     void Setup(MotorDo motor)
@@ -138,6 +162,7 @@ public class MotorDetailViewModel : BaseDetailViewModel
         Name = motor.Name;
         Power = motor.Power;
         LastModified = motor.LastModified;
+        RPM = motor.RPM;
     }
 
     public override BaseDo GetDo()
@@ -147,6 +172,7 @@ public class MotorDetailViewModel : BaseDetailViewModel
             Name = this.Name,
             Power = this.Power,
             Symbol = this.Symbol,
+            RPM = this.RPM,
             LastModified = _appStateService.LoggedUser.Username,
         };
 }

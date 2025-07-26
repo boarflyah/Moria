@@ -82,4 +82,46 @@ public partial class DriveDetailView : Page, IViewModelContent
         if (motor != null)
             (DataContext as DriveDetailViewModel).Motor = motor;
     }
+
+    private async void VariatorLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var variator = await _lookupService.ShowLookup<VariatorDo>();
+        if (variator != null)
+            (DataContext as DriveDetailViewModel).Variator = variator;
+    }
+
+    private async void InverterLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var inverter = await _lookupService.ShowLookup<InverterDo>();
+        if (inverter != null)
+            (DataContext as DriveDetailViewModel).Inverter = inverter;
+    }
+
+    private async void PumpLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var pump = await _lookupService.ShowLookup<PumpDo>();
+        if (pump != null)
+            (DataContext as DriveDetailViewModel).Pump = pump;
+    }
+
+    private async void ExternalCoolingLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var externalCooling = await _lookupService.ShowLookup<ExternalCoolingDo>();
+        if (externalCooling != null)
+            (DataContext as DriveDetailViewModel).ExternalCooling = externalCooling;
+    }
+
+    private async void BrakeLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var brake = await _lookupService.ShowLookup<BrakeDo>();
+        if (brake != null)
+            (DataContext as DriveDetailViewModel).Brake = brake;
+    }
+
+    private async void SupplementLookupObjectControl_OnLookupInvoked(object sender, EventArgs e)
+    {
+        var supplement = await _lookupService.ShowLookup<SupplementDo>();
+        if (supplement != null)
+            (DataContext as DriveDetailViewModel).Supplement = supplement;
+    }
 }

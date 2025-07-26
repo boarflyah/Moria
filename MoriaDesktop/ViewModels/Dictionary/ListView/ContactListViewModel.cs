@@ -21,7 +21,7 @@ public sealed class ContactListViewModel : BaseListViewModel
         _contactService = apiContactService;
 
         Contacts = new();
-        Title = "Kontakty";
+        Title = "Podmioty";
     }
 
     #region properties

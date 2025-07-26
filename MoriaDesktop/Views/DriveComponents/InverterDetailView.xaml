@@ -43,8 +43,10 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Moc" Grid.Row="0" Margin="0,0,0,5"/>
-            <TextBox Name="TextBox2" Text="{Binding Power, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Row="1"/>
+            <Label Content="Moc (kW)" Grid.Row="0" Margin="0,0,0,5"/>
+            <TextBox Name="TextBox2" Text="{Binding Power, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" Grid.Row="1"
+                     PreviewKeyDown="TextBox2_PreviewKeyDown"
+                     PreviewTextInput="TextBox2_PreviewTextInput"/>
         </Grid>
 
     </Grid>

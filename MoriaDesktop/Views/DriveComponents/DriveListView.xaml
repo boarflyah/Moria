@@ -24,19 +24,32 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nazwa"
                                     Binding="{Binding Name}"
+                                    Width="4*"/>
+                <DataGridTextColumn Header="Reduktor/Pompa" 
+                                    Binding="{Binding Pump.FullName}" 
                                     Width="2*"/>
+                <DataGridTextColumn Header="Przystawka" 
+                                    Binding="{Binding Supplement.FullName}" 
+                                    Width="2*"/>
+                <DataGridTextColumn Header="Wariator" 
+                                    Binding="{Binding Variator.Type}" 
+                                    Width="*"/>
                 <DataGridTextColumn Header="Silnik"
-                                    Binding="{Binding Motor.Name}"
+                                    Binding="{Binding Motor.FullName}"
                                     Width="2*"/>
-                <DataGridTextColumn Header="Ilość" 
+                <DataGridTextColumn Header="Zewn. chłodz." 
+                                    Binding="{Binding ExternalCooling.FullName}" 
+                                    Width="*"/>
+                <DataGridTextColumn Header="Hamulec" 
+                                    Binding="{Binding Brake.Kind}" 
+                                    Width="*"/>
+                <DataGridTextColumn Header="l. szt." 
                                     Binding="{Binding Quantity}"
                                     Width="*"/>
-                <DataGridCheckBoxColumn Header="Falownik" 
-                                    Binding="{Binding Inverter}" 
+                <DataGridTextColumn Header="Falownik" 
+                                    Binding="{Binding Inverter.FullName}" 
                                     Width="*"/>
-                <DataGridCheckBoxColumn Header="Wariator" 
-                                    Binding="{Binding Variator}" 
-                                    Width="*"/>
+
             </DataGrid.Columns>
         </DataGrid>
 

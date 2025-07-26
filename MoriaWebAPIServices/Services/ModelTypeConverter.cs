@@ -37,6 +37,12 @@ public class ModelTypeConverter
         Register<OrderItemDo, OrderItem>();
         Register<ComponentDo, Component>();
         Register<ElectricalCabinetDo, ElectricalCabinet>();
+        Register<VariatorDo, Variator>();
+        Register<InverterDo, Inverter>();
+        Register<BrakeDo, Brake>();
+        Register<ExternalCoolingDo, ExternalCooling>();
+        Register<PumpDo, Pump>();
+        Register<SupplementDo, Supplement>();
     }
 
     protected void Register<T1, T2>() 

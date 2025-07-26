@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MoriaBaseServices;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
 
@@ -33,6 +34,19 @@ namespace MoriaDesktop.Views.DriveComponents
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             await (DataContext as BaseDetailViewModel)!.Load();
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !(sender as TextBox).Text.IsNumber(e.Text);
+        }
+
+        private void TextBox2_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

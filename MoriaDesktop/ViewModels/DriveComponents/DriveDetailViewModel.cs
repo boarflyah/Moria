@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text;
+using Microsoft.Extensions.Logging;
 using MoriaDesktop.Attributes;
 using MoriaDesktop.Services;
 using MoriaDesktop.ViewModels.Base;
@@ -47,30 +48,33 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         {
             _Motor = value;
             RaisePropertyChanged(value);
+            SetDriveName();
         }
     }
 
-    bool _Variator;
+    VariatorDo _Variator;
     [ObjectChangedValidate]
-    public bool Variator
+    public VariatorDo Variator
     {
         get => _Variator;
         set
         {
             _Variator = value;
             RaisePropertyChanged(value);
+            SetDriveName();
         }
     }
 
-    bool _Inverter;
+    InverterDo _Inverter;
     [ObjectChangedValidate]
-    public bool Inverter
+    public InverterDo Inverter
     {
         get => _Inverter;
         set
         {
             _Inverter = value;
             RaisePropertyChanged(value);
+            SetDriveName();
         }
     }
 
@@ -83,9 +87,106 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         {
             _Quantity = value;
             RaisePropertyChanged(value);
+            SetDriveName();
         }
     }
 
+
+    private PumpDo _Pump;
+    [ObjectChangedValidate]
+    public PumpDo Pump
+    {
+        get => _Pump;
+        set
+        {
+            _Pump = value;
+            RaisePropertyChanged(value);
+            SetDriveName();
+        }
+    }
+
+    private ExternalCoolingDo _ExternalCooling;
+    [ObjectChangedValidate]
+    public ExternalCoolingDo ExternalCooling
+    {
+        get => _ExternalCooling;
+        set
+        {
+            _ExternalCooling = value;
+            RaisePropertyChanged(value);
+            SetDriveName();
+        }
+    }
+
+    private BrakeDo _Brake;
+    [ObjectChangedValidate]
+    public BrakeDo Brake
+    {
+        get => _Brake;
+        set
+        {
+            _Brake = value;
+            RaisePropertyChanged(value);
+            SetDriveName();
+        }
+    }
+
+    private SupplementDo _Supplement;
+    [ObjectChangedValidate]
+    public SupplementDo Supplement
+    {
+        get => _Supplement;
+        set
+        {
+            _Supplement = value;
+            RaisePropertyChanged(value);
+            SetDriveName();
+        }
+    }
+
+    PermissionDo _Permission_Supplement;
+    public PermissionDo Permission_Supplement
+    {
+        get => _Permission_Supplement;
+        set
+        {
+            _Permission_Supplement = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Brake;
+    public PermissionDo Permission_Brake
+    {
+        get => _Permission_Brake;
+        set
+        {
+            _Permission_Brake = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_ExternalCooling;
+    public PermissionDo Permission_ExternalCooling
+    {
+        get => _Permission_ExternalCooling;
+        set
+        {
+            _Permission_ExternalCooling = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_Pump;
+    public PermissionDo Permission_Pump
+    {
+        get => _Permission_Pump;
+        set
+        {
+            _Permission_Pump = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     PermissionDo _Permission_Motor;
     public PermissionDo Permission_Motor
@@ -173,6 +274,8 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         else
             _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Info, "Brak danych do wczytania", true);
 
+        HasObjectChanged = false;
+
     }
 
     protected async override Task<bool> SaveNewObject()
@@ -199,6 +302,10 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         var result = new DriveDo()
         {
             Id = objectId,
+            Pump = Pump,
+            Supplement = Supplement,
+            ExternalCooling = ExternalCooling,
+            Brake = Brake,
             Inverter = Inverter,
             Variator = Variator,
             Quantity = Quantity,
@@ -219,6 +326,10 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
     {
         Inverter = default;
         Variator = default;
+        Pump = default;
+        ExternalCooling = default;
+        Supplement = default;
+        Brake = default;
         Quantity = default;
         Name = string.Empty;
         Motor = null;
@@ -232,11 +343,61 @@ public class DriveDetailViewModel : BaseDetailWithNestedListViewModel
         Motor = drive.Motor;
         Quantity = drive.Quantity;
         Variator = drive.Variator;
+        Pump = drive.Pump;
+        Supplement = drive.Supplement;
+        ExternalCooling = drive.ExternalCooling;
+        Brake = drive.Brake;
         Name = drive.Name;
         LastModified = drive.LastModified;
         if (drive.Gearboxes != null && drive.Gearboxes.Any())
             foreach (var gearbox in drive.Gearboxes)
                 Objects.Add(gearbox);
+    }
+
+    void SetDriveName()
+    {
+        StringBuilder builder = new();
+        if (Pump != null)
+            builder.Append($"{Pump?.Type ?? string.Empty} {Pump?.Size ?? string.Empty} {Pump?.IProperty ?? string.Empty}");
+
+        if (Pump != null && Supplement != null)
+            builder.Append(" | ");
+
+        if (Supplement != null)
+            builder.Append($"{Supplement.Type} {Supplement.Size} {Supplement.IProperty}");
+
+        if ((Pump != null || Supplement != null) && Variator != null)
+            builder.Append(" | ");
+
+        if (Variator != null)
+            builder.Append($"{Variator.Type}");
+
+        if ((Pump != null || Supplement != null || Variator != null) && Motor != null)
+            builder.Append(" | ");
+
+        if (Motor != null)
+            builder.Append($"{Motor.Name} {Motor.Power}kW ({Motor.RPM})");
+
+        if ((Pump != null || Supplement != null || Variator != null || Motor != null) && ExternalCooling != null)
+            builder.Append(" | ");
+
+        if (ExternalCooling != null)
+            builder.Append($"{ExternalCooling.Type} {ExternalCooling.Power}kW");
+
+        if((Pump != null || Supplement != null || Variator != null || Motor != null || ExternalCooling != null) && Brake != null)
+            builder.Append(" | ");
+
+        if (Brake != null)
+            builder.Append($"{Brake.Kind}");
+
+        if (Pump != null || Supplement != null || Variator != null || Motor != null || ExternalCooling != null || Brake != null)
+            builder.Append(" • ");
+
+        builder.Append($"[{Quantity}szt]");
+
+        if (!builder.ToString().Equals(Name))
+            Name = builder.ToString();
+
     }
 
     #endregion

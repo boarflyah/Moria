@@ -59,6 +59,17 @@ public sealed class MotorListViewModel : BaseListViewModel
         }
     }
 
+    PermissionDo _Permission_RPM;
+    public PermissionDo Permission_RPM
+    {
+        get => _Permission_RPM;
+        set
+        {
+            _Permission_RPM = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     #endregion
 
     protected async override Task LoadList()

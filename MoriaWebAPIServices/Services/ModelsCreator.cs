@@ -321,6 +321,7 @@ public class ModelsCreator
             Name = motor.Name,
             Power = motor.Power,
             Symbol = motor.Symbol,
+            RPM = motor.RPM,
             LastModified = motor.LastModified
         };
     }
@@ -332,6 +333,7 @@ public class ModelsCreator
             Symbol = motorDo.Symbol,
             Power = motorDo.Power,
             Name = motorDo.Name,
+            RPM = motorDo.RPM,
             LastModified = motorDo.LastModified
         };
     }
@@ -342,6 +344,7 @@ public class ModelsCreator
         motor.Power = motorModel.Power;
         motor.Name = motorModel.Name;
         motor.LastModified = motorModel.LastModified;
+        motor.RPM = motorModel.RPM;
         motor.IsLocked = false;
         motor.LockedBy = string.Empty;
     }
@@ -644,11 +647,15 @@ public class ModelsCreator
         return new()
         {
             Id = drive.Id,
-            //Inverter = drive.Inverter,
-            //Variator = drive.Variator, #TODO
+            Inverter = drive.Inverter != null ? GetInverterDo(drive.Inverter) : null,
+            Variator = drive.Variator != null ? GetVariatortDo(drive.Variator) : null,
+            Motor = drive.Motor != null ? GetMotor(drive.Motor) : null,
+            Pump = drive.Pump != null ? GetPumpDo(drive.Pump) : null,
+            Supplement = drive.Supplement != null ? GetSupplementDo(drive.Supplement) : null,
+            ExternalCooling = drive.ExternalCooling != null ? GetExternalCoolingDo(drive.ExternalCooling) : null,
+            Brake = drive.Brake != null ? GetBrakeDo(drive.Brake) : null,
             Quantity = drive.Quantity,
             Name = drive.Name,
-            Motor = drive.Motor != null ? GetMotor(drive.Motor) : null,
             Gearboxes = getGearboxes && drive.MotorGearToDrives != null && drive.MotorGearToDrives.Any() ? GetDoMotorGearBoxToDrives(drive.MotorGearToDrives) : null,
             LastModified = drive.LastModified,
         };
@@ -665,7 +672,13 @@ public class ModelsCreator
             LastModified = drive.LastModified,
         };
 
+        result.Pump = await GetModelInContext(CreatePump, drive.Pump, _context.Pumps);
+        result.Supplement = await GetModelInContext(CreateSuplement, drive.Supplement, _context.Supplements);
+        result.Variator = await GetModelInContext(CreateVariator, drive.Variator, _context.Variators);
         result.Motor = await GetModelInContext(CreateMotor, drive.Motor, _context.Motors);
+        result.ExternalCooling = await GetModelInContext(CreateExternalCooling, drive.ExternalCooling, _context.ExternalCoolings);
+        result.Brake = await GetModelInContext(CreateBrake, drive.Brake, _context.Brakes);
+        result.Inverter = await GetModelInContext(CreateInverter, drive.Inverter, _context.Inverters);
 
         foreach (var mgtd in drive.Gearboxes.Where(x => x.ChangeType == SystemChangeType.Added))
             result.MotorGearToDrives.Add(await GetModelInContext(CreateMotorGearToDrive, mgtd, _context.MotorGearToDrives));
@@ -675,16 +688,19 @@ public class ModelsCreator
 
     public async Task UpdateDrive(Drive drive, DriveDo driveModel)
     {
-    //    drive.Inverter = driveModel.Inverter;
-    //    drive.Variator = driveModel.Variator;
         drive.Quantity = driveModel.Quantity;
         drive.Name = driveModel.Name;
         drive.LastModified = driveModel.LastModified;
         drive.IsLocked = false;
         drive.LockedBy = string.Empty;
 
+        drive.Pump = await GetModelInContext(CreatePump, driveModel.Pump, _context.Pumps);
+        drive.Supplement = await GetModelInContext(CreateSuplement, driveModel.Supplement, _context.Supplements);
+        drive.Variator = await GetModelInContext(CreateVariator, driveModel.Variator, _context.Variators);
         drive.Motor = await GetModelInContext(CreateMotor, driveModel.Motor, _context.Motors);
-        //product.Category = await GetModelInContext(CreateCategory, productModel.Category, _context.Categories);
+        drive.ExternalCooling = await GetModelInContext(CreateExternalCooling, driveModel.ExternalCooling, _context.ExternalCoolings);
+        drive.Brake = await GetModelInContext(CreateBrake, driveModel.Brake, _context.Brakes);
+        drive.Inverter = await GetModelInContext(CreateInverter, driveModel.Inverter, _context.Inverters);
 
         foreach (var motorgear in driveModel.Gearboxes.Where(x => x.ChangeType != SystemChangeType.None))
         {

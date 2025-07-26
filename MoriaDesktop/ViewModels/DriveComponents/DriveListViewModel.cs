@@ -17,7 +17,7 @@ public sealed class DriveListViewModel : BaseListViewModel
     public DriveListViewModel(ILogger<BaseListViewModel> logger, AppStateService appStateService, INavigationService navigationService, IApiDriveService apiService, IApiListViewService listViewService) : base(logger, appStateService, navigationService, listViewService)
     {
         _apiService = apiService;
-
+        Title = "Napędy";
         Drives = new();
     }
 
@@ -80,6 +80,50 @@ public sealed class DriveListViewModel : BaseListViewModel
         set
         {
             _Permission_Name = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Pump;
+    public PermissionDo Permission_Pump
+    {
+        get => _Permission_Pump;
+        set
+        {
+            _Permission_Pump = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Supplement;
+    public PermissionDo Permission_Supplement
+    {
+        get => _Permission_Supplement;
+        set
+        {
+            _Permission_Supplement = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_ExternalCooling;
+    public PermissionDo Permission_ExternalCooling
+    {
+        get => _Permission_ExternalCooling;
+        set
+        {
+            _Permission_ExternalCooling = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_Brake;
+    public PermissionDo Permission_Brake
+    {
+        get => _Permission_Brake;
+        set
+        {
+            _Permission_Brake = value;
             RaisePropertyChanged(value);
         }
     }
