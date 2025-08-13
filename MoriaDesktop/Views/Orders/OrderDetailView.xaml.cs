@@ -140,10 +140,38 @@ public partial class OrderDetailView : Page, IViewModelContent
             {
                 bool modified = false;
 
+                if (window.TechnicalDrawingPlanned.HasValue &&
+                    item.TechnicalDrawingPlanned != window.TechnicalDrawingPlanned)
+                {
+                    item.TechnicalDrawingPlanned = window.TechnicalDrawingPlanned.Value;
+                    modified = true;
+                }
+
+                if (window.TechnicalDrawingStarted.HasValue &&
+                    item.TechnicalDrawingStarted != window.TechnicalDrawingStarted)
+                {
+                    item.TechnicalDrawingStarted = window.TechnicalDrawingStarted.Value;
+                    modified = true;
+                }
+
                 if (window.TechnicalDrawingCompleted.HasValue &&
                     item.TechnicalDrawingCompleted != window.TechnicalDrawingCompleted)
                 {
                     item.TechnicalDrawingCompleted = window.TechnicalDrawingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.CuttingPlanned.HasValue &&
+                   item.CuttingPlanned != window.CuttingPlanned)
+                {
+                    item.CuttingPlanned = window.CuttingPlanned.Value;
+                    modified = true;
+                }
+
+                if (window.CuttingStarted.HasValue &&
+                   item.CuttingStarted != window.CuttingStarted)
+                {
+                    item.CuttingStarted = window.CuttingStarted.Value;
                     modified = true;
                 }
 
@@ -154,6 +182,20 @@ public partial class OrderDetailView : Page, IViewModelContent
                     modified = true;
                 }
 
+                if (window.WeldingPlanned.HasValue &&
+                    item.WeldingPlanned != window.WeldingPlanned)
+                {
+                    item.WeldingPlanned = window.WeldingPlanned.Value;
+                    modified = true;
+                }
+
+                if (window.WeldingStarted.HasValue &&
+                    item.WeldingStarted != window.WeldingStarted)
+                {
+                    item.WeldingStarted = window.WeldingStarted.Value;
+                    modified = true;
+                }
+
                 if (window.WeldingCompleted.HasValue &&
                  item.WeldingCompleted != window.WeldingCompleted)
                 {
@@ -161,17 +203,59 @@ public partial class OrderDetailView : Page, IViewModelContent
                     modified = true;
                 }
 
+                if (window.MetalCliningPlanned.HasValue &&
+                    item.MetalCliningPlanned != window.MetalCliningPlanned)
+                {
+                    item.MetalCliningPlanned = window.MetalCliningPlanned.Value;
+                    modified = true;
+                }
+
+                if (window.MetalCliningStarted.HasValue &&
+                  item.MetalCliningStarted != window.MetalCliningStarted)
+                {
+                    item.MetalCliningStarted = window.MetalCliningStarted.Value;
+                    modified = true;
+                }
+
                 if (window.MetalCliningCompleted.HasValue &&
-                    item.MetalCliningCompleted != window.MetalCliningCompleted)
+                  item.MetalCliningCompleted != window.MetalCliningCompleted)
                 {
                     item.MetalCliningCompleted = window.MetalCliningCompleted.Value;
                     modified = true;
                 }
 
+                if (window.PaintingPlanned.HasValue &&
+                    item.PaintingPlanned != window.PaintingPlanned)
+                {
+                    item.PaintingPlanned = window.PaintingPlanned.Value;
+                    modified = true;
+                }
+
+                if (window.PaintingStarted.HasValue &&
+                   item.PaintingStarted != window.PaintingStarted)
+                {
+                    item.PaintingStarted = window.PaintingStarted.Value;
+                    modified = true;
+                }
+
                 if (window.PaintingCompleted.HasValue &&
-                    item.PaintingCompleted != window.PaintingCompleted)
+                   item.PaintingCompleted != window.PaintingCompleted)
                 {
                     item.PaintingCompleted = window.PaintingCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedMachineAssembled.HasValue &&
+                    item.PlannedMachineAssembled != window.PlannedMachineAssembled)
+                {
+                    item.PlannedMachineAssembled = window.PlannedMachineAssembled.Value;
+                    modified = true;
+                }
+
+                if (window.MachineAssembledStarted.HasValue &&
+                    item.MachineAssembledStarted != window.MachineAssembledStarted)
+                {
+                    item.MachineAssembledStarted = window.MachineAssembledStarted.Value;
                     modified = true;
                 }
 
@@ -179,6 +263,41 @@ public partial class OrderDetailView : Page, IViewModelContent
                     item.MachineAssembled != window.MachineAssembled)
                 {
                     item.MachineAssembled = window.MachineAssembled.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedMachineAssembledAll.HasValue &&
+               item.PlannedMachineAssembledAll != window.PlannedMachineAssembledAll)
+                {
+                    item.PlannedMachineAssembledAll = window.PlannedMachineAssembledAll.Value;
+                    modified = true;
+                }
+
+                if (window.MachineAssembledAllStarted.HasValue &&
+                    item.MachineAssembledAllStarted != window.MachineAssembledAllStarted)
+                {
+                    item.MachineAssembledAllStarted = window.MachineAssembledAllStarted.Value;
+                    modified = true;
+                }
+
+                if (window.MachineAssembledAllCompleted.HasValue &&
+                    item.MachineAssembledAllCompleted != window.MachineAssembledAllCompleted)
+                {
+                    item.MachineAssembledAllCompleted = window.MachineAssembledAllCompleted.Value;
+                    modified = true;
+                }
+
+                if (window.PlannedMachineWiredAndTested.HasValue &&
+                   item.PlannedMachineWiredAndTested != window.PlannedMachineWiredAndTested)
+                {
+                    item.PlannedMachineWiredAndTested = window.PlannedMachineWiredAndTested.Value;
+                    modified = true;
+                }
+
+                if (window.MachineWiredAndTestedStarted.HasValue &&
+                   item.MachineWiredAndTestedStarted != window.MachineWiredAndTestedStarted)
+                {
+                    item.MachineWiredAndTestedStarted = window.MachineWiredAndTestedStarted.Value;
                     modified = true;
                 }
 
@@ -203,19 +322,6 @@ public partial class OrderDetailView : Page, IViewModelContent
                     modified = true;
                 }
 
-                if (window.PlannedMachineAssembled.HasValue &&
-                    item.PlannedMachineAssembled != window.PlannedMachineAssembled)
-                {
-                    item.PlannedMachineAssembled = window.PlannedMachineAssembled.Value;
-                    modified = true;
-                }
-
-                if (window.PlannedMachineWiredAndTested.HasValue &&
-                    item.PlannedMachineWiredAndTested != window.PlannedMachineWiredAndTested)
-                {
-                    item.PlannedMachineWiredAndTested = window.PlannedMachineWiredAndTested.Value;
-                    modified = true;
-                }
 
                 if (window.PlannedTransport.HasValue &&
                     item.PlannedTransport != window.PlannedTransport)

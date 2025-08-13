@@ -23,6 +23,7 @@ public class OrderItem : BaseModel, ISubiektModel
     public string TechnicalDrawingLink { get; set; }
     public double Quantity { get; set; }
 
+    public bool PrintedNamePlate { get; set; }
     // only one choise 
     [Searchable]
     public Product? Product { get; set; }
@@ -111,6 +112,14 @@ public class OrderItem : BaseModel, ISubiektModel
     //public DateTime? MachineAssembledPlanned { get; set; }
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MachineAssembledStarted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineAssembledAllStarted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineAssembledAllCompleted { get; set; }
+
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PlannedMachineAssembledAll { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MachineWiredAndTested { get; set; }

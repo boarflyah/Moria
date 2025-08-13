@@ -470,6 +470,27 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private bool _ElectricalDiagramCompleted;
+    public bool ElectricalDiagramCompleted
+    {
+        get => _ElectricalDiagramCompleted;
+        set
+        {
+            _ElectricalDiagramCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private bool _MachineAssembledAll;
+    public bool MachineAssembledAll
+    {
+        get => _MachineAssembledAll;
+        set
+        {
+            _MachineAssembledAll = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     #endregion
 
@@ -591,6 +612,8 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
         MachineReleased = default;
         TransportOrdered = default;
         DueDate = default;
+        ElectricalDiagramCompleted = default;
+        MachineAssembledAll = default;
         Objects.Clear();
     }
 
@@ -642,6 +665,8 @@ public class OrderDetailViewModel : BaseDetailWithNestedListViewModel
             MachineWiredAndTested = !order.OrderItems.Any(x => x.MachineWiredAndTested == null);
             MachineReleased = !order.OrderItems.Any( x => x.MachineReleased == null );
             TransportOrdered = !order.OrderItems.Any( y => y.TransportOrdered == null );
+            ElectricalDiagramCompleted = !order.OrderItems.Any(y => y.ElectricalDiagramCompleted == null);
+            MachineAssembledAll = !order.OrderItems.Any(x => x.MachineAssembledAllCompleted == null);
             DueDate = order.OrderItems.Max( x=> x.DueDate );
         }
         

@@ -247,6 +247,7 @@ public class MoriaDataContext : DbContext
                 (true, true, 'Zamówienie - Planowanie zestawienia na hali ', 'Order_PlannedMachineAssembled', PositionId, false, '', 'System'),
                 (true, true, 'Zamówienie - Planowane ladowanie', 'Order_PlannedTransport', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - L.p.', 'OrderItem_Index', PositionId, false, '', 'System'),
+                (true, true, 'Pozycja zamówienia - Etykieta wydrukowana', 'OrderItem_PrintedNamePlate', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - Symbol', 'OrderItem_Symbol', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - Opis', 'OrderItem_Description', PositionId, false, '', 'System'),
                 (true, true, 'Pozycja zamówienia - Komentarz', 'OrderItem_Notes', PositionId, false, '', 'System'),

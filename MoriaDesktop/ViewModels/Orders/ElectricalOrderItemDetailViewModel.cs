@@ -113,6 +113,17 @@ namespace MoriaDesktop.ViewModels.Orders
             }
         }
 
+        private DateTime? _ElectricaCabinetPlanned;
+        [ObjectChangedValidate]
+        public DateTime? ElectricaCabinetPlanned
+        {
+            get => _ElectricaCabinetPlanned;
+            set
+            {
+                _ElectricaCabinetPlanned = value;
+                RaisePropertyChanged(value);
+            }
+        }
 
         private PermissionDo _Permission_ElectricaCabinetCompleted;
         public PermissionDo Permission_ElectricaCabinetCompleted
@@ -121,6 +132,18 @@ namespace MoriaDesktop.ViewModels.Orders
             set
             {
                 _Permission_ElectricaCabinetCompleted = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
+        private DateTime? _ElectricaCabinetStarted;
+        [ObjectChangedValidate]
+        public DateTime? ElectricaCabinetStarted
+        {
+            get => _ElectricaCabinetStarted;
+            set
+            {
+                _ElectricaCabinetStarted = value;
                 RaisePropertyChanged(value);
             }
         }
@@ -136,6 +159,29 @@ namespace MoriaDesktop.ViewModels.Orders
                 RaisePropertyChanged(value);
             }
         }
+
+        private DateTime? _ElectricalDiagramPlanned;
+        public DateTime? ElectricalDiagramPlanned
+        {
+            get => _ElectricalDiagramPlanned;
+            set
+            {
+                _ElectricalDiagramPlanned = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
+        private DateTime? _ElectricalDiagramStarted;
+        public DateTime? ElectricalDiagramStarted
+        {
+            get => _ElectricalDiagramStarted;
+            set
+            {
+                _ElectricalDiagramStarted = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
 
         private PermissionDo _Permission_ElectricalDiagramCompleted;
         public PermissionDo Permission_ElectricalDiagramCompleted
@@ -229,6 +275,41 @@ namespace MoriaDesktop.ViewModels.Orders
             }
         }
 
+        private DateTime? _MachineWiredAndTestedStarted;
+        [ObjectChangedValidate]
+        public DateTime? MachineWiredAndTestedStarted
+        {
+            get => _MachineWiredAndTestedStarted;
+            set
+            {
+                _MachineWiredAndTestedStarted = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
+        private DateTime? _PlannedMachineWiredAndTested;
+        [ObjectChangedValidate]
+        public DateTime? PlannedMachineWiredAndTested
+        {
+            get => _PlannedMachineWiredAndTested;
+            set
+            {
+                _PlannedMachineWiredAndTested = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
+        private PermissionDo _Permission_PlannedMachineWiredAndTested;
+        public PermissionDo Permission_PlannedMachineWiredAndTested
+        {
+            get => _Permission_PlannedMachineWiredAndTested;
+            set
+            {
+                _Permission_PlannedMachineWiredAndTested = value;
+                RaisePropertyChanged(value);
+            }
+        }
+
         private PermissionDo _Permission_MachineWiredAndTested;
         public PermissionDo Permission_MachineWiredAndTested
         {
@@ -252,6 +333,12 @@ namespace MoriaDesktop.ViewModels.Orders
             ControlCabinetWorkStartDate = default;
             Electrician = default;
             MachineWiredAndTested = default;
+            ElectricaCabinetPlanned = default;
+            ElectricalDiagramPlanned = default;
+            ElectricaCabinetStarted = default;
+            ElectricalDiagramStarted = default;
+            MachineWiredAndTestedStarted = default;
+            PlannedMachineWiredAndTested = default;
         }
 
         public override BaseDo GetDo()
@@ -265,6 +352,12 @@ namespace MoriaDesktop.ViewModels.Orders
             currentOrderItem.ControlCabinetWorkStartDate = ControlCabinetWorkStartDate;
             currentOrderItem.Electrician = Electrician;
             currentOrderItem.MachineWiredAndTested = MachineWiredAndTested;
+            currentOrderItem.ElectricaCabinetPlanned = ElectricaCabinetPlanned;
+            currentOrderItem.ElectricaCabinetStarted = ElectricaCabinetStarted;
+            currentOrderItem.ElectricalDiagramPlanned = ElectricalDiagramPlanned;
+            currentOrderItem.ElectricalDiagramStarted = ElectricalDiagramStarted;
+            currentOrderItem.MachineWiredAndTestedStarted = MachineWiredAndTestedStarted;
+            currentOrderItem.PlannedMachineWiredAndTested = PlannedMachineWiredAndTested;
             currentOrderItem.Id = objectId;
             return currentOrderItem;
         }
@@ -294,6 +387,11 @@ namespace MoriaDesktop.ViewModels.Orders
             ControlCabinetWorkStartDate = orderItem.ControlCabinetWorkStartDate;
             ElectricaCabinetCompleted = orderItem.ElectricaCabinetCompleted;
             MachineWiredAndTested = orderItem.MachineWiredAndTested;
+            ElectricaCabinetPlanned = orderItem.ElectricaCabinetPlanned;
+            ElectricaCabinetStarted = orderItem.ElectricaCabinetStarted;
+            ElectricalDiagramPlanned = orderItem.ElectricalDiagramPlanned;
+            ElectricalDiagramStarted = orderItem.ElectricalDiagramStarted;
+            MachineWiredAndTestedStarted = orderItem.MachineWiredAndTestedStarted;
             LastModified = orderItem.LastModified;
             CatalogLink = orderItem.Order?.CatalogLink ?? null;
         }

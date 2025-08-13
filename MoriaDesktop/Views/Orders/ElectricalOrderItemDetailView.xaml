@@ -26,6 +26,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="0" Grid.Row="0" Margin="10"
@@ -90,15 +91,19 @@
                                                OnLookupInvoked="ElectricalCabinetLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+        <Grid Grid.Column="0" Grid.Row="2" Margin="10"
         IsEnabled="{Binding Permission_ElectricalDiagramCompleted.CanWrite}"
          Visibility="{Binding Permission_ElectricalDiagramCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Schemat elektryczny gotowy" Grid.Row="0" Margin="0,0,0,5"/>
-            <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1"/>
+            <Label Content="Schemat elektryczny " Grid.Row="0" Margin="0,0,0,5"/>
+            <DatePicker SelectedDate="{Binding ElectricalDiagramPlanned, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1" FontWeight="ExtraLight"/>
+            <DatePicker SelectedDate="{Binding ElectricalDiagramStarted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="2" FontWeight="Bold"/>
+            <DatePicker SelectedDate="{Binding ElectricalDiagramCompleted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="3" FontWeight="ExtraBlack"/>
         </Grid>
 
         <Grid Grid.Column="2" Grid.Row="1" Margin="10"
@@ -108,19 +113,23 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Rozpoczęto montaż szafy" Grid.Row="0" Margin="0,0,0,5"/>
+            <Label Content="Montaż szafy" Grid.Row="0" Margin="0,0,0,5"/>
             <DatePicker SelectedDate="{Binding ControlCabinetWorkStartDate, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1"/>
         </Grid>
 
-        <Grid Grid.Column="0" Grid.Row="2" Margin="10"
+        <Grid Grid.Column="0" Grid.Row="3" Margin="10"
       IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
        Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Szafa elektryczna gotowa" Grid.Row="0" Margin="0,0,0,5"/>
-            <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1"/>
+            <Label Content="Szafa elektryczna  montaż" Grid.Row="0" Margin="0,0,0,5"/>
+            <DatePicker SelectedDate="{Binding ElectricaCabinetPlanned, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1" FontWeight="ExtraLight"/>
+            <DatePicker SelectedDate="{Binding ElectricaCabinetStarted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="2" FontWeight="Bold"/>
+            <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="3" FontWeight="ExtraBlack"/>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="2" Margin="10"
@@ -129,9 +138,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Maszyna okablowana i przetestowana" Grid.Row="0" Margin="0,0,0,5"/>
-            <DatePicker SelectedDate="{Binding MachineWiredAndTested, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1"/>
+            <Label Content="Maszyna okablowanie i test" Grid.Row="0" Margin="0,0,0,5"/>
+            <DatePicker SelectedDate="{Binding PlannedMachineWiredAndTested, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="1" FontWeight="ExtraLight"/>
+            <DatePicker SelectedDate="{Binding MachineWiredAndTestedStarted, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="2" FontWeight="Bold"/>
+            <DatePicker SelectedDate="{Binding MachineWiredAndTested, Mode=TwoWay, StringFormat=\{0:dd.MM.yyyy\}}" Grid.Row="3" FontWeight="ExtraBlack"/>
         </Grid>
 
         <Grid Grid.Column="2" Grid.Row="2" Margin="10"

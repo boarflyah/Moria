@@ -956,6 +956,7 @@ public class ModelsCreator
             MainColor = oi.MainColor != null ? GetColorDo(oi.MainColor) : null,
             DetailsColor = oi.DetailsColor != null ? GetColorDo(oi.DetailsColor) : null,
             Power = oi.Power,
+            PrintedNamePlate = oi.PrintedNamePlate,
             ElectricaCabinetCompleted = oi.ElectricaCabinetCompleted,
             TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted,
             CuttingCompleted = oi.CuttingCompleted,
@@ -964,6 +965,27 @@ public class ModelsCreator
             PaintingCompleted = oi.PaintingCompleted,
             ElectricialDescription = oi.ElectricalDescription,
             MachineAssembled = oi.MachineAssembled,
+            MachineAssembledAllCompleted = oi.MachineAssembledAllCompleted,
+            PlannedMachineAssembledAll = oi.PlannedMachineAssembledAll,
+            MachineAssembledAllStarted = oi.MachineAssembledAllStarted,
+            CuttingPlanned = oi.CuttingPlanned,
+            CuttingStarted = oi.CuttingStarted,
+            ElectricaCabinetPlanned = oi.ElectricaCabinetPlanned,
+            ElectricaCabinetStarted = oi.ElectricaCabinetStarted,
+            ElectricalDiagramPlanned = oi.ElectricalDiagramPlanned,
+            ElectricalDiagramStarted = oi.ElectricalDiagramStarted,
+            MachineAssembledStarted = oi.MachineAssembledStarted,
+            MachineReleasedPlanned = oi.MachineReleasedPlanned,
+            MachineReleasedStarted = oi.MachineReleasedStarted,
+            MachineWiredAndTestedStarted = oi.MachineWiredAndTestedStarted,
+            MetalCliningPlanned = oi.MetalCliningPlanned,
+            MetalCliningStarted = oi.MetalCliningStarted,
+            PaintingPlanned = oi.PaintingPlanned,
+            PaintingStarted = oi.PaintingStarted,
+            TechnicalDrawingPlanned = oi.TechnicalDrawingPlanned,
+            TechnicalDrawingStarted = oi.TechnicalDrawingStarted,
+            WeldingPlanned = oi.WeldingPlanned,
+            WeldingStarted = oi.WeldingStarted,
             MachineWiredAndTested = oi.MachineWiredAndTested,
             MachineReleased = oi.MachineReleased,
             TransportOrdered = oi.TransportOrdered,
@@ -1011,6 +1033,7 @@ public class ModelsCreator
             MainColor = model.MainColor != null ? await GetModelInContext(CreateColor, model.MainColor, _context.Colors) : null,
             DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null,
             Power = model.Power,
+            PrintedNamePlate = model.PrintedNamePlate,
             TechnicalDrawingLink = model.TechnicalDrawingLink,
             ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
             WeldingCompleted = model.WeldingCompleted,
@@ -1029,6 +1052,9 @@ public class ModelsCreator
             ElectricaCabinetStarted = model.ElectricaCabinetStarted,
             //MachineAssembledPlanned = model.MachineAssembledPlanned,
             MachineAssembledStarted = model.MachineAssembledStarted,
+            MachineAssembledAllCompleted = model.MachineAssembledAllCompleted,
+            PlannedMachineAssembledAll = model.PlannedMachineAssembledAll,
+            MachineAssembledAllStarted = model.MachineAssembledAllStarted,
            // MachineWiredAndTestedPlanned = model.MachineWiredAndTestedPlanned,
             MachineWiredAndTestedStarted = model.MachineWiredAndTestedStarted,
             MachineReleasedPlanned = model.MachineReleasedPlanned,
@@ -1194,6 +1220,12 @@ public class ModelsCreator
         orderItem.Electrician = model.Electrician != null ? await GetModelInContext(CreateEmployee, model.Electrician, _context.Employees) : null;
         orderItem.ElectricalCabinet = model.ElectricalCabinet != null ? await GetModelInContext(CreateElectricalCabinet, model.ElectricalCabinet, _context.ElectricalCabinets) : null;
         orderItem.ControlCabinetWorkStartDate = model.ControlCabinetWorkStartDate;
+        orderItem.ElectricaCabinetPlanned = model.ElectricaCabinetPlanned;
+        orderItem.ElectricaCabinetStarted = model.ElectricaCabinetStarted;
+        orderItem.ElectricalDiagramPlanned = model.ElectricalDiagramPlanned;
+        orderItem.ElectricalDiagramStarted = model.ElectricalDiagramStarted;
+        orderItem.MachineWiredAndTestedStarted = model.MachineWiredAndTestedStarted;
+        orderItem.PlannedMachineWiredAndTested = model.PlannedMachineWiredAndTested;
         orderItem.ElectricalDiagramCompleted = model.ElectricalDiagramCompleted;
         orderItem.IsLocked = false;
         orderItem.LockedBy = default;
@@ -1218,6 +1250,7 @@ public class ModelsCreator
         orderItem.DetailsColor = model.DetailsColor != null ? await GetModelInContext(CreateColor, model.DetailsColor, _context.Colors) : null;
         orderItem.Power = model.Power;
         orderItem.ProductionYear = model.ProductionYear;
+        orderItem.PrintedNamePlate = model.PrintedNamePlate;
         orderItem.SerialNumber = model.SerialNumber;
         orderItem.TechnicalDrawingLink = model.TechnicalDrawingLink;
         //orderItem.ElectricaCabinetCompleted = model.ElectricaCabinetCompleted;
@@ -1240,6 +1273,9 @@ public class ModelsCreator
         orderItem.PaintingStarted = model.PaintingStarted;
         orderItem.ElectricaCabinetPlanned = model.ElectricaCabinetPlanned;
         orderItem.ElectricaCabinetStarted = model.ElectricaCabinetStarted;
+        orderItem.MachineAssembledAllCompleted = model.MachineAssembledAllCompleted;
+        orderItem.MachineAssembledAllStarted = model.MachineAssembledAllStarted;
+        orderItem.PlannedMachineAssembledAll = model.PlannedMachineAssembledAll;
         //orderItem.MachineAssembledPlanned = model.MachineAssembledPlanned;
         orderItem.MachineAssembledStarted = model.MachineAssembledStarted;
         //orderItem.MachineWiredAndTestedPlanned = model.MachineWiredAndTestedPlanned;

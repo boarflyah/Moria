@@ -509,7 +509,7 @@
                                 <DatePicker SelectedDate="{Binding ElectricaCabinetCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" IsEnabled="False" FontWeight="ExtraBlack"/>
                             </StackPanel>
 
-                <!--            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
+                            <!--            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1"
                                     IsEnabled="{Binding Permission_ElectricaCabinetCompleted.CanWrite}"
                                     Visibility="{Binding Permission_ElectricaCabinetCompleted.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Szafa elektryczna gotowa" Margin="0,0,10,0"/>
@@ -522,7 +522,9 @@
                                     IsEnabled="{Binding Permission_PlannedMachineAssembled.CanWrite}"
                                     Visibility="{Binding Permission_PlannedMachineAssembled.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Zestawienie" Margin="0,0,10,0"/>
-                                <DatePicker SelectedDate="{Binding PlannedMachineAssembled, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="ExtraBlack"/>
+                                <DatePicker SelectedDate="{Binding PlannedMachineAssembledAll, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="ExtraLight"/>
+                                <DatePicker SelectedDate="{Binding MachineAssembledAllStarted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="Bold"/>
+                                <DatePicker SelectedDate="{Binding MachineAssembledAllCompleted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="ExtraBlack"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
@@ -533,8 +535,8 @@
                                 <DatePicker SelectedDate="{Binding MachineWiredAndTestedStarted, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center" FontWeight="Bold"/>
                                 <DatePicker SelectedDate="{Binding MachineWiredAndTested, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" IsEnabled="False" VerticalAlignment="Center" FontWeight="ExtraBlack"/>
                             </StackPanel>
-                            
-                   <!--         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
+
+                            <!--         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2"
                                     IsEnabled="{Binding Permission_PlannedMachineWiredAndTested.CanWrite}"
                                     Visibility="{Binding Permission_PlannedMachineWiredAndTested.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Planowane okablowanie" Margin="0,0,10,0"/>
@@ -549,19 +551,33 @@
                                 <DatePicker SelectedDate="{Binding MachineReleased, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="ExtraBlack" IsEnabled="{Binding Permission_MachineReleased.CanWrite}"/>
                             </StackPanel>
 
-             <!--               <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1"
+                            <!--               <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1"
              IsEnabled="{Binding Permission_TransportOrdered.CanWrite}"
              Visibility="{Binding Permission_TransportOrdered.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Transport zamówiony" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding TransportOrdered, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" VerticalAlignment="Center" FontWeight="ExtraBlack"/>
                             </StackPanel> -->
-                            
+
                             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2"
                                     IsEnabled="{Binding Permission_DueDate.CanWrite}"
                                     Visibility="{Binding Permission_DueDate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Label Content="Termin realizacji" Margin="0,0,10,0"/>
                                 <DatePicker SelectedDate="{Binding DueDate, StringFormat='{}{0:dd.MM.yyyy}', Mode=TwoWay}" FontWeight="ExtraBlack"/>
                             </StackPanel>
+
+                            <Grid Grid.Row="4"
+                                Grid.Column="2"
+                                Margin="10"
+                                IsEnabled="{Binding Permission_PrintedNamePlate.CanWrite}"
+                                Visibility="{Binding Permission_PrintedNamePlate.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="Tabliczka wydrukowana" Grid.Row="0" Margin="20,0,0,5"/>
+                                <CheckBox IsChecked="{Binding PrintedNamePlate, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </Grid>
+
                         </Grid>
 
                         <Grid Grid.Row="6"

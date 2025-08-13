@@ -22,18 +22,35 @@ public partial class SetProductionDateWindowView : System.Windows.Window, INotif
 {
     #region Property
 
+    public DateTime? TechnicalDrawingPlanned { get; set; }
+    public DateTime? TechnicalDrawingStarted { get; set; }
     public DateTime? TechnicalDrawingCompleted { get; set; }
+    public DateTime? CuttingPlanned { get; set; }
+    public DateTime? CuttingStarted { get; set; }
     public DateTime? CuttingCompleted { get; set; }
+    public DateTime? MetalCliningPlanned { get; set; }
+    public DateTime? MetalCliningStarted { get; set; }
     public DateTime? MetalCliningCompleted { get; set; }
+    public DateTime? PaintingPlanned { get; set; }
+    public DateTime? PaintingStarted { get; set; }
     public DateTime? PaintingCompleted { get; set; }
+    public DateTime? PlannedMachineAssembled { get; set; }
+    public DateTime? MachineAssembledStarted { get; set; }
     public DateTime? MachineAssembled { get; set; }
+    public DateTime? PlannedMachineAssembledAll { get; set; }
+    public DateTime? MachineAssembledAllStarted { get; set; }
+    public DateTime? MachineAssembledAllCompleted { get; set; }
+    public DateTime? PlannedMachineWiredAndTested { get; set; }
+    public DateTime? MachineWiredAndTestedStarted { get; set; }
     public DateTime? MachineWiredAndTested { get; set; }
+    public DateTime? PlannedTransport { get; set; }
     public DateTime? MachineReleased { get; set; }
     public DateTime? TransportOrdered { get; set; }
-    public DateTime? PlannedMachineAssembled { get; set; }
+
+    public DateTime? WeldingPlanned { get; set; }
+    public DateTime? WeldingStarted { get; set; }
     public DateTime? WeldingCompleted { get; set; }
-    public DateTime? PlannedMachineWiredAndTested { get; set; }
-    public DateTime? PlannedTransport { get; set; }
+ 
     public DateTime? DueDate { get; set; }
 
     public PermissionDo Permission_TechnicalDrawingCompleted { get; set; }

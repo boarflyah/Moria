@@ -301,6 +301,30 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
             RaisePropertyChanged(value);
         }
     }
+    
+
+    private bool _PrintedNamePlate;
+    [ObjectChangedValidate]
+    public bool PrintedNamePlate
+    {
+        get => _PrintedNamePlate;
+        set
+        {
+            _PrintedNamePlate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PrintedNamePlate;
+    public PermissionDo Permission_PrintedNamePlate
+    {
+        get => _Permission_PrintedNamePlate;
+        set
+        {
+            _Permission_PrintedNamePlate = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     private ComponentDo _Component;
     [ObjectChangedValidate]
@@ -906,6 +930,41 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _MachineAssembledAllStarted;
+    [ObjectChangedValidate]
+    public DateTime? MachineAssembledAllStarted
+    {
+        get => _MachineAssembledAllStarted;
+        set
+        {
+            _MachineAssembledAllStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MachineAssembledAllCompleted;
+    [ObjectChangedValidate]
+    public DateTime? MachineAssembledAllCompleted
+    {
+        get => _MachineAssembledAllCompleted;
+        set
+        {
+            _MachineAssembledAllCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedMachineAssembledAll;
+    [ObjectChangedValidate]
+    public DateTime? PlannedMachineAssembledAll
+    {
+        get => _PlannedMachineAssembledAll;
+        set
+        {
+            _PlannedMachineAssembledAll = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     private PermissionDo _Permission_MachineAssembledStarted;
     public PermissionDo Permission_MachineAssembledStarted
@@ -1392,6 +1451,10 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         ElectricaCabinetStarted = default;
         ElectricalCabinet = default;
         ControlCabinetWorkStartDate = default;
+        MachineAssembledAllCompleted = default;
+        MachineAssembledAllStarted = default;
+        PlannedMachineAssembledAll = default;
+        PrintedNamePlate = default;
 
     }
 
@@ -1403,6 +1466,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MachineWeight = oi.MachineWeight;
         TechnicalDrawingLink = oi.TechnicalDrawingLink;
         Quantity = oi.Quantity;
+        PrintedNamePlate = oi.PrintedNamePlate;
         Product = oi.Product;
         Component = oi.Component;
         Drive = oi.Drive;
@@ -1431,6 +1495,9 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         ElectricaCabinetStarted = oi.ElectricaCabinetStarted;
         MachineAssembled = oi.MachineAssembled;
         MachineAssembledStarted = oi.MachineAssembledStarted;
+        MachineAssembledAllCompleted = oi.MachineAssembledAllCompleted;
+        MachineAssembledAllStarted = oi.MachineAssembledAllStarted;
+        PlannedMachineAssembledAll = oi.PlannedMachineAssembledAll;
         MachineWiredAndTested = oi.MachineWiredAndTested;
         MachineWiredAndTestedStarted = oi.MachineWiredAndTestedStarted;
         MachineReleased = oi.MachineReleased;
@@ -1501,6 +1568,10 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.PlannedTransport = PlannedTransport;
         currentOrderItem.PlannedMachineAssembled = PlannedMachineAssembled;
         currentOrderItem.PlannedMachineWiredAndTested = PlannedMachineWiredAndTested;
+        currentOrderItem.MachineAssembledAllStarted = MachineAssembledAllStarted;
+        currentOrderItem.MachineAssembledAllCompleted = MachineAssembledAllCompleted;
+        currentOrderItem.PlannedMachineAssembledAll = PlannedMachineAssembledAll;
+        currentOrderItem.PrintedNamePlate = PrintedNamePlate;
         currentOrderItem.DueDate = DueDate;
         currentOrderItem.ProductionYear = ProductionYear;
         currentOrderItem.SerialNumber = SerialNumber;

@@ -120,6 +120,17 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private bool _PrintedNamePlate;
+    public bool PrintedNamePlate
+    {
+        get => _PrintedNamePlate;
+        set
+        {
+            _PrintedNamePlate = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private double _Quantity;
     public double Quantity
     {
@@ -440,6 +451,38 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _MachineAssembledAllStarted;
+    public DateTime? MachineAssembledAllStarted
+    {
+        get => _MachineAssembledAllStarted;
+        set
+        {
+            _MachineAssembledAllStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MachineAssembledAllCompleted;
+    public DateTime? MachineAssembledAllCompleted
+    {
+        get => _MachineAssembledAllCompleted;
+        set
+        {
+            _MachineAssembledAllCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PlannedMachineAssembledAll;
+    public DateTime? PlannedMachineAssembledAll
+    {
+        get => _PlannedMachineAssembledAll;
+        set
+        {
+            _PlannedMachineAssembledAll = value;
+            RaisePropertyChanged(value);
+        }
+    }
 
     private DateTime? _MachineWiredAndTested;
     public DateTime? MachineWiredAndTested
