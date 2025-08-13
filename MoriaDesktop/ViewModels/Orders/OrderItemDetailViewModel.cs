@@ -450,6 +450,53 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _TechnicalDrawingPlanned;
+    [ObjectChangedValidate]
+    public DateTime? TechnicalDrawingPlanned
+    {
+        get => _TechnicalDrawingPlanned;
+        set
+        {
+            _TechnicalDrawingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_TechnicalDrawingPlanned;
+    public PermissionDo Permission_TechnicalDrawingPlanned
+    {
+        get => _Permission_TechnicalDrawingPlanned;
+        set
+        {
+            _Permission_TechnicalDrawingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _TechnicalDrawingStarted;
+    [ObjectChangedValidate]
+    public DateTime? TechnicalDrawingStarted
+    {
+        get => _TechnicalDrawingStarted;
+        set
+        {
+            _TechnicalDrawingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    PermissionDo _Permission_TechnicalDrawingStarted;
+    public PermissionDo Permission_TechnicalDrawingStarted
+    {
+        get => _Permission_TechnicalDrawingStarted;
+        set
+        {
+            _Permission_TechnicalDrawingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
     private DateTime? _CuttingCompleted;
     [ObjectChangedValidate]
     public DateTime? CuttingCompleted
@@ -469,6 +516,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Permission_CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _CuttingPlanned;
+    [ObjectChangedValidate]
+    public DateTime? CuttingPlanned
+    {
+        get => _CuttingPlanned;
+        set
+        {
+            _CuttingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_CuttingPlanned;
+    public PermissionDo Permission_CuttingPlanned
+    {
+        get => _Permission_CuttingPlanned;
+        set
+        {
+            _Permission_CuttingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _CuttingStarted;
+    [ObjectChangedValidate]
+    public DateTime? CuttingStarted
+    {
+        get => _CuttingStarted;
+        set
+        {
+            _CuttingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_CuttingStarted;
+    public PermissionDo Permission_CuttingStarted
+    {
+        get => _Permission_CuttingStarted;
+        set
+        {
+            _Permission_CuttingStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -496,6 +589,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _WeldingPlanned;
+    [ObjectChangedValidate]
+    public DateTime? WeldingPlanned
+    {
+        get => _WeldingPlanned;
+        set
+        {
+            _WeldingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_WeldingPlanned;
+    public PermissionDo Permission_WeldingPlanned
+    {
+        get => _Permission_WeldingPlanned;
+        set
+        {
+            _Permission_WeldingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _WeldingStarted;
+    [ObjectChangedValidate]
+    public DateTime? WeldingStarted
+    {
+        get => _WeldingStarted;
+        set
+        {
+            _WeldingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_WeldingStarted;
+    public PermissionDo Permission_WeldingStarted
+    {
+        get => _Permission_WeldingStarted;
+        set
+        {
+            _Permission_WeldingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MetalCliningCompleted;
     [ObjectChangedValidate]
     public DateTime? MetalCliningCompleted
@@ -515,6 +654,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Permission_MetalCliningCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MetalCliningPlanned;
+    [ObjectChangedValidate]
+    public DateTime? MetalCliningPlanned
+    {
+        get => _MetalCliningPlanned;
+        set
+        {
+            _MetalCliningPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MetalCliningPlanned;
+    public PermissionDo Permission_MetalCliningPlanned
+    {
+        get => _Permission_MetalCliningPlanned;
+        set
+        {
+            _Permission_MetalCliningPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MetalCliningStarted;
+    [ObjectChangedValidate]
+    public DateTime? MetalCliningStarted
+    {
+        get => _MetalCliningStarted;
+        set
+        {
+            _MetalCliningStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MetalCliningStarted;
+    public PermissionDo Permission_MetalCliningStarted
+    {
+        get => _Permission_MetalCliningStarted;
+        set
+        {
+            _Permission_MetalCliningStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -542,6 +727,53 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _PaintingStarted;
+    [ObjectChangedValidate]
+    public DateTime? PaintingStarted
+    {
+        get => _PaintingStarted;
+        set
+        {
+            _PaintingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PaintingStarted;
+    public PermissionDo Permission_PaintingStarted
+    {
+        get => _Permission_PaintingStarted;
+        set
+        {
+            _Permission_PaintingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PaintingPlanned;
+    [ObjectChangedValidate]
+    public DateTime? PaintingPlanned
+    {
+        get => _PaintingPlanned;
+        set
+        {
+            _PaintingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_PaintingPlanned;
+    public PermissionDo Permission_PaintingPlanned
+    {
+        get => _Permission_PaintingPlanned;
+        set
+        {
+            _Permission_PaintingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
     private DateTime? _ElectricaCabinetCompleted;
     [ObjectChangedValidate]
     public DateTime? ElectricaCabinetCompleted
@@ -566,6 +798,54 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _ElectricaCabinetPlanned;
+    [ObjectChangedValidate]
+    public DateTime? ElectricaCabinetPlanned
+    {
+        get => _ElectricaCabinetPlanned;
+        set
+        {
+            _ElectricaCabinetPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_ElectricaCabinetPlanned;
+    public PermissionDo Permission_ElectricaCabinetPlanned
+    {
+        get => _Permission_ElectricaCabinetPlanned;
+        set
+        {
+            _Permission_ElectricaCabinetPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricaCabinetStarted;
+    [ObjectChangedValidate]
+    public DateTime? ElectricaCabinetStarted
+    {
+        get => _ElectricaCabinetStarted;
+        set
+        {
+            _ElectricaCabinetStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_ElectricaCabinetStarted;
+    public PermissionDo Permission_ElectricaCabinetStarted
+    {
+        get => _Permission_ElectricaCabinetStarted;
+        set
+        {
+            _Permission_ElectricaCabinetStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MachineAssembled;
     [ObjectChangedValidate]
     public DateTime? MachineAssembled
@@ -583,6 +863,54 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
     public PermissionDo Permission_MachineAssembled
     {
         get => _Permission_MachineAssembled;
+        set
+        {
+            _Permission_MachineAssembled = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    //private DateTime? _MachineAssembledPlanned;
+    //[ObjectChangedValidate]
+    //public DateTime? MachineAssembledPlanned
+    //{
+    //    get => _MachineAssembledPlanned;
+    //    set
+    //    {
+    //        _MachineAssembledPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+
+    //private PermissionDo _Permission_MachineAssembledPlanned;
+    //public PermissionDo Permission_MachineAssembledPlanned
+    //{
+    //    get => _Permission_MachineAssembledPlanned;
+    //    set
+    //    {
+    //        _Permission_MachineAssembledPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    private DateTime? _MachineAssembledStarted;
+    [ObjectChangedValidate]
+    public DateTime? MachineAssembledStarted
+    {
+        get => _MachineAssembledStarted;
+        set
+        {
+            _MachineAssembledStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PermissionDo _Permission_MachineAssembledStarted;
+    public PermissionDo Permission_MachineAssembledStarted
+    {
+        get => _Permission_MachineAssembledStarted;
         set
         {
             _Permission_MachineAssembled = value;
@@ -613,6 +941,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    //private DateTime? _MachineWiredAndTestedPlanned;
+    //[ObjectChangedValidate]
+    //public DateTime? MachineWiredAndTestedPlanned
+    //{
+    //    get => _MachineWiredAndTestedPlanned;
+    //    set
+    //    {
+    //        _MachineWiredAndTestedPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    //private PermissionDo _Permission_MachineWiredAndTestedPlanned;
+    //public PermissionDo Permission_MachineWiredAndTestedPlanned
+    //{
+    //    get => _Permission_MachineWiredAndTestedPlanned;
+    //    set
+    //    {
+    //        _Permission_MachineWiredAndTestedPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    private DateTime? _MachineWiredAndTestedStarted;
+    [ObjectChangedValidate]
+    public DateTime? MachineWiredAndTestedStarted
+    {
+        get => _MachineWiredAndTestedStarted;
+        set
+        {
+            _MachineWiredAndTestedStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineWiredAndTestedStarted;
+    public PermissionDo Permission_MachineWiredAndTestedStarted
+    {
+        get => _Permission_MachineWiredAndTestedStarted;
+        set
+        {
+            _Permission_MachineWiredAndTestedStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MachineReleased;
     [ObjectChangedValidate]
     public DateTime? MachineReleased
@@ -632,6 +1006,52 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         set
         {
             _Permission_MachineReleased = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MachineReleasedPlanned;
+    [ObjectChangedValidate]
+    public DateTime? MachineReleasedPlanned
+    {
+        get => _MachineReleasedPlanned;
+        set
+        {
+            _MachineReleasedPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineReleasedStarted;
+    public PermissionDo Permission_MachineReleasedStarted
+    {
+        get => _Permission_MachineReleasedStarted;
+        set
+        {
+            _Permission_MachineReleasedStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MachineReleasedStarted;
+    [ObjectChangedValidate]
+    public DateTime? MachineReleasedStarted
+    {
+        get => _MachineReleasedStarted;
+        set
+        {
+            _MachineReleasedStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private PermissionDo _Permission_MachineReleasedPlanned;
+    public PermissionDo Permission_MachineReleasedPlanned
+    {
+        get => _Permission_MachineReleasedPlanned;
+        set
+        {
+            _Permission_MachineReleasedPlanned = value;
             RaisePropertyChanged(value);
         }
     }
@@ -787,6 +1207,28 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         }
     }
 
+    private DateTime? _ElectricalDiagramPlanned;
+    public DateTime? ElectricalDiagramPlanned
+    {
+        get => _ElectricalDiagramPlanned;
+        set
+        {
+            _ElectricalDiagramPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricalDiagramStarted;
+    public DateTime? ElectricalDiagramStarted
+    {
+        get => _ElectricalDiagramStarted;
+        set
+        {
+            _ElectricalDiagramStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private ElectricalCabinetDo _ElectricalCabinet;
     [ObjectChangedValidate]
     public ElectricalCabinetDo ElectricalCabinet
@@ -915,14 +1357,30 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         SecondColor = default;
         Power = default;
         TechnicalDrawingCompleted = default;
+        TechnicalDrawingPlanned = default;
+        TechnicalDrawingStarted = default;
         CuttingCompleted = default;
+        CuttingPlanned = default;
+        CuttingStarted = default;
         WeldingCompleted = default;
+        WeldingPlanned = default;
+        WeldingStarted = default;
         MetalCliningCompleted = default;
+        MetalCliningPlanned = default;
+        MetalCliningStarted = default;
         PaintingCompleted = default;
+        PaintingPlanned = default;
+        PaintingStarted = default;
         ElectricaCabinetCompleted = default;
+        ElectricaCabinetPlanned = default;
+        ElectricaCabinetStarted = default;
         MachineAssembled = default;
+        MachineAssembledStarted = default;
         MachineWiredAndTested = default;
+        MachineWiredAndTestedStarted = default;
         MachineReleased = default;
+        MachineReleasedStarted = default;
+        MachineReleasedPlanned = default;
         TransportOrdered = default;
         PlannedMachineAssembled = default;
         PlannedMachineWiredAndTested = default;
@@ -930,6 +1388,8 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         DueDate = default;
         Electrician = default;
         ElectricalDiagramCompleted = default;
+        ElectricaCabinetPlanned = default;
+        ElectricaCabinetStarted = default;
         ElectricalCabinet = default;
         ControlCabinetWorkStartDate = default;
 
@@ -952,14 +1412,30 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         MainColor = oi.MainColor;
         SecondColor = oi.DetailsColor;
         TechnicalDrawingCompleted = oi.TechnicalDrawingCompleted;
+        TechnicalDrawingPlanned = oi.TechnicalDrawingPlanned;
+        TechnicalDrawingStarted = oi.TechnicalDrawingStarted;
         WeldingCompleted = oi.WeldingCompleted;
+        WeldingPlanned = oi.WeldingPlanned;
+        WeldingStarted = oi.WeldingStarted;
         CuttingCompleted = oi.CuttingCompleted;
+        CuttingPlanned = oi.CuttingPlanned;
+        CuttingStarted = oi.CuttingStarted;
         MetalCliningCompleted = oi.MetalCliningCompleted;
+        MetalCliningPlanned = oi.MetalCliningPlanned;
+        MetalCliningStarted = oi.MetalCliningStarted;
         PaintingCompleted = oi.PaintingCompleted;
+        PaintingPlanned = oi.PaintingPlanned;
+        PaintingStarted = oi.PaintingStarted;
         ElectricaCabinetCompleted = oi.ElectricaCabinetCompleted;
+        ElectricaCabinetPlanned = oi.ElectricaCabinetPlanned;
+        ElectricaCabinetStarted = oi.ElectricaCabinetStarted;
         MachineAssembled = oi.MachineAssembled;
+        MachineAssembledStarted = oi.MachineAssembledStarted;
         MachineWiredAndTested = oi.MachineWiredAndTested;
+        MachineWiredAndTestedStarted = oi.MachineWiredAndTestedStarted;
         MachineReleased = oi.MachineReleased;
+        MachineReleasedStarted = oi.MachineReleasedStarted;
+        MachineReleasedPlanned = oi.MachineReleasedPlanned;
         TransportOrdered = oi.TransportOrdered;
         PlannedMachineAssembled = oi.PlannedMachineAssembled;
         PlannedMachineWiredAndTested = oi.PlannedMachineWiredAndTested;
@@ -967,6 +1443,8 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         ElectricalCabinet = oi.ElectricalCabinet;
         Electrician = oi.Electrician;
         ElectricalDiagramCompleted = oi.ElectricalDiagramCompleted;
+        ElectricalDiagramPlanned = oi.ElectricalDiagramPlanned;
+        ElectricalDiagramStarted = oi.ElectricalDiagramStarted;
         ControlCabinetWorkStartDate = oi.ControlCabinetWorkStartDate;
         DueDate = oi.DueDate == DateTime.MinValue ? DateTime.Now : oi.DueDate;
         ProductionYear = oi.ProductionYear == null ? DateTime.Now.Year.ToString() : oi.ProductionYear;
@@ -995,14 +1473,30 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.MainColor = MainColor;
         currentOrderItem.DetailsColor = SecondColor;
         currentOrderItem.TechnicalDrawingCompleted = TechnicalDrawingCompleted;
+        currentOrderItem.TechnicalDrawingPlanned = TechnicalDrawingPlanned;
+        currentOrderItem.TechnicalDrawingStarted = TechnicalDrawingStarted;
         currentOrderItem.WeldingCompleted = WeldingCompleted;
+        currentOrderItem.WeldingPlanned = WeldingPlanned;
+        currentOrderItem.WeldingStarted = WeldingStarted;
         currentOrderItem.CuttingCompleted = CuttingCompleted;
+        currentOrderItem.CuttingPlanned = CuttingPlanned;
+        currentOrderItem.CuttingStarted = CuttingStarted;
         currentOrderItem.MetalCliningCompleted = MetalCliningCompleted;
+        currentOrderItem.MetalCliningPlanned = MetalCliningPlanned;
+        currentOrderItem.MetalCliningStarted = MetalCliningStarted;
         currentOrderItem.PaintingCompleted = PaintingCompleted;
+        currentOrderItem.PaintingPlanned  = PaintingPlanned;
+        currentOrderItem.PaintingStarted = PaintingStarted;
         currentOrderItem.ElectricaCabinetCompleted = ElectricaCabinetCompleted;
+        currentOrderItem.ElectricaCabinetPlanned = ElectricaCabinetPlanned;
+        currentOrderItem.ElectricaCabinetStarted = ElectricaCabinetStarted;
         currentOrderItem.MachineAssembled = MachineAssembled;
+        currentOrderItem.MachineAssembledStarted = MachineAssembledStarted;
         currentOrderItem.MachineWiredAndTested = MachineWiredAndTested;
+        currentOrderItem.MachineWiredAndTestedStarted = MachineWiredAndTestedStarted;
         currentOrderItem.MachineReleased = MachineReleased;
+        currentOrderItem.MachineReleasedPlanned = MachineReleasedPlanned;
+        currentOrderItem.MachineReleasedStarted = MachineReleasedStarted;
         currentOrderItem.TransportOrdered = TransportOrdered;
         currentOrderItem.PlannedTransport = PlannedTransport;
         currentOrderItem.PlannedMachineAssembled = PlannedMachineAssembled;

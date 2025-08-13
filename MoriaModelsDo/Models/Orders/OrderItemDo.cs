@@ -220,6 +220,28 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _TechnicalDrawingStarted;
+    public DateTime? TechnicalDrawingStarted
+    {
+        get => _TechnicalDrawingStarted;
+        set
+        {
+            _TechnicalDrawingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _TechnicalDrawingPlanned;
+    public DateTime? TechnicalDrawingPlanned
+    {
+        get => _TechnicalDrawingPlanned;
+        set
+        {
+            _TechnicalDrawingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _CuttingCompleted;
     public DateTime? CuttingCompleted
     {
@@ -227,6 +249,28 @@ public class OrderItemDo: BaseDo
         set
         {
             _CuttingCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _CuttingPlanned;
+    public DateTime? CuttingPlanned
+    {
+        get => _CuttingPlanned;
+        set
+        {
+            _CuttingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _CuttingStarted;
+    public DateTime? CuttingStarted
+    {
+        get => _CuttingStarted;
+        set
+        {
+            _CuttingStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -242,6 +286,28 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _WeldingPlanned;
+    public DateTime? WeldingPlanned
+    {
+        get => _WeldingPlanned;
+        set
+        {
+            _WeldingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _WeldingStarted;
+    public DateTime? WeldingStarted
+    {
+        get => _WeldingStarted;
+        set
+        {
+            _WeldingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _MetalCliningCompleted;
     public DateTime? MetalCliningCompleted
     {
@@ -249,6 +315,28 @@ public class OrderItemDo: BaseDo
         set
         {
             _MetalCliningCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MetalCliningPlanned;
+    public DateTime? MetalCliningPlanned
+    {
+        get => _MetalCliningPlanned;
+        set
+        {
+            _MetalCliningPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MetalCliningStarted;
+    public DateTime? MetalCliningStarted
+    {
+        get => _MetalCliningStarted;
+        set
+        {
+            _MetalCliningStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -264,6 +352,28 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    private DateTime? _PaintingPlanned;
+    public DateTime? PaintingPlanned
+    {
+        get => _PaintingPlanned;
+        set
+        {
+            _PaintingPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _PaintingStarted;
+    public DateTime? PaintingStarted
+    {
+        get => _PaintingStarted;
+        set
+        {
+            _PaintingStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
     private DateTime? _ElectricaCabinetCompleted;
     public DateTime? ElectricaCabinetCompleted
     {
@@ -271,6 +381,28 @@ public class OrderItemDo: BaseDo
         set
         {
             _ElectricaCabinetCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricaCabinetPlanned;
+    public DateTime? ElectricaCabinetPlanned
+    {
+        get => _ElectricaCabinetPlanned;
+        set
+        {
+            _ElectricaCabinetPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricaCabinetStarted;
+    public DateTime? ElectricaCabinetStarted
+    {
+        get => _ElectricaCabinetStarted;
+        set
+        {
+            _ElectricaCabinetStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -286,6 +418,29 @@ public class OrderItemDo: BaseDo
         }
     }
 
+    //private DateTime? _MachineAssembledPlanned;
+    //public DateTime? MachineAssembledPlanned
+    //{
+    //    get => _MachineAssembledPlanned;
+    //    set
+    //    {
+    //        _MachineAssembledPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    private DateTime? _MachineAssembledStarted;
+    public DateTime? MachineAssembledStarted
+    {
+        get => _MachineAssembledStarted;
+        set
+        {
+            _MachineAssembledStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
     private DateTime? _MachineWiredAndTested;
     public DateTime? MachineWiredAndTested
     {
@@ -293,6 +448,28 @@ public class OrderItemDo: BaseDo
         set
         {
             _MachineWiredAndTested = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    //private DateTime? _MachineWiredAndTestedPlanned;
+    //public DateTime? MachineWiredAndTestedPlanned
+    //{
+    //    get => _MachineWiredAndTestedPlanned;
+    //    set
+    //    {
+    //        _MachineWiredAndTestedPlanned = value;
+    //        RaisePropertyChanged(value);
+    //    }
+    //}
+
+    private DateTime? _MachineWiredAndTestedStarted;
+    public DateTime? MachineWiredAndTestedStarted
+    {
+        get => _MachineWiredAndTestedStarted;
+        set
+        {
+            _MachineWiredAndTestedStarted = value;
             RaisePropertyChanged(value);
         }
     }
@@ -307,6 +484,29 @@ public class OrderItemDo: BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    private DateTime? _MachineReleasedPlanned;
+    public DateTime? MachineReleasedPlanned
+    {
+        get => _MachineReleasedPlanned;
+        set
+        {
+            _MachineReleasedPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _MachineReleasedStarted;
+    public DateTime? MachineReleasedStarted
+    {
+        get => _MachineReleasedStarted;
+        set
+        {
+            _MachineReleasedStarted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
 
     private DateTime? _TransportOrdered;
     public DateTime? TransportOrdered
@@ -370,6 +570,29 @@ public class OrderItemDo: BaseDo
         set
         {
             _ElectricalDiagramCompleted = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private DateTime? _ElectricalDiagramPlanned;
+    public DateTime? ElectricalDiagramPlanned
+    {
+        get => _ElectricalDiagramPlanned;
+        set
+        {
+            _ElectricalDiagramPlanned = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private DateTime? _ElectricalDiagramStarted;
+    public DateTime? ElectricalDiagramStarted
+    {
+        get => _ElectricalDiagramStarted;
+        set
+        {
+            _ElectricalDiagramStarted = value;
             RaisePropertyChanged(value);
         }
     }

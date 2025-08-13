@@ -210,7 +210,8 @@
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
 
                     <!-- Pasek wyszukiwania -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                 Visibility="{Binding IsLoggedIn, Mode=OneWay, Converter={StaticResource bool2vis}}">
                         <TextBox x:Name="SearchBox"
                      Width="200"
                      Height="25"

@@ -65,30 +65,66 @@ public class OrderItem : BaseModel, ISubiektModel
     #region
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? TechnicalDrawingCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? TechnicalDrawingPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? TechnicalDrawingStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? CuttingCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? CuttingPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? CuttingStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? WeldingCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? WeldingPlanned{ get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? WeldingStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MetalCliningCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MetalCliningPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MetalCliningStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? PaintingCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PaintingPlanned{ get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? PaintingStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ElectricaCabinetCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricaCabinetPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricaCabinetStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MachineAssembled { get; set; }
+    //[Column(TypeName = "timestamp without time zone")]
+    //public DateTime? MachineAssembledPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineAssembledStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MachineWiredAndTested { get; set; }
+    //[Column(TypeName = "timestamp without time zone")]
+    //public DateTime? MachineWiredAndTestedPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineWiredAndTestedStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? MachineReleased { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineReleasedPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? MachineReleasedStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? TransportOrdered { get; set; }
@@ -107,6 +143,10 @@ public class OrderItem : BaseModel, ISubiektModel
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ElectricalDiagramCompleted { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricalDiagramPlanned { get; set; }
+    [Column(TypeName = "timestamp without time zone")]
+    public DateTime? ElectricalDiagramStarted { get; set; }
 
     [Column(TypeName = "timestamp without time zone")]
     public DateTime? ControlCabinetWorkStartDate { get; set; }

@@ -675,8 +675,8 @@ public class ModelsCreator
 
     public async Task UpdateDrive(Drive drive, DriveDo driveModel)
     {
-    //    drive.Inverter = driveModel.Inverter;
-    //    drive.Variator = driveModel.Variator;
+        //    drive.Inverter = driveModel.Inverter;
+        //    drive.Variator = driveModel.Variator;
         drive.Quantity = driveModel.Quantity;
         drive.Name = driveModel.Name;
         drive.LastModified = driveModel.LastModified;
@@ -966,7 +966,7 @@ public class ModelsCreator
             {
                 OrderNumberSymbol = oi.Order.OrderNumberSymbol,
                 CatalogLink = oi.Order.CatalogLink
-                
+
             }
         };
 
@@ -997,8 +997,28 @@ public class ModelsCreator
             Power = model.Power,
             TechnicalDrawingLink = model.TechnicalDrawingLink,
             ElectricaCabinetCompleted = model.ElectricaCabinetCompleted,
-            TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
             WeldingCompleted = model.WeldingCompleted,
+            TechnicalDrawingCompleted = model.TechnicalDrawingCompleted,
+            TechnicalDrawingPlanned = model.TechnicalDrawingPlanned,
+            TechnicalDrawingStarted = model.TechnicalDrawingStarted,
+            CuttingPlanned = model.CuttingPlanned,
+            CuttingStarted = model.CuttingStarted,
+            WeldingPlanned = model.WeldingPlanned,
+            WeldingStarted = model.WeldingStarted,
+            MetalCliningPlanned = model.MetalCliningPlanned,
+            MetalCliningStarted = model.MetalCliningStarted,
+            PaintingPlanned = model.PaintingPlanned,
+            PaintingStarted = model.PaintingStarted,
+            ElectricaCabinetPlanned = model.ElectricaCabinetPlanned,
+            ElectricaCabinetStarted = model.ElectricaCabinetStarted,
+            //MachineAssembledPlanned = model.MachineAssembledPlanned,
+            MachineAssembledStarted = model.MachineAssembledStarted,
+           // MachineWiredAndTestedPlanned = model.MachineWiredAndTestedPlanned,
+            MachineWiredAndTestedStarted = model.MachineWiredAndTestedStarted,
+            MachineReleasedPlanned = model.MachineReleasedPlanned,
+            MachineReleasedStarted = model.MachineReleasedStarted,
+            ElectricalDiagramPlanned = model.ElectricalDiagramPlanned,
+            ElectricalDiagramStarted = model.ElectricalDiagramStarted,
             CuttingCompleted = model.CuttingCompleted,
             MetalCliningCompleted = model.MetalCliningCompleted,
             PaintingCompleted = model.PaintingCompleted,
@@ -1099,7 +1119,7 @@ public class ModelsCreator
         {
             if (entity.ComponentToOrderItems?.Count > 0)
             {
-                foreach(var ctoi in entity.ComponentToOrderItems)
+                foreach (var ctoi in entity.ComponentToOrderItems)
                     _context.ComponentToOrderItems.Remove(ctoi);
 
                 //TODO usunac wszystkie obiekty z bazy z kolekcji
@@ -1192,6 +1212,26 @@ public class ModelsCreator
         orderItem.ElectricalDescription = model.ElectricialDescription;
         orderItem.MachineAssembled = model.MachineAssembled;
         orderItem.WeldingCompleted = model.WeldingCompleted;
+        orderItem.TechnicalDrawingPlanned = model.TechnicalDrawingPlanned;
+        orderItem.TechnicalDrawingStarted = model.TechnicalDrawingStarted;
+        orderItem.CuttingPlanned = model.CuttingPlanned;
+        orderItem.CuttingStarted = model.CuttingStarted;
+        orderItem.WeldingPlanned = model.WeldingPlanned;
+        orderItem.WeldingStarted = model.WeldingStarted;
+        orderItem.MetalCliningPlanned = model.MetalCliningPlanned;
+        orderItem.MetalCliningStarted = model.MetalCliningStarted;
+        orderItem.PaintingPlanned = model.PaintingPlanned;
+        orderItem.PaintingStarted = model.PaintingStarted;
+        orderItem.ElectricaCabinetPlanned = model.ElectricaCabinetPlanned;
+        orderItem.ElectricaCabinetStarted = model.ElectricaCabinetStarted;
+        //orderItem.MachineAssembledPlanned = model.MachineAssembledPlanned;
+        orderItem.MachineAssembledStarted = model.MachineAssembledStarted;
+        //orderItem.MachineWiredAndTestedPlanned = model.MachineWiredAndTestedPlanned;
+        orderItem.MachineWiredAndTestedStarted = model.MachineWiredAndTestedStarted;
+        orderItem.MachineReleasedPlanned = model.MachineReleasedPlanned;
+        orderItem.MachineReleasedStarted = model.MachineReleasedStarted;
+        orderItem.ElectricalDiagramPlanned = model.ElectricalDiagramPlanned;
+        orderItem.ElectricalDiagramStarted = model.ElectricalDiagramStarted;
         //orderItem.MachineWiredAndTested = model.MachineWiredAndTested;
         orderItem.MachineReleased = model.MachineReleased;
         orderItem.TransportOrdered = model.TransportOrdered;
