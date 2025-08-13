@@ -27,7 +27,17 @@ public class DriveControllerService : IDriveControllerService
 
     public async Task<DriveDo> UpdateDrive(DriveDo drive)
     {
-        var searchDrive = await _context.Drives.Include(x => x.Motor).Include(x => x.MotorGearToDrives).ThenInclude(x => x.MotorGear).FirstOrDefaultAsync(x => x.Id == drive.Id);
+        var searchDrive = await _context.Drives
+            .Include(x => x.Pump)
+            .Include(x => x.Variator)
+            .Include(x => x.Supplement)
+            .Include(x => x.ExternalCooling)
+            .Include(x => x.Brake)
+            .Include(x => x.Inverter)
+            .Include(x => x.Motor)
+            .Include(x => x.MotorGearToDrives)
+            .ThenInclude(x => x.MotorGear)
+            .FirstOrDefaultAsync(x => x.Id == drive.Id);
         if (searchDrive == null)
             throw new MoriaApiException(MoriaApiExceptionReason.ObjectNotFound, MoriaApiException.ApiExceptionThrownStatusCode);
 
@@ -53,7 +63,17 @@ public class DriveControllerService : IDriveControllerService
 
     public async Task<DriveDo> GetDrive(int id)
     {
-        var drive = await _context.Drives.Include(x => x.Motor).Include(x => x.MotorGearToDrives).ThenInclude(x => x.MotorGear).FirstOrDefaultAsync(x => x.Id == id);
+        var drive = await _context.Drives
+            .Include(x => x.Motor)
+            .Include(x => x.Inverter)
+            .Include(x => x.Variator)
+            .Include(x => x.Pump)
+            .Include(x => x.Supplement)
+            .Include(x => x.ExternalCooling)
+            .Include(x => x.Brake)
+            .Include(x => x.MotorGearToDrives)
+            .ThenInclude(x => x.MotorGear)
+            .FirstOrDefaultAsync(x => x.Id == id);
         if (drive == null)
             return null;
 
@@ -63,7 +83,14 @@ public class DriveControllerService : IDriveControllerService
     public async Task<IEnumerable<DriveDo>> GetDrives()
     {
         List<DriveDo> result = new();
-        foreach (var drive in _context.Drives.Include(x => x.Motor))
+        foreach (var drive in _context.Drives
+            .Include(x => x.Motor)
+            .Include(x => x.Inverter)
+            .Include(x => x.Variator)
+            .Include(x => x.Pump)
+            .Include(x => x.Supplement)
+            .Include(x => x.ExternalCooling)
+            .Include(x => x.Brake))
             result.Add(_creator.GetDriveDo(drive));
 
         return result;

@@ -81,10 +81,14 @@ public partial class LookupWindow : Window
         NewButton.Visibility = canAddNew ? Visibility.Visible : Visibility.Hidden;
         await (DataContext as LookupWindowViewModel).LoadNext();
         CreateColumns();
+        if (!IsVisible)
+        {
+            this.ShowDialog();
+            SearchBox.Text = string.Empty;
+            return (DataContext as LookupWindowViewModel).OnClosed<T>();
+        }
 
-        this.ShowDialog();
-        SearchBox.Text = string.Empty;
-        return (DataContext as LookupWindowViewModel).OnClosed<T>();
+        return new LookupWrapper<T>();
     }
 
     private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

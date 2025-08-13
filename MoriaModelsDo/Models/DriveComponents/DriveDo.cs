@@ -17,8 +17,8 @@ public class DriveDo : BaseDo
         }
     }
 
-    bool _Variator;
-    public bool Variator
+    VariatorDo _Variator;
+    public VariatorDo Variator
     {
         get => _Variator;
         set
@@ -28,8 +28,8 @@ public class DriveDo : BaseDo
         }
     }
 
-    bool _Inverter;
-    public bool Inverter
+    InverterDo _Inverter;
+    public InverterDo Inverter
     {
         get => _Inverter;
         set
@@ -57,6 +57,51 @@ public class DriveDo : BaseDo
         set
         {
             _Motor = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+
+    private PumpDo _Pump;
+    public PumpDo Pump
+    {
+        get => _Pump;
+        set
+        {
+            _Pump = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private ExternalCoolingDo _ExternalCooling;
+    public ExternalCoolingDo ExternalCooling
+    {
+        get => _ExternalCooling;
+        set
+        {
+            _ExternalCooling = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private BrakeDo _Brake;
+    public BrakeDo Brake
+    {
+        get => _Brake;
+        set
+        {
+            _Brake = value;
+            RaisePropertyChanged(value);
+        }
+    }
+
+    private SupplementDo _Supplement;
+    public SupplementDo Supplement
+    {
+        get => _Supplement;
+        set
+        {
+            _Supplement = value;
             RaisePropertyChanged(value);
         }
     }

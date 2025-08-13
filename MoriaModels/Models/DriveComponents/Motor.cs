@@ -18,5 +18,5 @@ public class Motor: BaseModel
     public int RPM { get; set; }
 
     public override LookupModel GetLookupObject()
-        => new(Id, Symbol, Name, Power.ToString("n2"), RPM.ToString("n2"));
+        => new(Id, Symbol, Name, Power.ToString("n2"), RPM.ToString("n0"));
 }

@@ -24,6 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -39,7 +40,82 @@
                      Grid.Row="1"/>
         </Grid>
 
+        <Grid Grid.Column="1" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_Variator.CanWrite}"
+           Visibility="{Binding Permission_Variator.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Wariator" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="VariatorLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Variator, Mode=TwoWay}"
+                                          NameText="{Binding Variator.Type, Mode=OneWay}"
+                                          OnLookupInvoked="VariatorLookupObjectControl_OnLookupInvoked"/>
+            
+        </Grid>
+        <Grid Grid.Column="2" Grid.Row="0" Margin="10"
+           IsEnabled="{Binding Permission_Inverter.CanWrite}"
+           Visibility="{Binding Permission_Inverter.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Falownik" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="InverterLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Inverter, Mode=TwoWay}"
+                                          NameText="{Binding Inverter.FullName, Mode=OneWay}"
+                                          OnLookupInvoked="InverterLookupObjectControl_OnLookupInvoked"/>    
+        </Grid>
+
         <Grid Grid.Column="0" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_Pump.CanWrite}"
+           Visibility="{Binding Permission_Pump.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Reduktor/pompa" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="PumpLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Pump, Mode=TwoWay}"
+                                          NameText="{Binding Pump.FullName, Mode=OneWay}"
+                                          OnLookupInvoked="PumpLookupObjectControl_OnLookupInvoked"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_ExternalCooling.CanWrite}"
+           Visibility="{Binding Permission_ExternalCooling.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Zewnętrzne chłodzenie" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="ExternalCoolingLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding ExternalCooling, Mode=TwoWay}"
+                                          NameText="{Binding ExternalCooling.FullName, Mode=OneWay}"
+                                          OnLookupInvoked="ExternalCoolingLookupObjectControl_OnLookupInvoked"/>
+        </Grid>
+        
+        <Grid Grid.Column="2" Grid.Row="1" Margin="10"
+           IsEnabled="{Binding Permission_ExternalCooling.CanWrite}"
+           Visibility="{Binding Permission_ExternalCooling.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Hamulec" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="BrakeLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Brake, Mode=TwoWay}"
+                                          NameText="{Binding Brake.Kind, Mode=OneWay}"
+                                          OnLookupInvoked="BrakeLookupObjectControl_OnLookupInvoked"/>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="2" Margin="10"
            IsEnabled="{Binding Permission_Motor.CanWrite}"
            Visibility="{Binding Permission_Motor.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -50,34 +126,26 @@
             <controls:LookupObjectControl x:Name="MotorLookupObjectControl"
                                           Grid.Row="1"
                                           LookupObject="{Binding Motor, Mode=TwoWay}"
-                                          NameText="{Binding Motor.Name, Mode=OneWay}"
+                                          NameText="{Binding Motor.FullName, Mode=OneWay}"
                                           OnLookupInvoked="MotorLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="0" Margin="10"
-           IsEnabled="{Binding Permission_Variator.CanWrite}"
-           Visibility="{Binding Permission_Variator.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Grid Grid.Column="0" Grid.Row="2" Margin="10"
+           IsEnabled="{Binding Permission_Supplement.CanWrite}"
+           Visibility="{Binding Permission_Supplement.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Content="Wariator" Grid.Row="0" Margin="0,0,0,5"/>
-            <CheckBox Grid.Row="1"
-                      IsChecked="{Binding Variator, Mode=TwoWay}"/>
-        </Grid>
-        <Grid Grid.Column="2" Grid.Row="0" Margin="10"
-           IsEnabled="{Binding Permission_Inverter.CanWrite}"
-           Visibility="{Binding Permission_Inverter.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Content="Falownik" Grid.Row="0" Margin="0,0,0,5"/>
-            <CheckBox Grid.Row="1"
-                      IsChecked="{Binding Inverter, Mode=TwoWay}"/>
+            <Label Content="Przystawka" Grid.Row="0" Margin="0,0,0,5"/>
+            <controls:LookupObjectControl x:Name="SupplementLookupObjectControl"
+                                          Grid.Row="1"
+                                          LookupObject="{Binding Supplement, Mode=TwoWay}"
+                                          NameText="{Binding Supplement.FullName, Mode=OneWay}"
+                                          OnLookupInvoked="SupplementLookupObjectControl_OnLookupInvoked"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1" Margin="10"
+        <Grid Grid.Column="2" Grid.Row="2" Margin="10"
            IsEnabled="{Binding Permission_Quantity.CanWrite}"
            Visibility="{Binding Permission_Quantity.CanRead, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid.RowDefinitions>
@@ -92,7 +160,7 @@
                      PreviewKeyDown="QuantityTextBox_PreviewKeyDown"/>
         </Grid>
 
-        <controls:NestedListViewWrapper Grid.Row="2"
+        <controls:NestedListViewWrapper Grid.Row="3"
                                         Grid.ColumnSpan="3">
             <DataGrid ItemsSource="{Binding Objects, Mode=OneWay}"
                       SelectedItem="{Binding Selected, Mode=TwoWay}"

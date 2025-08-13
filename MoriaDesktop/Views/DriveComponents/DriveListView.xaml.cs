@@ -4,6 +4,7 @@ using System.Windows.Input;
 using MoriaDesktop.Interfaces;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.DriveComponents;
+using MoriaModelsDo.Models.DriveComponents;
 
 namespace MoriaDesktop.Views.DriveComponents;
 
@@ -33,7 +34,10 @@ public partial class DriveListView : Page, IListViewModelContent
         var vm = DataContext as DriveListViewModel;
         if (vm != null && !vm.Permission_Name?.CanRead == true)
         {
-            DriveDatagrid.Columns[0].Visibility = System.Windows.Visibility.Collapsed;
+            var column = DriveDatagrid.Columns.FirstOrDefault(x => x.SortMemberPath.Equals(nameof(DriveDo.Name)));
+            if (column != null)
+                column.Visibility = Visibility.Collapsed;
+            //DriveDatagrid.Columns[0].Visibility = Visibility.Collapsed;
         }
 
         if (vm != null && !vm.Permission_Motor?.CanRead == true)

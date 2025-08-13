@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using MoriaBaseModels.Models;
 using MoriaModelsDo.Base;
@@ -42,6 +43,9 @@ public class SupplementDo : BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    [JsonIgnore]
+    public string FullName => $"{Type} {Size} {IProperty}";
 
     public override void SetObject(LookupModel lookup)
     {

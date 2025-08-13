@@ -46,7 +46,12 @@ public partial class MotorListView : Page, IListViewModelContent
 
         if (vm != null && !vm.Permission_Power.CanRead)
         {
-            MotorDataGrid.Columns[1].Visibility = System.Windows.Visibility.Collapsed;
+            MotorDataGrid.Columns[2].Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        if (vm != null && !(vm.Permission_RPM?.CanRead == true))
+        {
+            MotorDataGrid.Columns[3].Visibility = System.Windows.Visibility.Collapsed;
         }
 
         await (this as IListViewModelContent).SetColumnsOrder();

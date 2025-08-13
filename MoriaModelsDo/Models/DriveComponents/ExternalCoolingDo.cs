@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MoriaBaseModels.Models;
+﻿using MoriaBaseModels.Models;
 using MoriaModelsDo.Base;
 
 namespace MoriaModelsDo.Models.DriveComponents;
@@ -31,6 +26,8 @@ public class ExternalCoolingDo : BaseDo
             RaisePropertyChanged(value);
         }
     }
+
+    public string FullName => $"{Type} {Power}";
 
     public override void SetObject(LookupModel lookup)
     {
