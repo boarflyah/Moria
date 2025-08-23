@@ -111,6 +111,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="LottieSharp" Version="2.4.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
