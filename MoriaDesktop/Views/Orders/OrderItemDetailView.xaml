@@ -576,7 +576,15 @@
                                 </Grid.RowDefinitions>
                                 <Label Content="Tabliczka wydrukowana" Grid.Row="0" Margin="20,0,0,5"/>
                                 <CheckBox IsChecked="{Binding PrintedNamePlate, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <Button x:Name="PrintButton"
+                                            Width="25" Height="25"
+                                            ToolTip="Drukuj"
+                                        Command="{Binding PrintLabelCommand}">
+                                    <TextBlock Text="🖨" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Button>
                             </Grid>
+                            
+                          
 
                         </Grid>
 

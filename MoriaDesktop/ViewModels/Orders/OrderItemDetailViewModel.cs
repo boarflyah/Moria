@@ -1,8 +1,14 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Media.Animation;
 using System.Xml.Linq;
+using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using MoriaBaseServices;
@@ -13,6 +19,8 @@ using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Products;
 using MoriaDesktopServices.Interfaces;
 using MoriaDesktopServices.Interfaces.API;
+using MoriaModels.Models.Orders;
+using MoriaModels.Models.Products;
 using MoriaModelsDo.Attributes;
 using MoriaModelsDo.Base;
 using MoriaModelsDo.Models.Contacts;
@@ -28,13 +36,14 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
 {
     readonly IApiProductService _productService;
 
-    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService, 
+    public OrderItemDetailViewModel(ILogger<ViewModelBase> logger, AppStateService appStateService, IApiLockService apiLockService,
         INavigationService navigationService, IKeepAliveWorker worker, IApiProductService productService)
         : base(logger, appStateService, apiLockService, navigationService, worker)
     {
         _productService = productService;
 
         UpdateDrivesCommand = new(UpdateDrives, CanUpdateDrives);
+        PrintLabelCommand = new(PrintLabel, CanPrintLabel);
     }
 
     #region properties
@@ -236,6 +245,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         {
             _Product = value;
             UpdateDrivesCommand.NotifyCanExecuteChanged();
+            PrintLabelCommand.NotifyCanExecuteChanged();
             if (value != null)
             {
                 Component = null;
@@ -301,7 +311,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
             RaisePropertyChanged(value);
         }
     }
-    
+
 
     private bool _PrintedNamePlate;
     [ObjectChangedValidate]
@@ -1310,9 +1320,22 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         init;
     }
 
+    public AsyncRelayCommand PrintLabelCommand
+    {
+        get;
+        init;
+    }
+
     #endregion
 
     #region commands methods
+
+    async Task PrintLabel()
+    {
+        GenerateLabel();
+    }
+
+    bool CanPrintLabel() => Product != null;
 
     async Task UpdateDrives()
     {
@@ -1382,6 +1405,75 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
                 IsLocked = b;
             else
                 IsLocked = true;
+        }
+    }
+
+    public void GenerateLabel()
+    {
+        string appDir = AppDomain.CurrentDomain.BaseDirectory;
+        string templatePath = Path.Combine(appDir, "Images", "LabelTemplate.xlsx");
+        string outputPath = Path.Combine(appDir, "Images", "LabelOutput.xlsx");
+        try
+        {
+
+            File.Copy(templatePath, outputPath, true);
+
+            using (var doc = SpreadsheetDocument.Open(outputPath, true))
+            {
+                var workbookPart = doc.WorkbookPart;
+                var sheet = workbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
+                var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
+
+                var cells = worksheetPart.Worksheet.Descendants<Cell>();
+
+                void SetCell(string cellRef, string value)
+                {
+                    var cell = cells.FirstOrDefault(c => c.CellReference == cellRef);
+                    if (cell != null)
+                    {
+                        cell.CellValue = new CellValue(value);
+                        cell.DataType = new EnumValue<CellValues>(CellValues.String); 
+                    }
+                }
+
+                SetCell("AA4", Product.Symbol);
+                SetCell("AM7", SerialNumber);
+                SetCell("AG10", Power.ToString());
+                SetCell("AA7", Product.Category?.Name);
+                SetCell("AA10", ProductionYear);
+                SetCell("AA13", order.OrderNumberSymbol);
+                SetCell("AM10", MachineWeight.ToString());
+
+                worksheetPart.Worksheet.Save();
+            }
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = outputPath,
+                    UseShellExecute = true
+                });
+            
+
+
+            //using (var workbook = new XLWorkbook(templatePath))
+            //{
+            //    var ws = workbook.Worksheet(1);
+
+            //    ws.Range("AA4:AO5").Value = Product.Name;
+            //    ws.Range("AM7:AO8").Value = SerialNumber;
+            //    ws.Range("AG10:AJ11").Value = Power;
+            //    ws.Range("AA7:AJ8").Value = Product.Category.Name;
+            //    ws.Range("AA10:AD11").Value = ProductionYear;
+            //    ws.Range("AA13:AJ14").Value = order.OrderNumberSymbol;
+            //    ws.Range("AM10:AO11").Value = MachineWeight;
+
+            //    workbook.SaveAs(outputPath);
+            //}
+
+            //Process.Start(new ProcessStartInfo(outputPath) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            _appStateService.SetupInfo(Models.Enums.SystemInfoStatus.Error, ex.Message, true);
         }
     }
 
@@ -1552,7 +1644,7 @@ public class OrderItemDetailViewModel : BaseDetailWithNestedListViewModel
         currentOrderItem.MetalCliningPlanned = MetalCliningPlanned;
         currentOrderItem.MetalCliningStarted = MetalCliningStarted;
         currentOrderItem.PaintingCompleted = PaintingCompleted;
-        currentOrderItem.PaintingPlanned  = PaintingPlanned;
+        currentOrderItem.PaintingPlanned = PaintingPlanned;
         currentOrderItem.PaintingStarted = PaintingStarted;
         currentOrderItem.ElectricaCabinetCompleted = ElectricaCabinetCompleted;
         currentOrderItem.ElectricaCabinetPlanned = ElectricaCabinetPlanned;
