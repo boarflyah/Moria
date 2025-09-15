@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using MoriaDesktop.Models;
 using MoriaDesktop.ViewModels.Base;
 using MoriaDesktop.ViewModels.Contacts;
@@ -41,7 +42,30 @@ public partial class MainWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         MaximizeWithoutCoveringTaskbar();
-        (DataContext as MainWindowViewModel)!.NavigateToFirstView(); 
+        (DataContext as MainWindowViewModel)!.NavigateToFirstView();
+    }
+
+    private async void StartTextAnimation()
+    {
+        if (!string.IsNullOrWhiteSpace(InfoTextBlock.Text) && InfoTextBlock.ActualWidth > ((FrameworkElement)InfoTextBlock.Parent).ActualWidth)
+        {
+
+            var textWidth = InfoTextBlock.ActualWidth;
+            var borderWidth = ((FrameworkElement)InfoTextBlock.Parent).ActualWidth;
+
+            var animation = new DoubleAnimation
+            {
+                From = 0,
+                To = -textWidth,
+                Duration = TimeSpan.FromSeconds(10),
+                RepeatBehavior = RepeatBehavior.Forever,
+                BeginTime = TimeSpan.FromSeconds(2),
+                EasingFunction = null,
+                FillBehavior = FillBehavior.Stop
+            };
+
+            TextTransform.BeginAnimation(TranslateTransform.XProperty, animation);
+        }
     }
 
     private void ExpandButton_Click(object sender, RoutedEventArgs e)
@@ -200,5 +224,20 @@ public partial class MainWindow : Window
         {
             (DataContext as MainWindowViewModel)!.NavigateToSearch(SearchBox.Text);
         }
+    }
+
+    private void InfoTextBlock_TargetUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+    {
+        StartTextAnimation();
+    }
+
+    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        StartTextAnimation();
+    }
+
+    private void InfoTextBlock_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        StartTextAnimation();
     }
 }

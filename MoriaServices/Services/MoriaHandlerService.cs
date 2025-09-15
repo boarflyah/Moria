@@ -26,10 +26,10 @@ namespace MoriaServices.Services
 
             bool windowsAuth = _credentialsService.GetIsWindowsAuthenticated();
 
-            try
-            {
+            //try
+            //{
 
-                DanePolaczenia connection = null;
+                DanePolaczenia connection;
                 if (!windowsAuth)
                 {
                     string userName = _credentialsService.GetDatabaseUsername();
@@ -41,19 +41,19 @@ namespace MoriaServices.Services
                 MenedzerPolaczen mp = new MenedzerPolaczen();
                 if (connection != null)
                     return mp.Polacz(connection, ProductId.Subiekt);
-            }
-            catch (InvalidOperationException ioe)
-            {
-                _logger.LogWarning($"Metoda łączaca z Subiektem - {ioe.Message}");
-            }
-            catch (SqlException se)
-            {
-                _logger.LogWarning($"Metoda łączaca z Subiektem - {se.Message}");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogCritical(ex, "Metoda łączaca z Subiektem");
-            }
+            //}
+            //catch (InvalidOperationException ioe)
+            //{
+            //    _logger.LogWarning($"Metoda łączaca z Subiektem - {ioe.Message}");
+            //}
+            //catch (SqlException se)
+            //{
+            //    _logger.LogWarning($"Metoda łączaca z Subiektem - {se.Message}");
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogCritical(ex, "Metoda łączaca z Subiektem");
+            //}
             return null;
         }
 

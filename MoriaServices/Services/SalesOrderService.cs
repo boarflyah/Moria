@@ -74,10 +74,10 @@ namespace MoriaServices.Services
                         { "@p2", "ZK" }
                     });
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogCritical(ex, "Metoda pobierająca listę wszystkich zamówień");
-                }
+                //catch (Exception ex)
+                //{
+                //    _logger.LogCritical(ex, "Metoda pobierająca listę wszystkich zamówień");
+                //}
                 finally
                 {
                     moriaHandler?.Dispose();

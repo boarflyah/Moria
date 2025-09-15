@@ -18,6 +18,7 @@
         Background="Transparent" 
         BorderThickness="0"
         BorderBrush="Transparent"
+        SizeChanged="Window_SizeChanged"
         Loaded="Window_Loaded">
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="bool2vis"/>
@@ -481,10 +482,21 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding InfoText, Mode=OneWay}"
+                        <Border ClipToBounds="True" HorizontalAlignment="Stretch">
+                            <Canvas>
+                                <TextBlock Text="{Binding InfoText, Mode=OneWay, NotifyOnTargetUpdated=True}"
+                                           x:Name="InfoTextBlock"
+                                           TargetUpdated="InfoTextBlock_TargetUpdated"
+                                           SizeChanged="InfoTextBlock_SizeChanged"
                                FontWeight="Light"
                                    HorizontalAlignment="Right"
-                               Margin="10 0 5 0"/>
+                               Margin="10 0 5 0">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="TextTransform" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Canvas>
+                        </Border>
                         <Button x:Name="CloseInfoButton" 
                             Style="{StaticResource MainWindowTopRibbonButtonStyle}" 
                             Command="{Binding CloseInfoCommand, Mode=OneWay}"
@@ -498,6 +510,9 @@
                                    Width="10"/>
                             </Button.Content>
                         </Button>
+                        
+                        
+                        
                     </Grid>
                 </Grid>
             </StatusBarItem>

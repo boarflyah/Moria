@@ -7,4 +7,5 @@ public enum MoriaApiExceptionReason
     ObjectNotFound = 110,
     ValueIsNotUnique = 120,
     CreateCatalogError = 130,
+    SubiektError = 140,
 }

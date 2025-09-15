@@ -36,6 +36,9 @@ public class Program
 
             //logger configuration
             Log.Logger = new LoggerConfiguration()
+#if !DEBUG
+                .MinimumLevel.Warning()
+#endif
                 //.MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File("C:\\Apps\\Logs\\WebApi\\log-.txt", rollingInterval: RollingInterval.Day)

@@ -143,7 +143,7 @@ public class OrderController: ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, $"Method: {nameof(ImportOrders)}");
-            return StatusCode(501, ex.Message);
+            return StatusCode(MoriaApiException.ApiExceptionThrownStatusCode, new MoriaApiException(MoriaApiExceptionReason.SubiektError, MoriaApiException.ApiExceptionThrownStatusCode,ex.Message));
         }
     }
 

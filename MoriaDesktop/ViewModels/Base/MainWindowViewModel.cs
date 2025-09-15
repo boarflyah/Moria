@@ -18,6 +18,7 @@ using MoriaDesktop.ViewModels.Dictionary.ListView;
 using MoriaDesktop.ViewModels.Orders;
 using MoriaDesktop.Args;
 using CommunityToolkit.Mvvm.Input;
+using MoriaBaseServices;
 
 namespace MoriaDesktop.ViewModels.Base;
 
@@ -418,8 +419,14 @@ public class MainWindowViewModel : BaseNotifyPropertyChanged
                     _appStateService.SetupInfo(SystemInfoStatus.Info, "Import zamówień z Subiekta został zakończony", true);
                 }
             }
+            catch (MoriaApiException mae)
+            {
+                _appStateService.SetupInfo(SystemInfoStatus.Warning, mae.AdditionalMessage, true);
+            }
             catch (Exception ex)
             {
+                //_appStateService.SetupInfo(SystemInfoStatus.Error, "Nie udało się zaimportować zamówień, więcej informacji w pliku zdarzeń na serwerze", true);
+                _appStateService.SetupInfo(SystemInfoStatus.Error, ex.Message, true);
             }
             finally
             {

@@ -34,47 +34,27 @@
   <ItemGroup>
     <Reference Include="InsERT.Moria.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.API.dll</HintPath>
-    </Reference>
-    <Reference Include="InsERT.Moria.BibliotekaDokumentow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.BibliotekaDokumentow.dll</HintPath>
-    </Reference>
-    <Reference Include="InsERT.Moria.DaneDomyslne, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.DaneDomyslne.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Moria.API.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.ModelDanych, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7e1aa7558fba1cf1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.ModelDanych.dll</HintPath>
-    </Reference>
-    <Reference Include="InsERT.Moria.Security, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="InsERT.Moria.Security.Configuration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.Security.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="InsERT.Moria.Security.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\InsERT.Moria.Security.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Moria.ModelDanych.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Moria.Sfera, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Moria.Sfera.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Moria.Sfera.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Mox.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Mox.Core.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.EntityFramework.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=574d892b577c05ec, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Mox.EntityFramework.Core.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Mox.EntityFramework.Core.dll</HintPath>
     </Reference>
     <Reference Include="InsERT.Mox.EntityFrameworkSupport, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8f3ef93a6b458098, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_55.0.1.8249\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\sfera\nexo\nexoSDK_56.1.0.8513\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -139,6 +119,16 @@
       <Project>{FF8090C5-177F-4FEE-B992-DBC941736FB1}</Project>
       <Name>MoriaDTObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="InsERT.Moria.API.dll" />
+    <Content Include="InsERT.Moria.BibliotekaDokumentow.dll" />
+    <Content Include="InsERT.Moria.DaneDomyslne.dll" />
+    <Content Include="InsERT.Moria.ModelDanych.dll" />
+    <Content Include="InsERT.Moria.Security.Configuration.dll" />
+    <Content Include="InsERT.Moria.Security.dll" />
+    <Content Include="InsERT.Moria.Sfera.dll" />
+    <Content Include="InsERT.Mox.Core.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
