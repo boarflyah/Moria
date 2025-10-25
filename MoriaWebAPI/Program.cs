@@ -57,6 +57,15 @@ public class Program
             builder.Services.AddSingleton<ModelTypeConverter>();
             builder.Services.AddScoped<ModelsCreator>();
             builder.Services.AddSingleton<LockService>();
+
+            builder.Services.Configure<CredentialsConfig>(
+            builder.Configuration.GetSection("Credentials"));
+            builder.Services.AddScoped<ICredentialsService, CoreCredentialsService>();
+            builder.Services.AddScoped<IDictionariesService, DictionariesService>();
+            builder.Services.AddScoped<IMoriaHandlerService, MoriaHandlerService>();
+            builder.Services.AddScoped<ISalesOrderQueriesService, TestSalesOrderQueriesService>();
+            builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
+
             builder.Services.AddScoped<IEmployeeControllerService, EmployeeControllerService>();
             builder.Services.AddScoped<IWarehouseControllerService, WarehouseControllerService>();
             builder.Services.AddScoped<IColorControllerService, ColorControllerService>();
@@ -84,14 +93,7 @@ public class Program
 
             builder.Services.AddScoped<ICatalogService, CatalogService>();
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
-            builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
-
-            builder.Services.Configure<CredentialsConfig>(
-            builder.Configuration.GetSection("Credentials"));
-            builder.Services.AddSingleton<ICredentialsService, CoreCredentialsService>();
-            builder.Services.AddSingleton<IDictionariesService, DictionariesService>();
-            builder.Services.AddSingleton<IMoriaHandlerService, MoriaHandlerService>();
-            builder.Services.AddSingleton<ISalesOrderService, SalesOrderService>();
+            builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();          
 
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
