@@ -1153,7 +1153,7 @@ public class ModelsCreator
         entity.Description = model.Remarks;
 
         //TODO ustalic czy produkt bedzie zmieniany
-        bool hasProductChanged = entity.Product?.SubiektId != model.Product.Id;
+        bool hasProductChanged = entity.Product?.SubiektId != model.Product?.Id;
 
         entity.Product = await GetSubiektModelInContext(CreateProduct, UpdateProduct, model.Product, _context.Products);
 

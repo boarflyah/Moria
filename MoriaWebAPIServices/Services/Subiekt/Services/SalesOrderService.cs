@@ -129,17 +129,19 @@ public class SalesOrderService : ISalesOrderService
         return result;
     }
 
-    public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids)
+    public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids, ref List<int> failed)
     {
         var moriaHandler = _handlerService.GetHandler();
         if (_handlerService?.Login(moriaHandler) == true)
         {
-            IList<MoriaSalesOrder> result = new List<MoriaSalesOrder>();
+            var result = new List<MoriaSalesOrder>();
             foreach (var id in ids)
             {
                 var order = GetSalesOrder(moriaHandler, id);
                 if (order != null)
                     result.Add(order);
+                else
+                    failed.Add(id);
             }
             return result;
         }
@@ -219,7 +221,15 @@ public class SalesOrderService : ISalesOrderService
     {
         var document = handler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == id);
         if (document != null)
-            return CreateSalesOrder(document);
+        {
+            try
+            {
+                return CreateSalesOrder(document);
+            }
+            catch
+            {
+            }
+        }
 
         return null;
     }

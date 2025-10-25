@@ -39,12 +39,15 @@ public class Program
 
             //logger configuration
             Log.Logger = new LoggerConfiguration()
-#if !DEBUG
+#if RELEASE
                 .MinimumLevel.Warning()
 #endif
                 //.MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\log-.txt", rollingInterval: RollingInterval.Day)
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\imports-.txt", rollingInterval: RollingInterval.Day,
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\log-.txt", rollingInterval: RollingInterval.Day,
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .CreateLogger();
             builder.Logging.ClearProviders();
             builder.Logging.AddSerilog(Log.Logger);

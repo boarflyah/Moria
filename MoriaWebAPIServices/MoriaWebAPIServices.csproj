@@ -4,6 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+	  <nexoSdkBinPath>C:\sfera\nexoSDK_57.0.0.8847\Bin\</nexoSdkBinPath>
+	  <nexoSdkNarzedziaPath>C:\sfera\nexoSDK_57.0.0.8847\Narzedzia\</nexoSdkNarzedziaPath>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +25,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
     <PackageReference Include="System.ServiceModel.Federation" Version="6.0.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="6.0.*" />
@@ -54,6 +58,9 @@
     </Reference>
     <Reference Include="InsERT.Mox.EntityFrameworkSupport">
       <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Mox.Helpers">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Mox.Helpers.dll</HintPath>
     </Reference>
   </ItemGroup>
 

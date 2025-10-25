@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.ServiceModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MoriaBaseServices;
 using MoriaDTObjects.Models;
 using MoriaModels.Models.Orders;
@@ -18,13 +19,16 @@ public class OrderControllerService : IOrderControllerService
     readonly ModelsCreator _creator;
     readonly ICatalogService _catalogService;
     readonly ISalesOrderService _salesOrderService;
+    readonly ILogger<OrderControllerService> _logger;
 
-    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator, ICatalogService catalogService, ISalesOrderService salesOrderService)
+    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator, ICatalogService catalogService, ISalesOrderService salesOrderService,
+        ILogger<OrderControllerService> logger)
     {
         _context = context;
         _creator = creator;
         _catalogService = catalogService;
         _salesOrderService = salesOrderService;
+        _logger = logger;
     }
 
     public async Task<OrderDo> CreateOrder(OrderDo order)
@@ -206,7 +210,8 @@ public class OrderControllerService : IOrderControllerService
                 if (ids.Any())
                 {
                     //var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
-                    var ordersToImport = _salesOrderService.GetDetailedSalesOrders(ids.ToArray());
+                    var failed = new List<int>();
+                    var ordersToImport = _salesOrderService.GetDetailedSalesOrders(ids.Select(x => x.id).ToArray(), ref failed);
                     bool updateB0 = false;
                     foreach (var order in ordersToImport)
                     {
@@ -231,6 +236,14 @@ public class OrderControllerService : IOrderControllerService
                         }
                     }
 
+                    foreach (var id in failed)
+                    {
+                        var order = ids.FirstOrDefault(x => x.id == id);
+                        if (order.id == id)
+                        {
+                            _logger.LogWarning($"Nieudany import zamówienia: {order.id} - {order.symbol}");
+                        }
+                    }
                     //dzialamy na podstawie daty modyfikacji zamowienia w subiekcie, nie musimy updateowac wartosci boolean w bazie subiekta
                     //if (updateB0)
                     //    await client.UpdateOrdersToUpdateValueAsync(ids.ToArray());
@@ -247,16 +260,16 @@ public class OrderControllerService : IOrderControllerService
         }
     }
 
-    async Task<IEnumerable<int>> GetOrderIds(IEnumerable<MoriaSalesOrder> orders, bool getAll = true)
+    async Task<IEnumerable<(int id, string symbol)>> GetOrderIds(IEnumerable<MoriaSalesOrder> orders, bool getAll = true)
     {
-        var ids = new List<int>();
+        var ids = new List<(int, string)>();
 
         foreach (var order in orders)
         {
             if (getAll)
-                ids.Add(order.Id);
+                ids.Add((order.Id, order.Symbol));
             else if (!await _context.Orders.AnyAsync(x => x.SubiektId == order.Id))
-                ids.Add(order.Id);
+                ids.Add((order.Id, order.Symbol));
         }
 
         return ids;
