@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.*" />
@@ -30,6 +31,30 @@
 
   <ItemGroup>
     <Folder Include="Services\Interfaces\Orders\Relations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="InsERT.Common.Product">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Common.Product.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Moria.API">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Moria.API.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Moria.ModelDanych">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Moria.ModelDanych.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Moria.Sfera">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Moria.Sfera.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Mox.Core">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Mox.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Mox.EntityFramework.Core">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Mox.EntityFramework.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="InsERT.Mox.EntityFrameworkSupport">
+      <HintPath>..\..\..\..\..\Downloads\nexoSDK_57.0.0.8847\Bin\InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

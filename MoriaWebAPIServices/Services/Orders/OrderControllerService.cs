@@ -8,6 +8,7 @@ using MoriaModelsDo.Models.Orders;
 using MoriaWebAPIServices.Contexts;
 using MoriaWebAPIServices.Services.Interfaces;
 using MoriaWebAPIServices.Services.Interfaces.Orders;
+using MoriaWebAPIServices.Services.Subiekt.Interfaces;
 using SubiektSalesOrders;
 
 namespace MoriaWebAPIServices.Services.Orders;
@@ -16,12 +17,14 @@ public class OrderControllerService : IOrderControllerService
     readonly ApplicationDbContext _context;
     readonly ModelsCreator _creator;
     readonly ICatalogService _catalogService;
+    readonly ISalesOrderService _salesOrderService;
 
-    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator, ICatalogService catalogService)
+    public OrderControllerService(ApplicationDbContext context, ModelsCreator creator, ICatalogService catalogService, ISalesOrderService salesOrderService)
     {
         _context = context;
         _creator = creator;
         _catalogService = catalogService;
+        _salesOrderService = salesOrderService;
     }
 
     public async Task<OrderDo> CreateOrder(OrderDo order)
@@ -133,9 +136,9 @@ public class OrderControllerService : IOrderControllerService
         {
             var binding = new BasicHttpBinding();
             binding.SendTimeout = TimeSpan.FromMinutes(5);
-            var endpoint = new EndpointAddress("http://localhost:8080/MyService");
+            //var endpoint = new EndpointAddress("http://localhost:8080/MyService");
 
-            var client = new SalesOrderContractClient(binding, endpoint);
+            //var client = new SalesOrderContractClient(binding, endpoint);
             try
             {
                 MoriaSalesOrder mso = new()
@@ -155,14 +158,15 @@ public class OrderControllerService : IOrderControllerService
                     };
                     mso.SalesOrderItems.Add(msoi);
                 }
-//update w subiekcie na razie zakomentowany w debugu
-#if DEBUG==false
-                client.UpdateSalesOrderAsync(mso);
+                //update w subiekcie na razie zakomentowany w debugu
+#if DEBUG == false
+                //client.UpdateSalesOrderAsync(mso);
+               _salesOrderService.UpdateSalesOrder(mso);
 #endif
             }
             finally
             {
-                await client.CloseAsync();
+                //await client.CloseAsync();
             }
         }
 
@@ -186,21 +190,23 @@ public class OrderControllerService : IOrderControllerService
             }
         };
 
-        var endpoint = new EndpointAddress("http://localhost:8080/MyService");
+        //var endpoint = new EndpointAddress("http://localhost:8080/MyService");
 
-        var client = new SalesOrderContractClient(binding, endpoint);
+        //var client = new SalesOrderContractClient(binding, endpoint);
         try
         {
 
             var settings = await _context.Settings.FirstOrDefaultAsync();
-            var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
+            var orders = _salesOrderService.GetSalesOrdersSimplified(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
+            //var orders = await client.GetSalesOrdersSimplifiedAsync(settings?.LastSubiektImport ?? new DateTime(2025, 1, 1));
 
             if (orders.Any())
             {
                 var ids = await GetOrderIds(orders);
                 if (ids.Any())
                 {
-                    var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
+                    //var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
+                    var ordersToImport = _salesOrderService.GetDetailedSalesOrders(ids.ToArray());
                     bool updateB0 = false;
                     foreach (var order in ordersToImport)
                     {
@@ -237,7 +243,7 @@ public class OrderControllerService : IOrderControllerService
         }
         finally
         {
-            await client.CloseAsync();
+            //await client.CloseAsync();
         }
     }
 

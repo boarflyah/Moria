@@ -18,6 +18,9 @@ using MoriaWebAPIServices.Services.Interfaces.Orders;
 using MoriaWebAPIServices.Services.Interfaces.Products;
 using MoriaWebAPIServices.Services.Orders;
 using MoriaWebAPIServices.Services.Products;
+using MoriaWebAPIServices.Services.Subiekt.Core;
+using MoriaWebAPIServices.Services.Subiekt.Interfaces;
+using MoriaWebAPIServices.Services.Subiekt.Services;
 using Serilog;
 
 namespace MoriaWebAPI;
@@ -82,6 +85,14 @@ public class Program
             builder.Services.AddScoped<ICatalogService, CatalogService>();
             builder.Services.AddScoped<ILockControllerService, LockControllerService>();
             builder.Services.AddScoped<ILookupControllerService, LookupControllerService>();
+
+            builder.Services.Configure<CredentialsConfig>(
+            builder.Configuration.GetSection("Credentials"));
+            builder.Services.AddSingleton<ICredentialsService, CoreCredentialsService>();
+            builder.Services.AddSingleton<IDictionariesService, DictionariesService>();
+            builder.Services.AddSingleton<IMoriaHandlerService, MoriaHandlerService>();
+            builder.Services.AddSingleton<ISalesOrderService, SalesOrderService>();
+
             builder.Services.AddScoped<ITokenGeneratorService, TempTokenGeneratorService>(serviceProvider =>
             {
                 TempTokenGeneratorService service = new(ip);
@@ -129,7 +140,7 @@ public class Program
                     //configure.UseHttps();
                 });
             });
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
