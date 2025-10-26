@@ -373,3 +373,5 @@ FodyWeavers.xsd
 /MoriaWebAPI/appsettings.json
 /MoriaDesktop/appsettings.json
 /MoriaDesktop/appsettings.json
+/MoriaDatabaseConnectionDesktop/appsettings.Development.json
+/MoriaDatabaseConnectionDesktop/appsettings.json
