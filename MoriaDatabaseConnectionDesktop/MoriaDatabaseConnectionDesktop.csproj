@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+	  <nexoSdkBinPath>C:\sfera\nexoSDK_57.0.0.8847\Bin\</nexoSdkBinPath>
+	  <nexoSdkNarzedziaPath>C:\sfera\nexoSDK_57.0.0.8847\Narzedzia\</nexoSdkNarzedziaPath>
+	  <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <OutputType>Exe</OutputType>
+	  <TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
+	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	  <PlatformTarget>x64</PlatformTarget>
+	  <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +25,38 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<Reference Include="InsERT.Moria.API">
+			<HintPath>$(nexoSdkBinPath)InsERT.Moria.API.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Moria.DaneDomyslne">
+			<HintPath>$(nexoSdkBinPath)InsERT.Moria.DaneDomyslne.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Moria.ModelDanych">
+			<HintPath>$(nexoSdkBinPath)InsERT.Moria.ModelDanych.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Moria.Sfera">
+			<HintPath>$(nexoSdkBinPath)InsERT.Moria.Sfera.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Mox.Core">
+			<HintPath>$(nexoSdkBinPath)InsERT.Mox.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Mox.EntityFramework.Core">
+			<HintPath>$(nexoSdkBinPath)InsERT.Mox.EntityFramework.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="InsERT.Mox.EntityFrameworkSupport">
+			<HintPath>$(nexoSdkBinPath)InsERT.Mox.EntityFrameworkSupport.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy /y &quot;$(nexoSdkBinPath)Xml.pak&quot; &quot;$(TargetDir)\Xml.pak&quot;" />
+		<Exec Command="copy /y &quot;$(nexoSdkBinPath)ijwhost.dll&quot; &quot;$(TargetDir)ijwhost.dll&quot;" />
+		<Exec Command="copy /y &quot;$(nexoSdkBinPath)Microsoft.Data.SqlClient.SNI.dll&quot; &quot;$(TargetDir)Microsoft.Data.SqlClient.SNI.dll&quot;" />
+	</Target>
+
+
+	<ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />

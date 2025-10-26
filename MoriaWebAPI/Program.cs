@@ -44,9 +44,11 @@ public class Program
 #endif
                 //.MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\imports-.txt", rollingInterval: RollingInterval.Day,
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\logs-.txt", rollingInterval: RollingInterval.Day,
                     restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information)
-                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\log-.txt", rollingInterval: RollingInterval.Day,
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\imports-.txt", rollingInterval: RollingInterval.Day,
+                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning)
+                .WriteTo.File("C:\\Apps\\Logs\\WebApi\\errors-.txt", rollingInterval: RollingInterval.Day,
                     restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
                 .CreateLogger();
             builder.Logging.ClearProviders();
