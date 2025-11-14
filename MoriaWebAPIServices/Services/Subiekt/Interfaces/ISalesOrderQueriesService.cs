@@ -5,4 +5,5 @@ public interface ISalesOrderQueriesService
 {
     string GetSalesOrdersSimplifiedQuery();
     string GetClosedSalesOrdersSimplifiedQuery();
+    string GetUpdateEntitiesQuery();
 }

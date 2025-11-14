@@ -11,4 +11,6 @@ public interface ISalesOrderService
     bool UpdateOrdersToUpdateValue(IEnumerable<int> ids);
     MoriaSalesOrder GetSalesOrder(int id);
     bool UpdateSalesOrder(MoriaSalesOrder model);
+    int UpdateEntities();
+
 }

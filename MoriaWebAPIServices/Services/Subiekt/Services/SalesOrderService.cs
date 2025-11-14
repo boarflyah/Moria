@@ -281,4 +281,23 @@ public class SalesOrderService : ISalesOrderService
             var affected = cmd.ExecuteNonQuery();
         }
     }
+
+    public int UpdateEntities()
+    {
+        var moriaHandler = _handlerService.GetHandler();
+        if (_handlerService?.Login(moriaHandler) == true)
+        {
+
+            using var conn = moriaHandler.PodajPolaczenie();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = _queriesService.GetUpdateEntitiesQuery();
+            conn.Open();
+            var updated = cmd.ExecuteNonQuery();
+
+            //_logger.LogInformation($"Zaktualizowano {updated} rekordów w tabeli Podmioty");
+            return updated;
+        }
+        else
+            throw new ArgumentException("Nie udało się zalogować do Sfery");
+    }
 }

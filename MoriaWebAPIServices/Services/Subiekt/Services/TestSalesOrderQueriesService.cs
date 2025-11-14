@@ -23,4 +23,6 @@ public class TestSalesOrderQueriesService : ISalesOrderQueriesService
                     $"LEFT JOIN ModelDanychContainer.NaglowkiEncji ne ON ne.Id = dok.Dokument_Naglowek_Id " +
                     //$"WHERE dok.DataWprowadzenia >= @p1 AND dok.Symbol LIKE @p2 AND pw.B0 = 1;";
                     $"WHERE ne.Zmieniono >= @p1 AND dok.Symbol LIKE @p2;";
+
+    public string GetUpdateEntitiesQuery() => $"UPDATE ModelDanychContainer.Podmioty SET Nieokreslony = 1 WHERE Nieokreslony IS null;";
 }
