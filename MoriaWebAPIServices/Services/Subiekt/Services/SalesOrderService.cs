@@ -129,7 +129,7 @@ public class SalesOrderService : ISalesOrderService
         return result;
     }
 
-    public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids, ref List<int> failed)
+    public IEnumerable<MoriaSalesOrder> GetDetailedSalesOrders(IEnumerable<int> ids, ref List<(int, string)> failed)
     {
         var moriaHandler = _handlerService.GetHandler();
         if (_handlerService?.Login(moriaHandler) == true)
@@ -137,11 +137,12 @@ public class SalesOrderService : ISalesOrderService
             var result = new List<MoriaSalesOrder>();
             foreach (var id in ids)
             {
-                var order = GetSalesOrder(moriaHandler, id);
+                string error = string.Empty;
+                var order = GetSalesOrder(moriaHandler, id, ref error);
                 if (order != null)
                     result.Add(order);
                 else
-                    failed.Add(id);
+                    failed.Add((id, error));
             }
             return result;
         }
@@ -179,12 +180,12 @@ public class SalesOrderService : ISalesOrderService
         return query;
     }
 
-    public MoriaSalesOrder GetSalesOrder(int id)
+    public MoriaSalesOrder GetSalesOrder(int id, ref string error)
     {
         var moriaHandler = _handlerService.GetHandler();
         if (_handlerService?.Login(moriaHandler) == true)
         {
-            return GetSalesOrder(moriaHandler, id);
+            return GetSalesOrder(moriaHandler, id, ref error);
         }
         else
             throw new ArgumentException("Nie udało się zalogować do Sfery");
@@ -217,7 +218,7 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    MoriaSalesOrder GetSalesOrder(Uchwyt handler, int id)
+    MoriaSalesOrder GetSalesOrder(Uchwyt handler, int id, ref string error)
     {
         var document = handler.PodajObiektTypu<InsERT.Moria.Dokumenty.Logistyka.IZamowieniaOdKlientow>().Dane.Pierwszy(x => x.Id == id);
         if (document != null)
@@ -226,8 +227,9 @@ public class SalesOrderService : ISalesOrderService
             {
                 return CreateSalesOrder(document);
             }
-            catch
+            catch(Exception ex)
             {
+                error = ex.Message;
             }
         }
 

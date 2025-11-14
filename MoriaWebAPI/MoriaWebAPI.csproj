@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <nexoSdkBinPath>C:\sfera\nexoSDK_57.0.0.8847\Bin\</nexoSdkBinPath>
-	  <nexoSdkNarzedziaPath>C:\sfera\nexoSDK_57.0.0.8847\Narzedzia\</nexoSdkNarzedziaPath>
+	  <nexoSdkBinPath>C:\sfera\nexosdk\Bin\</nexoSdkBinPath>
+	  <nexoSdkNarzedziaPath>C:\sfera\nexosdk\Narzedzia\</nexoSdkNarzedziaPath>
 	  <ImplicitUsings>enable</ImplicitUsings>
 	  <Nullable>enable</Nullable>
 	  <OutputType>Exe</OutputType>

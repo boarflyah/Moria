@@ -210,7 +210,7 @@ public class OrderControllerService : IOrderControllerService
                 if (ids.Any())
                 {
                     //var ordersToImport = await client.GetDetailedSalesOrdersAsync(ids.ToArray());
-                    var failed = new List<int>();
+                    var failed = new List<(int, string)>();
                     var ordersToImport = _salesOrderService.GetDetailedSalesOrders(ids.Select(x => x.id).ToArray(), ref failed);
                     bool updateB0 = false;
                     foreach (var order in ordersToImport)
@@ -228,7 +228,7 @@ public class OrderControllerService : IOrderControllerService
                         {
                             var newOrder = await _creator.CreateOrder(order);
                             await _context.AddAsync(newOrder);
-                            newOrder.CatalogLink = await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
+                            //newOrder.CatalogLink = await _catalogService.CreateCatalogs(newOrder.OrderNumberSymbol);
                         }
                         else
                         {
@@ -238,10 +238,10 @@ public class OrderControllerService : IOrderControllerService
 
                     foreach (var id in failed)
                     {
-                        var order = ids.FirstOrDefault(x => x.id == id);
-                        if (order.id == id)
+                        var order = ids.FirstOrDefault(x => x.id == id.Item1);
+                        if (order.id == id.Item1)
                         {
-                            _logger.LogWarning($"Nieudany import zamówienia: {order.id} - {order.symbol}");
+                            _logger.LogWarning($"Nieudany import zamówienia: {order.id} - {order.symbol}\r\n{id.Item2}");
                         }
                     }
                     //dzialamy na podstawie daty modyfikacji zamowienia w subiekcie, nie musimy updateowac wartosci boolean w bazie subiekta
